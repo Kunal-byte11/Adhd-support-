@@ -13,6 +13,7 @@ import {
   Users,
   KeyRound,
   Gift,
+  ExternalLink,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -73,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </span>
             <div className="min-w-0">
               <p className="text-xs font-bold text-[#181c1e] truncate">
-                {userRole === 'partner' ? 'parii26 (Pari)' : 'kunal11 (Kunal)'}
+                {userRole === 'partner' ? 'partner_hq (Partner)' : 'kunal11 (Kunal)'}
               </p>
               <p className="text-[10px] text-[#545f72] truncate">
                 Active Session

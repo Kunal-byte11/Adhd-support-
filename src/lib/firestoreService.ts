@@ -273,7 +273,7 @@ export function subscribePartnerNotes(onNotesChanged: (notes: PartnerNote[]) => 
           const data = docSnap.data();
           return {
             id: docSnap.id,
-            author: data.author || 'Girlfriend 💖',
+            author: data.author || 'Partner HQ 💖',
             message: data.message || '',
             timestamp: data.timestamp || Date.now(),
             emoji: data.emoji || '💖',
@@ -320,7 +320,7 @@ export function subscribePartnerNudges(onNudgeReceived: (nudge: PartnerNudge) =>
           label: data.label || 'Cheering you on!',
           emoji: data.emoji || '💖',
           timestamp: data.timestamp || Date.now(),
-          fromName: data.fromName || 'Your Girlfriend 💖',
+          fromName: data.fromName || 'Partner HQ 💖',
         };
         onNudgeReceived(nudge);
       }

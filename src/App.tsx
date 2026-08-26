@@ -502,7 +502,7 @@ export default function App() {
         <div className="md:ml-64 bg-gradient-to-r from-pink-600 via-rose-500 to-indigo-600 text-white px-4 sm:px-6 py-2 flex items-center justify-between shadow-xs z-30">
           <div className="flex items-center gap-2 text-xs font-bold truncate">
             <Heart className="w-3.5 h-3.5 fill-pink-200 text-pink-200" />
-            <span>User: parii26 (Pari's Partner HQ) &bull; Connected to kunal11's Flow</span>
+            <span>User: partner_hq (Partner HQ) &bull; Connected to kunal11's Flow</span>
           </div>
         </div>
       )}
