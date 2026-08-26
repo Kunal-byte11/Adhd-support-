@@ -175,12 +175,12 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
   // Handle Send Love Note
   const handleSendLoveNote = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newNoteText.trim()) return;
+    if (!newNoteText.trim() && !noteImageUrl && !recordedAudioUrl) return;
 
     const note: PartnerNote = {
       id: `note-${Date.now()}`,
       author: 'Partner HQ 💖',
-      message: newNoteText.trim(),
+      message: newNoteText.trim() || (noteImageUrl ? 'Sent you a photo! 📸' : 'Sent you a voice note! 🎙️'),
       timestamp: Date.now(),
       emoji: newNoteEmoji,
       isRead: false,

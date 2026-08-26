@@ -263,7 +263,7 @@ export default function App() {
       const unexpired = remoteNotes.filter(
         (n) => Date.now() - n.timestamp <= TWENTY_FOUR_HOURS_MS
       );
-      setPartnerNotes(unexpired);
+      setPartnerNotes(unexpired.slice(0, 1));
     });
 
     const unsubNudges = subscribePartnerNudges((nudge) => {
@@ -422,7 +422,7 @@ export default function App() {
   };
 
   const handleSendPartnerNote = (note: PartnerNote) => {
-    setPartnerNotes((prev) => [note, ...prev]);
+    setPartnerNotes([note]);
     sendPartnerNoteToFirestore(note);
     showToast('💖 Encouragement note posted in real-time!');
   };

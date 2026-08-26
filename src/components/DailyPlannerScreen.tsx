@@ -140,11 +140,38 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
   const [startTime, setStartTime] = useState('09:00 AM');
   const [customGoals, setCustomGoals] = useState('');
   const [energyLevel, setEnergyLevel] = useState<'high' | 'low'>('high');
+  const [sleepHours, setSleepHours] = useState<'poor' | 'fair' | 'good'>('fair');
   const [isGenerating, setIsGenerating] = useState(false);
   const [greetingMessage, setGreetingMessage] = useState('Hii Kunal! What you want to do today?');
   const [motivationalQuote, setMotivationalQuote] = useState(
-    '2hrs DSA + 2hrs GenAI + 1hr Revision + 10,000 Steps + 10 mins English improvement. Structured for maximum dopamine and zero burnout.'
+    'Structured curriculum roadmap optimized for maximum dopamine and zero burnout.'
   );
+
+  // ADHD Sleep-to-Energy Channelizer
+  useEffect(() => {
+    if (sleepHours === 'poor') {
+      // < 5 hours sleep: Low energy, low target hours
+      setEnergyLevel('low');
+      setDsaHours(0.5);
+      setGenAiHours(0.5);
+      setRevisionHours(0.5);
+      setStepGoal(5000);
+    } else if (sleepHours === 'fair') {
+      // 5 - 7 hours sleep: Normal focus, medium target hours
+      setEnergyLevel('high');
+      setDsaHours(1.5);
+      setGenAiHours(1.5);
+      setRevisionHours(0.5);
+      setStepGoal(8000);
+    } else {
+      // > 7 hours sleep: Peak Rested Focus, heavy target hours
+      setEnergyLevel('high');
+      setDsaHours(2.5);
+      setGenAiHours(2.0);
+      setRevisionHours(1.0);
+      setStepGoal(10000);
+    }
+  }, [sleepHours]);
 
   // English 10-Min Timer State
   const [englishTimerRunning, setEnglishTimerRunning] = useState(false);
@@ -884,160 +911,85 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
         </div>
       </section>
 
-      {/* 🎯 Interactive Goal Configuration & Schedule Customizer */}
+      {/* 🎯 Sleep & Energy Channelizer Customizer */}
       <section className="w-full mb-8 bg-white border border-[#c2c8c0] rounded-3xl p-6 sm:p-7 shadow-xs">
         <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-5">
           <div className="flex items-center gap-2">
             <Target className="w-5 h-5 text-[#43664c]" />
             <h2 className="text-[18px] sm:text-[20px] font-bold text-[#181c1e]">
-              Configure Today's Targets
+              Configure Today's Energy
             </h2>
           </div>
           <span className="text-xs font-semibold text-[#545f72] bg-[#f1f4f6] px-3 py-1 rounded-full">
-            Total Focus: {(dsaHours + genAiHours + revisionHours).toFixed(1)} Hours
+            Auto-Channelized Target Plan
           </span>
         </div>
 
-        {/* Big Beautiful Energy Level Card */}
-        <div className="mb-6 bg-gradient-to-r from-pink-50 via-rose-50 to-pink-100/40 border border-pink-200/80 rounded-3xl p-6 text-center shadow-xs">
-          <Brain className="w-12 h-12 text-pink-600 mx-auto mb-3 animate-pulse" />
-          <h3 className="text-xl sm:text-2xl font-extrabold text-pink-900 tracking-tight">
-            How are your Energy &amp; Focus today?
-          </h3>
-          <p className="text-xs sm:text-sm text-[#545f72] max-w-md mx-auto mt-1 mb-5">
-            We adapt curriculum task difficulty and rest frequency to match your prefrontal capacity.
-          </p>
+        {/* Big Beautiful Sleep Input & Energy Channelizer Card */}
+        <div className="bg-gradient-to-r from-pink-50 via-rose-50 to-pink-100/40 border border-pink-200/80 rounded-3xl p-6 shadow-xs">
+          <div className="text-center mb-5">
+            <Brain className="w-12 h-12 text-pink-600 mx-auto mb-3 animate-pulse" />
+            <h3 className="text-xl sm:text-2xl font-extrabold text-pink-900 tracking-tight">
+              How many hours did you sleep last night?
+            </h3>
+            <p className="text-xs sm:text-sm text-[#545f72] max-w-md mx-auto mt-1">
+              We dynamically channelize your learning targets and break frequency based on sleep quality.
+            </p>
+          </div>
 
-          <div className="flex justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             <button
               type="button"
-              onClick={() => setEnergyLevel('high')}
-              className={`px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
-                energyLevel === 'high'
-                  ? 'bg-[#43664c] text-white shadow-md'
-                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:text-[#181c1e]'
-              }`}
-            >
-              <span>⚡ Locked In (Full Core Focus)</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setEnergyLevel('low')}
-              className={`px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
-                energyLevel === 'low'
+              onClick={() => setSleepHours('poor')}
+              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
+                sleepHours === 'poor'
                   ? 'bg-amber-600 text-white shadow-md'
                   : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:text-[#181c1e]'
               }`}
             >
-              <span>🐢 Low Energy (Gentle Lofi Flow)</span>
+              <span>🐌 &lt; 5 Hours (Tired / Low Focus)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSleepHours('fair')}
+              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
+                sleepHours === 'fair'
+                  ? 'bg-[#43664c] text-white shadow-md'
+                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:text-[#181c1e]'
+              }`}
+            >
+              <span>⚡ 5 - 7 Hours (Balanced Focus)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSleepHours('good')}
+              className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
+                sleepHours === 'good'
+                  ? 'bg-indigo-600 text-white shadow-md'
+                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:text-[#181c1e]'
+              }`}
+            >
+              <span>🔥 &gt; 7 Hours (Peak Rested / Lock In)</span>
             </button>
           </div>
-        </div>
 
-        {/* 4-Item Simple Clean Targets Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          {/* 1. DSA Hours */}
-          <div className="bg-[#f8faf9] border border-[#c2c8c0]/70 rounded-2xl p-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-extrabold text-[#43664c] flex items-center gap-1">
-                <Code2 className="w-4 h-4" /> DSA (Ch 1-10)
-              </span>
-              <span className="text-lg font-black text-[#43664c]">{dsaHours} hrs</span>
+          {/* Clean Auto-Channelized Target Readout */}
+          <div className="mt-6 pt-5 border-t border-pink-200/50 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div className="bg-white/90 p-3 rounded-xl border border-pink-100">
+              <p className="text-[10px] uppercase font-bold text-[#545f72]">DSA Time</p>
+              <p className="text-sm font-black text-pink-900 mt-0.5">{dsaHours} Hours</p>
             </div>
-            <p className="text-[11px] text-[#545f72] mb-3">Core LeetCode &amp; Dry Runs</p>
-            <div className="flex items-center gap-2 mt-auto">
-              <button
-                onClick={() => setDsaHours((prev) => Math.max(0.5, prev - 0.5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-xs font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
-              >
-                -0.5h
-              </button>
-              <button
-                onClick={() => setDsaHours((prev) => Math.min(6, prev + 0.5))}
-                className="flex-1 py-1.5 bg-[#43664c] text-white rounded-xl text-xs font-bold hover:bg-[#38553f] cursor-pointer flex items-center justify-center"
-              >
-                +0.5h
-              </button>
+            <div className="bg-white/90 p-3 rounded-xl border border-pink-100">
+              <p className="text-[10px] uppercase font-bold text-[#545f72]">GenAI Time</p>
+              <p className="text-sm font-black text-pink-900 mt-0.5">{genAiHours} Hours</p>
             </div>
-          </div>
-
-          {/* 2. GenAI Hours */}
-          <div className="bg-[#f0f7fb] border border-blue-200 rounded-2xl p-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-extrabold text-[#006494] flex items-center gap-1">
-                <Brain className="w-4 h-4" /> GenAI &amp; RAG
-              </span>
-              <span className="text-lg font-black text-[#006494]">{genAiHours} hrs</span>
+            <div className="bg-white/90 p-3 rounded-xl border border-pink-100">
+              <p className="text-[10px] uppercase font-bold text-[#545f72]">Spaced Revision</p>
+              <p className="text-sm font-black text-pink-900 mt-0.5">{revisionHours} Hour</p>
             </div>
-            <p className="text-[11px] text-[#545f72] mb-3">Transformers &amp; Projects</p>
-            <div className="flex items-center gap-2 mt-auto">
-              <button
-                onClick={() => setGenAiHours((prev) => Math.max(0.5, prev - 0.5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-xs font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
-              >
-                -0.5h
-              </button>
-              <button
-                onClick={() => setGenAiHours((prev) => Math.min(6, prev + 0.5))}
-                className="flex-1 py-1.5 bg-[#006494] text-white rounded-xl text-xs font-bold hover:bg-[#004e75] cursor-pointer flex items-center justify-center"
-              >
-                +0.5h
-              </button>
-            </div>
-          </div>
-
-          {/* 3. Revision Hours */}
-          <div className="bg-[#f9f5ff] border border-purple-200 rounded-2xl p-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-extrabold text-purple-800 flex items-center gap-1">
-                <BookOpen className="w-4 h-4" /> Revision
-              </span>
-              <span className="text-lg font-black text-purple-800">{revisionHours} hr</span>
-            </div>
-            <p className="text-[11px] text-[#545f72] mb-3">Active Recall &amp; Notes</p>
-            <div className="flex items-center gap-2 mt-auto">
-              <button
-                onClick={() => setRevisionHours((prev) => Math.max(0, prev - 0.5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-xs font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
-              >
-                -0.5h
-              </button>
-              <button
-                onClick={() => setRevisionHours((prev) => Math.min(3, prev + 0.5))}
-                className="flex-1 py-1.5 bg-purple-700 text-white rounded-xl text-xs font-bold hover:bg-purple-800 cursor-pointer flex items-center justify-center"
-              >
-                +0.5h
-              </button>
-            </div>
-          </div>
-
-          {/* 4. Steps Goal Dropdown/Segments Picker */}
-          <div className="bg-[#fffbf0] border border-amber-200 rounded-2xl p-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-extrabold text-amber-900 flex items-center gap-1">
-                <Footprints className="w-4 h-4" /> Steps Goal
-              </span>
-              <span className="text-base font-black text-amber-900">
-                {stepGoal.toLocaleString()}
-              </span>
-            </div>
-            <p className="text-[11px] text-[#545f72] mb-3">Select Daily Target</p>
-            
-            <div className="flex bg-amber-50 border border-amber-200/80 p-0.5 rounded-xl gap-1 mt-auto">
-              {[5000, 8000, 10000].map((val) => (
-                <button
-                  key={val}
-                  type="button"
-                  onClick={() => setStepGoal(val)}
-                  className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
-                    stepGoal === val
-                      ? 'bg-amber-600 text-white shadow-xs'
-                      : 'text-amber-900 hover:bg-amber-100'
-                  }`}
-                >
-                  {val === 10000 ? '10k' : val === 8000 ? '8k' : '5k'}
-                </button>
-              ))}
+            <div className="bg-white/90 p-3 rounded-xl border border-pink-100">
+              <p className="text-[10px] uppercase font-bold text-[#545f72]">Movement Steps</p>
+              <p className="text-sm font-black text-pink-900 mt-0.5">{stepGoal.toLocaleString()}</p>
             </div>
           </div>
         </div>
