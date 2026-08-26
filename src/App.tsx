@@ -39,8 +39,57 @@ import {
   subscribePartnerNotes,
   subscribePartnerNudges,
 } from './lib/firestoreService';
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { auth, signInWithGoogle, handleSignOut } from './lib/firebase';
 
 export default function App() {
+  const [googleUser, setGoogleUser] = useState<User | null>(null);
+
+  // Monitor Google Authentication State
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setGoogleUser(user);
+      if (user && user.email) {
+        const email = user.email.toLowerCase();
+        if (email === 'kunaldubey975@gmail.com') {
+          setUserRole('kunal');
+          localStorage.setItem('focusflow_active_user', 'kunal');
+          setCurrentScreen('now');
+          setIsLoginModalOpen(false);
+          showToast('Welcome back Kunal! Focus Flow synced ⚡');
+        } else if (email === 'pandeypragati504@gmail.com') {
+          setUserRole('partner');
+          localStorage.setItem('focusflow_active_user', 'partner');
+          setCurrentScreen('partner-hq');
+          setIsLoginModalOpen(false);
+          showToast('Welcome back Pragati! Partner HQ synced 💖');
+        } else {
+          // Unauthorized email: automatically sign out
+          handleSignOut();
+          setGoogleUser(null);
+          showToast('Access Denied: Google account unauthorized.');
+        }
+      }
+    });
+    return unsubscribe;
+  }, []);
+
+  const handleSignInGoogle = async () => {
+    try {
+      const uid = await signInWithGoogle();
+      if (uid && uid !== 'local-user') {
+        showToast('🔒 Persistent Google Authentication synced!');
+      }
+    } catch (e) {
+      showToast('Authentication failed.');
+    }
+  };
+
+  const handleSignOutGoogle = async () => {
+    await handleSignOut();
+    showToast('Signed out of Google session.');
+  };
+
   // Active user role: 'kunal' (focus master) or 'partner' (support & dopamine HQ)
   const [userRole, setUserRole] = useState<UserRole>(() => {
     try {
@@ -614,7 +663,16 @@ export default function App() {
         currentUserRole={userRole}
         isOpen={isLoginModalOpen}
         onSelectRole={handleSelectRole}
-        onClose={() => setIsLoginModalOpen(false)}
+        onClose={
+          googleUser &&
+          googleUser.email &&
+          ['kunaldubey975@gmail.com', 'pandeypragati504@gmail.com'].includes(googleUser.email.toLowerCase())
+            ? () => setIsLoginModalOpen(false)
+            : undefined
+        }
+        googleUser={googleUser}
+        onSignInGoogle={handleSignInGoogle}
+        onSignOutGoogle={handleSignOutGoogle}
       />
 
       {/* Instant Unbox Celebration Modal */}

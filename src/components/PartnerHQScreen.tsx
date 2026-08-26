@@ -67,8 +67,40 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setNoteImageUrl(reader.result as string);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX_WIDTH = 400;
+          const MAX_HEIGHT = 400;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL('image/jpeg', 0.6);
+            setNoteImageUrl(compressed);
+          } else {
+            setNoteImageUrl(event.target?.result as string);
+          }
+        };
+        img.src = event.target?.result as string;
       };
       reader.readAsDataURL(file);
     }
@@ -83,17 +115,31 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
 
+  const stopRecording = () => {
+    if (mediaRecorder && isRecording) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    }
+  };
+
   useEffect(() => {
     let interval: any = null;
     if (isRecording) {
       interval = setInterval(() => {
-        setRecordingSeconds((prev) => prev + 1);
+        setRecordingSeconds((prev) => {
+          if (prev >= 14) {
+            stopRecording();
+            onShowToast('Maximum 15s voice note length reached! 🎙️');
+            return 15;
+          }
+          return prev + 1;
+        });
       }, 1000);
     } else {
       setRecordingSeconds(0);
     }
     return () => clearInterval(interval);
-  }, [isRecording]);
+  }, [isRecording, mediaRecorder]);
 
   const startRecording = async () => {
     try {
@@ -123,13 +169,6 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
     } catch (err) {
       console.error('Error starting audio recording:', err);
       onShowToast('Could not access microphone! 🎙️');
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorder && isRecording) {
-      mediaRecorder.stop();
-      setIsRecording(false);
     }
   };
 

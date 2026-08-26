@@ -12,7 +12,7 @@ import {
   deleteDoc,
   serverTimestamp,
 } from 'firebase/firestore';
-import { getAuth, signInAnonymously } from 'firebase/auth';
+import { getAuth, signInAnonymously, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
 export const firebaseConfig = {
   projectId: "talzii-hinglish",
@@ -32,6 +32,27 @@ const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 // Auth
 export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
+
+// Sign in with Google
+export async function signInWithGoogle(): Promise<string> {
+  try {
+    const cred = await signInWithPopup(auth, googleProvider);
+    return cred.user.uid;
+  } catch (error) {
+    console.warn('Google Sign-In Error:', error);
+    return 'local-user';
+  }
+}
+
+// Sign Out
+export async function handleSignOut(): Promise<void> {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.warn('Sign-Out Error:', error);
+  }
+}
 
 // Sign in anonymously for easy, seamless ADHD session persistence
 export async function ensureAnonymousAuth(): Promise<string> {
