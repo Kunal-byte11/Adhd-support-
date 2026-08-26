@@ -62,7 +62,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             Secure Google Sign In
           </h2>
           <p className="text-sm text-[#545f72] mt-1 font-medium">
-            Authorized access only for Kunal &amp; Pragati
+            Authorized access only for Kunal &amp; Partner
           </p>
         </div>
 

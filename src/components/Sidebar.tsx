@@ -112,15 +112,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           );
         })}
       </div>
-
-      {/* Real-time Firebase Firestore database sync indicator */}
-      <div className="px-6 pt-4 border-t border-[#c2c8c0]/60 mt-auto">
-        <div className="flex items-center gap-2 text-xs text-[#545f72] bg-[#ffffff] border border-[#c2c8c0]/60 px-3 py-2 rounded-lg">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <Database className="w-3.5 h-3.5 text-[#43664c]" />
-          <span className="font-medium">Firebase Synced</span>
-        </div>
-      </div>
     </nav>
   );
 };

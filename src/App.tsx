@@ -62,7 +62,7 @@ export default function App() {
           localStorage.setItem('focusflow_active_user', 'partner');
           setCurrentScreen('partner-hq');
           setIsLoginModalOpen(false);
-          showToast('Welcome back Pragati! Partner HQ synced 💖');
+          showToast('Welcome back Partner! Partner HQ synced 💖');
         } else {
           // Unauthorized email: automatically sign out
           handleSignOut();
