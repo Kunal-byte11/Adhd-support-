@@ -5,6 +5,7 @@ import {
   TaskItem,
   TaskImportance,
 } from '../types';
+import { DSA_PROBLEMS_DATA, AI_DATA_SCIENCE_COURSES } from '../data/curriculumData';
 import {
   Sunrise,
   Footprints,
@@ -343,43 +344,63 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
 
     // Simulate instant AI micro-step decomposition
     setTimeout(() => {
-      setGreetingMessage(`Hii ${userName}! Here is your AI-optimized schedule for today.`);
+      // Fetch completed curriculum IDs from localStorage
+      let completedSet = new Set<string>();
+      try {
+        const stored = localStorage.getItem('focusflow_completed_curriculum');
+        if (stored) {
+          completedSet = new Set(JSON.parse(stored));
+        }
+      } catch (e) {}
+
+      // Dynamically select next 2 uncompleted DSA problems from 230-item curriculum
+      const uncompletedDsa = DSA_PROBLEMS_DATA.filter((p) => !completedSet.has(p.id));
+      const nextDsa1 = uncompletedDsa[0] || DSA_PROBLEMS_DATA[0];
+      const nextDsa2 = uncompletedDsa[1] || DSA_PROBLEMS_DATA[1];
+
+      // Dynamically select next uncompleted GenAI course from curriculum
+      const uncompletedGenAi = AI_DATA_SCIENCE_COURSES.filter((c) => !completedSet.has(c.id));
+      const nextGenAi = uncompletedGenAi[0] || AI_DATA_SCIENCE_COURSES[0];
+
+      setGreetingMessage(`Hii ${userName}! Here is your curriculum-aligned AI schedule for today.`);
       setMotivationalQuote(
-        `${dsaHours}h DSA + ${genAiHours}h GenAI + ${revisionHours}h Revision + ${stepGoal.toLocaleString()} Steps + ${englishMinutes}m English. Micro-chunked for zero burnout.`
+        `Curriculum Progress: DSA Problem #${nextDsa1.moduleIndex || 1} ("${nextDsa1.title.slice(0, 25)}") & ${nextGenAi.category} (${nextGenAi.title.slice(0, 25)}).`
       );
 
       const newBlocks: DailyScheduleBlock[] = [
         {
           id: `plan-dsa-${Date.now()}-1`,
           timeSlot: `${startTime} - 10:00 AM`,
-          title: `DSA Focus Block: Code & Debug Python Course (${dsaHours * 60} min)`,
+          title: `DSA Problem #${nextDsa1.moduleIndex || 1}: ${nextDsa1.title} (${dsaHours * 60} min)`,
           category: 'dsa',
           durationMinutes: dsaHours * 60,
           icon: 'code',
-          description: customGoals ? `Target Goal: ${customGoals}. Master Big-O complexity & problem framing on paper.` : 'Master Big-O time & space complexity, TLE errors, and problem framing on paper before submitting.',
-          whyItMatters: 'Morning peak energy is best for algorithmic thinking.',
+          description: `Module: ${nextDsa1.moduleName} • Platform: ${nextDsa1.practicePlatform || 'LeetCode'} (${nextDsa1.difficulty || 'Easy'})`,
+          whyItMatters: `Curriculum Item #${nextDsa1.moduleIndex || 1} of 230 Code & Debug DSA Problems.`,
           stepsTarget: 0,
           isCompleted: false,
+          curriculumRef: nextDsa1.id,
           subSteps: [
-            { id: `s-dsa-1`, title: 'Frame problem constraints & edge cases on paper', minutes: 15, isCompleted: false, importance: 'MUST_DO' },
-            { id: `s-dsa-2`, title: 'Write optimal single-pass Python solution', minutes: 30, isCompleted: false, importance: 'CORE' },
-            { id: `s-dsa-3`, title: 'Test boundary conditions & dry-run submit on LeetCode', minutes: 15, isCompleted: false, importance: 'PRACTICE' },
+            { id: `s-dsa-1`, title: `Watch/Read Theory & Frame constraints for "${nextDsa1.title}"`, minutes: 15, isCompleted: false, importance: 'MUST_DO' },
+            { id: `s-dsa-2`, title: `Code optimal Python solution on ${nextDsa1.practicePlatform || 'LeetCode'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
+            { id: `s-dsa-3`, title: `Test edge cases & solve Problem #${nextDsa2.moduleIndex || 2}: "${nextDsa2.title.slice(0, 25)}"`, minutes: 15, isCompleted: false, importance: 'PRACTICE' },
           ],
         },
         {
           id: `plan-genai-${Date.now()}-2`,
           timeSlot: '10:00 AM - 12:00 PM',
-          title: `GenAI & RAG Track: Krish Naik Course (${genAiHours * 60} min)`,
+          title: `GenAI Track: ${nextGenAi.title} (${genAiHours * 60} min)`,
           category: 'genai',
           durationMinutes: genAiHours * 60,
           icon: 'brain',
-          description: 'Build end-to-end document chunking -> vector embeddings -> ChromaDB -> prompt augmentation pipeline.',
-          whyItMatters: 'Hands-on AI agent engineering builds real portfolio competence.',
+          description: `${nextGenAi.phase} • Category: ${nextGenAi.category} (${nextGenAi.durationHours || '2 Hours'})`,
+          whyItMatters: `Curriculum Order #${nextGenAi.recommendedOrder || 1}: ${nextGenAi.importance}`,
           stepsTarget: 0,
           isCompleted: false,
+          curriculumRef: nextGenAi.id,
           subSteps: [
-            { id: `s-gen-1`, title: 'Setup LangChain document loaders & RecursiveCharacterTextSplitter', minutes: 30, isCompleted: false, importance: 'CORE' },
-            { id: `s-gen-2`, title: 'Store embeddings in ChromaDB vector database', minutes: 30, isCompleted: false, importance: 'CORE' },
+            { id: `s-gen-1`, title: `Study key takeaways: ${nextGenAi.keyTakeaways[0] || 'Core Theory'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
+            { id: `s-gen-2`, title: `Hands-on coding lab: ${nextGenAi.keyTakeaways[1] || 'Practical Implementation'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
           ],
         },
         {
@@ -400,16 +421,16 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
         {
           id: `plan-revision-${Date.now()}-4`,
           timeSlot: '02:00 PM - 03:00 PM',
-          title: `Spaced Revision & Algorithmic Recall (${revisionHours * 60} min)`,
+          title: `Spaced Revision: Review Problem #${Math.max(1, (nextDsa1.moduleIndex || 1) - 2)} (${revisionHours * 60} min)`,
           category: 'revision',
           durationMinutes: revisionHours * 60,
           icon: 'book',
-          description: 'Review previously solved LeetCode problems & reinforce weak patterns.',
+          description: 'Active recall & re-solving previously studied algorithm pattern without looking at solution.',
           whyItMatters: 'Prevents forgetting curve and cements long-term memory.',
           stepsTarget: 0,
           isCompleted: false,
           subSteps: [
-            { id: `s-rev-1`, title: 'Active recall & re-code 1-2 tagged weak problems', minutes: 30, isCompleted: false, importance: 'PRACTICE' },
+            { id: `s-rev-1`, title: 'Active recall & re-code 1 tagged weak problem', minutes: 30, isCompleted: false, importance: 'PRACTICE' },
           ],
         },
       ];
