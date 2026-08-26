@@ -524,6 +524,7 @@ export default function App() {
           <DailyPlannerScreen
             onLaunchTaskToNow={handleLaunchSingleTaskToNow}
             onLaunchFullSprint={handleLaunchFullSprint}
+            partnerNotes={partnerNotes}
           />
         )}
 

@@ -235,6 +235,7 @@ export function subscribePartnerRewards(onRewardsChanged: (rewards: PartnerRewar
             noteFromPartner: data.noteFromPartner || '',
             grantedBy: data.grantedBy || 'Girlfriend',
             createdAt: data.createdAt || Date.now(),
+            audioDataUrl: data.audioDataUrl || undefined,
           };
         });
         onRewardsChanged(loaded);
@@ -279,6 +280,7 @@ export function subscribePartnerNotes(onNotesChanged: (notes: PartnerNote[]) => 
             emoji: data.emoji || '💖',
             isRead: !!data.isRead,
             imageUrl: data.imageUrl || undefined,
+            audioDataUrl: data.audioDataUrl || undefined,
           };
         });
         const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;

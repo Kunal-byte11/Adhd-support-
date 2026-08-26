@@ -213,6 +213,19 @@ export const NowScreen: React.FC<NowScreenProps> = ({
                 </p>
               )}
 
+              {currentTask.youtubeUrl && (
+                <div className="mb-6">
+                  <a
+                    href={currentTask.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2.5 rounded-2xl shadow-sm transition-all hover:scale-105 cursor-pointer"
+                  >
+                    <span>📺 Watch YouTube Video Tutorial</span>
+                  </a>
+                </div>
+              )}
+
               {/* Countdown Readout */}
               <div className="text-[44px] sm:text-[56px] font-black font-mono text-[#43664c] tracking-tight my-2">
                 {formatTime(secondsRemaining)}

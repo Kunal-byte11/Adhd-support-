@@ -4,6 +4,7 @@ import {
   DailyScheduleBlock,
   TaskItem,
   TaskImportance,
+  PartnerNote,
 } from '../types';
 import { DSA_PROBLEMS_DATA, AI_DATA_SCIENCE_COURSES } from '../data/curriculumData';
 import {
@@ -30,11 +31,13 @@ import {
   CalendarCheck,
   ChevronDown,
   ChevronUp,
+  Heart,
 } from 'lucide-react';
 
 interface DailyPlannerScreenProps {
   onLaunchTaskToNow: (task: TaskItem) => void;
   onLaunchFullSprint: (tasks: TaskItem[]) => void;
+  partnerNotes?: PartnerNote[];
 }
 
 const CATEGORY_STYLES: Record<
@@ -118,6 +121,7 @@ const ENGLISH_TOPIC_PROMPTS = [
 export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
   onLaunchTaskToNow,
   onLaunchFullSprint,
+  partnerNotes = [],
 }) => {
   const [userName, setUserName] = useState('Kunal');
   const [dsaHours, setDsaHours] = useState(2);
@@ -135,6 +139,7 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
   const [englishMinutes, setEnglishMinutes] = useState(10);
   const [startTime, setStartTime] = useState('09:00 AM');
   const [customGoals, setCustomGoals] = useState('');
+  const [energyLevel, setEnergyLevel] = useState<'high' | 'low'>('high');
   const [isGenerating, setIsGenerating] = useState(false);
   const [greetingMessage, setGreetingMessage] = useState('Hii Kunal! What you want to do today?');
   const [motivationalQuote, setMotivationalQuote] = useState(
@@ -362,78 +367,159 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
       const uncompletedGenAi = AI_DATA_SCIENCE_COURSES.filter((c) => !completedSet.has(c.id));
       const nextGenAi = uncompletedGenAi[0] || AI_DATA_SCIENCE_COURSES[0];
 
-      setGreetingMessage(`Hii ${userName}! Here is your curriculum-aligned AI schedule for today.`);
+      setGreetingMessage(
+        energyLevel === 'low'
+          ? `Hii ${userName}! Low-Energy Mode active. We scaled down tasks to prevent burnout. 🐢`
+          : `Hii ${userName}! Here is your curriculum-aligned AI schedule for today.`
+      );
       setMotivationalQuote(
-        `Curriculum Progress: DSA Problem #${nextDsa1.moduleIndex || 1} ("${nextDsa1.title.slice(0, 25)}") & ${nextGenAi.category} (${nextGenAi.title.slice(0, 25)}).`
+        energyLevel === 'low'
+          ? `Curriculum Progress (Lofi Mode): DSA Problem #${nextDsa1.moduleIndex || 1} & ${nextGenAi.title.slice(0, 25)}.`
+          : `Curriculum Progress: DSA Problem #${nextDsa1.moduleIndex || 1} ("${nextDsa1.title.slice(0, 25)}") & ${nextGenAi.category} (${nextGenAi.title.slice(0, 25)}).`
       );
 
-      const newBlocks: DailyScheduleBlock[] = [
-        {
-          id: `plan-dsa-${Date.now()}-1`,
-          timeSlot: `${startTime} - 10:00 AM`,
-          title: `DSA Problem #${nextDsa1.moduleIndex || 1}: ${nextDsa1.title} (${dsaHours * 60} min)`,
-          category: 'dsa',
-          durationMinutes: dsaHours * 60,
-          icon: 'code',
-          description: `Module: ${nextDsa1.moduleName} • Platform: ${nextDsa1.practicePlatform || 'LeetCode'} (${nextDsa1.difficulty || 'Easy'})`,
-          whyItMatters: `Curriculum Item #${nextDsa1.moduleIndex || 1} of 230 Code & Debug DSA Problems.`,
-          stepsTarget: 0,
-          isCompleted: false,
-          curriculumRef: nextDsa1.id,
-          subSteps: [
-            { id: `s-dsa-1`, title: `Watch/Read Theory & Frame constraints for "${nextDsa1.title}"`, minutes: 15, isCompleted: false, importance: 'MUST_DO' },
-            { id: `s-dsa-2`, title: `Code optimal Python solution on ${nextDsa1.practicePlatform || 'LeetCode'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
-            { id: `s-dsa-3`, title: `Test edge cases & solve Problem #${nextDsa2.moduleIndex || 2}: "${nextDsa2.title.slice(0, 25)}"`, minutes: 15, isCompleted: false, importance: 'PRACTICE' },
-          ],
-        },
-        {
-          id: `plan-genai-${Date.now()}-2`,
-          timeSlot: '10:00 AM - 12:00 PM',
-          title: `GenAI Track: ${nextGenAi.title} (${genAiHours * 60} min)`,
-          category: 'genai',
-          durationMinutes: genAiHours * 60,
-          icon: 'brain',
-          description: `${nextGenAi.phase} • Category: ${nextGenAi.category} (${nextGenAi.durationHours || '2 Hours'})`,
-          whyItMatters: `Curriculum Order #${nextGenAi.recommendedOrder || 1}: ${nextGenAi.importance}`,
-          stepsTarget: 0,
-          isCompleted: false,
-          curriculumRef: nextGenAi.id,
-          subSteps: [
-            { id: `s-gen-1`, title: `Study key takeaways: ${nextGenAi.keyTakeaways[0] || 'Core Theory'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
-            { id: `s-gen-2`, title: `Hands-on coding lab: ${nextGenAi.keyTakeaways[1] || 'Practical Implementation'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
-          ],
-        },
-        {
-          id: `plan-steps-${Date.now()}-3`,
-          timeSlot: '12:00 PM - 01:00 PM',
-          title: `Movement & Dopamine Reset (${stepGoal.toLocaleString()} Steps Goal)`,
-          category: 'steps',
-          durationMinutes: 40,
-          icon: 'footprints',
-          description: 'Get physical movement and outdoor daylight for natural dopamine and mental clarity.',
-          whyItMatters: 'Physical activity refreshes cognitive energy for afternoon focus.',
-          stepsTarget: stepGoal,
-          isCompleted: false,
-          subSteps: [
-            { id: `s-step-1`, title: 'Outdoor walking / stamina movement break', minutes: 35, isCompleted: false, importance: 'MUST_DO' },
-          ],
-        },
-        {
-          id: `plan-revision-${Date.now()}-4`,
-          timeSlot: '02:00 PM - 03:00 PM',
-          title: `Spaced Revision: Review Problem #${Math.max(1, (nextDsa1.moduleIndex || 1) - 2)} (${revisionHours * 60} min)`,
-          category: 'revision',
-          durationMinutes: revisionHours * 60,
-          icon: 'book',
-          description: 'Active recall & re-solving previously studied algorithm pattern without looking at solution.',
-          whyItMatters: 'Prevents forgetting curve and cements long-term memory.',
-          stepsTarget: 0,
-          isCompleted: false,
-          subSteps: [
-            { id: `s-rev-1`, title: 'Active recall & re-code 1 tagged weak problem', minutes: 30, isCompleted: false, importance: 'PRACTICE' },
-          ],
-        },
-      ];
+      const newBlocks: DailyScheduleBlock[] = [];
+
+      if (energyLevel === 'low') {
+        newBlocks.push(
+          {
+            id: `plan-dsa-${Date.now()}-1`,
+            timeSlot: `${startTime} - 09:30 AM`,
+            title: `🐌 Lofi DSA Watch & Draw: Problem #${nextDsa1.moduleIndex || 1} (30 min)`,
+            category: 'dsa',
+            durationMinutes: 30,
+            icon: 'code',
+            description: `Lighter scale-down: Frame logic & watch curriculum tutorial. No heavy code writing pressure.`,
+            whyItMatters: `Keeps curriculum momentum alive with low cognitive strain.`,
+            stepsTarget: 0,
+            isCompleted: false,
+            curriculumRef: nextDsa1.id,
+            youtubeUrl: nextDsa1.youtubeUrl || undefined,
+            subSteps: [
+              { id: `s-dsa-1`, title: `Watch video tutorial for "${nextDsa1.title}"`, minutes: 15, isCompleted: false, importance: 'MUST_DO' },
+              { id: `s-dsa-2`, title: `Draw problem flowchart or sketch pointers in notepad`, minutes: 15, isCompleted: false, importance: 'CORE' },
+            ],
+          },
+          {
+            id: `plan-break-${Date.now()}-15`,
+            timeSlot: '09:30 AM - 09:45 AM',
+            title: `🍵 Dopamine Hydration & Breathing Break (15 min)`,
+            category: 'break',
+            durationMinutes: 15,
+            icon: 'coffee',
+            description: `Gentle breathing exercises to reset cognitive load and hydrate.`,
+            whyItMatters: `Refreshes focus capacity in Low Energy state.`,
+            stepsTarget: 0,
+            isCompleted: false,
+            subSteps: [
+              { id: `s-break-1`, title: `Do 3 minutes of box breathing & drink water`, minutes: 15, isCompleted: false, importance: 'MUST_DO' }
+            ],
+          },
+          {
+            id: `plan-genai-${Date.now()}-2`,
+            timeSlot: '09:45 AM - 10:30 AM',
+            title: `🐌 GenAI Lofi Read Track: ${nextGenAi.title} (45 min)`,
+            category: 'genai',
+            durationMinutes: 45,
+            icon: 'brain',
+            description: `${nextGenAi.phase} • Lighter study of key takeaways without coding from scratch.`,
+            whyItMatters: `Builds familiarity and intuition with zero performance pressure.`,
+            stepsTarget: 0,
+            isCompleted: false,
+            curriculumRef: nextGenAi.id,
+            youtubeUrl: nextGenAi.youtubeUrl || undefined,
+            subSteps: [
+              { id: `s-gen-1`, title: `Read takeaways: ${nextGenAi.keyTakeaways[0] || 'Core Theory'}`, minutes: 20, isCompleted: false, importance: 'CORE' },
+              { id: `s-gen-2`, title: `Review local codebase files and structure`, minutes: 25, isCompleted: false, importance: 'CORE' },
+            ],
+          },
+          {
+            id: `plan-steps-${Date.now()}-3`,
+            timeSlot: '10:30 AM - 11:15 AM',
+            title: `Gentle Movement & Daylight Reset (5,000 Steps)`,
+            category: 'steps',
+            durationMinutes: 45,
+            icon: 'footprints',
+            description: 'Easy walk to refresh prefrontal cortex. Lowers ADHD distraction impulses.',
+            whyItMatters: 'Physical movement restores dopamine in low energy states.',
+            stepsTarget: 5000,
+            isCompleted: false,
+            subSteps: [
+              { id: `s-step-1`, title: 'Outdoor walk at relaxed pace', minutes: 40, isCompleted: false, importance: 'MUST_DO' },
+            ],
+          }
+        );
+      } else {
+        newBlocks.push(
+          {
+            id: `plan-dsa-${Date.now()}-1`,
+            timeSlot: `${startTime} - 10:00 AM`,
+            title: `DSA Problem #${nextDsa1.moduleIndex || 1}: ${nextDsa1.title} (${dsaHours * 60} min)`,
+            category: 'dsa',
+            durationMinutes: dsaHours * 60,
+            icon: 'code',
+            description: `Module: ${nextDsa1.moduleName} • Platform: ${nextDsa1.practicePlatform || 'LeetCode'} (${nextDsa1.difficulty || 'Easy'})`,
+            whyItMatters: `Curriculum Item #${nextDsa1.moduleIndex || 1} of 230 Code & Debug DSA Problems.`,
+            stepsTarget: 0,
+            isCompleted: false,
+            curriculumRef: nextDsa1.id,
+            youtubeUrl: nextDsa1.youtubeUrl || undefined,
+            subSteps: [
+              { id: `s-dsa-1`, title: `Watch/Read Theory & Frame constraints for "${nextDsa1.title}"`, minutes: 15, isCompleted: false, importance: 'MUST_DO' },
+              { id: `s-dsa-2`, title: `Code optimal Python solution on ${nextDsa1.practicePlatform || 'LeetCode'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
+              { id: `s-dsa-3`, title: `Test edge cases & solve Problem #${nextDsa2.moduleIndex || 2}: "${nextDsa2.title.slice(0, 25)}"`, minutes: 15, isCompleted: false, importance: 'PRACTICE' },
+            ],
+          },
+          {
+            id: `plan-genai-${Date.now()}-2`,
+            timeSlot: '10:00 AM - 12:00 PM',
+            title: `GenAI Track: ${nextGenAi.title} (${genAiHours * 60} min)`,
+            category: 'genai',
+            durationMinutes: genAiHours * 60,
+            icon: 'brain',
+            description: `${nextGenAi.phase} • Category: ${nextGenAi.category} (${nextGenAi.durationHours || '2 Hours'})`,
+            whyItMatters: `Curriculum Order #${nextGenAi.recommendedOrder || 1}: ${nextGenAi.importance}`,
+            stepsTarget: 0,
+            isCompleted: false,
+            curriculumRef: nextGenAi.id,
+            youtubeUrl: nextGenAi.youtubeUrl || undefined,
+            subSteps: [
+              { id: `s-gen-1`, title: `Study key takeaways: ${nextGenAi.keyTakeaways[0] || 'Core Theory'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
+              { id: `s-gen-2`, title: `Hands-on coding lab: ${nextGenAi.keyTakeaways[1] || 'Practical Implementation'}`, minutes: 30, isCompleted: false, importance: 'CORE' },
+            ],
+          },
+          {
+            id: `plan-steps-${Date.now()}-3`,
+            timeSlot: '12:00 PM - 01:00 PM',
+            title: `Movement & Dopamine Reset (${stepGoal.toLocaleString()} Steps Goal)`,
+            category: 'steps',
+            durationMinutes: 40,
+            icon: 'footprints',
+            description: 'Get physical movement and outdoor daylight for natural dopamine and mental clarity.',
+            whyItMatters: 'Physical activity refreshes cognitive energy for afternoon focus.',
+            stepsTarget: stepGoal,
+            isCompleted: false,
+            subSteps: [
+              { id: `s-step-1`, title: 'Outdoor walking / stamina movement break', minutes: 35, isCompleted: false, importance: 'MUST_DO' },
+            ],
+          },
+          {
+            id: `plan-revision-${Date.now()}-4`,
+            timeSlot: '02:00 PM - 03:00 PM',
+            title: `Spaced Revision: Review Problem #${Math.max(1, (nextDsa1.moduleIndex || 1) - 2)} (${revisionHours * 60} min)`,
+            category: 'revision',
+            durationMinutes: revisionHours * 60,
+            icon: 'book',
+            description: 'Active recall & re-solving previously studied algorithm pattern without looking at solution.',
+            whyItMatters: 'Prevents forgetting curve and cements long-term memory.',
+            stepsTarget: 0,
+            isCompleted: false,
+            subSteps: [
+              { id: `s-rev-1`, title: 'Active recall & re-code 1 tagged weak problem', minutes: 30, isCompleted: false, importance: 'PRACTICE' },
+            ],
+          },
+        );
+      }
 
       setScheduleBlocks(newBlocks);
       try {
@@ -457,6 +543,7 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
               goalSource: block.title,
               importance: sub.importance || 'CORE',
               whyItMatters: block.whyItMatters,
+              youtubeUrl: block.youtubeUrl,
             });
           });
         } else {
@@ -471,16 +558,55 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
             goalSource: block.title,
             importance: 'CORE',
             whyItMatters: block.whyItMatters,
+            youtubeUrl: block.youtubeUrl,
           });
         }
       });
 
-      if (generatedTasks.length > 0) {
-        onLaunchFullSprint(generatedTasks);
-      }
-
       setIsGenerating(false);
     }, 300);
+  };
+
+  const handleLaunchEntirePlan = () => {
+    const generatedTasks: TaskItem[] = [];
+    let orderCount = 1;
+    scheduleBlocks.forEach((block) => {
+      if (block.subSteps && block.subSteps.length > 0) {
+        block.subSteps.forEach((sub) => {
+          generatedTasks.push({
+            id: `task-${block.id}-${sub.id}`,
+            title: sub.title,
+            description: block.description,
+            estimatedMinutes: sub.minutes || 10,
+            actualSeconds: 0,
+            isCompleted: sub.isCompleted,
+            order: orderCount++,
+            goalSource: block.title,
+            importance: sub.importance || 'CORE',
+            whyItMatters: block.whyItMatters,
+            youtubeUrl: block.youtubeUrl,
+          });
+        });
+      } else {
+        generatedTasks.push({
+          id: `task-${block.id}`,
+          title: block.title,
+          description: block.description,
+          estimatedMinutes: block.durationMinutes || 10,
+          actualSeconds: 0,
+          isCompleted: block.isCompleted,
+          order: orderCount++,
+          goalSource: block.title,
+          importance: 'CORE',
+          whyItMatters: block.whyItMatters,
+          youtubeUrl: block.youtubeUrl,
+        });
+      }
+    });
+
+    if (generatedTasks.length > 0) {
+      onLaunchFullSprint(generatedTasks);
+    }
   };
 
   // Preset Applicator
@@ -772,8 +898,44 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
           </span>
         </div>
 
-        {/* 5-Item Stepper Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+        {/* Big Beautiful Energy Level Card */}
+        <div className="mb-6 bg-gradient-to-r from-pink-50 via-rose-50 to-pink-100/40 border border-pink-200/80 rounded-3xl p-6 text-center shadow-xs">
+          <Brain className="w-12 h-12 text-pink-600 mx-auto mb-3 animate-pulse" />
+          <h3 className="text-xl sm:text-2xl font-extrabold text-pink-900 tracking-tight">
+            How are your Energy &amp; Focus today?
+          </h3>
+          <p className="text-xs sm:text-sm text-[#545f72] max-w-md mx-auto mt-1 mb-5">
+            We adapt curriculum task difficulty and rest frequency to match your prefrontal capacity.
+          </p>
+
+          <div className="flex justify-center gap-3">
+            <button
+              type="button"
+              onClick={() => setEnergyLevel('high')}
+              className={`px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
+                energyLevel === 'high'
+                  ? 'bg-[#43664c] text-white shadow-md'
+                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:text-[#181c1e]'
+              }`}
+            >
+              <span>⚡ Locked In (Full Core Focus)</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setEnergyLevel('low')}
+              className={`px-6 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-xs ${
+                energyLevel === 'low'
+                  ? 'bg-amber-600 text-white shadow-md'
+                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:text-[#181c1e]'
+              }`}
+            >
+              <span>🐢 Low Energy (Gentle Lofi Flow)</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 4-Item Simple Clean Targets Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {/* 1. DSA Hours */}
           <div className="bg-[#f8faf9] border border-[#c2c8c0]/70 rounded-2xl p-4 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-2">
@@ -786,15 +948,15 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
             <div className="flex items-center gap-2 mt-auto">
               <button
                 onClick={() => setDsaHours((prev) => Math.max(0.5, prev - 0.5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-sm font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
+                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-xs font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
               >
-                <Minus className="w-3.5 h-3.5" />
+                -0.5h
               </button>
               <button
                 onClick={() => setDsaHours((prev) => Math.min(6, prev + 0.5))}
-                className="flex-1 py-1.5 bg-[#43664c] text-white rounded-xl text-sm font-bold hover:bg-[#38553f] cursor-pointer flex items-center justify-center"
+                className="flex-1 py-1.5 bg-[#43664c] text-white rounded-xl text-xs font-bold hover:bg-[#38553f] cursor-pointer flex items-center justify-center"
               >
-                <Plus className="w-3.5 h-3.5" />
+                +0.5h
               </button>
             </div>
           </div>
@@ -811,15 +973,15 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
             <div className="flex items-center gap-2 mt-auto">
               <button
                 onClick={() => setGenAiHours((prev) => Math.max(0.5, prev - 0.5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-sm font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
+                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-xs font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
               >
-                <Minus className="w-3.5 h-3.5" />
+                -0.5h
               </button>
               <button
                 onClick={() => setGenAiHours((prev) => Math.min(6, prev + 0.5))}
-                className="flex-1 py-1.5 bg-[#006494] text-white rounded-xl text-sm font-bold hover:bg-[#004e75] cursor-pointer flex items-center justify-center"
+                className="flex-1 py-1.5 bg-[#006494] text-white rounded-xl text-xs font-bold hover:bg-[#004e75] cursor-pointer flex items-center justify-center"
               >
-                <Plus className="w-3.5 h-3.5" />
+                +0.5h
               </button>
             </div>
           </div>
@@ -836,68 +998,46 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
             <div className="flex items-center gap-2 mt-auto">
               <button
                 onClick={() => setRevisionHours((prev) => Math.max(0, prev - 0.5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-sm font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
+                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-xs font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
               >
-                <Minus className="w-3.5 h-3.5" />
+                -0.5h
               </button>
               <button
                 onClick={() => setRevisionHours((prev) => Math.min(3, prev + 0.5))}
-                className="flex-1 py-1.5 bg-purple-700 text-white rounded-xl text-sm font-bold hover:bg-purple-800 cursor-pointer flex items-center justify-center"
+                className="flex-1 py-1.5 bg-purple-700 text-white rounded-xl text-xs font-bold hover:bg-purple-800 cursor-pointer flex items-center justify-center"
               >
-                <Plus className="w-3.5 h-3.5" />
+                +0.5h
               </button>
             </div>
           </div>
 
-          {/* 4. Steps Goal */}
+          {/* 4. Steps Goal Dropdown/Segments Picker */}
           <div className="bg-[#fffbf0] border border-amber-200 rounded-2xl p-4 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-extrabold text-amber-900 flex items-center gap-1">
                 <Footprints className="w-4 h-4" /> Steps Goal
               </span>
               <span className="text-base font-black text-amber-900">
-                {(stepGoal / 1000).toFixed(0)}k
+                {stepGoal.toLocaleString()}
               </span>
             </div>
-            <p className="text-[11px] text-[#545f72] mb-3">Dopamine Walking Breaks</p>
-            <div className="flex items-center gap-2 mt-auto">
-              <button
-                onClick={() => setStepGoal((prev) => Math.max(3000, prev - 1000))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-sm font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
-              >
-                -1k
-              </button>
-              <button
-                onClick={() => setStepGoal((prev) => Math.min(25000, prev + 1000))}
-                className="flex-1 py-1.5 bg-amber-600 text-white rounded-xl text-sm font-bold hover:bg-amber-700 cursor-pointer flex items-center justify-center"
-              >
-                +1k
-              </button>
-            </div>
-          </div>
-
-          {/* 5. English Improvement */}
-          <div className="bg-[#f5f5ff] border border-indigo-200 rounded-2xl p-4 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-extrabold text-indigo-900 flex items-center gap-1">
-                <MessageSquare className="w-4 h-4" /> English
-              </span>
-              <span className="text-base font-black text-indigo-900">{englishMinutes}m</span>
-            </div>
-            <p className="text-[11px] text-[#545f72] mb-3">Technical Speaking Sprint</p>
-            <div className="flex items-center gap-2 mt-auto">
-              <button
-                onClick={() => setEnglishMinutes((prev) => Math.max(5, prev - 5))}
-                className="flex-1 py-1.5 bg-white border border-[#c2c8c0] rounded-xl text-sm font-bold text-[#545f72] hover:bg-gray-100 cursor-pointer flex items-center justify-center"
-              >
-                -5m
-              </button>
-              <button
-                onClick={() => setEnglishMinutes((prev) => Math.min(30, prev + 5))}
-                className="flex-1 py-1.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 cursor-pointer flex items-center justify-center"
-              >
-                +5m
-              </button>
+            <p className="text-[11px] text-[#545f72] mb-3">Select Daily Target</p>
+            
+            <div className="flex bg-amber-50 border border-amber-200/80 p-0.5 rounded-xl gap-1 mt-auto">
+              {[5000, 8000, 10000].map((val) => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setStepGoal(val)}
+                  className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
+                    stepGoal === val
+                      ? 'bg-amber-600 text-white shadow-xs'
+                      : 'text-amber-900 hover:bg-amber-100'
+                  }`}
+                >
+                  {val === 10000 ? '10k' : val === 8000 ? '8k' : '5k'}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -1009,96 +1149,86 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
           </div>
         </div>
 
-        {/* 2. 10-Min English Communication Sprint */}
-        <div className="bg-white border border-indigo-200/90 rounded-3xl p-6 shadow-xs flex flex-col justify-between">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="p-2 rounded-xl bg-indigo-100 text-indigo-800">
-                  <MessageSquare className="w-5 h-5" />
-                </span>
-                <div>
-                  <h3 className="text-base font-extrabold text-[#181c1e]">
-                    10-Min English Sprint
-                  </h3>
-                  <p className="text-xs text-[#545f72]">Technical communication practice</p>
-                </div>
-              </div>
-
-              {/* Timer Pill */}
-              <div className="flex items-center gap-1.5 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full">
-                <Clock className="w-3.5 h-3.5 text-indigo-700" />
-                <span className="font-mono text-xs font-bold text-indigo-900">
-                  {formatEnglishTime(englishSecondsLeft)}
-                </span>
-              </div>
-            </div>
-
-            {/* Prompt of the day */}
-            <div className="bg-indigo-50/60 border border-indigo-100 rounded-2xl p-3.5 mb-3">
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[11px] font-extrabold text-indigo-800 uppercase tracking-wider">
-                  Today's Challenge: {currentTopic.topic}
-                </span>
-                <button
-                  onClick={() =>
-                    setCurrentEnglishPromptIndex(
-                      (prev) => (prev + 1) % ENGLISH_TOPIC_PROMPTS.length
-                    )
-                  }
-                  className="text-[10px] text-indigo-700 hover:underline font-bold cursor-pointer"
-                >
-                  Next Topic &rarr;
-                </button>
-              </div>
-              <p className="text-xs text-indigo-950 font-medium leading-relaxed">
-                "{currentTopic.prompt}"
-              </p>
-              <div className="flex flex-wrap gap-1 mt-2">
-                {currentTopic.keywords.map((kw, i) => (
-                  <span
-                    key={i}
-                    className="text-[10px] bg-white border border-indigo-200 text-indigo-800 px-2 py-0.5 rounded-md font-mono"
-                  >
-                    #{kw}
-                  </span>
-                ))}
-              </div>
-            </div>
+        {/* 2. Girlfriend's Support & Photo Wall */}
+        <div className="bg-white border border-pink-200/90 rounded-3xl p-6 shadow-xs flex flex-col justify-between relative overflow-hidden">
+          {/* Heart decorative background */}
+          <div className="absolute -top-6 -right-6 text-pink-100 opacity-50 z-0">
+            <Heart className="w-24 h-24 fill-pink-50 text-pink-50" />
           </div>
 
-          {/* Action Row */}
-          <div className="flex items-center justify-between pt-2 border-t border-indigo-100">
-            <button
-              onClick={() => setEnglishTimerRunning(!englishTimerRunning)}
-              className={`text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 cursor-pointer transition-all ${
-                englishTimerRunning
-                  ? 'bg-rose-600 hover:bg-rose-700 text-white'
-                  : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-              }`}
-            >
-              {englishTimerRunning ? 'Pause Sprint' : 'Start 10-Min Timer'}
-            </button>
-            <span className="text-xs text-[#545f72] flex items-center gap-1">
-              <Volume2 className="w-3.5 h-3.5 text-indigo-600" />
-              Speak clearly &amp; record voice
-            </span>
+          <div className="z-10 relative flex-1 flex flex-col justify-between">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="p-2 rounded-xl bg-pink-100 text-pink-700">
+                <Heart className="w-5 h-5 fill-pink-500 text-pink-500" />
+              </span>
+              <div>
+                <h3 className="text-base font-extrabold text-pink-950">
+                  Partner Support Photo
+                </h3>
+                <p className="text-xs text-pink-700">Dopamine boost from your girlfriend</p>
+              </div>
+            </div>
+
+            {/* Display Girlfriend's Latest Photo Attachment */}
+            {(() => {
+              const photoNote = partnerNotes.find((n) => n.imageUrl);
+              if (photoNote) {
+                return (
+                  <div className="mt-1">
+                    <div className="rounded-2xl overflow-hidden border-2 border-pink-200 shadow-xs max-h-44 flex items-center justify-center bg-pink-50/20">
+                      <img
+                        src={photoNote.imageUrl}
+                        alt="Support photo from girlfriend"
+                        className="w-full h-full object-cover max-h-44 hover:scale-[1.02] transition-all"
+                      />
+                    </div>
+                    {photoNote.message && (
+                      <p className="text-xs text-pink-900 font-semibold italic mt-2.5 text-center leading-relaxed">
+                        "{photoNote.message}"
+                      </p>
+                    )}
+                  </div>
+                );
+              } else {
+                return (
+                  <div className="bg-pink-50/40 border border-pink-100 rounded-2xl p-5 text-center flex flex-col items-center justify-center mt-1 py-10">
+                    <span className="text-3xl mb-1.5">👩‍❤️‍👨</span>
+                    <p className="text-xs text-pink-800 font-bold">
+                      No Photo Added Yet
+                    </p>
+                    <p className="text-[11px] text-pink-600 mt-1 max-w-[200px]">
+                      Your girlfriend can attach a custom photo from Partner HQ to surprise you here!
+                    </p>
+                  </div>
+                );
+              }
+            })()}
           </div>
         </div>
       </section>
 
       {/* 📅 Interactive Chronological Daily Timeline */}
       <section className="w-full">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
             <CalendarCheck className="w-5 h-5 text-[#43664c]" />
             <h2 className="text-[20px] sm:text-[22px] font-extrabold text-[#181c1e]">
               Today's Master Schedule for {userName}
             </h2>
           </div>
-          <span className="text-xs font-bold text-[#43664c] bg-[#8bb192]/20 px-3 py-1 rounded-full">
-            {scheduleBlocks.length} Sequential Focus Blocks
-          </span>
+          <div className="flex items-center gap-2">
+            {scheduleBlocks.length > 0 && (
+              <button
+                onClick={handleLaunchEntirePlan}
+                className="bg-[#43664c] hover:bg-[#38553f] text-white text-xs font-bold px-4 py-2 rounded-xl transition-all cursor-pointer shadow-xs active:scale-95 flex items-center gap-1"
+              >
+                <span>🚀 Launch Entire Focus Flow</span>
+              </button>
+            )}
+            <span className="text-xs font-bold text-[#43664c] bg-[#8bb192]/20 px-3 py-1 rounded-full">
+              {scheduleBlocks.length} Sequential Focus Blocks
+            </span>
+          </div>
         </div>
 
         {/* Timeline List */}
@@ -1168,6 +1298,19 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
                         <p className="text-[12px] text-[#43664c] font-medium mt-1">
                           💡 <em>{block.whyItMatters}</em>
                         </p>
+                      )}
+
+                      {block.youtubeUrl && (
+                        <div className="mt-2.5">
+                          <a
+                            href={block.youtubeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold px-3 py-1.5 rounded-xl border border-red-200 transition-colors"
+                          >
+                            <span>📺 Watch YouTube Tutorial</span>
+                          </a>
+                        </div>
                       )}
                     </div>
                   </div>

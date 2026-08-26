@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { TaskItem, ChecklistItem, TaskImportance } from '../types';
+import { DSA_PROBLEMS_DATA, AI_DATA_SCIENCE_COURSES } from '../data/curriculumData';
 import {
   Sparkles,
   Play,
@@ -64,8 +65,23 @@ export const IntakeScreen: React.FC<IntakeScreenProps> = ({
   initialGoal,
   onStartPlan,
 }) => {
+  // Fetch completed curriculum IDs from localStorage
+  let completedSet = new Set<string>();
+  try {
+    const stored = localStorage.getItem('focusflow_completed_curriculum');
+    if (stored) {
+      completedSet = new Set(JSON.parse(stored));
+    }
+  } catch (e) {}
+
+  const uncompletedDsa = DSA_PROBLEMS_DATA.filter((p) => !completedSet.has(p.id));
+  const nextDsa1 = uncompletedDsa[0] || DSA_PROBLEMS_DATA[0];
+
+  const uncompletedGenAi = AI_DATA_SCIENCE_COURSES.filter((c) => !completedSet.has(c.id));
+  const nextGenAi = uncompletedGenAi[0] || AI_DATA_SCIENCE_COURSES[0];
+
   const [goalInput, setGoalInput] = useState(
-    initialGoal || 'Master LangChain RAG & Vector Databases'
+    initialGoal || `DSA Problem #${nextDsa1.moduleIndex || 1}: ${nextDsa1.title}`
   );
   const [imageUrl, setImageUrl] = useState('');
   const [imageBase64, setImageBase64] = useState<string | null>(null);
@@ -88,8 +104,10 @@ export const IntakeScreen: React.FC<IntakeScreenProps> = ({
   React.useEffect(() => {
     if (initialGoal) {
       setGoalInput(initialGoal);
+    } else {
+      setGoalInput(`DSA Problem #${nextDsa1.moduleIndex || 1}: ${nextDsa1.title}`);
     }
-  }, [initialGoal]);
+  }, [initialGoal, nextDsa1.id]);
 
   const [generatedTasks, setGeneratedTasks] = useState<TaskItem[]>([
     {
@@ -195,103 +213,96 @@ export const IntakeScreen: React.FC<IntakeScreenProps> = ({
       let canWait = '';
       let checks: ChecklistItem[] = [];
 
-      if (lower.includes('tree') || lower.includes('bst') || lower.includes('binary') || lower.includes('graph') || lower.includes('dp') || lower.includes('dynamic') || lower.includes('leetcode') || lower.includes('dsa') || lower.includes('array') || lower.includes('string') || lower.includes('sort')) {
-        summary = `Algorithmic Deconstruction for "${cleanGoal}": Broken into framing, coding, and boundary dry-run.`;
-        critical = `Understand constraint limits (O(N) time vs O(N^2) TLE limit) & draw pointer diagrams on paper first.`;
-        canWait = `Fancy space optimizations and micro-benchmark speedups can wait until primary solution passes.`;
+      if (lower.includes('tree') || lower.includes('bst') || lower.includes('binary') || lower.includes('graph') || lower.includes('dp') || lower.includes('dynamic') || lower.includes('leetcode') || lower.includes('dsa') || lower.includes('array') || lower.includes('string') || lower.includes('sort') || lower.includes('code') || lower.includes('debug')) {
+        summary = `Curriculum DSA Deconstruction for "${nextDsa1.title}": Broken into framing, coding, and boundary dry-run.`;
+        critical = `Understand constraint limits & dry-run edge cases for "${nextDsa1.title}" on ${nextDsa1.practicePlatform || 'LeetCode'}.`;
+        canWait = `Optional speedups and formatting can wait until primary tests pass.`;
 
         actionPlan = [
           {
             id: `chunk-${Date.now()}-1`,
-            title: `1. Frame Constraints & Draw Dry-Run Diagram for "${cleanGoal.slice(0, 30)}"`,
-            description: `Define base cases, pointer boundaries, and expected Big-O complexity on paper in 5 minutes.`,
+            title: `1. Watch video tutorial & Frame Constraints for "${nextDsa1.title}"`,
+            description: `Define base cases, pointer boundaries, and expected Big-O complexity on paper first.`,
             estimatedMinutes: 10,
             actualSeconds: 0,
             isCompleted: false,
             order: 1,
             goalSource: cleanGoal,
             importance: 'MUST_DO',
-            whyItMatters: 'Prevents getting stuck in coding loops and establishes clear algorithmic logic.',
+            whyItMatters: `Essential step for Curriculum Problem #${nextDsa1.moduleIndex || 1}.`,
+            youtubeUrl: nextDsa1.youtubeUrl || undefined,
           },
           {
             id: `chunk-${Date.now()}-2`,
-            title: `2. Write Optimal Single-Pass Python Code for "${cleanGoal.slice(0, 30)}"`,
-            description: `Implement primary solution logic with clean variables & helper functions.`,
+            title: `2. Code Python solution on ${nextDsa1.practicePlatform || 'LeetCode'}`,
+            description: `Write optimal solution without looking at hints.`,
             estimatedMinutes: 10,
             actualSeconds: 0,
             isCompleted: false,
             order: 2,
             goalSource: cleanGoal,
             importance: 'CORE',
-            whyItMatters: 'Creates baseline working implementation on LeetCode / GFG.',
+            whyItMatters: `Builds working code implementation.`,
+            youtubeUrl: nextDsa1.youtubeUrl || undefined,
           },
           {
             id: `chunk-${Date.now()}-3`,
-            title: `3. Trace Edge Cases (Null/Negative Values) & Submit Solution`,
-            description: `Dry-run edge conditions (empty array, single node, max/min bounds) and verify all test cases pass.`,
+            title: `3. Dry-run edge cases & submit to resolve Problem #${nextDsa1.moduleIndex || 1}`,
+            description: `Test empty arrays, single elements, and verify submission passes.`,
             estimatedMinutes: 10,
             actualSeconds: 0,
             isCompleted: false,
             order: 3,
             goalSource: cleanGoal,
             importance: 'PRACTICE',
-            whyItMatters: 'Ensures 100% submission accuracy and cements pattern in long-term memory.',
+            whyItMatters: `Verify 100% test suite completion.`,
+            youtubeUrl: nextDsa1.youtubeUrl || undefined,
           },
         ];
 
         checks = [
           { id: 'c-1', label: 'Pen & Paper ready for dry-run trace', icon: 'checklist', isChecked: false },
-          { id: 'c-2', label: 'Open LeetCode / Code & Debug IDE tab', icon: 'code', isChecked: false },
-          { id: 'c-3', label: 'Close social media & activate Do Not Disturb', icon: 'lock', isChecked: false },
+          { id: 'c-2', label: `Open ${nextDsa1.practicePlatform || 'LeetCode'} tab`, icon: 'code', isChecked: false },
+          { id: 'c-3', label: 'Close all extra browser tabs', icon: 'lock', isChecked: false },
         ];
-      } else if (lower.includes('rag') || lower.includes('langchain') || lower.includes('agent') || lower.includes('vector') || lower.includes('embedding') || lower.includes('genai') || lower.includes('ai') || lower.includes('llm') || lower.includes('prompt')) {
-        summary = `GenAI & RAG Architecture Deconstruction for "${cleanGoal}": Chunking, Embeddings, & Vector Retrieval.`;
-        critical = `Proper document chunking size (e.g. 500 tokens) & embedding similarity thresholds.`;
-        canWait = `UI styling or multi-tenant database hosting can wait until vector retrieval accuracy is validated.`;
+      } else if (lower.includes('rag') || lower.includes('langchain') || lower.includes('agent') || lower.includes('vector') || lower.includes('embedding') || lower.includes('genai') || lower.includes('ai') || lower.includes('llm') || lower.includes('prompt') || lower.includes('course') || lower.includes('data')) {
+        summary = `GenAI Curriculum Deconstruction for "${nextGenAi.title}": Chunking, Embeddings, & Core Theory.`;
+        critical = `Proper document chunking size & similarity thresholds for "${nextGenAi.title}".`;
+        canWait = `Cosmetics and styling can wait until core retrieval is accurate.`;
 
         actionPlan = [
           {
             id: `chunk-${Date.now()}-1`,
-            title: `1. Setup Document Loaders & Text Chunker for "${cleanGoal.slice(0, 30)}"`,
-            description: `Configure LangChain PyPDFLoader / DirectoryLoader and set RecursiveCharacterTextSplitter chunk size.`,
+            title: `1. Study Key Takeaway: ${nextGenAi.keyTakeaways[0] || 'Core Theory'}`,
+            description: `Understand the fundamental conceptual architecture of "${nextGenAi.title}".`,
             estimatedMinutes: 10,
             actualSeconds: 0,
             isCompleted: false,
             order: 1,
             goalSource: cleanGoal,
             importance: 'MUST_DO',
-            whyItMatters: 'Clean document chunking is the backbone of RAG retrieval accuracy.',
+            whyItMatters: `Curriculum Order #${nextGenAi.recommendedOrder || 1}: ${nextGenAi.importance}`,
+            youtubeUrl: nextGenAi.youtubeUrl || undefined,
           },
           {
             id: `chunk-${Date.now()}-2`,
-            title: `2. Generate OpenAI / HuggingFace Embeddings & Store in ChromaDB`,
-            description: `Vectorize text chunks into numerical embeddings and index inside local ChromaDB / FAISS database.`,
+            title: `2. Hands-on coding lab: ${nextGenAi.keyTakeaways[1] || 'Practical Implementation'}`,
+            description: `Write local prototype scripts and execute tests for "${nextGenAi.title}".`,
             estimatedMinutes: 10,
             actualSeconds: 0,
             isCompleted: false,
             order: 2,
             goalSource: cleanGoal,
             importance: 'CORE',
-            whyItMatters: 'Enables high-speed semantic vector similarity search.',
-          },
-          {
-            id: `chunk-${Date.now()}-3`,
-            title: `3. Query Vector Retriever & Augment LLM Prompt Pipeline`,
-            description: `Pass query vector to retriever, fetch top-K relevant contexts, and construct RAG prompt payload.`,
-            estimatedMinutes: 10,
-            actualSeconds: 0,
-            isCompleted: false,
-            order: 3,
-            goalSource: cleanGoal,
-            importance: 'PRACTICE',
-            whyItMatters: 'Delivers zero-hallucination, context-aware AI answers.',
+            whyItMatters: `Cements knowledge through active keyboard execution.`,
+            youtubeUrl: nextGenAi.youtubeUrl || undefined,
           },
         ];
 
         checks = [
-          { id: 'c-1', label: 'Check API keys (.env file active)', icon: 'lock', isChecked: false },
-          { id: 'c-2', label: 'Load sample PDF or markdown test dataset', icon: 'file-text', isChecked: false },
-          { id: 'c-3', label: 'Open Python terminal / Jupyter notebook', icon: 'code', isChecked: false },
+          { id: 'c-1', label: 'Verify API keys in env variables', icon: 'lock', isChecked: false },
+          { id: 'c-2', label: 'Open local code editor & workspace', icon: 'code', isChecked: false },
+          { id: 'c-3', label: 'Load sample training dataset', icon: 'file-text', isChecked: false },
         ];
       } else {
         summary = `Personalized Goal Deconstruction for "${cleanGoal}": 3 High-Yield Micro-Sprints.`;

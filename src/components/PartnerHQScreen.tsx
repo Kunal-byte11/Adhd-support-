@@ -77,6 +77,62 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
   const [rewardCategory, setRewardCategory] = useState<'treat' | 'coupon' | 'date' | 'kiss'>('coupon');
   const [rewardNote, setRewardNote] = useState('');
 
+  // Audio Recording State
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
+  const [recordedAudioUrl, setRecordedAudioUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    let interval: any = null;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setRecordingSeconds((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setRecordingSeconds(0);
+    }
+    return () => clearInterval(interval);
+  }, [isRecording]);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      const chunks: Blob[] = [];
+
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunks.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/webm' });
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setRecordedAudioUrl(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
+
+        stream.getTracks().forEach((track) => track.stop());
+      };
+
+      recorder.start();
+      setMediaRecorder(recorder);
+      setIsRecording(true);
+      setRecordedAudioUrl(null);
+    } catch (err) {
+      console.error('Error starting audio recording:', err);
+      onShowToast('Could not access microphone! 🎙️');
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder && isRecording) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+    }
+  };
+
   // 14-day (2-week) milestone roadmap state using Monday - Sunday
   const [streakDays, setStreakDays] = useState([
     { day: 'Mon', completed: true, label: 'W1 Monday' },
@@ -129,6 +185,7 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
       emoji: newNoteEmoji,
       isRead: false,
       imageUrl: noteImageUrl.trim() || undefined,
+      audioDataUrl: recordedAudioUrl || undefined,
     };
 
     if (onSendNote) {
@@ -137,7 +194,8 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
     await sendPartnerNoteToFirestore(note);
     setNewNoteText('');
     setNoteImageUrl('');
-    onShowToast('Encouragement note & photo posted to Kunal’s focus vault! 💕');
+    setRecordedAudioUrl(null);
+    onShowToast('Encouragement note & audio posted to Kunal’s focus vault! 💕');
   };
 
   // Handle Stage Reward
@@ -157,6 +215,7 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
       noteFromPartner: rewardNote.trim(),
       grantedBy: 'Partner HQ 💖',
       createdAt: Date.now(),
+      audioDataUrl: recordedAudioUrl || undefined,
     };
 
     if (onGrantReward) {
@@ -165,8 +224,9 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
     await grantRewardInFirestore(newReward);
     setRewardTitle('');
     setRewardNote('');
+    setRecordedAudioUrl(null);
     setShowRewardModal(false);
-    onShowToast('🎁 Reward staged in Vault!');
+    onShowToast('🎁 Reward & audio staged in Vault!');
   };
 
   const completedTasksCount = tasks.filter((t) => t.isCompleted).length;
@@ -409,6 +469,57 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
             ))}
           </div>
 
+          {/* Voice Note Recorder Option */}
+          <div className="bg-[#fcf8f8] border border-pink-100 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <p className="text-xs font-bold text-pink-900 flex items-center gap-1">
+                <Mic className="w-4 h-4 text-pink-600" />
+                Add a Congratulations Voice Note
+              </p>
+              <p className="text-[11px] text-[#545f72] mt-0.5">
+                Kunal will hear your real voice when he completes his task!
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {!isRecording && !recordedAudioUrl && (
+                <button
+                  type="button"
+                  onClick={startRecording}
+                  className="bg-pink-100 hover:bg-pink-200 text-pink-800 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer"
+                >
+                  <Mic className="w-3.5 h-3.5" />
+                  <span>Start Recording</span>
+                </button>
+              )}
+
+              {isRecording && (
+                <button
+                  type="button"
+                  onClick={stopRecording}
+                  className="bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 animate-pulse transition-all cursor-pointer"
+                >
+                  <span className="w-2 h-2 bg-white rounded-full"></span>
+                  <span>Stop ({recordingSeconds}s)</span>
+                </button>
+              )}
+
+              {recordedAudioUrl && (
+                <div className="flex items-center gap-2 bg-pink-50 border border-pink-200 p-1.5 rounded-xl">
+                  <audio src={recordedAudioUrl} controls className="h-8 max-w-[160px]" />
+                  <button
+                    type="button"
+                    onClick={() => setRecordedAudioUrl(null)}
+                    className="text-gray-400 hover:text-rose-600 p-1 cursor-pointer"
+                    title="Delete recording"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Photo Preview if attached */}
           {noteImageUrl && (
             <div className="relative inline-block mt-2 mb-1">
@@ -453,7 +564,7 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
 
             <button
               type="submit"
-              disabled={!newNoteText.trim() && !noteImageUrl}
+              disabled={!newNoteText.trim() && !noteImageUrl && !recordedAudioUrl}
               className="bg-[#43664c] hover:bg-[#38553f] text-white px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50 shrink-0"
             >
               <Send className="w-4 h-4" />
@@ -486,7 +597,12 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
                         className="mt-2 w-full h-32 object-cover rounded-xl border border-pink-200 shadow-xs"
                       />
                     )}
-                    <span className="text-[10px] text-slate-400 mt-1 block">
+                    {note.audioDataUrl && (
+                      <div className="mt-2">
+                        <audio src={note.audioDataUrl} controls className="h-8 w-full max-w-[180px]" />
+                      </div>
+                    )}
+                    <span className="text-[10px] text-slate-400 mt-1.5 block">
                       {new Date(note.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>

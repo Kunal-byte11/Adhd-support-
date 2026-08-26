@@ -45,6 +45,7 @@ export interface DailyScheduleBlock {
   subSteps: DailyScheduleSubStep[];
   whyItMatters?: string;
   curriculumRef?: string;
+  youtubeUrl?: string;
 }
 
 export interface DailyPlanState {
@@ -74,6 +75,7 @@ export interface PartnerReward {
   noteFromPartner?: string;
   grantedBy: string;
   createdAt: number;
+  audioDataUrl?: string;
 }
 
 export interface PartnerNote {
@@ -84,6 +86,7 @@ export interface PartnerNote {
   emoji: string;
   isRead?: boolean;
   imageUrl?: string;
+  audioDataUrl?: string;
 }
 
 export type TaskImportance = 'MUST_DO' | 'CORE' | 'PRACTICE' | 'BONUS';
@@ -101,6 +104,7 @@ export interface TaskItem {
   importance?: TaskImportance;
   isCritical?: boolean;
   whyItMatters?: string;
+  youtubeUrl?: string;
 }
 
 export interface ChecklistItem {

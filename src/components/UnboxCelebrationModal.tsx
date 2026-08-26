@@ -24,19 +24,37 @@ export const UnboxCelebrationModal: React.FC<UnboxCelebrationModalProps> = ({
 }) => {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [audioSeconds, setAudioSeconds] = useState(0);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
 
-  // Audio timer simulation
+  // Initialize Real Audio Node
   useEffect(() => {
-    let interval: any = null;
-    if (isPlayingAudio && audioSeconds < 12) {
-      interval = setInterval(() => {
-        setAudioSeconds((prev) => prev + 1);
-      }, 1000);
-    } else if (audioSeconds >= 12) {
-      setIsPlayingAudio(false);
+    const audioSrc = note?.audioDataUrl || reward?.audioDataUrl;
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audio.onended = () => {
+        setIsPlayingAudio(false);
+        setAudioSeconds(0);
+      };
+      audio.ontimeupdate = () => {
+        setAudioSeconds(Math.floor(audio.currentTime));
+      };
+      setAudioElement(audio);
+      return () => {
+        audio.pause();
+      };
     }
-    return () => clearInterval(interval);
-  }, [isPlayingAudio, audioSeconds]);
+  }, [note?.audioDataUrl, reward?.audioDataUrl]);
+
+  const toggleRealAudio = () => {
+    if (!audioElement) return;
+    if (isPlayingAudio) {
+      audioElement.pause();
+      setIsPlayingAudio(false);
+    } else {
+      audioElement.play().catch((e) => console.log(e));
+      setIsPlayingAudio(true);
+    }
+  };
 
   const partnerMessage =
     note?.message ||
@@ -123,49 +141,47 @@ export const UnboxCelebrationModal: React.FC<UnboxCelebrationModalProps> = ({
             </div>
           )}
 
-          {/* Voice Note Widget with Interactive Simulated Waveform */}
-          <div className="bg-[#f1f4f6] rounded-2xl p-3.5 flex items-center gap-3 border border-[#c2c8c0]/50">
-            <button
-              onClick={() => {
-                if (isPlayingAudio) {
-                  setIsPlayingAudio(false);
-                } else {
-                  setIsPlayingAudio(true);
-                  if (audioSeconds >= 12) setAudioSeconds(0);
-                }
-              }}
-              className="w-10 h-10 rounded-full bg-[#43664c] text-white flex items-center justify-center shrink-0 hover:bg-[#38553f] transition-all cursor-pointer shadow-xs"
-            >
-              {isPlayingAudio ? (
-                <Pause className="w-4 h-4 fill-white" />
-              ) : (
-                <Play className="w-4 h-4 fill-white ml-0.5" />
-              )}
-            </button>
-
-            {/* Audio Waveform */}
-            <div className="flex-1 flex items-center h-8 gap-[3px] opacity-85">
-              {[4, 8, 14, 22, 18, 12, 20, 24, 16, 8, 12, 19, 23, 15, 6].map(
-                (h, idx) => {
-                  const isActive = (audioSeconds / 12) * 15 > idx;
-                  return (
-                    <div
-                      key={idx}
-                      className={`flex-1 rounded-full transition-all duration-200 ${
-                        isActive ? 'bg-[#43664c]' : 'bg-[#c2c8c0]'
-                      }`}
-                      style={{
-                        height: isPlayingAudio ? `${Math.max(4, (h + (audioSeconds % 3) * 4) % 26)}px` : `${h}px`,
-                      }}
-                    />
-                  );
-                }
-              )}
+          {/* Voice Note Widget with Interactive Waveform */}
+          <div className="bg-[#fcf8f8] rounded-2xl p-4 border border-pink-100 flex flex-col gap-3">
+            {/* Loving Quote Background (Clean, only her voice note plays) */}
+            <div className="text-center py-2 px-1 border-b border-pink-100/50">
+              <p className="text-xs italic text-pink-700 font-bold leading-relaxed">
+                "Your focus is beautiful. Keep building the future we want together. So proud of you!"
+              </p>
             </div>
 
-            <span className="text-xs font-mono font-bold text-[#545f72] shrink-0">
-              0:{audioSeconds.toString().padStart(2, '0')} / 0:12
-            </span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={note?.audioDataUrl || reward?.audioDataUrl ? toggleRealAudio : () => {
+                  if (isPlayingAudio) {
+                    setIsPlayingAudio(false);
+                  } else {
+                    setIsPlayingAudio(true);
+                    if (audioSeconds >= 12) setAudioSeconds(0);
+                  }
+                }}
+                className="w-12 h-12 rounded-full bg-pink-600 hover:bg-pink-700 text-white flex items-center justify-center shrink-0 transition-all cursor-pointer shadow-md hover:scale-105"
+              >
+                {isPlayingAudio ? (
+                  <Pause className="w-5 h-5 fill-white text-white" />
+                ) : (
+                  <Play className="w-5 h-5 fill-white text-white ml-0.5" />
+                )}
+              </button>
+
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-pink-900 truncate">
+                  {note?.audioDataUrl || reward?.audioDataUrl ? '🎙️ Real Voice Note Attached' : '🎙️ Congratulations Voice Note'}
+                </p>
+                <p className="text-[10px] text-pink-600 truncate mt-0.5">
+                  {isPlayingAudio ? 'Playing clean voice note...' : 'Tap to play her voice'}
+                </p>
+              </div>
+
+              <span className="text-xs font-mono font-bold text-pink-700 shrink-0">
+                0:{audioSeconds.toString().padStart(2, '0')}
+              </span>
+            </div>
           </div>
         </div>
 
