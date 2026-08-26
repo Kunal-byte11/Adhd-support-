@@ -278,9 +278,14 @@ export function subscribePartnerNotes(onNotesChanged: (notes: PartnerNote[]) => 
             timestamp: data.timestamp || Date.now(),
             emoji: data.emoji || '💖',
             isRead: !!data.isRead,
+            imageUrl: data.imageUrl || undefined,
           };
         });
-        onNotesChanged(loaded);
+        const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+        const validNotes = loaded.filter(
+          (note) => Date.now() - note.timestamp <= TWENTY_FOUR_HOURS_MS
+        );
+        onNotesChanged(validNotes);
       }
     }, (err) => {
       console.warn('Firestore notes subscription note:', err);

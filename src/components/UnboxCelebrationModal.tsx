@@ -104,13 +104,24 @@ export const UnboxCelebrationModal: React.FC<UnboxCelebrationModalProps> = ({
             <div>
               <h3 className="text-xs font-bold uppercase tracking-wider text-[#545f72] flex items-center gap-1">
                 <Heart className="w-3.5 h-3.5 text-pink-500 fill-pink-500" />
-                Message from Girlfriend
+                Message from Partner HQ
               </h3>
               <p className="text-base text-[#181c1e] font-semibold italic mt-1 leading-snug">
                 {partnerMessage}
               </p>
             </div>
           </div>
+
+          {/* Attached Photo */}
+          {note?.imageUrl && (
+            <div className="mb-4 rounded-2xl overflow-hidden border-2 border-pink-300 shadow-md">
+              <img
+                src={note.imageUrl}
+                alt="Attached photo from partner"
+                className="w-full max-h-56 object-cover"
+              />
+            </div>
+          )}
 
           {/* Voice Note Widget with Interactive Simulated Waveform */}
           <div className="bg-[#f1f4f6] rounded-2xl p-3.5 flex items-center gap-3 border border-[#c2c8c0]/50">

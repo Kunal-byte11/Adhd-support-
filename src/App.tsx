@@ -259,9 +259,11 @@ export default function App() {
     });
 
     const unsubNotes = subscribePartnerNotes((remoteNotes) => {
-      if (remoteNotes.length > 0) {
-        setPartnerNotes(remoteNotes);
-      }
+      const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+      const unexpired = remoteNotes.filter(
+        (n) => Date.now() - n.timestamp <= TWENTY_FOUR_HOURS_MS
+      );
+      setPartnerNotes(unexpired);
     });
 
     const unsubNudges = subscribePartnerNudges((nudge) => {
@@ -533,6 +535,8 @@ export default function App() {
             partnerNotes={partnerNotes}
             onSwitchToKunal={() => handleSelectRole('kunal')}
             onShowToast={showToast}
+            onSendNote={handleSendPartnerNote}
+            onGrantReward={handleGrantReward}
           />
         )}
 
@@ -540,6 +544,7 @@ export default function App() {
           <NowScreen
             currentTask={currentTask}
             tasks={tasks}
+            partnerNotes={partnerNotes}
             activeNudge={activeNudge}
             onDismissNudge={() => setActiveNudge(null)}
             onCompleteTask={handleCompleteTask}

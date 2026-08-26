@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TaskItem, PartnerNudge } from '../types';
+import { TaskItem, PartnerNudge, PartnerNote } from '../types';
 import {
   Check,
   RotateCcw,
@@ -12,11 +12,13 @@ import {
   Sparkles,
   Gift,
   X,
+  MessageSquare,
 } from 'lucide-react';
 
 interface NowScreenProps {
   currentTask: TaskItem | null;
   tasks: TaskItem[];
+  partnerNotes?: PartnerNote[];
   activeNudge?: PartnerNudge | null;
   onDismissNudge?: () => void;
   onCompleteTask: (taskId: string) => void;
@@ -29,6 +31,7 @@ interface NowScreenProps {
 export const NowScreen: React.FC<NowScreenProps> = ({
   currentTask,
   tasks,
+  partnerNotes = [],
   activeNudge,
   onDismissNudge,
   onCompleteTask,
@@ -82,6 +85,8 @@ export const NowScreen: React.FC<NowScreenProps> = ({
     }
   };
 
+  const latestNote = partnerNotes.length > 0 ? partnerNotes[0] : null;
+
   return (
     <main
       id="screen-now"
@@ -98,6 +103,55 @@ export const NowScreen: React.FC<NowScreenProps> = ({
           Partner HQ
         </button>
       </div>
+
+      {/* 💌 TOP PARTNER HQ NOTE & ATTACHED PHOTO BANNER */}
+      {latestNote && (
+        <div className="w-full max-w-[600px] mb-6 animate-in slide-in-from-top-4 duration-300">
+          <div className="bg-gradient-to-r from-pink-50 via-rose-50 to-pink-100 border-2 border-pink-300 rounded-3xl p-5 shadow-sm relative overflow-hidden">
+            <div className="flex items-center justify-between gap-3 mb-2">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">{latestNote.emoji || '💖'}</span>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <Heart className="w-3.5 h-3.5 fill-pink-500 text-pink-500" />
+                    <span className="text-xs font-extrabold text-pink-800 uppercase tracking-wider">
+                      Message from {latestNote.author}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-pink-600 font-medium flex items-center gap-1">
+                    <span>{new Date(latestNote.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    <span>&bull;</span>
+                    <span className="bg-pink-200/60 text-pink-900 px-1.5 py-0.2 rounded-md text-[9px] font-bold">⏳ Expires in 24h</span>
+                  </span>
+                </div>
+              </div>
+              {onOpenPartnerHQ && (
+                <button
+                  onClick={onOpenPartnerHQ}
+                  className="text-[11px] font-bold text-pink-700 hover:text-pink-900 bg-white/80 hover:bg-white px-3 py-1 rounded-full border border-pink-200 transition-all cursor-pointer shrink-0"
+                >
+                  Partner HQ &rarr;
+                </button>
+              )}
+            </div>
+
+            <p className="text-sm sm:text-base font-bold text-[#181c1e] italic leading-snug px-1 mb-2">
+              "{latestNote.message}"
+            </p>
+
+            {/* Attached Photo Display */}
+            {latestNote.imageUrl && (
+              <div className="mt-3 rounded-2xl overflow-hidden border-2 border-pink-300 shadow-sm max-h-64 w-full">
+                <img
+                  src={latestNote.imageUrl}
+                  alt="Attached photo from partner"
+                  className="w-full h-52 object-cover"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* 💌 Live Partner Nudge Banner */}
       {activeNudge && (
@@ -261,6 +315,53 @@ export const NowScreen: React.FC<NowScreenProps> = ({
                       </button>
                     );
                   })}
+                </div>
+              </div>
+            )}
+
+            {/* 💌 Support Notes & Photos from Partner HQ */}
+            {partnerNotes.length > 0 && (
+              <div className="w-full mt-6 pt-6 border-t border-[#c2c8c0]/40">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[12px] uppercase font-bold text-pink-700 tracking-wider flex items-center gap-1.5">
+                    <Heart className="w-3.5 h-3.5 fill-pink-500 text-pink-500" />
+                    Support Notes &amp; Photos from Partner HQ
+                  </p>
+                  <button
+                    onClick={onOpenPartnerHQ}
+                    className="text-[11px] font-bold text-pink-600 hover:underline cursor-pointer"
+                  >
+                    Open Partner HQ &rarr;
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {partnerNotes.slice(0, 3).map((note) => (
+                    <div
+                      key={note.id}
+                      className="bg-pink-50/60 border border-pink-200/80 rounded-2xl p-4 text-left shadow-xs"
+                    >
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-bold text-pink-900 flex items-center gap-1">
+                          <span>{note.emoji || '💖'}</span>
+                          <span>{note.author}</span>
+                        </span>
+                        <span className="text-[10px] text-gray-500">
+                          {new Date(note.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+                      <p className="text-xs text-[#181c1e] font-semibold leading-relaxed">
+                        "{note.message}"
+                      </p>
+                      {note.imageUrl && (
+                        <img
+                          src={note.imageUrl}
+                          alt="Attached photo from partner"
+                          className="mt-2.5 w-full h-40 object-cover rounded-xl border border-pink-200 shadow-xs"
+                        />
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

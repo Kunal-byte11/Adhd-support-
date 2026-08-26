@@ -419,6 +419,45 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
         localStorage.setItem('focusflow_daily_plan_blocks', JSON.stringify(newBlocks));
       } catch (e) {}
 
+      // Convert blocks to micro-sprint tasks and populate My Flow (Now)
+      const generatedTasks: TaskItem[] = [];
+      let orderCount = 1;
+      newBlocks.forEach((block) => {
+        if (block.subSteps && block.subSteps.length > 0) {
+          block.subSteps.forEach((sub) => {
+            generatedTasks.push({
+              id: `task-${block.id}-${sub.id}`,
+              title: sub.title,
+              description: block.description,
+              estimatedMinutes: sub.minutes || 10,
+              actualSeconds: 0,
+              isCompleted: sub.isCompleted,
+              order: orderCount++,
+              goalSource: block.title,
+              importance: sub.importance || 'CORE',
+              whyItMatters: block.whyItMatters,
+            });
+          });
+        } else {
+          generatedTasks.push({
+            id: `task-${block.id}`,
+            title: block.title,
+            description: block.description,
+            estimatedMinutes: block.durationMinutes || 10,
+            actualSeconds: 0,
+            isCompleted: block.isCompleted,
+            order: orderCount++,
+            goalSource: block.title,
+            importance: 'CORE',
+            whyItMatters: block.whyItMatters,
+          });
+        }
+      });
+
+      if (generatedTasks.length > 0) {
+        onLaunchFullSprint(generatedTasks);
+      }
+
       setIsGenerating(false);
     }, 300);
   };

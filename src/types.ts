@@ -83,6 +83,7 @@ export interface PartnerNote {
   timestamp: number;
   emoji: string;
   isRead?: boolean;
+  imageUrl?: string;
 }
 
 export type TaskImportance = 'MUST_DO' | 'CORE' | 'PRACTICE' | 'BONUS';

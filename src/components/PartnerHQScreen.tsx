@@ -24,6 +24,9 @@ import {
   MessageCircleHeart,
   ArrowRight,
   RefreshCw,
+  Camera,
+  Paperclip,
+  X,
   UserCheck,
   CheckCircle2,
 } from 'lucide-react';
@@ -40,6 +43,8 @@ interface PartnerHQScreenProps {
   partnerNotes: PartnerNote[];
   onSwitchToKunal: () => void;
   onShowToast: (msg: string) => void;
+  onSendNote?: (note: PartnerNote) => void;
+  onGrantReward?: (reward: PartnerReward) => void;
 }
 
 export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
@@ -49,11 +54,25 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
   partnerNotes,
   onSwitchToKunal,
   onShowToast,
+  onSendNote,
+  onGrantReward,
 }) => {
   const [activeNudgeSending, setActiveNudgeSending] = useState<string | null>(null);
   const [newNoteText, setNewNoteText] = useState('');
   const [newNoteEmoji, setNewNoteEmoji] = useState('💖');
+  const [noteImageUrl, setNoteImageUrl] = useState('');
   const [showRewardModal, setShowRewardModal] = useState(false);
+
+  const handleNoteImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNoteImageUrl(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   const [rewardTitle, setRewardTitle] = useState('');
   const [rewardCategory, setRewardCategory] = useState<'treat' | 'coupon' | 'date' | 'kiss'>('coupon');
   const [rewardNote, setRewardNote] = useState('');
@@ -104,16 +123,21 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
 
     const note: PartnerNote = {
       id: `note-${Date.now()}`,
-      author: 'Girlfriend 💖',
+      author: 'Partner HQ 💖',
       message: newNoteText.trim(),
       timestamp: Date.now(),
       emoji: newNoteEmoji,
       isRead: false,
+      imageUrl: noteImageUrl.trim() || undefined,
     };
 
+    if (onSendNote) {
+      onSendNote(note);
+    }
     await sendPartnerNoteToFirestore(note);
     setNewNoteText('');
-    onShowToast('Love note saved in Kunal’s focus vault! 💕');
+    setNoteImageUrl('');
+    onShowToast('Encouragement note & photo posted to Kunal’s focus vault! 💕');
   };
 
   // Handle Stage Reward
@@ -131,15 +155,18 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
       unlockedAt: Date.now(),
       isRedeemed: false,
       noteFromPartner: rewardNote.trim(),
-      grantedBy: 'Girlfriend 💖',
+      grantedBy: 'Partner HQ 💖',
       createdAt: Date.now(),
     };
 
+    if (onGrantReward) {
+      onGrantReward(newReward);
+    }
     await grantRewardInFirestore(newReward);
     setRewardTitle('');
     setRewardNote('');
     setShowRewardModal(false);
-    onShowToast('New reward staged in Dopamine Vault! 🎁');
+    onShowToast('🎁 Reward staged in Vault!');
   };
 
   const completedTasksCount = tasks.filter((t) => t.isCompleted).length;
@@ -382,7 +409,26 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
             ))}
           </div>
 
-          <div className="flex gap-2">
+          {/* Photo Preview if attached */}
+          {noteImageUrl && (
+            <div className="relative inline-block mt-2 mb-1">
+              <img
+                src={noteImageUrl}
+                alt="Attached photo"
+                className="w-24 h-24 object-cover rounded-2xl border-2 border-pink-300 shadow-md"
+              />
+              <button
+                type="button"
+                onClick={() => setNoteImageUrl('')}
+                className="absolute -top-2 -right-2 bg-rose-600 text-white rounded-full p-1 shadow-md hover:bg-rose-700 cursor-pointer"
+                title="Remove photo"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+
+          <div className="flex gap-2 items-center">
             <input
               type="text"
               value={newNoteText}
@@ -390,10 +436,25 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
               placeholder="e.g., 'You're doing amazing Kunal! Can't wait for our weekend meetup ❤️'"
               className="flex-1 bg-[#f8faf9] border border-[#c2c8c0] rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-[#43664c]"
             />
+
+            {/* Photo Attachment Button */}
+            <label
+              className="p-3 bg-pink-50 hover:bg-pink-100 border border-pink-200 text-pink-700 rounded-2xl cursor-pointer flex items-center justify-center transition-all shrink-0"
+              title="Attach a photo/picture"
+            >
+              <Camera className="w-5 h-5 text-pink-600" />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleNoteImageUpload}
+                className="hidden"
+              />
+            </label>
+
             <button
               type="submit"
-              disabled={!newNoteText.trim()}
-              className="bg-[#43664c] hover:bg-[#38553f] text-white px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50"
+              disabled={!newNoteText.trim() && !noteImageUrl}
+              className="bg-[#43664c] hover:bg-[#38553f] text-white px-5 py-3 rounded-2xl text-sm font-bold flex items-center gap-1.5 shadow-xs cursor-pointer disabled:opacity-50 shrink-0"
             >
               <Send className="w-4 h-4" />
               <span>Send Note</span>
@@ -405,7 +466,7 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
         {partnerNotes.length > 0 && (
           <div className="mt-5 pt-4 border-t border-gray-100 space-y-2">
             <p className="text-[11px] font-bold text-[#545f72] uppercase tracking-wider">
-              Recent Notes Sent:
+              Recent Notes &amp; Photos Sent:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {partnerNotes.slice(0, 4).map((note) => (
@@ -418,6 +479,13 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
                     <p className="text-xs text-[#181c1e] font-medium leading-snug">
                       "{note.message}"
                     </p>
+                    {note.imageUrl && (
+                      <img
+                        src={note.imageUrl}
+                        alt="Attached photo"
+                        className="mt-2 w-full h-32 object-cover rounded-xl border border-pink-200 shadow-xs"
+                      />
+                    )}
                     <span className="text-[10px] text-slate-400 mt-1 block">
                       {new Date(note.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
