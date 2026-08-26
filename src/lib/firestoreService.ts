@@ -255,6 +255,14 @@ export function subscribePartnerRewards(onRewardsChanged: (rewards: PartnerRewar
 export async function sendPartnerNoteToFirestore(note: PartnerNote): Promise<void> {
   try {
     await ensureAnonymousAuth();
+
+    // Query and delete all existing notes to keep only one (like a queue of size 1)
+    const q = query(collection(db, PARTNER_NOTES_COLLECTION));
+    const querySnapshot = await getDocs(q);
+    const deletePromises = querySnapshot.docs.map((docSnap) => deleteDoc(docSnap.ref));
+    await Promise.all(deletePromises);
+
+    // Save the new note
     const noteRef = doc(db, PARTNER_NOTES_COLLECTION, note.id);
     await setDoc(noteRef, {
       ...note,
@@ -288,6 +296,8 @@ export function subscribePartnerNotes(onNotesChanged: (notes: PartnerNote[]) => 
           (note) => Date.now() - note.timestamp <= TWENTY_FOUR_HOURS_MS
         );
         onNotesChanged(validNotes);
+      } else {
+        onNotesChanged([]);
       }
     }, (err) => {
       console.warn('Firestore notes subscription note:', err);
