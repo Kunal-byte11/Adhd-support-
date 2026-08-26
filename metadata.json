@@ -1,0 +1,6 @@
+{
+  "name": "FocusFlow",
+  "description": "Distraction-free task execution and urge-tracking application designed specifically for users with ADHD.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
