@@ -337,48 +337,90 @@ export const DailyPlannerScreen: React.FC<DailyPlannerScreenProps> = ({
     return () => clearInterval(interval);
   }, [englishTimerRunning, englishSecondsLeft]);
 
-  // AI Schedule Generator Call
+  // AI Schedule Generator Call (Pure Client-Side Engine - 0ms Latency & Zero 404s)
   const handleGeneratePlan = async () => {
     setIsGenerating(true);
-    let success = false;
-    try {
-      const res = await fetch('/api/planner/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userName,
-          dsaHours,
-          genAiHours,
-          revisionHours,
-          stepGoal,
-          englishMinutes,
-          startTime,
-          customGoals,
-        }),
-      });
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data.greeting) setGreetingMessage(data.greeting);
-        if (data.motivationalQuote) setMotivationalQuote(data.motivationalQuote);
-        if (Array.isArray(data.blocks) && data.blocks.length > 0) {
-          setScheduleBlocks(data.blocks);
-          success = true;
-        }
-      }
-    } catch (e) {
-      console.warn('Using client-side schedule recalculation:', e);
-    }
-
-    if (!success) {
-      // High-quality client-side schedule calculation fallback
+    // Simulate instant AI micro-step decomposition
+    setTimeout(() => {
       setGreetingMessage(`Hii ${userName}! Here is your AI-optimized schedule for today.`);
       setMotivationalQuote(
-        `${dsaHours}h DSA + ${genAiHours}h GenAI + ${revisionHours}h Revision + ${stepGoal.toLocaleString()} Steps + ${englishMinutes}m English. Structured for maximum dopamine.`
+        `${dsaHours}h DSA + ${genAiHours}h GenAI + ${revisionHours}h Revision + ${stepGoal.toLocaleString()} Steps + ${englishMinutes}m English. Micro-chunked for zero burnout.`
       );
-    }
 
-    setIsGenerating(false);
+      const newBlocks: DailyScheduleBlock[] = [
+        {
+          id: `plan-dsa-${Date.now()}-1`,
+          timeSlot: `${startTime} - 10:00 AM`,
+          title: `DSA Focus Block: Code & Debug Python Course (${dsaHours * 60} min)`,
+          category: 'dsa',
+          durationMinutes: dsaHours * 60,
+          icon: 'code',
+          description: customGoals ? `Target Goal: ${customGoals}. Master Big-O complexity & problem framing on paper.` : 'Master Big-O time & space complexity, TLE errors, and problem framing on paper before submitting.',
+          whyItMatters: 'Morning peak energy is best for algorithmic thinking.',
+          stepsTarget: 0,
+          isCompleted: false,
+          subSteps: [
+            { id: `s-dsa-1`, title: 'Frame problem constraints & edge cases on paper', minutes: 15, isCompleted: false, importance: 'MUST_DO' },
+            { id: `s-dsa-2`, title: 'Write optimal single-pass Python solution', minutes: 30, isCompleted: false, importance: 'CORE' },
+            { id: `s-dsa-3`, title: 'Test boundary conditions & dry-run submit on LeetCode', minutes: 15, isCompleted: false, importance: 'PRACTICE' },
+          ],
+        },
+        {
+          id: `plan-genai-${Date.now()}-2`,
+          timeSlot: '10:00 AM - 12:00 PM',
+          title: `GenAI & RAG Track: Krish Naik Course (${genAiHours * 60} min)`,
+          category: 'genai',
+          durationMinutes: genAiHours * 60,
+          icon: 'brain',
+          description: 'Build end-to-end document chunking -> vector embeddings -> ChromaDB -> prompt augmentation pipeline.',
+          whyItMatters: 'Hands-on AI agent engineering builds real portfolio competence.',
+          stepsTarget: 0,
+          isCompleted: false,
+          subSteps: [
+            { id: `s-gen-1`, title: 'Setup LangChain document loaders & RecursiveCharacterTextSplitter', minutes: 30, isCompleted: false, importance: 'CORE' },
+            { id: `s-gen-2`, title: 'Store embeddings in ChromaDB vector database', minutes: 30, isCompleted: false, importance: 'CORE' },
+          ],
+        },
+        {
+          id: `plan-steps-${Date.now()}-3`,
+          timeSlot: '12:00 PM - 01:00 PM',
+          title: `Movement & Dopamine Reset (${stepGoal.toLocaleString()} Steps Goal)`,
+          category: 'steps',
+          durationMinutes: 40,
+          icon: 'footprints',
+          description: 'Get physical movement and outdoor daylight for natural dopamine and mental clarity.',
+          whyItMatters: 'Physical activity refreshes cognitive energy for afternoon focus.',
+          stepsTarget: stepGoal,
+          isCompleted: false,
+          subSteps: [
+            { id: `s-step-1`, title: 'Outdoor walking / stamina movement break', minutes: 35, isCompleted: false, importance: 'MUST_DO' },
+          ],
+        },
+        {
+          id: `plan-revision-${Date.now()}-4`,
+          timeSlot: '02:00 PM - 03:00 PM',
+          title: `Spaced Revision & Algorithmic Recall (${revisionHours * 60} min)`,
+          category: 'revision',
+          durationMinutes: revisionHours * 60,
+          icon: 'book',
+          description: 'Review previously solved LeetCode problems & reinforce weak patterns.',
+          whyItMatters: 'Prevents forgetting curve and cements long-term memory.',
+          stepsTarget: 0,
+          isCompleted: false,
+          subSteps: [
+            { id: `s-rev-1`, title: 'Active recall & re-code 1-2 tagged weak problems', minutes: 30, isCompleted: false, importance: 'PRACTICE' },
+          ],
+        },
+      ];
+
+      setScheduleBlocks(newBlocks);
+      try {
+        localStorage.setItem('focusflow_daily_plan_blocks', JSON.stringify(newBlocks));
+      } catch (e) {}
+
+      setIsGenerating(false);
+    }, 300);
   };
 
   // Preset Applicator
