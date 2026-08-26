@@ -203,12 +203,20 @@ export const NowScreen: React.FC<NowScreenProps> = ({
                 <span>Mark Done &amp; Unbox</span>
               </button>
               <button
+                onClick={() => setSecondsRemaining((prev) => prev + 300)}
+                className="bg-amber-50 border border-amber-200 text-amber-900 text-sm font-bold rounded-2xl px-4 min-h-[56px] flex items-center justify-center gap-1.5 hover:bg-amber-100 transition-all cursor-pointer shrink-0"
+                title="Add 5 minutes extra time"
+              >
+                <Sparkles className="w-4 h-4 text-amber-600" />
+                <span>+5m Extra</span>
+              </button>
+              <button
                 id="btn-now-recalibrate"
                 onClick={onRecalibrate}
                 className="flex-1 bg-white border border-[#c2c8c0] text-[#181c1e] text-[17px] font-bold rounded-2xl min-h-[56px] flex items-center justify-center gap-2 hover:bg-[#f1f4f6] transition-all cursor-pointer"
               >
                 <RotateCcw className="w-5 h-5 text-[#545f72]" />
-                <span>Recalibrate</span>
+                <span>AI Recalibrate</span>
               </button>
             </div>
 

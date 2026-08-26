@@ -32,18 +32,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'daily-plan', label: 'Morning Plan 🌅', Icon: Sunrise },
     { id: 'now', label: 'My Flow (Now)', Icon: Target },
     { id: 'roadmap', label: 'Curriculum & Tasks', Icon: Map },
-    { id: 'partner-hq', label: 'Partner HQ 💖', Icon: Heart },
     { id: 'intake', label: 'Intake & Planning', Icon: Sparkles },
     { id: 'urges', label: 'Urge Lockdown', Icon: ShieldAlert },
     { id: 'recovery', label: 'Recovery Reset', Icon: RefreshCw },
-    { id: 'adhd-helper', label: 'ADHD Helper', Icon: Heart },
   ];
 
   const partnerNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
     { id: 'partner-hq', label: 'Partner HQ 💖', Icon: Heart },
-    { id: 'now', label: "Kunal's Live Flow 🎯", Icon: Target },
-    { id: 'daily-plan', label: "Kunal's Daily Plan 🌅", Icon: Sunrise },
-    { id: 'roadmap', label: 'Roadmap & Progress 🗺️', Icon: Map },
   ];
 
   const navItems = userRole === 'partner' ? partnerNavItems : kunalNavItems;
@@ -66,11 +61,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* User Profile / Switcher Pill */}
       <div className="px-5 mb-5">
         <div
-          onClick={onOpenLoginModal}
-          className={`p-3 rounded-2xl border transition-all cursor-pointer shadow-xs flex items-center justify-between ${
+          className={`p-3 rounded-2xl border shadow-xs flex items-center justify-between ${
             userRole === 'partner'
-              ? 'bg-pink-50/80 border-pink-200 hover:border-pink-400'
-              : 'bg-white border-[#c2c8c0] hover:border-[#43664c]'
+              ? 'bg-pink-50/80 border-pink-200'
+              : 'bg-white border-[#c2c8c0]'
           }`}
         >
           <div className="flex items-center gap-2.5 min-w-0">
@@ -79,14 +73,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </span>
             <div className="min-w-0">
               <p className="text-xs font-bold text-[#181c1e] truncate">
-                {userRole === 'partner' ? 'Girlfriend HQ' : "Kunal's Flow"}
+                {userRole === 'partner' ? 'parii26 (Pari)' : 'kunal11 (Kunal)'}
               </p>
               <p className="text-[10px] text-[#545f72] truncate">
-                Click to switch login &rarr;
+                Active Session
               </p>
             </div>
           </div>
-          <KeyRound className="w-3.5 h-3.5 text-[#545f72] shrink-0" />
         </div>
       </div>
 

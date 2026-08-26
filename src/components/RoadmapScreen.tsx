@@ -93,8 +93,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
   completedIds,
   onToggleComplete,
 }) => {
-  const [activeTab, setActiveTab] = useState<'ai' | 'dsa'>('ai');
-  const [dsaScope, setDsaScope] = useState<'core' | 'optional' | 'all'>('core');
+  const [activeTab, setActiveTab] = useState<'ai' | 'dsa'>('dsa');
   const [selectedModule, setSelectedModule] = useState<number | 'all'>('all');
   const [selectedAiCategory, setSelectedAiCategory] = useState<string>('all');
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
@@ -106,10 +105,6 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
   // Filtered DSA Problems
   const filteredDsaProblems = useMemo(() => {
     return DSA_PROBLEMS_DATA.filter((item) => {
-      // DSA Scope Filter: Core (1-10), Optional (11-17), All (1-17)
-      if (dsaScope === 'core' && item.moduleIndex > 10) return false;
-      if (dsaScope === 'optional' && item.moduleIndex <= 10) return false;
-
       const matchModule = selectedModule === 'all' || item.moduleIndex === selectedModule;
       const matchSearch =
         searchQuery.trim() === '' ||
@@ -124,7 +119,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
 
       return matchModule && matchSearch && matchStatus;
     });
-  }, [dsaScope, selectedModule, searchQuery, statusFilter, completedIds]);
+  }, [selectedModule, searchQuery, statusFilter, completedIds]);
 
   // Filtered AI Courses
   const filteredAiCourses = useMemo(() => {
@@ -264,22 +259,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
       </header>
 
       {/* Main Track Selection Tabs */}
-      <div className="flex border-b border-[#c2c8c0] mb-6">
-        <button
-          onClick={() => {
-            setActiveTab('ai');
-            setSelectedAiCategory('all');
-          }}
-          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
-            activeTab === 'ai'
-              ? 'border-[#006494] text-[#006494] bg-[#5fafe9]/10 rounded-t-lg'
-              : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
-          }`}
-        >
-          <BrainCircuit className="w-4 h-4" />
-          <span>Krish Naik GenAI Playlist ({totalAiCount} Systematic Courses)</span>
-        </button>
-
+      <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6">
         <button
           onClick={() => {
             setActiveTab('dsa');
@@ -291,76 +271,27 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
               : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
           }`}
         >
-          <Code2 className="w-4 h-4" />
-          <span>DSA &amp; Python Sheet (17 Chapters • {totalDsaCount} Topics)</span>
+          <Code2 className="w-4 h-4 text-emerald-700" />
+          <span>Code &amp; Debug DSA Python Course ({totalDsaCount} Lessons • 17 Chapters)</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab('ai');
+            setSelectedAiCategory('all');
+          }}
+          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+            activeTab === 'ai'
+              ? 'border-[#006494] text-[#006494] bg-[#5fafe9]/10 rounded-t-lg'
+              : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
+          }`}
+        >
+          <BrainCircuit className="w-4 h-4 text-[#006494]" />
+          <span>Krish Naik GenAI Track ({totalAiCount} Courses)</span>
         </button>
       </div>
 
-      {/* Systematic GenAI Priority Legend (Only visible on AI tab) */}
-      {activeTab === 'ai' && (
-        <div className="bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-white border border-blue-200/80 rounded-2xl p-4 mb-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
-            <div>
-              <h2 className="text-sm font-bold text-[#181c1e] flex items-center gap-2">
-                <Target className="w-4 h-4 text-[#006494]" />
-                <span>Systematic AI Roadmap: Importance Priority Framework</span>
-              </h2>
-              <p className="text-xs text-[#545f72] mt-0.5">
-                We've categorized every one-shot into what is <strong>CRITICAL</strong> to watch first vs what can be skipped for now.
-              </p>
-            </div>
 
-            {/* View Switcher */}
-            <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-blue-200 text-xs self-start md:self-auto shadow-xs">
-              <button
-                onClick={() => setViewMode('systematic_phases')}
-                className={`px-3 py-1 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  viewMode === 'systematic_phases'
-                    ? 'bg-[#006494] text-white shadow-xs'
-                    : 'text-[#545f72] hover:text-[#181c1e]'
-                }`}
-              >
-                <Layers className="w-3.5 h-3.5" />
-                <span>Phase-by-Phase Order</span>
-              </button>
-              <button
-                onClick={() => setViewMode('flat_priority')}
-                className={`px-3 py-1 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  viewMode === 'flat_priority'
-                    ? 'bg-[#006494] text-white shadow-xs'
-                    : 'text-[#545f72] hover:text-[#181c1e]'
-                }`}
-              >
-                <ListOrdered className="w-3.5 h-3.5" />
-                <span>Linear Playlist</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Quick Importance Badges Filter */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-2 border-t border-blue-200/60">
-            {(
-              [
-                { key: 'all', label: 'All Importance Tiers', count: totalAiCount, color: 'bg-white border-gray-200 text-gray-700' },
-                { key: 'CRITICAL_MUST_WATCH', label: 'Must Watch First (7)', count: criticalMustWatchCount, color: 'bg-rose-50 border-rose-200 text-rose-800' },
-                { key: 'HIGH_CORE', label: 'High Value Core (3)', count: 3, color: 'bg-amber-50 border-amber-200 text-amber-800' },
-                { key: 'RECOMMENDED_PROJECT', label: 'Hands-on Projects (4)', count: 4, color: 'bg-emerald-50 border-emerald-200 text-emerald-800' },
-              ] as const
-            ).map((b) => (
-              <button
-                key={b.key}
-                onClick={() => setSelectedImportance(selectedImportance === b.key ? 'all' : b.key)}
-                className={`text-left p-2 rounded-xl border text-xs transition-all cursor-pointer flex items-center justify-between ${b.color} ${
-                  selectedImportance === b.key ? 'ring-2 ring-[#006494] shadow-xs' : 'hover:opacity-90'
-                }`}
-              >
-                <span className="font-bold">{b.label}</span>
-                {selectedImportance === b.key && <Check className="w-3.5 h-3.5 text-[#006494]" />}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Search and Filter Controls */}
       <div className="bg-[#ffffff] border border-[#c2c8c0] rounded-2xl p-4 mb-6 shadow-xs flex flex-col md:flex-row gap-3 items-center justify-between">
@@ -401,108 +332,41 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         </div>
       </div>
 
-      {/* Chapter / Category Filter Pills */}
+      {/* Chapter Filter Pills */}
       {activeTab === 'dsa' && (
-        <div className="mb-6 space-y-3">
-          {/* DSA Scope Toggle: Core (1-10) vs Optional (11-17) vs All */}
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={() => {
-                setDsaScope('core');
-                setSelectedModule('all');
-              }}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
-                dsaScope === 'core'
-                  ? 'bg-[#43664c] text-white'
-                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
-              }`}
-            >
-              <span>🎯 Core Track (Chapters 1–10)</span>
-              <span
-                className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  dsaScope === 'core' ? 'bg-white/20 text-white' : 'bg-emerald-50 text-[#43664c]'
-                }`}
-              >
-                {coreDsaCount} Problems
-              </span>
-            </button>
-
-            <button
-              onClick={() => {
-                setDsaScope('optional');
-                setSelectedModule('all');
-              }}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
-                dsaScope === 'optional'
-                  ? 'bg-[#545f72] text-white'
-                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:border-[#545f72]'
-              }`}
-            >
-              <span>💡 Optional Track (Chapters 11–17)</span>
-              <span
-                className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  dsaScope === 'optional' ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-700'
-                }`}
-              >
-                {optionalDsaCount} Problems
-              </span>
-            </button>
-
-            <button
-              onClick={() => {
-                setDsaScope('all');
-                setSelectedModule('all');
-              }}
-              className={`px-3 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
-                dsaScope === 'all'
-                  ? 'bg-[#181c1e] text-white'
-                  : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:border-[#181c1e]'
-              }`}
-            >
-              <span>All Chapters (1–17)</span>
-              <span className="text-[10px] opacity-75">({totalDsaCount})</span>
-            </button>
-          </div>
-
-          {/* Module Pills for current Scope */}
+        <div className="mb-6">
           <div className="overflow-x-auto pb-1 flex gap-2 no-scrollbar">
             <button
               onClick={() => setSelectedModule('all')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedModule === 'all'
-                  ? dsaScope === 'optional'
-                    ? 'bg-[#545f72] text-white shadow-xs'
-                    : 'bg-[#43664c] text-white shadow-xs'
+                  ? 'bg-[#43664c] text-white shadow-xs'
                   : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
               }`}
             >
-              {dsaScope === 'core'
-                ? `All Core (${coreDsaCount})`
-                : dsaScope === 'optional'
-                ? `All Optional (${optionalDsaCount})`
-                : `All Chapters (${totalDsaCount})`}
+              All 17 Chapters ({totalDsaCount})
             </button>
-            {DSA_CHAPTERS.filter((ch) => {
-              if (dsaScope === 'core') return ch.isCore;
-              if (dsaScope === 'optional') return !ch.isCore;
-              return true;
-            }).map((ch) => {
+            {DSA_CHAPTERS.map((ch) => {
               const isSelected = selectedModule === ch.id;
               return (
                 <button
                   key={ch.id}
                   onClick={() => setSelectedModule(ch.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
-                      ? ch.isCore
-                        ? 'bg-[#43664c] text-white shadow-xs'
-                        : 'bg-[#545f72] text-white shadow-xs'
+                      ? 'bg-[#43664c] text-white shadow-xs font-bold'
                       : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
                   }`}
                 >
                   <span className="opacity-75">Ch {ch.id}:</span>
                   <span>{ch.title}</span>
-                  <span className="text-[10px] opacity-60">({ch.count})</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                      isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                    }`}
+                  >
+                    {ch.count}
+                  </span>
                 </button>
               );
             })}
@@ -917,7 +781,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                       : 'border-[#c2c8c0] hover:border-[#8bb192]'
                   }`}
                 >
-                  {/* Left: Checkbox + Title + Meta */}
+                  {/* Left: Checkbox + Thumbnail + Title + Meta */}
                   <div className="flex items-start gap-3.5 flex-1 min-w-0">
                     <button
                       onClick={() => onToggleComplete(prob.id)}
@@ -931,25 +795,34 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                       {isDone && <CheckCircle2 className="w-4 h-4" />}
                     </button>
 
+                    {/* Video Thumbnail Preview */}
+                    {prob.youtubeUrl && (() => {
+                      const ytId = prob.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
+                      if (!ytId) return null;
+                      return (
+                        <a
+                          href={prob.youtubeUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="relative hidden sm:block w-24 h-14 rounded-lg overflow-hidden shrink-0 border border-slate-200 group"
+                        >
+                          <img
+                            src={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`}
+                            alt={prob.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Youtube className="w-5 h-5 text-white drop-shadow-md" />
+                          </div>
+                        </a>
+                      );
+                    })()}
+
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span
-                          className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
-                            prob.moduleIndex <= 10
-                              ? 'text-[#43664c] bg-[#8bb192]/20'
-                              : 'text-slate-700 bg-slate-200'
-                          }`}
-                        >
+                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-[#43664c] bg-[#8bb192]/20 border border-[#8bb192]/30">
                           Ch {prob.moduleIndex}: {prob.moduleName}
-                        </span>
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                            prob.moduleIndex <= 10
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-slate-100 text-slate-600 border border-slate-200'
-                          }`}
-                        >
-                          {prob.moduleIndex <= 10 ? '🎯 Core' : '💡 Optional'}
                         </span>
                         {prob.difficulty && (
                           <span
@@ -994,10 +867,11 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                         href={prob.youtubeUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
-                        title="Watch Striver / TakeUForward YouTube Video Tutorial"
+                        className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors flex items-center gap-1 text-xs font-bold"
+                        title="Watch Code &amp; Debug YouTube Video Tutorial"
                       >
                         <Youtube className="w-4 h-4" />
+                        <span className="hidden md:inline">Watch Video</span>
                       </a>
                     )}
                     {prob.practiceUrl && (

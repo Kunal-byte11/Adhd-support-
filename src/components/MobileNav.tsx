@@ -27,16 +27,12 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   const kunalNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
     { id: 'daily-plan', label: 'Plan 🌅', Icon: Sunrise },
     { id: 'now', label: 'Flow 🎯', Icon: Target },
-    { id: 'partner-hq', label: 'Partner 💖', Icon: Heart },
     { id: 'roadmap', label: 'Tasks 🗺️', Icon: Map },
     { id: 'urges', label: 'Urge 🛡️', Icon: ShieldAlert },
   ];
 
   const partnerNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
-    { id: 'partner-hq', label: 'Partner 💖', Icon: Heart },
-    { id: 'now', label: 'Kunal Flow', Icon: Target },
-    { id: 'daily-plan', label: 'Schedule 🌅', Icon: Sunrise },
-    { id: 'roadmap', label: 'Roadmap', Icon: Map },
+    { id: 'partner-hq', label: 'Partner HQ 💖', Icon: Heart },
   ];
 
   const navItems = userRole === 'partner' ? partnerNavItems : kunalNavItems;

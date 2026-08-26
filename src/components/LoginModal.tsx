@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { UserRole } from '../types';
 import {
-  User,
-  Heart,
-  Sparkles,
-  Code2,
-  Brain,
-  ShieldAlert,
-  Gift,
-  ArrowRight,
-  Lock,
-  CheckCircle2,
-  Eye,
   KeyRound,
+  User,
+  Lock,
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  Heart,
+  AlertCircle,
+  CheckCircle2,
 } from 'lucide-react';
 
 interface LoginModalProps {
@@ -28,131 +25,171 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onClose,
   isOpen,
 }) => {
+  const [username, setUsername] = useState(currentUserRole === 'partner' ? 'parii26' : 'kunal11');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [selectedRole, setSelectedRole] = useState<UserRole>(currentUserRole);
 
   if (!isOpen) return null;
 
-  const handleConfirmLogin = (role: UserRole) => {
+  const handleQuickSelect = (role: UserRole) => {
     setSelectedRole(role);
-    onSelectRole(role);
-    if (onClose) onClose();
+    if (role === 'kunal') {
+      setUsername('kunal11');
+      setPassword('kunal11');
+    } else {
+      setUsername('parii26');
+      setPassword('parii26');
+    }
+    setErrorMessage('');
+  };
+
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanUser = username.trim().toLowerCase();
+
+    if (cleanUser === 'kunal11') {
+      onSelectRole('kunal');
+      if (onClose) onClose();
+    } else if (cleanUser === 'parii26') {
+      onSelectRole('partner');
+      if (onClose) onClose();
+    } else {
+      setErrorMessage('Invalid username. Please use "kunal11" or "parii26".');
+    }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
       <div className="bg-white border border-[#c2c8c0] rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative overflow-hidden">
         {/* Top Header */}
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-[#8bb192]/20 text-[#43664c] flex items-center justify-center mx-auto mb-3">
-            <KeyRound className="w-6 h-6" />
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#43664c] to-[#006494] text-white flex items-center justify-center mx-auto mb-3 shadow-md">
+            <KeyRound className="w-7 h-7" />
           </div>
-          <h2 className="text-[24px] font-black text-[#181c1e] tracking-tight">
-            Select Your Workspace
+          <h2 className="text-[26px] font-black text-[#181c1e] tracking-tight">
+            Account Login
           </h2>
-          <p className="text-sm text-[#545f72] mt-1">
-            Separate personalized portals for Kunal and his Partner
+          <p className="text-sm text-[#545f72] mt-1 font-medium">
+            Sign in to access your personal workspace
           </p>
         </div>
 
-        {/* 2 Big Account Cards */}
-        <div className="space-y-4 mb-6">
-          {/* Option 1: Kunal's Profile */}
-          <div
-            onClick={() => setSelectedRole('kunal')}
-            className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-start gap-4 ${
-              selectedRole === 'kunal'
-                ? 'border-[#43664c] bg-emerald-50/40 shadow-xs ring-2 ring-[#43664c]/20'
-                : 'border-gray-200 bg-white hover:border-[#43664c]/50'
-            }`}
-          >
-            <div className="w-12 h-12 rounded-2xl bg-[#43664c] text-white flex items-center justify-center text-xl shrink-0 font-bold shadow-xs">
-              👨‍💻
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-extrabold text-[#181c1e]">
-                  Kunal's Focus Flow
-                </h3>
-                {selectedRole === 'kunal' && (
-                  <span className="text-xs font-bold text-[#43664c] bg-[#8bb192]/20 px-2.5 py-0.5 rounded-full">
-                    Selected
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-[#545f72] mt-1 leading-relaxed">
-                DSA Deep Work (Ch 1-10), Generative AI Roadmap, 10k Steps Tracker, Morning AI Planner, &amp; 5-min Urge Pause.
-              </p>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                <span className="text-[10px] bg-white border border-emerald-200 text-[#43664c] px-2 py-0.5 rounded-md font-semibold">
-                  #AlgorithmMaster
-                </span>
-                <span className="text-[10px] bg-white border border-blue-200 text-[#006494] px-2 py-0.5 rounded-md font-semibold">
-                  #GenAI
-                </span>
-              </div>
-            </div>
+        {/* Error Alert */}
+        {errorMessage && (
+          <div className="mb-5 bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold px-4 py-3 rounded-2xl flex items-center gap-2 animate-in fade-in">
+            <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+            <span>{errorMessage}</span>
           </div>
+        )}
 
-          {/* Option 2: Girlfriend / Partner Profile */}
-          <div
-            onClick={() => setSelectedRole('partner')}
-            className={`p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-start gap-4 ${
-              selectedRole === 'partner'
-                ? 'border-pink-500 bg-pink-50/40 shadow-xs ring-2 ring-pink-400/20'
-                : 'border-gray-200 bg-white hover:border-pink-300'
-            }`}
-          >
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-400 text-white flex items-center justify-center text-xl shrink-0 font-bold shadow-xs">
-              💖
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <h3 className="text-base font-extrabold text-[#181c1e]">
-                  Partner HQ (Girlfriend)
-                </h3>
-                {selectedRole === 'partner' && (
-                  <span className="text-xs font-bold text-pink-600 bg-pink-100 px-2.5 py-0.5 rounded-full">
-                    Selected
-                  </span>
-                )}
-              </div>
-              <p className="text-xs text-[#545f72] mt-1 leading-relaxed">
-                Live Focus Status Tracker, Low-friction Gentle Nudges (Breathe, Water, Focus, Proud), Dopamine Vault Rewards, &amp; 7-Day Meetup Roadmap.
-              </p>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                <span className="text-[10px] bg-white border border-pink-200 text-pink-700 px-2 py-0.5 rounded-md font-semibold">
-                  #PartnerHQ
-                </span>
-                <span className="text-[10px] bg-white border border-amber-200 text-amber-800 px-2 py-0.5 rounded-md font-semibold">
-                  #DopamineVault
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Action Button */}
-        <div className="flex gap-3">
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="flex-1 py-3.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl text-sm font-bold cursor-pointer transition-all"
-            >
-              Cancel
-            </button>
-          )}
+        {/* Quick Profile Cards */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
           <button
-            onClick={() => handleConfirmLogin(selectedRole)}
-            className={`flex-1 py-3.5 rounded-2xl text-sm font-bold text-white shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] ${
-              selectedRole === 'partner'
-                ? 'bg-pink-600 hover:bg-pink-700'
-                : 'bg-[#43664c] hover:bg-[#38553f]'
+            type="button"
+            onClick={() => handleQuickSelect('kunal')}
+            className={`p-3.5 rounded-2xl border-2 transition-all text-left cursor-pointer flex flex-col justify-between ${
+              selectedRole === 'kunal'
+                ? 'border-[#43664c] bg-emerald-50/60 ring-2 ring-[#43664c]/20'
+                : 'border-gray-200 bg-white hover:border-gray-300'
             }`}
           >
-            <span>Login to {selectedRole === 'partner' ? 'Partner HQ' : "Kunal's Flow"}</span>
-            <ArrowRight className="w-4 h-4" />
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-2xl">👨‍💻</span>
+              {selectedRole === 'kunal' && (
+                <CheckCircle2 className="w-4 h-4 text-[#43664c]" />
+              )}
+            </div>
+            <div>
+              <h4 className="text-xs font-black text-[#181c1e]">kunal11</h4>
+              <p className="text-[10px] text-[#545f72] font-semibold">Kunal's Focus Flow</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleQuickSelect('partner')}
+            className={`p-3.5 rounded-2xl border-2 transition-all text-left cursor-pointer flex flex-col justify-between ${
+              selectedRole === 'partner'
+                ? 'border-pink-500 bg-pink-50/60 ring-2 ring-pink-400/20'
+                : 'border-gray-200 bg-white hover:border-gray-300'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-2xl">💖</span>
+              {selectedRole === 'partner' && (
+                <CheckCircle2 className="w-4 h-4 text-pink-600" />
+              )}
+            </div>
+            <div>
+              <h4 className="text-xs font-black text-[#181c1e]">parii26</h4>
+              <p className="text-[10px] text-[#545f72] font-semibold">Pari's Partner HQ</p>
+            </div>
           </button>
         </div>
+
+        {/* Login Form */}
+        <form onSubmit={handleLoginSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-[#181c1e] mb-1.5 uppercase tracking-wider">
+              Username
+            </label>
+            <div className="relative">
+              <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setErrorMessage('');
+                }}
+                placeholder="Enter kunal11 or parii26"
+                required
+                className="w-full pl-10 pr-4 py-3 bg-[#f1f4f6] rounded-2xl border border-gray-200 text-sm font-semibold focus:bg-white focus:border-[#43664c] focus:outline-none transition-all"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-[#181c1e] mb-1.5 uppercase tracking-wider">
+              Passcode / PIN
+            </label>
+            <div className="relative">
+              <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full pl-10 pr-4 py-3 bg-[#f1f4f6] rounded-2xl border border-gray-200 text-sm font-semibold focus:bg-white focus:border-[#43664c] focus:outline-none transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="pt-2 flex gap-3">
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-3.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl text-sm font-bold cursor-pointer transition-all"
+              >
+                Cancel
+              </button>
+            )}
+            <button
+              type="submit"
+              className={`flex-1 py-3.5 rounded-2xl text-sm font-bold text-white shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] ${
+                username.trim().toLowerCase() === 'parii26'
+                  ? 'bg-pink-600 hover:bg-pink-700'
+                  : 'bg-[#43664c] hover:bg-[#38553f]'
+              }`}
+            >
+              <span>Sign In to {username.trim() || 'Account'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

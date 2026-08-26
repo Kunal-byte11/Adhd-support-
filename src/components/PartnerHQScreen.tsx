@@ -58,15 +58,22 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
   const [rewardCategory, setRewardCategory] = useState<'treat' | 'coupon' | 'date' | 'kiss'>('coupon');
   const [rewardNote, setRewardNote] = useState('');
 
-  // 7-day milestone state
+  // 14-day (2-week) milestone roadmap state using Monday - Sunday
   const [streakDays, setStreakDays] = useState([
-    { day: 'Mon', completed: true, label: 'Completed' },
-    { day: 'Tue', completed: true, label: 'Completed' },
-    { day: 'Wed', completed: true, label: 'Completed' },
-    { day: 'Thu', completed: false, isCurrent: true, label: 'In Progress' },
-    { day: 'Fri', completed: false, label: 'Upcoming' },
-    { day: 'Sat', completed: false, label: 'Upcoming' },
-    { day: 'Sun', completed: false, isMilestone: true, label: 'Meetup Day 🎉' },
+    { day: 'Mon', completed: true, label: 'W1 Monday' },
+    { day: 'Tue', completed: true, label: 'W1 Tuesday' },
+    { day: 'Wed', completed: true, label: 'W1 Wednesday' },
+    { day: 'Thu', completed: true, label: 'W1 Thursday' },
+    { day: 'Fri', completed: true, label: 'W1 Friday' },
+    { day: 'Sat', completed: true, label: 'W1 Saturday' },
+    { day: 'Sun 🎉', completed: true, label: 'Week 1 Complete' },
+    { day: 'Mon', completed: true, label: 'W2 Monday' },
+    { day: 'Tue', completed: true, label: 'W2 Tuesday' },
+    { day: 'Wed', completed: true, label: 'W2 Wednesday' },
+    { day: 'Thu', completed: false, isCurrent: true, label: 'W2 Thursday (Today)' },
+    { day: 'Fri', completed: false, label: 'W2 Friday' },
+    { day: 'Sat', completed: false, label: 'W2 Saturday' },
+    { day: 'Sun 🎉', completed: false, isMilestone: true, label: '2-Week Meetup 🎉' },
   ]);
 
   // Handle Quick Gentle Nudge
@@ -296,88 +303,15 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
         </div>
       </section>
 
-      {/* 🎁 Section 2: Dopamine Vault (Staged Rewards) */}
-      <section className="w-full mb-8">
-        <div className="flex items-center justify-between mb-3.5">
-          <div className="flex items-center gap-2">
-            <Gift className="w-5 h-5 text-[#43664c]" />
-            <h2 className="text-[20px] font-extrabold text-[#181c1e]">
-              Dopamine Vault (Staged Rewards)
-            </h2>
-          </div>
-          <button
-            onClick={() => setShowRewardModal(true)}
-            className="text-xs font-bold bg-[#43664c] hover:bg-[#38553f] text-white px-3.5 py-2 rounded-xl flex items-center gap-1.5 cursor-pointer shadow-xs"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Stage New Reward</span>
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {/* Active Staged Reward Box */}
-          <div className="md:col-span-1 bg-white border-2 border-[#43664c] rounded-3xl p-6 flex flex-col items-center text-center gap-3 relative overflow-hidden shadow-xs">
-            <div className="absolute top-0 w-full h-1.5 bg-[#43664c]"></div>
-            <span className="bg-[#8bb192]/20 text-[#22442c] text-xs font-extrabold px-3 py-1 rounded-full">
-              🎁 Staged &amp; Ready
-            </span>
-            <div className="w-16 h-16 rounded-full bg-[#f1f4f6] flex items-center justify-center text-[#43664c] my-1">
-              <PartyPopper className="w-8 h-8 text-[#43664c]" />
-            </div>
-            <h3 className="text-lg font-extrabold text-[#181c1e]">
-              Photo &amp; Love Note Reveal
-            </h3>
-            <p className="text-xs text-[#545f72] leading-relaxed">
-              Unlocks automatically as an Instant Celebration modal on Kunal's screen when his active sprint finishes!
-            </p>
-          </div>
-
-          {/* Staging Quick Options */}
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <button
-              onClick={() => {
-                setRewardTitle('Special Voice Note of Encouragement');
-                setRewardCategory('kiss');
-                setRewardNote('Recorded a 30s voice clip telling you how awesome you are!');
-                setShowRewardModal(true);
-              }}
-              className="flex flex-col items-start p-5 bg-white border border-[#c2c8c0] rounded-3xl hover:border-[#43664c] transition-all text-left cursor-pointer shadow-xs group"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Mic className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-[#181c1e] mb-1">Voice Note Reward</h4>
-              <p className="text-xs text-[#545f72]">Record or type a quick audio-styled note of appreciation.</p>
-            </button>
-
-            <button
-              onClick={() => {
-                setRewardTitle('One Free Coffee / Boba Run ☕');
-                setRewardCategory('coupon');
-                setRewardNote('Redeemable this weekend during our meetup date!');
-                setShowRewardModal(true);
-              }}
-              className="flex flex-col items-start p-5 bg-white border border-[#c2c8c0] rounded-3xl hover:border-[#43664c] transition-all text-left cursor-pointer shadow-xs group"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                <Ticket className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-[#181c1e] mb-1">Custom Couple Coupon</h4>
-              <p className="text-xs text-[#545f72]">E.g. "One free coffee run", "Movie choice", or "Dinner treat".</p>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 📅 Section 3: 7-Day Milestone Builder ("Road to Weekend Meetup") */}
+      {/* 📅 Section 2: 2-Week Milestone Builder ("Road to 2-Week Meetup") */}
       <section className="w-full mb-8 bg-white border border-[#c2c8c0] rounded-3xl p-6 sm:p-7 shadow-xs">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-[18px] sm:text-[20px] font-extrabold text-[#181c1e]">
-              Road to Weekend Meetup 💑
+              Road to 2-Week Meetup 💑 (14 Days)
             </h2>
             <p className="text-xs sm:text-sm text-[#545f72] mt-0.5">
-              Building momentum together, one focused day at a time.
+              Building momentum together over 2 weeks, one focused day at a time.
             </p>
           </div>
           <div className="w-12 h-12 rounded-2xl bg-[#8bb192]/20 flex items-center justify-center text-[#43664c]">
@@ -385,36 +319,38 @@ export const PartnerHQScreen: React.FC<PartnerHQScreenProps> = ({
           </div>
         </div>
 
-        {/* Horizontal Timeline / Streak */}
-        <div className="relative flex justify-between items-center w-full px-2 py-4">
-          {/* Background Connecting Line */}
-          <div className="absolute left-[5%] right-[5%] top-1/2 -translate-y-1/2 h-[3px] bg-[#ebeef0] z-0"></div>
-          {/* Active Progress Line */}
-          <div className="absolute left-[5%] top-1/2 -translate-y-1/2 h-[3px] bg-[#43664c] z-0" style={{ width: '50%' }}></div>
+        {/* Horizontal Timeline / Streak for 14 Days */}
+        <div className="overflow-x-auto pb-2 no-scrollbar">
+          <div className="relative flex justify-between items-center min-w-[700px] w-full px-2 py-4">
+            {/* Background Connecting Line */}
+            <div className="absolute left-[3%] right-[3%] top-1/2 -translate-y-1/2 h-[3px] bg-[#ebeef0] z-0"></div>
+            {/* Active Progress Line */}
+            <div className="absolute left-[3%] top-1/2 -translate-y-1/2 h-[3px] bg-[#43664c] z-0" style={{ width: '75%' }}></div>
 
-          {/* Days */}
-          {streakDays.map((item, idx) => (
-            <div key={idx} className="relative z-10 flex flex-col items-center gap-2">
-              {item.completed ? (
-                <div className="w-9 h-9 rounded-full bg-[#43664c] text-white flex items-center justify-center shadow-xs">
-                  <Check className="w-4 h-4 stroke-[3]" />
-                </div>
-              ) : item.isCurrent ? (
-                <div className="w-10 h-10 rounded-full bg-white border-2 border-[#43664c] flex items-center justify-center shadow-xs">
-                  <div className="w-4 h-4 rounded-full bg-[#43664c] animate-pulse"></div>
-                </div>
-              ) : item.isMilestone ? (
-                <div className="w-10 h-10 rounded-full bg-amber-50 border border-amber-300 text-amber-700 flex items-center justify-center shadow-xs">
-                  <Heart className="w-5 h-5 fill-amber-500 text-amber-500" />
-                </div>
-              ) : (
-                <div className="w-8 h-8 rounded-full bg-[#ebeef0] border border-[#c2c8c0] flex items-center justify-center"></div>
-              )}
-              <span className={`text-xs font-bold ${item.isCurrent ? 'text-[#43664c]' : 'text-[#545f72]'}`}>
-                {item.day}
-              </span>
-            </div>
-          ))}
+            {/* 14 Days */}
+            {streakDays.map((item, idx) => (
+              <div key={idx} className="relative z-10 flex flex-col items-center gap-2">
+                {item.completed ? (
+                  <div className="w-8 h-8 rounded-full bg-[#43664c] text-white flex items-center justify-center shadow-xs">
+                    <Check className="w-3.5 h-3.5 stroke-[3]" />
+                  </div>
+                ) : item.isCurrent ? (
+                  <div className="w-9 h-9 rounded-full bg-white border-2 border-[#43664c] flex items-center justify-center shadow-xs">
+                    <div className="w-3.5 h-3.5 rounded-full bg-[#43664c] animate-pulse"></div>
+                  </div>
+                ) : item.isMilestone ? (
+                  <div className="w-9 h-9 rounded-full bg-amber-50 border border-amber-300 text-amber-700 flex items-center justify-center shadow-xs">
+                    <Heart className="w-4 h-4 fill-amber-500 text-amber-500" />
+                  </div>
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-[#ebeef0] border border-[#c2c8c0] flex items-center justify-center"></div>
+                )}
+                <span className={`text-[11px] font-bold whitespace-nowrap ${item.isCurrent ? 'text-[#43664c]' : 'text-[#545f72]'}`}>
+                  {item.day}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

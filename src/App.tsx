@@ -50,13 +50,13 @@ export default function App() {
     return 'kunal';
   });
 
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(true);
   const [currentScreen, setCurrentScreen] = useState<ScreenType>(() => {
     try {
       const savedRole = localStorage.getItem('focusflow_active_user');
       if (savedRole === 'partner') return 'partner-hq';
     } catch (e) {}
-    return 'daily-plan';
+    return 'now';
   });
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -121,37 +121,57 @@ export default function App() {
     });
   };
 
-  // Initial Tasks
+  // Initial Morning AI Plan Tasks
   const [tasks, setTasks] = useState<TaskItem[]>([
     {
       id: 'task-initial-1',
-      title: "Learn Time & Space Complexity and solve Kadane's Algorithm",
-      description: 'Review the time-space tradeoff and implement maximum subarray sum.',
+      title: "1st Task: Code & Debug DSA Python Course — Part 1 (Time & Space Complexity)",
+      description: "Learn Big-O notation, TLE errors, Python operations time complexity, & digit extraction.",
       estimatedMinutes: 10,
       actualSeconds: 0,
       isCompleted: false,
       order: 1,
-      goalSource: "Kadane's Algorithm & Complexity",
+      goalSource: "Code & Debug DSA Python Course (Ch 1: Basics)",
     },
     {
       id: 'task-initial-2',
-      title: 'Code optimal single-pass solution (O(N) time, O(1) space)',
-      description: 'Keep track of current running sum and max sum found so far.',
+      title: "2nd Task: Krish Naik GenAI Track — LangChain, Vector Embeddings & RAG",
+      description: "Build document chunking -> vector embeddings -> ChromaDB -> prompt augmentation flow.",
       estimatedMinutes: 10,
       actualSeconds: 0,
       isCompleted: false,
       order: 2,
-      goalSource: "Kadane's Algorithm & Complexity",
+      goalSource: "Krish Naik GenAI Track (Phase 1)",
     },
     {
       id: 'task-initial-3',
-      title: 'Trace edge cases with negative arrays & dry run',
-      description: 'Run through [-2, 1, -3, 4, -1, 2, 1, -5, 4] and submit solution.',
+      title: "3rd Task: Spaced Revision & Active Recall on LeetCode & GFG",
+      description: "Dry-run 1-2 core array/string problems on paper before submitting code.",
       estimatedMinutes: 10,
       actualSeconds: 0,
       isCompleted: false,
       order: 3,
-      goalSource: "Kadane's Algorithm & Complexity",
+      goalSource: "Morning AI Schedule (Spaced Revision)",
+    },
+    {
+      id: 'task-initial-4',
+      title: "4th Task: 10,000 Steps Movement & Dopamine Reset Walk",
+      description: "Get physical movement and outdoor daylight for natural dopamine and stamina.",
+      estimatedMinutes: 10,
+      actualSeconds: 0,
+      isCompleted: false,
+      order: 4,
+      goalSource: "Morning AI Schedule (10k Steps Movement)",
+    },
+    {
+      id: 'task-initial-5',
+      title: "5th Task: 10-Minute English Active Speaking & Voice Practice",
+      description: "Speak out loud on an AI prompt for 10 minutes to build spontaneous fluency.",
+      estimatedMinutes: 10,
+      actualSeconds: 0,
+      isCompleted: false,
+      order: 5,
+      goalSource: "Morning AI Schedule (10m English)",
     },
   ]);
 
@@ -450,13 +470,13 @@ export default function App() {
         </div>
       )}
 
-      {/* Top Banner: Kunal's Morning Planner Banner or Partner Mode Indicator */}
+      {/* Top Banner: kunal11 vs parii26 Account Indicator */}
       {userRole === 'kunal' && showMorningBanner && currentScreen !== 'daily-plan' && (
         <div className="md:ml-64 bg-gradient-to-r from-[#43664c] to-[#006494] text-white px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-xs z-30">
           <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold truncate">
             <Sunrise className="w-4 h-4 text-amber-300 shrink-0" />
             <span className="truncate">
-              <strong>Hii Kunal!</strong> Today's Plan: 2h DSA &bull; 2h GenAI &bull; 1h Revision &bull; 10k Steps &bull; 10m English
+              <strong>User: kunal11</strong> &bull; Today's Plan: 2h DSA &bull; 2h GenAI &bull; 1h Revision &bull; 10k Steps &bull; 10m English
             </span>
           </div>
           <div className="flex items-center gap-2 shrink-0">
@@ -466,14 +486,6 @@ export default function App() {
             >
               <span>Daily Plan</span>
               <ArrowRight className="w-3 h-3" />
-            </button>
-            <button
-              onClick={() => setIsLoginModalOpen(true)}
-              className="bg-white/20 hover:bg-white/30 text-white px-2.5 py-1 rounded-full text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
-              title="Switch user"
-            >
-              <KeyRound className="w-3 h-3" />
-              <span>Switch</span>
             </button>
             <button
               onClick={() => setShowMorningBanner(false)}
@@ -490,14 +502,8 @@ export default function App() {
         <div className="md:ml-64 bg-gradient-to-r from-pink-600 via-rose-500 to-indigo-600 text-white px-4 sm:px-6 py-2 flex items-center justify-between shadow-xs z-30">
           <div className="flex items-center gap-2 text-xs font-bold truncate">
             <Heart className="w-3.5 h-3.5 fill-pink-200 text-pink-200" />
-            <span>Girlfriend Support Mode &bull; Connected to Kunal's Flow</span>
+            <span>User: parii26 (Pari's Partner HQ) &bull; Connected to kunal11's Flow</span>
           </div>
-          <button
-            onClick={() => handleSelectRole('kunal')}
-            className="bg-white/20 hover:bg-white text-white hover:text-pink-600 px-3 py-0.5 rounded-full text-xs font-bold transition-all cursor-pointer"
-          >
-            Switch to Kunal
-          </button>
         </div>
       )}
 
