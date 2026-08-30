@@ -19,7 +19,7 @@ import { RecoveryScreen } from './components/RecoveryScreen';
 import { ADHDHelperScreen } from './components/ADHDHelperScreen';
 import { DailyPlannerScreen } from './components/DailyPlannerScreen';
 import { PartnerHQScreen } from './components/PartnerHQScreen';
-import { IA1PrepScreen } from './components/IA1PrepScreen';
+import { Sem7Screen } from './components/Sem7Screen';
 import { LoginModal } from './components/LoginModal';
 import { UnboxCelebrationModal } from './components/UnboxCelebrationModal';
 import { Sunrise, Sparkles, X, ArrowRight, Heart, KeyRound, UserCheck } from 'lucide-react';
@@ -615,9 +615,9 @@ export default function App() {
           />
         )}
 
-        {currentScreen === 'ia1-prep' && (
-          <IA1PrepScreen
-            onStartFocusFromQuestion={(title) => handleStartFocusFromItem(title, 'IA 1 Prep')}
+        {currentScreen === 'sem7' && (
+          <Sem7Screen
+            onStartFocusFromQuestion={(title) => handleStartFocusFromItem(title, 'Sem 7 DL')}
           />
         )}
 

@@ -1,4 +1,4 @@
-export type ScreenType = 'now' | 'roadmap' | 'intake' | 'urges' | 'recovery' | 'adhd-helper' | 'daily-plan' | 'partner-hq' | 'ia1-prep';
+export type ScreenType = 'now' | 'roadmap' | 'intake' | 'urges' | 'recovery' | 'adhd-helper' | 'daily-plan' | 'partner-hq' | 'sem7';
 
 export type UserRole = 'kunal' | 'partner';
 

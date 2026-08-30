@@ -13,6 +13,7 @@ import {
   Award,
   Search,
   BookMarked,
+  Brain,
 } from 'lucide-react';
 
 interface ChecklistTask {
@@ -45,16 +46,8 @@ const Q25_TASKS: ChecklistTask[] = [
   { id: 'compression', label: 'Explain Image Compression using Autoencoder.', icon: '🖼️' },
 ];
 
-const IA1_QUESTIONS: QuestionMetadata[] = [
+const DL_EXAM_QUESTIONS: QuestionMetadata[] = [
   // ================= UNIT 1 =================
-  {
-    id: 'q1',
-    num: 1,
-    text: 'What is an MLP? Explain its architecture.',
-    unit: 1,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
   {
     id: 'q2',
     num: 2,
@@ -72,14 +65,6 @@ const IA1_QUESTIONS: QuestionMetadata[] = [
     tasks: STANDARD_TASKS,
   },
   {
-    id: 'q4',
-    num: 4,
-    text: 'What is a Sigmoid neuron? Explain its working.',
-    unit: 1,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
-  {
     id: 'q5',
     num: 5,
     text: 'Explain Gradient Descent and its working.',
@@ -87,61 +72,13 @@ const IA1_QUESTIONS: QuestionMetadata[] = [
     isHighPriority: true,
     tasks: STANDARD_TASKS,
   },
-  {
-    id: 'q6',
-    num: 6,
-    text: 'Explain Feedforward Neural Network and its representation power.',
-    unit: 1,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
-  {
-    id: 'q7',
-    num: 7,
-    text: 'State the three classes of Deep Learning.',
-    unit: 1,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
-  {
-    id: 'q8',
-    num: 8,
-    text: 'Explain basic terminologies of Deep Learning.',
-    unit: 1,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
-  {
-    id: 'q9',
-    num: 9,
-    text: 'Explain History of Deep Learning and major Deep Learning success stories.',
-    unit: 1,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
   // ================= UNIT 2 =================
-  {
-    id: 'q10',
-    num: 10,
-    text: 'Explain Multi-Layer Feedforward DNN and factors affecting learning.',
-    unit: 2,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
   {
     id: 'q11',
     num: 11,
     text: 'Explain Logistic, Tanh, Linear, ReLU, Leaky ReLU and Softmax activation functions.',
     unit: 2,
     isHighPriority: true,
-    tasks: STANDARD_TASKS,
-  },
-  {
-    id: 'q12',
-    num: 12,
-    text: 'Compare the different activation functions.',
-    unit: 2,
-    isHighPriority: false,
     tasks: STANDARD_TASKS,
   },
   {
@@ -153,14 +90,6 @@ const IA1_QUESTIONS: QuestionMetadata[] = [
     tasks: STANDARD_TASKS,
   },
   {
-    id: 'q14',
-    num: 14,
-    text: 'Explain how to choose output function and loss function.',
-    unit: 2,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
-  {
     id: 'q15',
     num: 15,
     text: 'Explain Backpropagation algorithm.',
@@ -169,27 +98,11 @@ const IA1_QUESTIONS: QuestionMetadata[] = [
     tasks: STANDARD_TASKS,
   },
   {
-    id: 'q16',
-    num: 16,
-    text: 'Explain weight and bias update using Backpropagation/Gradient Descent.',
-    unit: 2,
-    isHighPriority: false,
-    tasks: STANDARD_TASKS,
-  },
-  {
     id: 'q17',
     num: 17,
     text: 'Differentiate Batch GD, Stochastic GD and Mini-Batch GD.',
     unit: 2,
     isHighPriority: true,
-    tasks: STANDARD_TASKS,
-  },
-  {
-    id: 'q18',
-    num: 18,
-    text: 'Explain Momentum-based GD and Nesterov Accelerated GD.',
-    unit: 2,
-    isHighPriority: false,
     tasks: STANDARD_TASKS,
   },
   {
@@ -251,25 +164,24 @@ const IA1_QUESTIONS: QuestionMetadata[] = [
   },
 ];
 
-interface IA1PrepScreenProps {
+interface Sem7ScreenProps {
   onStartFocusFromQuestion: (title: string) => void;
 }
 
-export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQuestion }) => {
+export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion }) => {
   const [selectedUnit, setSelectedUnit] = useState<number | 'all'>('all');
-  const [priorityOnly, setPriorityOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeSubject, setActiveSubject] = useState<'deep-learning'>('deep-learning');
   
   // Expanded questions state: maps question ID to boolean
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>(() => {
-    // Keep Q2, Q11, Q25 expanded by default for attention
-    return { q2: true, q11: true, q25: true };
+    return { q2: true, q11: true, q25: true }; // Keep key ones expanded
   });
 
   // Checklist progress state: key is 'questionId_taskId' -> boolean
   const [progress, setProgress] = useState<Record<string, boolean>>(() => {
     try {
-      const saved = localStorage.getItem('focusflow_ia1_prep_progress');
+      const saved = localStorage.getItem('focusflow_sem7_dl_progress');
       return saved ? JSON.parse(saved) : {};
     } catch (e) {
       return {};
@@ -279,7 +191,7 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
   // Save progress to local storage
   useEffect(() => {
     try {
-      localStorage.setItem('focusflow_ia1_prep_progress', JSON.stringify(progress));
+      localStorage.setItem('focusflow_sem7_dl_progress', JSON.stringify(progress));
     } catch (e) {
       console.warn('Could not save progress to localStorage', e);
     }
@@ -326,57 +238,45 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
     return q.tasks.filter((t) => !!progress[`${q.id}_${t.id}`]).length;
   };
 
-  // Stats Calculations
+  // Stats Calculations (out of the 14 exam focused questions)
   const stats = useMemo(() => {
     let totalTasks = 0;
     let completedTasks = 0;
-    let totalHighPriorityTasks = 0;
-    let completedHighPriorityTasks = 0;
 
-    IA1_QUESTIONS.forEach((q) => {
+    DL_EXAM_QUESTIONS.forEach((q) => {
       const qTasksCount = q.tasks.length;
       totalTasks += qTasksCount;
       
       const qCompleted = q.tasks.filter((t) => !!progress[`${q.id}_${t.id}`]).length;
       completedTasks += qCompleted;
-
-      if (q.isHighPriority) {
-        totalHighPriorityTasks += qTasksCount;
-        completedHighPriorityTasks += qCompleted;
-      }
     });
 
     const percent = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-    const hpPercent = totalHighPriorityTasks > 0 ? Math.round((completedHighPriorityTasks / totalHighPriorityTasks) * 100) : 0;
 
     return {
       totalTasks,
       completedTasks,
       percent,
-      totalHighPriorityTasks,
-      completedHighPriorityTasks,
-      hpPercent,
     };
   }, [progress]);
 
   // Filtered Questions
   const filteredQuestions = useMemo(() => {
-    return IA1_QUESTIONS.filter((q) => {
+    return DL_EXAM_QUESTIONS.filter((q) => {
       const matchUnit = selectedUnit === 'all' || q.unit === selectedUnit;
-      const matchPriority = !priorityOnly || q.isHighPriority;
       const matchSearch =
         searchQuery.trim() === '' ||
         q.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
         `unit ${q.unit}`.includes(searchQuery.toLowerCase()) ||
         q.tasks.some((t) => t.label.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      return matchUnit && matchPriority && matchSearch;
+      return matchUnit && matchSearch;
     });
-  }, [selectedUnit, priorityOnly, searchQuery]);
+  }, [selectedUnit, searchQuery]);
 
   // Reset progress handler
   const handleResetProgress = () => {
-    if (window.confirm('Are you sure you want to reset all IA 1 study progress? This cannot be undone.')) {
+    if (window.confirm('Are you sure you want to reset all Deep Learning study progress? This cannot be undone.')) {
       setProgress({});
     }
   };
@@ -385,11 +285,11 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
   const getUnitName = (unitNum: number) => {
     switch (unitNum) {
       case 1:
-        return 'Unit 1 — Fundamentals (MLP, SLP, XOR, Gradient Descent)';
+        return 'Unit 1 — Fundamentals (XOR Problem, representation power, Gradient Descent)';
       case 2:
-        return 'Unit 2 — Training, Optimization & Regularization (Activation Functions, GD, Backprop, Optimizers, Regularization)';
+        return 'Unit 2 — Training, Optimization & Regularization (Activations, Cross-Entropy Loss, Backpropagation, Optimizers, Regularizers)';
       case 3:
-        return 'Unit 3 — Autoencoders (Encoder/Decoder, Denoising, Sparse, Contractive, Image Compression)';
+        return 'Unit 3 — Autoencoders (Bottleneck architecture, Regularized Autoencoders, Image Compression)';
       default:
         return `Unit ${unitNum}`;
     }
@@ -403,54 +303,57 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-bold uppercase tracking-wider text-[#006494] bg-[#5fafe9]/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
               <BookOpen className="w-3.5 h-3.5" />
-              EXAM PREP TOOLKIT
+              Semester 7 Study Hub
             </span>
           </div>
           <h1 className="text-[28px] sm:text-[34px] font-extrabold text-[#181c1e] tracking-tight">
-            IA 1 Preparation Hub
+            Sem 7 Revision Portal
           </h1>
           <p className="text-[14px] sm:text-[15px] text-[#545f72] mt-0.5">
-            Track syllabus questions, focus on high-yield questions, and clear units step-by-step.
+            Highly targeted revision checklists. Zero fluff, 100% exam-focused content.
           </p>
         </div>
 
         {/* Progress Tracker Card */}
-        <div className="bg-white border border-[#c2c8c0] rounded-2xl p-4 shadow-xs flex flex-wrap gap-4 self-start md:self-auto min-w-[280px]">
-          <div className="flex-1 min-w-[120px] border-r border-[#c2c8c0]/60 pr-2">
-            <div className="flex items-center justify-between text-xs font-semibold text-slate-500 uppercase">
-              <span>Overall Prep</span>
-              <span className="text-[#006494] font-bold">{stats.percent}%</span>
+        <div className="bg-white border border-[#c2c8c0] rounded-2xl p-4 shadow-xs flex gap-4 self-start md:self-auto min-w-[240px]">
+          <div className="flex-1">
+            <div className="flex items-center justify-between text-xs font-semibold text-rose-500 uppercase">
+              <span className="flex items-center gap-1 font-bold">
+                <Star className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
+                DL Exam Prep Progress
+              </span>
+              <span className="text-rose-700 font-extrabold">{stats.percent}%</span>
             </div>
-            <div className="w-full h-2 bg-[#ebeef0] rounded-full mt-1.5 overflow-hidden">
+            <div className="w-full h-2.5 bg-[#ebeef0] rounded-full mt-2 overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-blue-500 to-[#006494] rounded-full transition-all duration-300"
+                className="h-full bg-gradient-to-r from-rose-400 to-rose-600 rounded-full transition-all duration-300"
                 style={{ width: `${stats.percent}%` }}
               />
             </div>
-            <p className="text-[10px] text-slate-400 mt-1 font-mono">
-              {stats.completedTasks}/{stats.totalTasks} sub-steps done
-            </p>
-          </div>
-
-          <div className="flex-1 min-w-[120px]">
-            <div className="flex items-center justify-between text-xs font-semibold text-rose-500 uppercase">
-              <span className="flex items-center gap-0.5">⭐ Exam Focus</span>
-              <span className="text-rose-700 font-bold">{stats.hpPercent}%</span>
+            <div className="flex items-center justify-between mt-1 text-[10px] text-slate-400 font-mono">
+              <span>{stats.completedTasks}/{stats.totalTasks} sub-steps done</span>
+              <span>14 target topics</span>
             </div>
-            <div className="w-full h-2 bg-[#ebeef0] rounded-full mt-1.5 overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-rose-400 to-rose-600 rounded-full transition-all duration-300"
-                style={{ width: `${stats.hpPercent}%` }}
-              />
-            </div>
-            <p className="text-[10px] text-slate-400 mt-1 font-mono">
-              {stats.completedHighPriorityTasks}/{stats.totalHighPriorityTasks} sub-steps done
-            </p>
           </div>
         </div>
       </header>
 
-      {/* Filter and Control Bar */}
+      {/* Subject Tabs */}
+      <div className="flex border-b border-[#c2c8c0] mb-6">
+        <button
+          onClick={() => setActiveSubject('deep-learning')}
+          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+            activeSubject === 'deep-learning'
+              ? 'border-rose-500 text-rose-700 bg-rose-50/40 rounded-t-lg font-extrabold'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Brain className="w-4 h-4 text-rose-600" />
+          <span>Deep Learning (IA-1 Focus)</span>
+        </button>
+      </div>
+
+      {/* Filters and Controls */}
       <div className="bg-white border border-[#c2c8c0] rounded-2xl p-4 mb-6 shadow-xs flex flex-col gap-4">
         <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
           {/* Search */}
@@ -460,8 +363,8 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search questions or keywords..."
-              className="w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:border-[#006494] focus:bg-white focus:outline-none transition-all placeholder-slate-400"
+              placeholder="Search exam topics..."
+              className="w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:border-rose-500 focus:bg-white focus:outline-none transition-all placeholder-slate-400"
             />
           </div>
 
@@ -478,7 +381,7 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
                 onClick={() => setSelectedUnit(unit.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   selectedUnit === unit.id
-                    ? 'bg-[#006494] text-white'
+                    ? 'bg-rose-600 text-white shadow-xs'
                     : 'bg-[#f1f4f6] text-slate-600 hover:bg-[#e5e9eb]'
                 }`}
               >
@@ -488,33 +391,25 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
           </div>
         </div>
 
-        {/* Checkbox and Reset Controls */}
+        {/* Action Controls */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3">
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-700 select-none font-mono text-[11px]">
-            <input
-              type="checkbox"
-              checked={priorityOnly}
-              onChange={(e) => setPriorityOnly(e.target.checked)}
-              className="w-4 h-4 rounded text-rose-600 border-gray-300 focus:ring-rose-500 cursor-pointer"
-            />
-            <span className="flex items-center gap-1 text-rose-700 font-bold">
-              Show 12-Hour Focus Questions Only (⭐ 14 core topics)
-            </span>
-          </label>
+          <p className="text-[11px] font-semibold text-slate-500 flex items-center gap-1 select-none font-mono">
+            <Zap className="w-3.5 h-3.5 text-rose-500 fill-rose-500 shrink-0" />
+            <span>Currently focused on 14 critical high-yield topics</span>
+          </p>
 
           <button
             onClick={handleResetProgress}
-            className="flex items-center gap-1 px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold rounded-lg transition-colors border border-rose-200 cursor-pointer"
+            className="flex items-center gap-1 px-3 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold rounded-lg transition-colors border border-rose-200 cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" />
-            <span>Reset Progress</span>
+            <span>Reset Subject Progress</span>
           </button>
         </div>
       </div>
 
-      {/* Questions List */}
+      {/* Questions list */}
       <div className="space-y-8">
-        {/* Render questions by Unit grouping */}
         {([1, 2, 3] as const).map((unitNum) => {
           const unitQuestions = filteredQuestions.filter((q) => q.unit === unitNum);
           if (unitQuestions.length === 0) return null;
@@ -539,9 +434,7 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
                       className={`w-full rounded-2xl border transition-all duration-200 overflow-hidden ${
                         isDone
                           ? 'border-[#c4eccb] bg-[#c4eccb]/10'
-                          : q.isHighPriority
-                          ? 'border-rose-200 bg-white hover:border-rose-300'
-                          : 'border-[#c2c8c0] bg-white hover:border-slate-400'
+                          : 'border-rose-200 bg-white hover:border-rose-300 hover:shadow-xs'
                       }`}
                     >
                       {/* Card Header row */}
@@ -552,10 +445,8 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
                             onClick={() => toggleQuestionAll(q)}
                             className={`mt-1 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
                               isDone
-                                ? 'bg-[#43664c] border-[#43664c] text-white'
-                                : q.isHighPriority
-                                ? 'border-rose-400 hover:border-rose-500 hover:bg-rose-50'
-                                : 'border-slate-400 hover:border-slate-600 hover:bg-slate-50'
+                                ? 'bg-rose-600 border-rose-600 text-white'
+                                : 'border-rose-400 hover:border-rose-500 hover:bg-rose-50'
                             }`}
                           >
                             {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -567,12 +458,10 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
                                 Topic {q.num}
                               </span>
 
-                              {q.isHighPriority && (
-                                <span className="text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono">
-                                  <Star className="w-3 h-3 fill-rose-600 text-rose-600 shrink-0" />
-                                  <span>EXAM FOCUS</span>
-                                </span>
-                              )}
+                              <span className="text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono">
+                                <Star className="w-3 h-3 fill-rose-600 text-rose-600 shrink-0" />
+                                <span>EXAM MUST-DO</span>
+                              </span>
 
                               <span className="text-[10px] font-semibold text-slate-400 font-mono">
                                 {completedSteps}/{totalSteps} steps completed
@@ -595,7 +484,7 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
                           <button
                             onClick={() =>
                               onStartFocusFromQuestion(
-                                `Master Topic ${q.num}: ${q.text.split(/[?.:+]/)[0]}`
+                                `Study Topic ${q.num}: ${q.text.split(/[?.:+]/)[0]}`
                               )
                             }
                             className="px-2.5 py-1.5 bg-[#006494] hover:bg-[#004e75] text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition-all shadow-xs cursor-pointer font-sans"
@@ -669,13 +558,13 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
                             <div className="mt-3.5 p-3.5 rounded-xl bg-rose-50/70 border border-rose-100 text-slate-700 text-xs leading-relaxed">
                               <p className="font-extrabold text-rose-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
                                 <Zap className="w-3.5 h-3.5 text-rose-600 fill-rose-600" />
-                                EXAM SYLLABUS WARNING &bull; AUTOENCODER DETAILS
+                                EXAM SYLLABUS DETAIL &bull; AUTOENCODER STUDY GUIDE
                               </p>
                               <p className="font-semibold text-slate-600">
-                                Image Compression **is explicitly included** in the final syllabus. Make sure you can answer:
+                                Image Compression **is explicitly included**. Prepare the following topics carefully:
                               </p>
                               <ul className="list-disc pl-4 mt-1.5 space-y-1 font-semibold text-slate-800">
-                                <li><strong>What is Denoising Autoencoder?</strong> (Reconstructs clean input from corrupted version; forces latent features to be robust)</li>
+                                <li><strong>What is Denoising Autoencoder?</strong> (Reconstructs clean output from corrupted version; forces latent features to be robust)</li>
                                 <li><strong>What is Sparse Autoencoder?</strong> (Adds an L1 penalty on hidden unit activations to force sparsity, learning selective pathways)</li>
                                 <li><strong>What is Contractive Autoencoder?</strong> (Adds Jacobian Frobenius norm penalty to ensure small input changes don't change hidden representation)</li>
                                 <li><strong>How do Sparse and Contractive Autoencoders act as regularizers?</strong> (They prevent identity mapping in overcomplete representations by constraining the capacity of the model mathematically)</li>
@@ -701,19 +590,18 @@ export const IA1PrepScreen: React.FC<IA1PrepScreenProps> = ({ onStartFocusFromQu
             💡
           </div>
           <div>
-            <h4 className="text-xs font-bold text-slate-800">ADHD Study Hacks</h4>
+            <h4 className="text-xs font-bold text-slate-800">ADHD Study Tips for Deep Learning</h4>
             <p className="text-[11px] text-slate-500 font-semibold mt-0.5">
-              Launch a 10m study sprint. Focus on one equation or diagram, then take a quick break. Action beats overthinking.
+              Draw the neural architectures on paper! Drawing diagrams for MLPs, SLP boundary lines, and Autoencoder bottlenecks is standard for 90%+ of DL exam papers.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono">Priority Order:</span>
-          <span className="text-[10px] bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-bold font-mono">⭐ Exam Focus</span>
-          <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">Unit 3</span>
-          <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">Unit 2</span>
-          <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">Unit 1</span>
+          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono">Exam Focus:</span>
+          <span className="text-[10px] bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-bold font-mono">14 Core Topics</span>
+          <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">Autoencoders</span>
+          <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">Optimizers</span>
         </div>
       </footer>
     </main>

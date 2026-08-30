@@ -34,7 +34,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'daily-plan', label: 'Morning Plan 🌅', Icon: Sunrise },
     { id: 'now', label: 'My Flow (Now)', Icon: Target },
     { id: 'roadmap', label: 'Curriculum & Tasks', Icon: Map },
-    { id: 'ia1-prep', label: 'IA 1 Prep 📝', Icon: BookOpen },
+    { id: 'sem7', label: 'sem 7 📚', Icon: BookOpen },
     { id: 'intake', label: 'Intake & Planning', Icon: Sparkles },
     { id: 'urges', label: 'Urge Lockdown', Icon: ShieldAlert },
     { id: 'recovery', label: 'Recovery Reset', Icon: RefreshCw },

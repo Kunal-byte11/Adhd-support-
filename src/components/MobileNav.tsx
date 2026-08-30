@@ -29,7 +29,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'daily-plan', label: 'Plan 🌅', Icon: Sunrise },
     { id: 'now', label: 'Flow 🎯', Icon: Target },
     { id: 'roadmap', label: 'Tasks 🗺️', Icon: Map },
-    { id: 'ia1-prep', label: 'IA 1 📝', Icon: BookOpen },
+    { id: 'sem7', label: 'Sem 7 📚', Icon: BookOpen },
     { id: 'urges', label: 'Urge 🛡️', Icon: ShieldAlert },
   ];
 
