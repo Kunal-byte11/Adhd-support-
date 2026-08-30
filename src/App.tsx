@@ -19,6 +19,7 @@ import { RecoveryScreen } from './components/RecoveryScreen';
 import { ADHDHelperScreen } from './components/ADHDHelperScreen';
 import { DailyPlannerScreen } from './components/DailyPlannerScreen';
 import { PartnerHQScreen } from './components/PartnerHQScreen';
+import { IA1PrepScreen } from './components/IA1PrepScreen';
 import { LoginModal } from './components/LoginModal';
 import { UnboxCelebrationModal } from './components/UnboxCelebrationModal';
 import { Sunrise, Sparkles, X, ArrowRight, Heart, KeyRound, UserCheck } from 'lucide-react';
@@ -611,6 +612,12 @@ export default function App() {
             onSendToIntake={handleSendToIntake}
             completedIds={completedCurriculumIds}
             onToggleComplete={handleToggleCurriculumComplete}
+          />
+        )}
+
+        {currentScreen === 'ia1-prep' && (
+          <IA1PrepScreen
+            onStartFocusFromQuestion={(title) => handleStartFocusFromItem(title, 'IA 1 Prep')}
           />
         )}
 
