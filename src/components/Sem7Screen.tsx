@@ -15,6 +15,7 @@ import {
   BookMarked,
   Brain,
   Layers,
+  Link,
 } from 'lucide-react';
 
 interface ChecklistTask {
@@ -28,7 +29,8 @@ interface QuestionMetadata {
   num: number;
   text: string;
   unit?: 1 | 2 | 3;
-  tier?: 1 | 2;
+  tier?: 1 | 2 | 3;
+  priorityRating?: string;
   isHighPriority: boolean;
   evidence?: string;
   tasks: ChecklistTask[];
@@ -36,8 +38,8 @@ interface QuestionMetadata {
 
 const STANDARD_TASKS: ChecklistTask[] = [
   { id: 'concept', label: 'Read & understand core concept', icon: '📖' },
-  { id: 'equations', label: 'Write key equations, formulas & derivations', icon: '🧮' },
-  { id: 'diagram', label: 'Draw/sketch architecture or diagrams (if applicable)', icon: '✏️' },
+  { id: 'equations', label: 'Write key equations, formulas & code derivations', icon: '🧮' },
+  { id: 'diagram', label: 'Draw/sketch architecture or workflow diagrams (if applicable)', icon: '✏️' },
   { id: 'recall', label: 'Active Recall: Write answer from memory & self-verify', icon: '🧠' },
 ];
 
@@ -307,19 +309,206 @@ const BDA_EXAM_QUESTIONS: QuestionMetadata[] = [
   },
 ];
 
+const BCT_EXAM_QUESTIONS: QuestionMetadata[] = [
+  // ================= 5 FLAMES (🔥🔥🔥🔥🔥) =================
+  {
+    id: 'c1',
+    num: 1,
+    text: 'Explain Hyperledger Fabric architecture/components and transaction flow in detail.',
+    tier: 1,
+    priorityRating: '🔥🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c2',
+    num: 2,
+    text: 'Explain Ethereum architecture/components in detail with workflow.',
+    tier: 1,
+    priorityRating: '🔥🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c3',
+    num: 3,
+    text: 'Explain RAFT consensus algorithm with suitable example.',
+    tier: 1,
+    priorityRating: '🔥🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c4',
+    num: 4,
+    text: 'Differentiate between Public, Private and Consortium Blockchain.',
+    tier: 1,
+    priorityRating: '🔥🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c5',
+    num: 5,
+    text: 'Explain PoW, PoS, PoB and PoET. Differentiate between them.',
+    tier: 1,
+    priorityRating: '🔥🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c6',
+    num: 6,
+    text: 'Explain Merkle Tree with suitable example/diagram.',
+    tier: 1,
+    priorityRating: '🔥🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  // ================= 4 FLAMES (🔥🔥🔥🔥) =================
+  {
+    id: 'c7',
+    num: 7,
+    text: 'Explain State Machine Replication with suitable example.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c8',
+    num: 8,
+    text: 'Explain UTXO model of Bitcoin.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c9',
+    num: 9,
+    text: 'Compare Bitcoin and Ethereum.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c10',
+    num: 10,
+    text: 'Explain Double Spending problem and how Bitcoin solves it.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c11',
+    num: 11,
+    text: 'Explain Mining Difficulty and how it is calculated in Proof-of-Work.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c12',
+    num: 12,
+    text: 'Explain types of arrays in Solidity with suitable examples/program.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c13',
+    num: 13,
+    text: 'Explain Solidity visibility and activity/state mutability qualifiers with examples.',
+    tier: 2,
+    priorityRating: '🔥🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  // ================= 2-3 FLAMES (🔥🔥🔥 / 🔥🔥) =================
+  {
+    id: 'c14',
+    num: 14,
+    text: 'Explain View and Pure functions in Solidity with examples.',
+    tier: 3,
+    priorityRating: '🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c15',
+    num: 15,
+    text: 'Write a Solidity program to implement Multi-level/Multiple Inheritance.',
+    tier: 3,
+    priorityRating: '🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c16',
+    num: 16,
+    text: 'Explain Mining Pool and its methods.',
+    tier: 3,
+    priorityRating: '🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c17',
+    num: 17,
+    text: 'Explain Hot Wallet and Cold Wallet. Compare them.',
+    tier: 3,
+    priorityRating: '🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c18',
+    num: 18,
+    text: 'Explain different types of Cryptocurrencies.',
+    tier: 3,
+    priorityRating: '🔥🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c19',
+    num: 19,
+    text: 'Explain Ethereum Virtual Machine (EVM).',
+    tier: 3,
+    priorityRating: '🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'c20',
+    num: 20,
+    text: 'Explain Ripple / Corda as a blockchain platform.',
+    tier: 3,
+    priorityRating: '🔥🔥',
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+];
+
 interface Sem7ScreenProps {
   onStartFocusFromQuestion: (title: string) => void;
 }
 
 export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion }) => {
-  const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda'>('deep-learning');
+  const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda' | 'bct'>('deep-learning');
   const [selectedUnit, setSelectedUnit] = useState<number | 'all'>('all');
   const [selectedTier, setSelectedTier] = useState<number | 'all'>('all');
+  const [selectedBctPriority, setSelectedBctPriority] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   
   // Expanded questions state: maps question ID to boolean
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>(() => {
-    return { q2: true, q11: true, q25: true, b1: true, b3: true, b12: true }; // Keep key ones expanded
+    return { q2: true, q11: true, q25: true, b1: true, b3: true, b12: true, c1: true, c3: true, c6: true };
   });
 
   // DL Checklist progress state
@@ -342,6 +531,16 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
     }
   });
 
+  // BCT Checklist progress state
+  const [progressBCT, setProgressBCT] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('focusflow_sem7_bct_progress');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+
   // Save DL progress
   useEffect(() => {
     try {
@@ -356,6 +555,13 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
     } catch (e) {}
   }, [progressBDA]);
 
+  // Save BCT progress
+  useEffect(() => {
+    try {
+      localStorage.setItem('focusflow_sem7_bct_progress', JSON.stringify(progressBCT));
+    } catch (e) {}
+  }, [progressBCT]);
+
   // Toggle single sub-task
   const toggleSubTask = (qId: string, tId: string) => {
     const key = `${qId}_${tId}`;
@@ -364,8 +570,13 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         ...prev,
         [key]: !prev[key],
       }));
-    } else {
+    } else if (activeSubject === 'bda') {
       setProgressBDA((prev) => ({
+        ...prev,
+        [key]: !prev[key],
+      }));
+    } else {
+      setProgressBCT((prev) => ({
         ...prev,
         [key]: !prev[key],
       }));
@@ -375,7 +586,8 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
   // Toggle main question (select all / deselect all sub-tasks)
   const toggleQuestionAll = (q: QuestionMetadata) => {
     const allTaskKeys = q.tasks.map((t) => `${q.id}_${t.id}`);
-    const currentProgress = activeSubject === 'deep-learning' ? progressDL : progressBDA;
+    const currentProgress =
+      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
     const isCurrentlyFullyCompleted = allTaskKeys.every((key) => !!currentProgress[key]);
     
     const updater = (prev: Record<string, boolean>) => {
@@ -388,8 +600,10 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
     if (activeSubject === 'deep-learning') {
       setProgressDL(updater);
-    } else {
+    } else if (activeSubject === 'bda') {
       setProgressBDA(updater);
+    } else {
+      setProgressBCT(updater);
     }
   };
 
@@ -403,13 +617,15 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
   // Check if a question is fully completed
   const isQuestionCompleted = (q: QuestionMetadata) => {
-    const currentProgress = activeSubject === 'deep-learning' ? progressDL : progressBDA;
+    const currentProgress =
+      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
     return q.tasks.every((t) => !!currentProgress[`${q.id}_${t.id}`]);
   };
 
   // Get completed tasks count for a question
   const getQuestionCompletedCount = (q: QuestionMetadata) => {
-    const currentProgress = activeSubject === 'deep-learning' ? progressDL : progressBDA;
+    const currentProgress =
+      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
     return q.tasks.filter((t) => !!currentProgress[`${q.id}_${t.id}`]).length;
   };
 
@@ -417,8 +633,14 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
   const stats = useMemo(() => {
     let totalTasks = 0;
     let completedTasks = 0;
-    const currentQuestions = activeSubject === 'deep-learning' ? DL_EXAM_QUESTIONS : BDA_EXAM_QUESTIONS;
-    const currentProgress = activeSubject === 'deep-learning' ? progressDL : progressBDA;
+    const currentQuestions =
+      activeSubject === 'deep-learning'
+        ? DL_EXAM_QUESTIONS
+        : activeSubject === 'bda'
+        ? BDA_EXAM_QUESTIONS
+        : BCT_EXAM_QUESTIONS;
+    const currentProgress =
+      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
 
     currentQuestions.forEach((q) => {
       const qTasksCount = q.tasks.length;
@@ -435,7 +657,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
       completedTasks,
       percent,
     };
-  }, [activeSubject, progressDL, progressBDA]);
+  }, [activeSubject, progressDL, progressBDA, progressBCT]);
 
   // Filtered Questions
   const filteredQuestions = useMemo(() => {
@@ -450,7 +672,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
         return matchUnit && matchSearch;
       });
-    } else {
+    } else if (activeSubject === 'bda') {
       return BDA_EXAM_QUESTIONS.filter((q) => {
         const matchTier = selectedTier === 'all' || q.tier === selectedTier;
         const matchSearch =
@@ -462,17 +684,35 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
         return matchTier && matchSearch;
       });
+    } else {
+      return BCT_EXAM_QUESTIONS.filter((q) => {
+        const matchPriority = selectedBctPriority === 'all' || q.tier === selectedBctPriority;
+        const matchSearch =
+          searchQuery.trim() === '' ||
+          q.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (q.priorityRating && q.priorityRating.includes(searchQuery.trim())) ||
+          q.tasks.some((t) => t.label.toLowerCase().includes(searchQuery.toLowerCase()));
+
+        return matchPriority && matchSearch;
+      });
     }
-  }, [activeSubject, selectedUnit, selectedTier, searchQuery]);
+  }, [activeSubject, selectedUnit, selectedTier, selectedBctPriority, searchQuery]);
 
   // Reset progress handler
   const handleResetProgress = () => {
-    const subjectName = activeSubject === 'deep-learning' ? 'Deep Learning' : 'Big Data Analytics';
+    const subjectName =
+      activeSubject === 'deep-learning'
+        ? 'Deep Learning'
+        : activeSubject === 'bda'
+        ? 'Big Data Analytics'
+        : 'Blockchain Technology';
     if (window.confirm(`Are you sure you want to reset all ${subjectName} study progress?`)) {
       if (activeSubject === 'deep-learning') {
         setProgressDL({});
-      } else {
+      } else if (activeSubject === 'bda') {
         setProgressBDA({});
+      } else {
+        setProgressBCT({});
       }
     }
   };
@@ -488,6 +728,134 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         return 'Unit 3 — Autoencoders (Bottleneck architecture, Regularized Autoencoders, Image Compression)';
       default:
         return `Unit ${unitNum}`;
+    }
+  };
+
+  // Helper to render study notes inside BCT cards
+  const renderBctStudyTips = (qId: string) => {
+    switch (qId) {
+      case 'c1':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-purple-50/70 border border-purple-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-purple-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              ⛓️ EXAM GUIDE: HYPERLEDGER FABRIC ARCHITECTURE &amp; TRANSACTION FLOW
+            </p>
+            <p>
+              Hyperledger Fabric is a modular, permissioned enterprise blockchain with identity management (MSP) and private channels.
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Core Components</strong>: Peer Nodes (Endorsing Peers simulate &amp; sign; Committing Peers validate &amp; write to ledger), Orderer Nodes (package transactions into blocks), Certificate Authority (Fabric-CA for PKI identity), World State (CouchDB/LevelDB) + Blockchain log.</li>
+              <li><strong>Execute-Order-Validate Transaction Flow</strong>:
+                <br/>1. <em>Proposal</em>: Client SDK creates transaction proposal and sends to Endorsing Peers.
+                <br/>2. <em>Endorsement</em>: Endorsing peers simulate chaincode execution, generate read/write sets, sign endorsement, and return to Client.
+                <br/>3. <em>Ordering</em>: Client packages endorsed transactions into a broadcast message and sends to Orderer.
+                <br/>4. <em>Delivery</em>: Orderer establishes deterministic block order and delivers blocks to Committing Peers.
+                <br/>5. <em>Validation &amp; Commit</em>: Committing peers verify endorsements match policy, check for read-write conflicts (MVCC), and commit to the local Ledger.
+              </li>
+            </ul>
+          </div>
+        );
+      case 'c2':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-indigo-50/70 border border-indigo-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-indigo-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🌐 EXAM GUIDE: ETHEREUM ARCHITECTURE &amp; WORKFLOW
+            </p>
+            <p>
+              Ethereum is a stateful, Turing-complete decentralized world computer.
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Key Architecture Components</strong>:
+                <br/>- <em>Accounts</em>: Externally Owned Accounts (EOA, controlled by private keys) vs Contract Accounts (controlled by code).
+                <br/>- <em>State Model</em>: World State represented as a modified Merkle Patricia Trie (mapping addresses to account states: nonce, balance, storageRoot, codeHash).
+                <br/>- <em>EVM</em>: Stack-based execution environment (256-bit words) for executing bytecodes.
+                <br/>- <em>Gas System</em>: `GasLimit * GasPrice` prevents infinite loops and pays miners/validators.
+              </li>
+              <li><strong>Execution Workflow</strong>: EOA signs transaction with gas parameters -&gt; Broadcast to mempool -&gt; Validator includes in block -&gt; EVM deducts upfront gas, executes opcodes, modifies state trie, and refunds unused gas.</li>
+            </ul>
+          </div>
+        );
+      case 'c3':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-amber-50/70 border border-amber-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-amber-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              ⚡ EXAM GUIDE: RAFT CONSENSUS ALGORITHM
+            </p>
+            <p>
+              RAFT is a crash fault tolerant (CFT) leader-based consensus algorithm designed for understandability.
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Node Roles</strong>: Leader (handles all client requests and replication), Follower (passive, responds to RPCs), Candidate (requests votes during election).</li>
+              <li><strong>Stage 1: Leader Election</strong>: If followers don't hear heartbeats within a randomized election timeout (150-300ms), they become Candidates, increment term, vote for themselves, and send `RequestVote` RPC. Candidate with majority (&gt; N/2) votes becomes Leader.</li>
+              <li><strong>Stage 2: Log Replication</strong>: Leader accepts client write -&gt; appends entry to local log -&gt; sends `AppendEntries` RPC to followers -&gt; once entry replicated on majority of nodes, Leader commits entry and applies to state machine -&gt; responds to client.</li>
+              <li><strong>Fault Tolerance</strong>: Handles up to \(F\) crashed nodes out of \(2F + 1\) total nodes. (Does not handle Byzantine/malicious actors).</li>
+            </ul>
+          </div>
+        );
+      case 'c5':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-blue-50/70 border border-blue-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-blue-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🔄 EXAM GUIDE: CONSENSUS MECHANISMS COMPARISON (PoW, PoS, PoB, PoET)
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>PoW (Proof of Work)</strong>: Miners compete to find a cryptographic nonce satisfying hash target H(block) &lt; Target. Pros: Battle-tested security, permissionless. Cons: High energy consumption, hardware centralization. (e.g. Bitcoin).</li>
+              <li><strong>PoS (Proof of Stake)</strong>: Validators lock cryptocurrency as collateral (stake). Selection probability is proportional to stake size. Pros: 99.9% energy reduction, faster finality, slashing penalties. (e.g. Ethereum 2.0).</li>
+              <li><strong>PoB (Proof of Burn)</strong>: Miners send coins to an unspendable address (burn address), earning virtual mining rigs that grant block reward probability over time.</li>
+              <li><strong>PoET (Proof of Elapsed Time)</strong>: Uses Intel SGX Trusted Execution Environment. Nodes request a random wait timer from secure enclave; node whose timer expires first wakes up and mints the next block. Ideal for permissioned consortiums (Hyperledger Sawtooth).</li>
+            </ul>
+          </div>
+        );
+      case 'c6':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-rose-50/70 border border-rose-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-rose-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🌳 EXAM GUIDE: MERKLE TREE &amp; VERIFICATION
+            </p>
+            <p>
+              A Merkle tree is a complete binary hash tree where every leaf node is the cryptographic hash of a transaction block, and every non-leaf node is the hash of its children:
+              <br/>
+              <span className="font-mono font-bold block my-1">H_AB = Hash(H_A + H_B)</span>
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Merkle Root</strong>: Stored in the block header. Summarizes all transactions in the block in a fixed 32-byte hash.</li>
+              <li><strong>SPV &amp; Merkle Proofs</strong>: A lightweight client can verify whether transaction T_A is included in a block in O(log N) time by requesting only the sibling hashes along the path to the root (Merkle audit path).</li>
+            </ul>
+          </div>
+        );
+      case 'c8':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-emerald-50/70 border border-emerald-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-emerald-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              💰 EXAM GUIDE: BITCOIN UTXO MODEL
+            </p>
+            <p>
+              Bitcoin does not store account balances. It tracks state via a global set of Unspent Transaction Outputs (UTXO).
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Transaction Anatomy</strong>: Inputs reference and unlock existing unspent outputs via `scriptSig`. Outputs define new unspent coins locked by public key scripts (`scriptPubKey`).</li>
+              <li><strong>Fundamental Invariant</strong>: Sum(Inputs) = Sum(Outputs) + Miner Fee.</li>
+              <li><strong>Advantages</strong>: Complete stateless parallel verification, enhanced privacy (change addresses), prevention of race conditions/re-entrancy vs Account-based state models.</li>
+            </ul>
+          </div>
+        );
+      case 'c12':
+      case 'c13':
+      case 'c14':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-teal-50/70 border border-teal-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-teal-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              💻 EXAM GUIDE: SOLIDITY PROGRAMMING ESSENTIALS
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Arrays</strong>: Fixed size (`uint[5] a;`) vs Dynamic (`uint[] a;`). Memory arrays (`uint[] memory m = new uint[](length);`) cannot be resized (no `.push()`). Storage arrays support `.push()`, `.pop()`, and `.length`.</li>
+              <li><strong>Function Visibility</strong>: `public` (any caller), `private` (only this contract), `internal` (this contract + derived), `external` (only external callers / transactions, gas efficient for large arrays).</li>
+              <li><strong>State Mutability</strong>: `pure` (no state reads or writes), `view` (reads state variables, no modifications), non-view/payable (can modify state; `payable` allows accepting Ether `msg.value`).</li>
+            </ul>
+          </div>
+        );
+      default:
+        return null;
     }
   };
 
@@ -619,7 +987,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             ? 'border-[#c4eccb] bg-[#c4eccb]/10'
             : activeSubject === 'deep-learning'
             ? 'border-rose-200 bg-white hover:border-rose-300 hover:shadow-xs'
-            : 'border-amber-200 bg-white hover:border-amber-300 hover:shadow-xs'
+            : activeSubject === 'bda'
+            ? 'border-amber-200 bg-white hover:border-amber-300 hover:shadow-xs'
+            : 'border-purple-200 bg-white hover:border-purple-300 hover:shadow-xs'
         }`}
       >
         {/* Card Header row */}
@@ -632,10 +1002,14 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 isDone
                   ? activeSubject === 'deep-learning'
                     ? 'bg-rose-600 border-rose-600 text-white'
-                    : 'bg-amber-600 border-amber-600 text-white'
+                    : activeSubject === 'bda'
+                    ? 'bg-amber-600 border-amber-600 text-white'
+                    : 'bg-purple-600 border-purple-600 text-white'
                   : activeSubject === 'deep-learning'
                   ? 'border-rose-400 hover:border-rose-500 hover:bg-rose-50'
-                  : 'border-amber-400 hover:border-amber-500 hover:bg-amber-50'
+                  : activeSubject === 'bda'
+                  ? 'border-amber-400 hover:border-amber-500 hover:bg-amber-50'
+                  : 'border-purple-400 hover:border-purple-500 hover:bg-purple-50'
               }`}
             >
               {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -648,18 +1022,26 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 </span>
 
                 {/* Priority Badges */}
-                {activeSubject === 'deep-learning' ? (
+                {activeSubject === 'deep-learning' && (
                   <span className="text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono">
                     <Star className="w-3 h-3 fill-rose-600 text-rose-600 shrink-0" />
                     <span>EXAM MUST-DO</span>
                   </span>
-                ) : (
+                )}
+
+                {activeSubject === 'bda' && (
                   <span className={`text-[10px] font-extrabold border px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono ${
                     q.tier === 1 
                       ? 'bg-amber-100 text-amber-800 border-amber-200' 
                       : 'bg-blue-100 text-blue-800 border-blue-200'
                   }`}>
                     <span>{q.tier === 1 ? '🥇 TIER 1 MUST-DO' : '🥈 TIER 2 CORE'}</span>
+                  </span>
+                )}
+
+                {activeSubject === 'bct' && q.priorityRating && (
+                  <span className="text-[10px] font-extrabold bg-purple-100 text-purple-800 border border-purple-200 px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono">
+                    <span>{q.priorityRating}</span>
                   </span>
                 )}
 
@@ -691,13 +1073,21 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             <button
               onClick={() =>
                 onStartFocusFromQuestion(
-                  `Study ${activeSubject === 'deep-learning' ? 'DL' : 'BDA'} Topic ${q.num}: ${q.text.split(/[?.:+]/)[0]}`
+                  `Study ${
+                    activeSubject === 'deep-learning'
+                      ? 'DL'
+                      : activeSubject === 'bda'
+                      ? 'BDA'
+                      : 'BCT'
+                  } Topic ${q.num}: ${q.text.split(/[?.:+]/)[0]}`
                 )
               }
               className={`px-2.5 py-1.5 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition-all shadow-xs cursor-pointer font-sans ${
                 activeSubject === 'deep-learning'
                   ? 'bg-rose-600 hover:bg-rose-700'
-                  : 'bg-amber-600 hover:bg-amber-700'
+                  : activeSubject === 'bda'
+                  ? 'bg-amber-600 hover:bg-amber-700'
+                  : 'bg-purple-600 hover:bg-purple-700'
               }`}
               title="Launch 10-minute study sprint in My Flow"
             >
@@ -728,7 +1118,12 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {q.tasks.map((task) => {
                 const key = `${q.id}_${task.id}`;
-                const currentProgress = activeSubject === 'deep-learning' ? progressDL : progressBDA;
+                const currentProgress =
+                  activeSubject === 'deep-learning'
+                    ? progressDL
+                    : activeSubject === 'bda'
+                    ? progressBDA
+                    : progressBCT;
                 const isChecked = !!currentProgress[key];
 
                 return (
@@ -765,7 +1160,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               })}
             </div>
 
-            {/* Extra study tip guides (Topic 25 for DL, or any numerical BDA question) */}
+            {/* Extra study tip guides (Topic 25 for DL, numerical BDA questions, or core BCT questions) */}
             {activeSubject === 'deep-learning' && q.id === 'q25' && (
               <div className="mt-3.5 p-3.5 rounded-xl bg-rose-50/70 border border-rose-100 text-slate-700 text-xs leading-relaxed">
                 <p className="font-extrabold text-rose-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
@@ -786,6 +1181,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             )}
 
             {activeSubject === 'bda' && renderBdaStudyTips(q.id)}
+            {activeSubject === 'bct' && renderBctStudyTips(q.id)}
           </div>
         )}
       </div>
@@ -815,16 +1211,28 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         <div className="bg-white border border-[#c2c8c0] rounded-2xl p-4 shadow-xs flex gap-4 self-start md:self-auto min-w-[240px]">
           <div className="flex-1">
             <div className={`flex items-center justify-between text-xs font-semibold uppercase ${
-              activeSubject === 'deep-learning' ? 'text-rose-500' : 'text-amber-500'
+              activeSubject === 'deep-learning'
+                ? 'text-rose-500'
+                : activeSubject === 'bda'
+                ? 'text-amber-500'
+                : 'text-purple-600'
             }`}>
               <span className="flex items-center gap-1 font-bold">
                 <Star className={`w-3.5 h-3.5 fill-current ${
-                  activeSubject === 'deep-learning' ? 'text-rose-500' : 'text-amber-500'
+                  activeSubject === 'deep-learning'
+                    ? 'text-rose-500'
+                    : activeSubject === 'bda'
+                    ? 'text-amber-500'
+                    : 'text-purple-600'
                 }`} />
-                {activeSubject === 'deep-learning' ? 'DL' : 'BDA'} Prep Progress
+                {activeSubject === 'deep-learning' ? 'DL' : activeSubject === 'bda' ? 'BDA' : 'BCT'} Prep Progress
               </span>
               <span className={`font-extrabold ${
-                activeSubject === 'deep-learning' ? 'text-rose-700' : 'text-amber-700'
+                activeSubject === 'deep-learning'
+                  ? 'text-rose-700'
+                  : activeSubject === 'bda'
+                  ? 'text-amber-700'
+                  : 'text-purple-700'
               }`}>{stats.percent}%</span>
             </div>
             <div className="w-full h-2.5 bg-[#ebeef0] rounded-full mt-2 overflow-hidden">
@@ -832,28 +1240,36 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 className={`h-full rounded-full transition-all duration-300 ${
                   activeSubject === 'deep-learning'
                     ? 'bg-gradient-to-r from-rose-400 to-rose-600'
-                    : 'bg-gradient-to-r from-amber-400 to-amber-600'
+                    : activeSubject === 'bda'
+                    ? 'bg-gradient-to-r from-amber-400 to-amber-600'
+                    : 'bg-gradient-to-r from-purple-400 to-purple-600'
                 }`}
                 style={{ width: `${stats.percent}%` }}
               />
             </div>
             <div className="flex items-center justify-between mt-1 text-[10px] text-slate-400 font-mono">
               <span>{stats.completedTasks}/{stats.totalTasks} sub-steps done</span>
-              <span>{activeSubject === 'deep-learning' ? '14 DL topics' : '15 BDA topics'}</span>
+              <span>
+                {activeSubject === 'deep-learning'
+                  ? '14 DL topics'
+                  : activeSubject === 'bda'
+                  ? '15 BDA topics'
+                  : '20 BCT topics'}
+              </span>
             </div>
           </div>
         </div>
       </header>
 
       {/* Subject Tabs */}
-      <div className="flex border-b border-[#c2c8c0] mb-6">
+      <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6 gap-1 sm:gap-2">
         <button
           onClick={() => {
             setActiveSubject('deep-learning');
             setSelectedUnit('all');
             setSearchQuery('');
           }}
-          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
             activeSubject === 'deep-learning'
               ? 'border-rose-500 text-rose-700 bg-rose-50/40 rounded-t-lg font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -869,7 +1285,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             setSelectedTier('all');
             setSearchQuery('');
           }}
-          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
             activeSubject === 'bda'
               ? 'border-amber-500 text-amber-700 bg-amber-50/40 rounded-t-lg font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -877,6 +1293,22 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         >
           <span className="text-base leading-none">🔥</span>
           <span>bda 🔥 (Top 15 Focus)</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveSubject('bct');
+            setSelectedBctPriority('all');
+            setSearchQuery('');
+          }}
+          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+            activeSubject === 'bct'
+              ? 'border-purple-500 text-purple-700 bg-purple-50/40 rounded-t-lg font-extrabold'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <span className="text-base leading-none">⛓️</span>
+          <span>BCT ⛓️ (Top 20 Expected)</span>
         </button>
       </div>
 
@@ -890,16 +1322,22 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={`Search ${activeSubject === 'deep-learning' ? 'DL' : 'BDA'} topics...`}
+              placeholder={`Search ${
+                activeSubject === 'deep-learning' ? 'DL' : activeSubject === 'bda' ? 'BDA' : 'BCT'
+              } topics...`}
               className={`w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:bg-white focus:outline-none transition-all placeholder-slate-400 ${
-                activeSubject === 'deep-learning' ? 'focus:border-rose-500' : 'focus:border-amber-500'
+                activeSubject === 'deep-learning'
+                  ? 'focus:border-rose-500'
+                  : activeSubject === 'bda'
+                  ? 'focus:border-amber-500'
+                  : 'focus:border-purple-500'
               }`}
             />
           </div>
 
-          {/* Dynamic Filters (Units vs Tiers) */}
+          {/* Dynamic Filters (Units vs Tiers vs Priority Flames) */}
           <div className="flex flex-wrap gap-1.5 self-start md:self-auto">
-            {activeSubject === 'deep-learning' ? (
+            {activeSubject === 'deep-learning' && (
               ([
                 { id: 'all', label: 'All Units' },
                 { id: 1, label: 'Unit 1' },
@@ -918,7 +1356,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                   {unit.label}
                 </button>
               ))
-            ) : (
+            )}
+
+            {activeSubject === 'bda' && (
               ([
                 { id: 'all', label: 'All Tiers' },
                 { id: 1, label: '🥇 Tier 1' },
@@ -937,6 +1377,27 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 </button>
               ))
             )}
+
+            {activeSubject === 'bct' && (
+              ([
+                { id: 'all', label: 'All Priorities' },
+                { id: 1, label: '🔥🔥🔥🔥🔥 5 Flames' },
+                { id: 2, label: '🔥🔥🔥🔥 4 Flames' },
+                { id: 3, label: '🔥🔥🔥 2-3 Flames' },
+              ] as const).map((p) => (
+                <button
+                  key={p.id}
+                  onClick={() => setSelectedBctPriority(p.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    selectedBctPriority === p.id
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'bg-[#f1f4f6] text-slate-600 hover:bg-[#e5e9eb]'
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))
+            )}
           </div>
         </div>
 
@@ -944,12 +1405,18 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-3">
           <p className="text-[11px] font-semibold text-slate-500 flex items-center gap-1 select-none font-mono">
             <Zap className={`w-3.5 h-3.5 shrink-0 ${
-              activeSubject === 'deep-learning' ? 'text-rose-500 fill-rose-500' : 'text-amber-500 fill-amber-500'
+              activeSubject === 'deep-learning'
+                ? 'text-rose-500 fill-rose-500'
+                : activeSubject === 'bda'
+                ? 'text-amber-500 fill-amber-500'
+                : 'text-purple-500 fill-purple-500'
             }`} />
             <span>
               {activeSubject === 'deep-learning'
                 ? 'Focused on 14 high-yield Deep Learning topics'
-                : 'Focused on 15 core Big Data Analytics topics'}
+                : activeSubject === 'bda'
+                ? 'Focused on 15 core Big Data Analytics topics'
+                : 'Focused on 20 top expected Blockchain Technology topics'}
             </span>
           </p>
 
@@ -958,7 +1425,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             className={`flex items-center gap-1 px-3 py-1 text-xs font-bold rounded-lg transition-colors border cursor-pointer ${
               activeSubject === 'deep-learning'
                 ? 'bg-rose-50 hover:bg-rose-100 text-rose-700 border-rose-200'
-                : 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200'
+                : activeSubject === 'bda'
+                ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200'
+                : 'bg-purple-50 hover:bg-purple-100 text-purple-700 border-purple-200'
             }`}
           >
             <Trash2 className="w-3.5 h-3.5" />
@@ -969,7 +1438,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
       {/* Questions list */}
       <div className="space-y-8">
-        {activeSubject === 'deep-learning' ? (
+        {activeSubject === 'deep-learning' && (
           ([1, 2, 3] as const).map((unitNum) => {
             const unitQuestions = filteredQuestions.filter((q) => q.unit === unitNum);
             if (unitQuestions.length === 0) return null;
@@ -986,7 +1455,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               </div>
             );
           })
-        ) : (
+        )}
+
+        {activeSubject === 'bda' && (
           ([1, 2] as const).map((tierNum) => {
             const tierQuestions = filteredQuestions.filter((q) => q.tier === tierNum);
             if (tierQuestions.length === 0) return null;
@@ -1008,6 +1479,35 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             );
           })
         )}
+
+        {activeSubject === 'bct' && (
+          ([1, 2, 3] as const).map((tierNum) => {
+            const priorityQuestions = filteredQuestions.filter((q) => q.tier === tierNum);
+            if (priorityQuestions.length === 0) return null;
+
+            return (
+              <div key={tierNum} className="space-y-4">
+                <h2 className={`text-base sm:text-md font-extrabold tracking-wide border-l-4 pl-3 py-0.5 ${
+                  tierNum === 1 
+                    ? 'text-purple-700 border-purple-700' 
+                    : tierNum === 2 
+                    ? 'text-indigo-700 border-indigo-700' 
+                    : 'text-slate-700 border-slate-700'
+                }`}>
+                  {tierNum === 1 
+                    ? 'Priority: 🔥🔥🔥🔥🔥 (Rank 1–6: Top Critical Core Questions)' 
+                    : tierNum === 2 
+                    ? 'Priority: 🔥🔥🔥🔥 (Rank 7–13: High Priority Mechanisms & Models)' 
+                    : 'Priority: 🔥🔥🔥 / 🔥🔥 (Rank 14–20: Solidity Programs, Wallets & Platforms)'}
+                </h2>
+
+                <div className="space-y-3">
+                  {priorityQuestions.map((q) => renderQuestionCard(q))}
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       {/* Revision Guidelines Widget */}
@@ -1018,12 +1518,18 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
           </div>
           <div>
             <h4 className="text-xs font-bold text-slate-800">
-              {activeSubject === 'deep-learning' ? 'DL Study Hack' : 'BDA Study Hack'}
+              {activeSubject === 'deep-learning'
+                ? 'DL Study Hack'
+                : activeSubject === 'bda'
+                ? 'BDA Study Hack'
+                : 'BCT Study Hack'}
             </h4>
             <p className="text-[11px] text-slate-500 font-semibold mt-0.5">
               {activeSubject === 'deep-learning'
                 ? 'Draw the neural architectures on paper! Drawing diagrams for MLPs and Autoencoder bottlenecks is key.'
-                : 'Formulate HDFS, MapReduce workflows, and Bloom Filter math step-by-step. Practical coding workflow layouts are standard exam questions.'}
+                : activeSubject === 'bda'
+                ? 'Formulate HDFS, MapReduce workflows, and Bloom Filter math step-by-step. Practical coding workflow layouts are standard exam questions.'
+                : 'Master transaction flows (Hyperledger proposal-order-commit, Ethereum state transition) and write clean Solidity syntax.'}
             </p>
           </div>
         </div>
@@ -1035,10 +1541,16 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               <span className="text-[10px] bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-bold font-mono">14 DL Topics</span>
               <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">Autoencoders</span>
             </>
-          ) : (
+          ) : activeSubject === 'bda' ? (
             <>
               <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold font-mono">10 MUST-DOs</span>
               <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold font-mono">5 Core Alg</span>
+            </>
+          ) : (
+            <>
+              <span className="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-bold font-mono">6 🔥x5 Core</span>
+              <span className="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-bold font-mono">7 🔥x4 High</span>
+              <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">7 Solidity/App</span>
             </>
           )}
         </div>
