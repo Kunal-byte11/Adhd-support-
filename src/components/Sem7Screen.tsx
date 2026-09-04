@@ -16,6 +16,8 @@ import {
   Brain,
   Layers,
   Link,
+  BarChart3,
+  ShieldCheck,
 } from 'lucide-react';
 
 interface ChecklistTask {
@@ -31,6 +33,7 @@ interface QuestionMetadata {
   unit?: 1 | 2 | 3;
   tier?: 1 | 2 | 3;
   priorityRating?: string;
+  marks?: 5 | 10;
   isHighPriority: boolean;
   evidence?: string;
   tasks: ChecklistTask[];
@@ -38,8 +41,8 @@ interface QuestionMetadata {
 
 const STANDARD_TASKS: ChecklistTask[] = [
   { id: 'concept', label: 'Read & understand core concept', icon: '📖' },
-  { id: 'equations', label: 'Write key equations, formulas & code derivations', icon: '🧮' },
-  { id: 'diagram', label: 'Draw/sketch architecture or workflow diagrams (if applicable)', icon: '✏️' },
+  { id: 'equations', label: 'Write key equations, frameworks & definitions', icon: '🧮' },
+  { id: 'diagram', label: 'Draw/sketch architecture or process diagrams (if applicable)', icon: '✏️' },
   { id: 'recall', label: 'Active Recall: Write answer from memory & self-verify', icon: '🧠' },
 ];
 
@@ -495,20 +498,327 @@ const BCT_EXAM_QUESTIONS: QuestionMetadata[] = [
   },
 ];
 
+const MIS_EXAM_QUESTIONS: QuestionMetadata[] = [
+  // ================= MODULE 01 — Introduction to Information Systems =================
+  {
+    id: 'm1',
+    num: 1,
+    text: 'How Does IT impact Organizations? [5]',
+    unit: 1,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm2',
+    num: 2,
+    text: 'Explain the impact of information system on organization and society. [10]',
+    unit: 1,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm3',
+    num: 3,
+    text: 'Highlight the Economic impacts of IS. Give example. [10]',
+    unit: 1,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm4',
+    num: 4,
+    text: 'List the various components of CBIS. [5]',
+    unit: 1,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm5',
+    num: 5,
+    text: 'Explain in detail computer-based information systems. [10]',
+    unit: 1,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm6',
+    num: 6,
+    text: 'What are types IS? Explain with example. [10]',
+    unit: 1,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm7',
+    num: 7,
+    text: 'Explain the importance of Information systems to Society. [5]',
+    unit: 1,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm8',
+    num: 8,
+    text: 'Contrast to bring out the advantages and disadvantages of Competitive environment in an organization. [10]',
+    unit: 1,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm9',
+    num: 9,
+    text: 'What are the different types of MIS? [5]',
+    unit: 1,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm10',
+    num: 10,
+    text: 'How is data governance achieved in case of MIS? [5]',
+    unit: 1,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+
+  // ================= MODULE 02 — Data and Knowledge Management / Business Intelligence =================
+  {
+    id: 'm11',
+    num: 11,
+    text: 'Categorize the approach to managing information across an entire organization. [5]',
+    unit: 2,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm12',
+    num: 12,
+    text: 'What is Big Data? What are the various challenges and characteristics of Big Data? [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm13',
+    num: 13,
+    text: 'What is Data Mart and Data Warehouses? Give two examples which show generation of Big Data. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm14',
+    num: 14,
+    text: 'Illustrate Knowledge Management lifecycle. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm15',
+    num: 15,
+    text: 'Illustrate the different types of knowledge and explain four modes of knowledge conversion. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm16',
+    num: 16,
+    text: 'Analyze the impact of BI on Decision making. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm17',
+    num: 17,
+    text: 'Explain Data warehouse and Data Mart in an organization. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm18',
+    num: 18,
+    text: 'Highlight how company can use Big data to gain competitive advantage? [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm19',
+    num: 19,
+    text: 'Explain the steps involved in knowledge capturing. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm20',
+    num: 20,
+    text: 'Explain Data warehouse in an organization. [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm21',
+    num: 21,
+    text: 'Explain the challenges faced by Knowledge management in different business scenarios. [5]',
+    unit: 2,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm22',
+    num: 22,
+    text: 'How the quality of data is ensured in an organization? [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm23',
+    num: 23,
+    text: 'What is the need / Norm for Businesses? [10]',
+    unit: 2,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+
+  // ================= MODULE 03 — Ethical Issues, Privacy and Information Security =================
+  {
+    id: 'm24',
+    num: 24,
+    text: 'Identify the measures to improve cyber security with example. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm25',
+    num: 25,
+    text: 'Define Information security with an example. [5]',
+    unit: 3,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm26',
+    num: 26,
+    text: 'Describe the privacy issues affected by IT. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm27',
+    num: 27,
+    text: 'Discuss how privacy issue can impact transborder data flows? [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm28',
+    num: 28,
+    text: 'Is security an ethical responsibility? Justify with a case study. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm29',
+    num: 29,
+    text: 'Explain the major security threats to information security and discuss the measures for controlling the same. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm30',
+    num: 30,
+    text: 'Identify the five factors that contribute to the increasing vulnerability of information resources, and provide a specific example of each one? [5]',
+    unit: 3,
+    marks: 5,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm31',
+    num: 31,
+    text: 'Give an understanding on types of Control to achieve it. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm32',
+    num: 32,
+    text: 'Evaluate the role of Confidentiality, Integrity and Availability in order to achieve security. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+  {
+    id: 'm33',
+    num: 33,
+    text: 'Analyse the main reasons of Computer Crimes. [10]',
+    unit: 3,
+    marks: 10,
+    isHighPriority: true,
+    tasks: STANDARD_TASKS,
+  },
+];
+
 interface Sem7ScreenProps {
   onStartFocusFromQuestion: (title: string) => void;
 }
 
 export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion }) => {
-  const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda' | 'bct'>('deep-learning');
+  const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda' | 'bct' | 'mis'>('deep-learning');
   const [selectedUnit, setSelectedUnit] = useState<number | 'all'>('all');
   const [selectedTier, setSelectedTier] = useState<number | 'all'>('all');
   const [selectedBctPriority, setSelectedBctPriority] = useState<number | 'all'>('all');
+  const [selectedMisModule, setSelectedMisModule] = useState<number | 'all'>('all');
+  const [selectedMisMarks, setSelectedMisMarks] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Expanded questions state: maps question ID to boolean
+  // Expanded questions state
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>(() => {
-    return { q2: true, q11: true, q25: true, b1: true, b3: true, b12: true, c1: true, c3: true, c6: true };
+    return { q2: true, q11: true, q25: true, b1: true, b3: true, b12: true, c1: true, c3: true, c6: true, m4: true, m15: true, m32: true };
   });
 
   // DL Checklist progress state
@@ -541,45 +851,52 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
     }
   });
 
-  // Save DL progress
+  // MIS Checklist progress state
+  const [progressMIS, setProgressMIS] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('focusflow_sem7_mis_progress');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+
+  // Save progress states
   useEffect(() => {
     try {
       localStorage.setItem('focusflow_sem7_dl_progress', JSON.stringify(progressDL));
     } catch (e) {}
   }, [progressDL]);
 
-  // Save BDA progress
   useEffect(() => {
     try {
       localStorage.setItem('focusflow_sem7_bda_progress', JSON.stringify(progressBDA));
     } catch (e) {}
   }, [progressBDA]);
 
-  // Save BCT progress
   useEffect(() => {
     try {
       localStorage.setItem('focusflow_sem7_bct_progress', JSON.stringify(progressBCT));
     } catch (e) {}
   }, [progressBCT]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem('focusflow_sem7_mis_progress', JSON.stringify(progressMIS));
+    } catch (e) {}
+  }, [progressMIS]);
+
   // Toggle single sub-task
   const toggleSubTask = (qId: string, tId: string) => {
     const key = `${qId}_${tId}`;
     if (activeSubject === 'deep-learning') {
-      setProgressDL((prev) => ({
-        ...prev,
-        [key]: !prev[key],
-      }));
+      setProgressDL((prev) => ({ ...prev, [key]: !prev[key] }));
     } else if (activeSubject === 'bda') {
-      setProgressBDA((prev) => ({
-        ...prev,
-        [key]: !prev[key],
-      }));
+      setProgressBDA((prev) => ({ ...prev, [key]: !prev[key] }));
+    } else if (activeSubject === 'bct') {
+      setProgressBCT((prev) => ({ ...prev, [key]: !prev[key] }));
     } else {
-      setProgressBCT((prev) => ({
-        ...prev,
-        [key]: !prev[key],
-      }));
+      setProgressMIS((prev) => ({ ...prev, [key]: !prev[key] }));
     }
   };
 
@@ -587,7 +904,13 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
   const toggleQuestionAll = (q: QuestionMetadata) => {
     const allTaskKeys = q.tasks.map((t) => `${q.id}_${t.id}`);
     const currentProgress =
-      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
+      activeSubject === 'deep-learning'
+        ? progressDL
+        : activeSubject === 'bda'
+        ? progressBDA
+        : activeSubject === 'bct'
+        ? progressBCT
+        : progressMIS;
     const isCurrentlyFullyCompleted = allTaskKeys.every((key) => !!currentProgress[key]);
     
     const updater = (prev: Record<string, boolean>) => {
@@ -602,8 +925,10 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
       setProgressDL(updater);
     } else if (activeSubject === 'bda') {
       setProgressBDA(updater);
-    } else {
+    } else if (activeSubject === 'bct') {
       setProgressBCT(updater);
+    } else {
+      setProgressMIS(updater);
     }
   };
 
@@ -618,14 +943,26 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
   // Check if a question is fully completed
   const isQuestionCompleted = (q: QuestionMetadata) => {
     const currentProgress =
-      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
+      activeSubject === 'deep-learning'
+        ? progressDL
+        : activeSubject === 'bda'
+        ? progressBDA
+        : activeSubject === 'bct'
+        ? progressBCT
+        : progressMIS;
     return q.tasks.every((t) => !!currentProgress[`${q.id}_${t.id}`]);
   };
 
   // Get completed tasks count for a question
   const getQuestionCompletedCount = (q: QuestionMetadata) => {
     const currentProgress =
-      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
+      activeSubject === 'deep-learning'
+        ? progressDL
+        : activeSubject === 'bda'
+        ? progressBDA
+        : activeSubject === 'bct'
+        ? progressBCT
+        : progressMIS;
     return q.tasks.filter((t) => !!currentProgress[`${q.id}_${t.id}`]).length;
   };
 
@@ -638,9 +975,17 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         ? DL_EXAM_QUESTIONS
         : activeSubject === 'bda'
         ? BDA_EXAM_QUESTIONS
-        : BCT_EXAM_QUESTIONS;
+        : activeSubject === 'bct'
+        ? BCT_EXAM_QUESTIONS
+        : MIS_EXAM_QUESTIONS;
     const currentProgress =
-      activeSubject === 'deep-learning' ? progressDL : activeSubject === 'bda' ? progressBDA : progressBCT;
+      activeSubject === 'deep-learning'
+        ? progressDL
+        : activeSubject === 'bda'
+        ? progressBDA
+        : activeSubject === 'bct'
+        ? progressBCT
+        : progressMIS;
 
     currentQuestions.forEach((q) => {
       const qTasksCount = q.tasks.length;
@@ -657,7 +1002,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
       completedTasks,
       percent,
     };
-  }, [activeSubject, progressDL, progressBDA, progressBCT]);
+  }, [activeSubject, progressDL, progressBDA, progressBCT, progressMIS]);
 
   // Filtered Questions
   const filteredQuestions = useMemo(() => {
@@ -684,7 +1029,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
         return matchTier && matchSearch;
       });
-    } else {
+    } else if (activeSubject === 'bct') {
       return BCT_EXAM_QUESTIONS.filter((q) => {
         const matchPriority = selectedBctPriority === 'all' || q.tier === selectedBctPriority;
         const matchSearch =
@@ -695,8 +1040,21 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
         return matchPriority && matchSearch;
       });
+    } else {
+      return MIS_EXAM_QUESTIONS.filter((q) => {
+        const matchModule = selectedMisModule === 'all' || q.unit === selectedMisModule;
+        const matchMarks = selectedMisMarks === 'all' || q.marks === selectedMisMarks;
+        const matchSearch =
+          searchQuery.trim() === '' ||
+          q.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          `module ${q.unit}`.includes(searchQuery.toLowerCase()) ||
+          `${q.marks} marks`.includes(searchQuery.toLowerCase()) ||
+          q.tasks.some((t) => t.label.toLowerCase().includes(searchQuery.toLowerCase()));
+
+        return matchModule && matchMarks && matchSearch;
+      });
     }
-  }, [activeSubject, selectedUnit, selectedTier, selectedBctPriority, searchQuery]);
+  }, [activeSubject, selectedUnit, selectedTier, selectedBctPriority, selectedMisModule, selectedMisMarks, searchQuery]);
 
   // Reset progress handler
   const handleResetProgress = () => {
@@ -705,14 +1063,18 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         ? 'Deep Learning'
         : activeSubject === 'bda'
         ? 'Big Data Analytics'
-        : 'Blockchain Technology';
+        : activeSubject === 'bct'
+        ? 'Blockchain Technology'
+        : 'Management Information Systems';
     if (window.confirm(`Are you sure you want to reset all ${subjectName} study progress?`)) {
       if (activeSubject === 'deep-learning') {
         setProgressDL({});
       } else if (activeSubject === 'bda') {
         setProgressBDA({});
-      } else {
+      } else if (activeSubject === 'bct') {
         setProgressBCT({});
+      } else {
+        setProgressMIS({});
       }
     }
   };
@@ -728,6 +1090,130 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
         return 'Unit 3 — Autoencoders (Bottleneck architecture, Regularized Autoencoders, Image Compression)';
       default:
         return `Unit ${unitNum}`;
+    }
+  };
+
+  // Helper to render module headers for MIS
+  const getMisModuleName = (modNum: number) => {
+    switch (modNum) {
+      case 1:
+        return 'MODULE 01 — Introduction to Information Systems (CBIS Components, IT Impacts, Types of IS, Data Governance)';
+      case 2:
+        return 'MODULE 02 — Data and Knowledge Management / Business Intelligence (Big Data, Data Mart/Warehouse, KM Lifecycle, SECI Model, BI)';
+      case 3:
+        return 'MODULE 03 — Ethical Issues, Privacy and Information Security (Cybersecurity, Transborder Data Flows, CIA Triad, Security Controls)';
+      default:
+        return `MODULE 0${modNum}`;
+    }
+  };
+
+  // Helper to render study notes inside MIS cards
+  const renderMisStudyTips = (qId: string) => {
+    switch (qId) {
+      case 'm4':
+      case 'm5':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-teal-50/70 border border-teal-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-teal-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              📊 EXAM GUIDE: 6 COMPONENTS OF CBIS
+            </p>
+            <p>
+              A Computer-Based Information System (CBIS) uses computer technology to perform intended tasks.
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>1. Hardware</strong>: Physical computer equipment (servers, processors, storage devices, input/output).</li>
+              <li><strong>2. Software</strong>: System software (OS) and Application software (custom apps, ERP, CRM).</li>
+              <li><strong>3. Data / Database</strong>: Raw facts organized in tables, relations, and data warehouses for querying.</li>
+              <li><strong>4. Network / Telecommunications</strong>: Connecting systems across LAN, WAN, internet, intranets, cloud.</li>
+              <li><strong>5. Procedures</strong>: Rules, policies, and guidelines for operating the system and processing data.</li>
+              <li><strong>6. People</strong>: Users, managers, systems analysts, database administrators, and IT personnel.</li>
+            </ul>
+          </div>
+        );
+      case 'm6':
+      case 'm9':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-blue-50/70 border border-blue-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-blue-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🏢 EXAM GUIDE: TYPES OF INFORMATION SYSTEMS HIERARCHY
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>TPS (Transaction Processing Systems)</strong>: Operational level. Records daily routine transactions (e.g. POS billing, payroll, ATM withdrawals).</li>
+              <li><strong>MIS (Management Information Systems)</strong>: Middle management. Generates structured periodic reports from TPS data for monitoring &amp; control (e.g. monthly sales summary).</li>
+              <li><strong>DSS (Decision Support Systems)</strong>: Middle/Senior management. Interactive models for semi-structured/unstructured decision-making (What-If analysis, goal seeking).</li>
+              <li><strong>EIS / ESS (Executive Information Systems)</strong>: Strategic top-level. Provides summarized drill-down dashboards, KPI tracking, internal &amp; external environment data.</li>
+              <li><strong>Enterprise Systems</strong>: Cross-functional systems integrating business processes: ERP, CRM, SCM, and Knowledge Management.</li>
+            </ul>
+          </div>
+        );
+      case 'm13':
+      case 'm17':
+      case 'm20':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-amber-50/70 border border-amber-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-amber-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              💾 EXAM GUIDE: DATA WAREHOUSE VS DATA MART
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Data Warehouse (DW)</strong>: Subject-oriented, integrated, time-variant, non-volatile central collection of organizational data from multiple operational sources. Supports enterprise-wide BI analytics.</li>
+              <li><strong>Data Mart</strong>: A departmental subset or focused mini-warehouse designed for a specific business unit (e.g., Marketing Data Mart, Financial Data Mart). Faster deployment, lower cost.</li>
+              <li><strong>Generation of Big Data Examples</strong>: 1. IoT sensor logs from smart grids / connected vehicles. 2. Real-time clickstream data from millions of e-commerce user visits.</li>
+            </ul>
+          </div>
+        );
+      case 'm14':
+      case 'm15':
+      case 'm19':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-purple-50/70 border border-purple-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-purple-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🧠 EXAM GUIDE: KNOWLEDGE MANAGEMENT &amp; NONAKA'S SECI MODEL
+            </p>
+            <p>
+              Knowledge types: <strong>Tacit Knowledge</strong> (intuitive, experiential, difficult to formalize) vs <strong>Explicit Knowledge</strong> (codified, documented in manuals and databases).
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>1. Socialization (Tacit -&gt; Tacit)</strong>: Sharing experiences, mentoring, apprenticeships, observation.</li>
+              <li><strong>2. Externalization (Tacit -&gt; Explicit)</strong>: Articulating tacit knowledge into concepts, models, diagrams, manuals.</li>
+              <li><strong>3. Combination (Explicit -&gt; Explicit)</strong>: Systemizing, merging, sorting, and aggregating different explicit knowledge sources.</li>
+              <li><strong>4. Internalization (Explicit -&gt; Tacit)</strong>: Absorbing explicit knowledge by learning by doing, creating new mental models.</li>
+              <li><strong>KM Lifecycle</strong>: Create/Discover -&gt; Capture/Document -&gt; Refine/Organize -&gt; Store/Repository -&gt; Share/Disseminate -&gt; Apply.</li>
+            </ul>
+          </div>
+        );
+      case 'm31':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-rose-50/70 border border-rose-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-rose-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🛡️ EXAM GUIDE: TYPES OF INFORMATION SYSTEM CONTROLS
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>General Controls</strong>: Govern design, security, and usage of computer programs throughout the entire enterprise:
+                <br/>- Software controls (OS security), Hardware physical controls, Computer operations controls, Data security controls, Implementation controls, Administrative controls (policies, segregation of duties).
+              </li>
+              <li><strong>Application Controls</strong>: Specific controls built into individual software applications:
+                <br/>- <em>Input Controls</em>: Validation, data format checks, authorization verification.
+                <br/>- <em>Processing Controls</em>: Check sums, sequence checks, consistency rules.
+                <br/>- <em>Output Controls</em>: Reconciliation reports, output access control, audit logs.
+              </li>
+            </ul>
+          </div>
+        );
+      case 'm32':
+        return (
+          <div className="mt-3.5 p-3 rounded-xl bg-emerald-50/70 border border-emerald-100 text-slate-700 text-xs">
+            <p className="font-extrabold text-emerald-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
+              🔒 EXAM GUIDE: CIA TRIAD IN INFORMATION SECURITY
+            </p>
+            <ul className="list-disc pl-4 mt-1 space-y-1 font-semibold text-slate-800">
+              <li><strong>Confidentiality</strong>: Preserving authorized restrictions on access and disclosure, including means for protecting personal privacy and proprietary information (encryption, access control lists, MFA).</li>
+              <li><strong>Integrity</strong>: Guarding against improper information modification or destruction, ensuring information non-repudiation and authenticity (digital signatures, hash checks, transaction logging).</li>
+              <li><strong>Availability</strong>: Ensuring timely and reliable access to and use of information and services (redundancy, failover clusters, DDoS mitigation, regular backups).</li>
+            </ul>
+          </div>
+        );
+      default:
+        return null;
     }
   };
 
@@ -788,7 +1274,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               <li><strong>Node Roles</strong>: Leader (handles all client requests and replication), Follower (passive, responds to RPCs), Candidate (requests votes during election).</li>
               <li><strong>Stage 1: Leader Election</strong>: If followers don't hear heartbeats within a randomized election timeout (150-300ms), they become Candidates, increment term, vote for themselves, and send `RequestVote` RPC. Candidate with majority (&gt; N/2) votes becomes Leader.</li>
               <li><strong>Stage 2: Log Replication</strong>: Leader accepts client write -&gt; appends entry to local log -&gt; sends `AppendEntries` RPC to followers -&gt; once entry replicated on majority of nodes, Leader commits entry and applies to state machine -&gt; responds to client.</li>
-              <li><strong>Fault Tolerance</strong>: Handles up to \(F\) crashed nodes out of \(2F + 1\) total nodes. (Does not handle Byzantine/malicious actors).</li>
+              <li><strong>Fault Tolerance</strong>: Handles up to F crashed nodes out of 2F + 1 total nodes. (Does not handle Byzantine/malicious actors).</li>
             </ul>
           </div>
         );
@@ -989,7 +1475,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             ? 'border-rose-200 bg-white hover:border-rose-300 hover:shadow-xs'
             : activeSubject === 'bda'
             ? 'border-amber-200 bg-white hover:border-amber-300 hover:shadow-xs'
-            : 'border-purple-200 bg-white hover:border-purple-300 hover:shadow-xs'
+            : activeSubject === 'bct'
+            ? 'border-purple-200 bg-white hover:border-purple-300 hover:shadow-xs'
+            : 'border-emerald-200 bg-white hover:border-emerald-300 hover:shadow-xs'
         }`}
       >
         {/* Card Header row */}
@@ -1004,12 +1492,16 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                     ? 'bg-rose-600 border-rose-600 text-white'
                     : activeSubject === 'bda'
                     ? 'bg-amber-600 border-amber-600 text-white'
-                    : 'bg-purple-600 border-purple-600 text-white'
+                    : activeSubject === 'bct'
+                    ? 'bg-purple-600 border-purple-600 text-white'
+                    : 'bg-emerald-600 border-emerald-600 text-white'
                   : activeSubject === 'deep-learning'
                   ? 'border-rose-400 hover:border-rose-500 hover:bg-rose-50'
                   : activeSubject === 'bda'
                   ? 'border-amber-400 hover:border-amber-500 hover:bg-amber-50'
-                  : 'border-purple-400 hover:border-purple-500 hover:bg-purple-50'
+                  : activeSubject === 'bct'
+                  ? 'border-purple-400 hover:border-purple-500 hover:bg-purple-50'
+                  : 'border-emerald-400 hover:border-emerald-500 hover:bg-emerald-50'
               }`}
             >
               {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -1018,10 +1510,10 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-mono">
-                  Topic {q.num}
+                  {activeSubject === 'mis' ? `Q${q.num}` : `Topic ${q.num}`}
                 </span>
 
-                {/* Priority Badges */}
+                {/* Priority / Marks Badges */}
                 {activeSubject === 'deep-learning' && (
                   <span className="text-[10px] font-extrabold bg-rose-100 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono">
                     <Star className="w-3 h-3 fill-rose-600 text-rose-600 shrink-0" />
@@ -1042,6 +1534,16 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 {activeSubject === 'bct' && q.priorityRating && (
                   <span className="text-[10px] font-extrabold bg-purple-100 text-purple-800 border border-purple-200 px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono">
                     <span>{q.priorityRating}</span>
+                  </span>
+                )}
+
+                {activeSubject === 'mis' && (
+                  <span className={`text-[10px] font-extrabold border px-2 py-0.5 rounded-full flex items-center gap-0.5 font-mono ${
+                    q.marks === 10 
+                      ? 'bg-emerald-100 text-emerald-800 border-emerald-200' 
+                      : 'bg-teal-100 text-teal-800 border-teal-200'
+                  }`}>
+                    <span>{q.marks === 10 ? '⭐ 10 MARKS' : '📝 5 MARKS'}</span>
                   </span>
                 )}
 
@@ -1078,8 +1580,10 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                       ? 'DL'
                       : activeSubject === 'bda'
                       ? 'BDA'
-                      : 'BCT'
-                  } Topic ${q.num}: ${q.text.split(/[?.:+]/)[0]}`
+                      : activeSubject === 'bct'
+                      ? 'BCT'
+                      : 'MIS'
+                  } Q${q.num}: ${q.text.split(/[?.:+\[]/)[0]}`
                 )
               }
               className={`px-2.5 py-1.5 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition-all shadow-xs cursor-pointer font-sans ${
@@ -1087,7 +1591,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                   ? 'bg-rose-600 hover:bg-rose-700'
                   : activeSubject === 'bda'
                   ? 'bg-amber-600 hover:bg-amber-700'
-                  : 'bg-purple-600 hover:bg-purple-700'
+                  : activeSubject === 'bct'
+                  ? 'bg-purple-600 hover:bg-purple-700'
+                  : 'bg-emerald-600 hover:bg-emerald-700'
               }`}
               title="Launch 10-minute study sprint in My Flow"
             >
@@ -1123,7 +1629,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                     ? progressDL
                     : activeSubject === 'bda'
                     ? progressBDA
-                    : progressBCT;
+                    : activeSubject === 'bct'
+                    ? progressBCT
+                    : progressMIS;
                 const isChecked = !!currentProgress[key];
 
                 return (
@@ -1160,7 +1668,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               })}
             </div>
 
-            {/* Extra study tip guides (Topic 25 for DL, numerical BDA questions, or core BCT questions) */}
+            {/* Extra study tip guides */}
             {activeSubject === 'deep-learning' && q.id === 'q25' && (
               <div className="mt-3.5 p-3.5 rounded-xl bg-rose-50/70 border border-rose-100 text-slate-700 text-xs leading-relaxed">
                 <p className="font-extrabold text-rose-800 flex items-center gap-1 mb-1 font-mono text-[10px]">
@@ -1182,6 +1690,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
 
             {activeSubject === 'bda' && renderBdaStudyTips(q.id)}
             {activeSubject === 'bct' && renderBctStudyTips(q.id)}
+            {activeSubject === 'mis' && renderMisStudyTips(q.id)}
           </div>
         )}
       </div>
@@ -1215,7 +1724,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 ? 'text-rose-500'
                 : activeSubject === 'bda'
                 ? 'text-amber-500'
-                : 'text-purple-600'
+                : activeSubject === 'bct'
+                ? 'text-purple-600'
+                : 'text-emerald-600'
             }`}>
               <span className="flex items-center gap-1 font-bold">
                 <Star className={`w-3.5 h-3.5 fill-current ${
@@ -1223,16 +1734,26 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                     ? 'text-rose-500'
                     : activeSubject === 'bda'
                     ? 'text-amber-500'
-                    : 'text-purple-600'
+                    : activeSubject === 'bct'
+                    ? 'text-purple-600'
+                    : 'text-emerald-600'
                 }`} />
-                {activeSubject === 'deep-learning' ? 'DL' : activeSubject === 'bda' ? 'BDA' : 'BCT'} Prep Progress
+                {activeSubject === 'deep-learning'
+                  ? 'DL'
+                  : activeSubject === 'bda'
+                  ? 'BDA'
+                  : activeSubject === 'bct'
+                  ? 'BCT'
+                  : 'MIS'} Prep Progress
               </span>
               <span className={`font-extrabold ${
                 activeSubject === 'deep-learning'
                   ? 'text-rose-700'
                   : activeSubject === 'bda'
                   ? 'text-amber-700'
-                  : 'text-purple-700'
+                  : activeSubject === 'bct'
+                  ? 'text-purple-700'
+                  : 'text-emerald-700'
               }`}>{stats.percent}%</span>
             </div>
             <div className="w-full h-2.5 bg-[#ebeef0] rounded-full mt-2 overflow-hidden">
@@ -1242,7 +1763,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                     ? 'bg-gradient-to-r from-rose-400 to-rose-600'
                     : activeSubject === 'bda'
                     ? 'bg-gradient-to-r from-amber-400 to-amber-600'
-                    : 'bg-gradient-to-r from-purple-400 to-purple-600'
+                    : activeSubject === 'bct'
+                    ? 'bg-gradient-to-r from-purple-400 to-purple-600'
+                    : 'bg-gradient-to-r from-emerald-400 to-emerald-600'
                 }`}
                 style={{ width: `${stats.percent}%` }}
               />
@@ -1254,7 +1777,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                   ? '14 DL topics'
                   : activeSubject === 'bda'
                   ? '15 BDA topics'
-                  : '20 BCT topics'}
+                  : activeSubject === 'bct'
+                  ? '20 BCT topics'
+                  : '33 MIS questions'}
               </span>
             </div>
           </div>
@@ -1269,14 +1794,14 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             setSelectedUnit('all');
             setSearchQuery('');
           }}
-          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 py-3 px-3.5 sm:px-4 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
             activeSubject === 'deep-learning'
               ? 'border-rose-500 text-rose-700 bg-rose-50/40 rounded-t-lg font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
           <Brain className="w-4 h-4 text-rose-600" />
-          <span>Deep Learning (IA-1 Focus)</span>
+          <span>Deep Learning (IA-1)</span>
         </button>
 
         <button
@@ -1285,14 +1810,14 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             setSelectedTier('all');
             setSearchQuery('');
           }}
-          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 py-3 px-3.5 sm:px-4 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
             activeSubject === 'bda'
               ? 'border-amber-500 text-amber-700 bg-amber-50/40 rounded-t-lg font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <span className="text-base leading-none">🔥</span>
-          <span>bda 🔥 (Top 15 Focus)</span>
+          <span className="text-sm leading-none">🔥</span>
+          <span>bda 🔥 (Top 15)</span>
         </button>
 
         <button
@@ -1301,14 +1826,31 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             setSelectedBctPriority('all');
             setSearchQuery('');
           }}
-          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 py-3 px-3.5 sm:px-4 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
             activeSubject === 'bct'
               ? 'border-purple-500 text-purple-700 bg-purple-50/40 rounded-t-lg font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <span className="text-base leading-none">⛓️</span>
-          <span>BCT ⛓️ (Top 20 Expected)</span>
+          <span className="text-sm leading-none">⛓️</span>
+          <span>BCT ⛓️ (Top 20)</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveSubject('mis');
+            setSelectedMisModule('all');
+            setSelectedMisMarks('all');
+            setSearchQuery('');
+          }}
+          className={`flex items-center gap-2 py-3 px-3.5 sm:px-4 text-xs sm:text-sm font-bold border-b-2 transition-all cursor-pointer ${
+            activeSubject === 'mis'
+              ? 'border-emerald-600 text-emerald-800 bg-emerald-50/40 rounded-t-lg font-extrabold'
+              : 'border-transparent text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <BarChart3 className="w-4 h-4 text-emerald-700" />
+          <span>MIS 📊 (33 Questions)</span>
         </button>
       </div>
 
@@ -1323,19 +1865,27 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={`Search ${
-                activeSubject === 'deep-learning' ? 'DL' : activeSubject === 'bda' ? 'BDA' : 'BCT'
+                activeSubject === 'deep-learning'
+                  ? 'DL'
+                  : activeSubject === 'bda'
+                  ? 'BDA'
+                  : activeSubject === 'bct'
+                  ? 'BCT'
+                  : 'MIS'
               } topics...`}
               className={`w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:bg-white focus:outline-none transition-all placeholder-slate-400 ${
                 activeSubject === 'deep-learning'
                   ? 'focus:border-rose-500'
                   : activeSubject === 'bda'
                   ? 'focus:border-amber-500'
-                  : 'focus:border-purple-500'
+                  : activeSubject === 'bct'
+                  ? 'focus:border-purple-500'
+                  : 'focus:border-emerald-600'
               }`}
             />
           </div>
 
-          {/* Dynamic Filters (Units vs Tiers vs Priority Flames) */}
+          {/* Dynamic Filters */}
           <div className="flex flex-wrap gap-1.5 self-start md:self-auto">
             {activeSubject === 'deep-learning' && (
               ([
@@ -1398,6 +1948,51 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 </button>
               ))
             )}
+
+            {activeSubject === 'mis' && (
+              <>
+                <div className="flex gap-1">
+                  {([
+                    { id: 'all', label: 'All Modules' },
+                    { id: 1, label: 'Mod 1' },
+                    { id: 2, label: 'Mod 2' },
+                    { id: 3, label: 'Mod 3' },
+                  ] as const).map((m) => (
+                    <button
+                      key={m.id}
+                      onClick={() => setSelectedMisModule(m.id)}
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        selectedMisModule === m.id
+                          ? 'bg-emerald-600 text-white shadow-xs'
+                          : 'bg-[#f1f4f6] text-slate-600 hover:bg-[#e5e9eb]'
+                      }`}
+                    >
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex gap-1 ml-2 border-l border-slate-200 pl-2">
+                  {([
+                    { id: 'all', label: 'All Marks' },
+                    { id: 10, label: '10M ⭐' },
+                    { id: 5, label: '5M' },
+                  ] as const).map((mk) => (
+                    <button
+                      key={mk.id}
+                      onClick={() => setSelectedMisMarks(mk.id)}
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        selectedMisMarks === mk.id
+                          ? 'bg-teal-700 text-white shadow-xs'
+                          : 'bg-[#f1f4f6] text-slate-600 hover:bg-[#e5e9eb]'
+                      }`}
+                    >
+                      {mk.label}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -1409,14 +2004,18 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 ? 'text-rose-500 fill-rose-500'
                 : activeSubject === 'bda'
                 ? 'text-amber-500 fill-amber-500'
-                : 'text-purple-500 fill-purple-500'
+                : activeSubject === 'bct'
+                ? 'text-purple-500 fill-purple-500'
+                : 'text-emerald-500 fill-emerald-500'
             }`} />
             <span>
               {activeSubject === 'deep-learning'
                 ? 'Focused on 14 high-yield Deep Learning topics'
                 : activeSubject === 'bda'
                 ? 'Focused on 15 core Big Data Analytics topics'
-                : 'Focused on 20 top expected Blockchain Technology topics'}
+                : activeSubject === 'bct'
+                ? 'Focused on 20 top expected Blockchain Technology topics'
+                : 'Focused on 33 module-wise Management Information Systems questions'}
             </span>
           </p>
 
@@ -1427,7 +2026,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 ? 'bg-rose-50 hover:bg-rose-100 text-rose-700 border-rose-200'
                 : activeSubject === 'bda'
                 ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200'
-                : 'bg-purple-50 hover:bg-purple-100 text-purple-700 border-purple-200'
+                : activeSubject === 'bct'
+                ? 'bg-purple-50 hover:bg-purple-100 text-purple-700 border-purple-200'
+                : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200'
             }`}
           >
             <Trash2 className="w-3.5 h-3.5" />
@@ -1508,6 +2109,25 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
             );
           })
         )}
+
+        {activeSubject === 'mis' && (
+          ([1, 2, 3] as const).map((modNum) => {
+            const modQuestions = filteredQuestions.filter((q) => q.unit === modNum);
+            if (modQuestions.length === 0) return null;
+
+            return (
+              <div key={modNum} className="space-y-4">
+                <h2 className="text-base sm:text-md font-extrabold text-emerald-800 tracking-wide border-l-4 border-emerald-600 pl-3 py-0.5">
+                  {getMisModuleName(modNum)}
+                </h2>
+
+                <div className="space-y-3">
+                  {modQuestions.map((q) => renderQuestionCard(q))}
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
       {/* Revision Guidelines Widget */}
@@ -1522,14 +2142,18 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                 ? 'DL Study Hack'
                 : activeSubject === 'bda'
                 ? 'BDA Study Hack'
-                : 'BCT Study Hack'}
+                : activeSubject === 'bct'
+                ? 'BCT Study Hack'
+                : 'MIS Study Hack'}
             </h4>
             <p className="text-[11px] text-slate-500 font-semibold mt-0.5">
               {activeSubject === 'deep-learning'
                 ? 'Draw the neural architectures on paper! Drawing diagrams for MLPs and Autoencoder bottlenecks is key.'
                 : activeSubject === 'bda'
                 ? 'Formulate HDFS, MapReduce workflows, and Bloom Filter math step-by-step. Practical coding workflow layouts are standard exam questions.'
-                : 'Master transaction flows (Hyperledger proposal-order-commit, Ethereum state transition) and write clean Solidity syntax.'}
+                : activeSubject === 'bct'
+                ? 'Master transaction flows (Hyperledger proposal-order-commit, Ethereum state transition) and write clean Solidity syntax.'
+                : 'Structure your answers using standard frameworks: draw CBIS 6 components, SECI 4 modes matrix, Data Warehouse layers, and the CIA Triad.'}
             </p>
           </div>
         </div>
@@ -1546,11 +2170,17 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
               <span className="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-bold font-mono">10 MUST-DOs</span>
               <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold font-mono">5 Core Alg</span>
             </>
-          ) : (
+          ) : activeSubject === 'bct' ? (
             <>
               <span className="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-bold font-mono">6 🔥x5 Core</span>
               <span className="text-[10px] bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full font-bold font-mono">7 🔥x4 High</span>
               <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">7 Solidity/App</span>
+            </>
+          ) : (
+            <>
+              <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold font-mono">10 Mod 1</span>
+              <span className="text-[10px] bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full font-bold font-mono">13 Mod 2</span>
+              <span className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-bold font-mono">10 Mod 3</span>
             </>
           )}
         </div>
