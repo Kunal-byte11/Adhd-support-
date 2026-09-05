@@ -1,15 +1,14 @@
 import React from 'react';
 import { ScreenType, UserRole } from '../types';
 import {
-  Target,
   Map,
-  ShieldAlert,
-  Sparkles,
   Heart,
-  Sunrise,
-  KeyRound,
   LucideIcon,
   BookOpen,
+  Brain,
+  Headphones,
+  Wind,
+  Target,
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -26,15 +25,21 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   onOpenLoginModal,
 }) => {
   const kunalNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
-    { id: 'daily-plan', label: 'Plan 🌅', Icon: Sunrise },
-    { id: 'now', label: 'Flow 🎯', Icon: Target },
-    { id: 'roadmap', label: 'Tasks 🗺️', Icon: Map },
-    { id: 'sem7', label: 'Sem 7 📚', Icon: BookOpen },
-    { id: 'urges', label: 'Urge 🛡️', Icon: ShieldAlert },
+    { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
+    { id: 'roadmap', label: 'Tasks', Icon: Map },
+    { id: 'woop', label: 'WOOP', Icon: Target },
+    { id: 'recalls', label: 'Recalls', Icon: BookOpen },
+    { id: 'breathing', label: 'Sigh', Icon: Wind },
+    { id: 'sounds', label: '40Hz', Icon: Headphones },
   ];
 
   const partnerNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
-    { id: 'partner-hq', label: 'Partner HQ 💖', Icon: Heart },
+    { id: 'partner-hq', label: 'Partner', Icon: Heart },
+    { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
+    { id: 'woop', label: 'WOOP', Icon: Target },
+    { id: 'recalls', label: 'Recalls', Icon: BookOpen },
+    { id: 'breathing', label: 'Sigh', Icon: Wind },
+    { id: 'sounds', label: '40Hz', Icon: Headphones },
   ];
 
   const navItems = userRole === 'partner' ? partnerNavItems : kunalNavItems;
@@ -42,7 +47,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   return (
     <nav
       id="mobile-bottom-nav"
-      className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-1 pb-3 pt-2 md:hidden bg-[#ffffff] rounded-t-2xl border-t border-[#c2c8c0] shadow-md"
+      className="fixed bottom-0 left-0 w-full z-50 flex items-center px-2 pb-3 pt-2 md:hidden bg-[#ffffff] rounded-t-2xl border-t border-[#c2c8c0] shadow-lg overflow-x-auto no-scrollbar gap-1"
     >
       {navItems.map((item) => {
         const isActive = currentScreen === item.id;
@@ -52,14 +57,14 @@ export const MobileNav: React.FC<MobileNavProps> = ({
             key={item.id}
             id={`mobile-nav-${item.id}`}
             onClick={() => onNavigate(item.id)}
-            className={`flex flex-col items-center justify-center flex-1 transition-transform active:scale-90 py-1 cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-[54px] flex-1 transition-transform active:scale-90 py-1 px-1 cursor-pointer rounded-xl ${
               isActive
-                ? 'text-[#43664c] font-bold'
-                : 'text-[#545f72] active:bg-[#ebeef0] rounded-lg'
+                ? 'text-[#43664c] bg-[#8bb192]/15 font-bold'
+                : 'text-[#545f72] hover:text-[#181c1e]'
             }`}
           >
-            <Icon className={`mb-0.5 w-5 h-5 ${isActive ? 'text-[#43664c]' : 'text-[#545f72]'}`} />
-            <span className="text-[10px] uppercase font-semibold tracking-wider">
+            <Icon className={`mb-0.5 w-4 h-4 ${isActive ? 'text-[#43664c]' : 'text-[#545f72]'}`} />
+            <span className="text-[10px] tracking-tight font-bold truncate max-w-[56px]">
               {item.label}
             </span>
           </button>
@@ -69,16 +74,17 @@ export const MobileNav: React.FC<MobileNavProps> = ({
       {/* Switch profile shortcut */}
       <button
         onClick={onOpenLoginModal}
-        className="flex flex-col items-center justify-center px-2 py-1 text-slate-500 active:scale-90 cursor-pointer"
+        className="flex flex-col items-center justify-center px-2 py-1 text-slate-500 active:scale-90 cursor-pointer min-w-[44px]"
         title="Switch user"
       >
-        <span className="text-base mb-0.5">
+        <span className="text-sm mb-0.5">
           {userRole === 'partner' ? '💖' : '👨‍💻'}
         </span>
-        <span className="text-[9px] uppercase font-bold text-slate-400">
+        <span className="text-[9px] font-bold text-slate-400 uppercase">
           Switch
         </span>
       </button>
     </nav>
   );
 };
+

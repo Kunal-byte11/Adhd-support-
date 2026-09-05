@@ -18,7 +18,22 @@ import {
   Link,
   BarChart3,
   ShieldCheck,
+  Pause,
+  RotateCcw,
+  X,
+  Clock,
+  PhoneOff,
+  Smartphone,
+  ShieldAlert,
+  PenTool,
+  Send,
+  Wind,
+  Flame,
+  Target,
 } from 'lucide-react';
+import { IWoopGoal, ISessionRecall } from '../types';
+import { saveRecallLogToFirestore } from '../lib/firestoreService';
+import { NeuroDeck } from './NeuroDeck';
 
 interface ChecklistTask {
   id: string;
@@ -804,10 +819,16 @@ const MIS_EXAM_QUESTIONS: QuestionMetadata[] = [
 ];
 
 interface Sem7ScreenProps {
-  onStartFocusFromQuestion: (title: string) => void;
+  onStartFocusFromQuestion?: (title: string) => void;
+  woopGoals?: IWoopGoal[];
+  onOpenWoopModal?: () => void;
 }
 
-export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion }) => {
+export const Sem7Screen: React.FC<Sem7ScreenProps> = ({
+  onStartFocusFromQuestion,
+  woopGoals = [],
+  onOpenWoopModal,
+}) => {
   const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda' | 'bct' | 'mis'>('deep-learning');
   const [selectedUnit, setSelectedUnit] = useState<number | 'all'>('all');
   const [selectedTier, setSelectedTier] = useState<number | 'all'>('all');
@@ -815,6 +836,111 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
   const [selectedMisModule, setSelectedMisModule] = useState<number | 'all'>('all');
   const [selectedMisMarks, setSelectedMisMarks] = useState<number | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Built-in Focus Sprint & Neuroscience Protocols
+  const [sprintQuestion, setSprintQuestion] = useState<QuestionMetadata | null>(null);
+  const [sprintSecondsLeft, setSprintSecondsLeft] = useState<number>(600);
+  const [sprintTotalDuration, setSprintTotalDuration] = useState<number>(600);
+  const [isSprintRunning, setIsSprintRunning] = useState<boolean>(false);
+  const [phoneDistanced, setPhoneDistanced] = useState<boolean>(true);
+  
+  // SDAP Waking Micro-Rest State
+  const [isMicroRestActive, setIsMicroRestActive] = useState<boolean>(false);
+  const [microRestSeconds, setMicroRestSeconds] = useState<number>(15);
+  const [microRestsCompleted, setMicroRestsCompleted] = useState<number>(0);
+  const [hasAutoTriggeredMicroRest, setHasAutoTriggeredMicroRest] = useState<boolean>(false);
+
+  // Post-Bout Active Recall State
+  const [isRecallModalOpen, setIsRecallModalOpen] = useState<boolean>(false);
+  const [recallDraft, setRecallDraft] = useState<string>('');
+  const [isRecallSaving, setIsRecallSaving] = useState<boolean>(false);
+  const [recallSavedSuccess, setRecallSavedSuccess] = useState<boolean>(false);
+
+  // Sprint Timer Effect
+  useEffect(() => {
+    let timer: any = null;
+    if (isSprintRunning && !isMicroRestActive && sprintSecondsLeft > 0) {
+      timer = setInterval(() => {
+        setSprintSecondsLeft((prev) => {
+          // Halfway automatic micro-rest trigger (NIH accelerated replay)
+          const halfWay = Math.floor(sprintTotalDuration / 2);
+          if (prev === halfWay && !hasAutoTriggeredMicroRest && sprintTotalDuration >= 300) {
+            setIsMicroRestActive(true);
+            setMicroRestSeconds(15);
+            setHasAutoTriggeredMicroRest(true);
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else if (sprintSecondsLeft === 0 && isSprintRunning) {
+      setIsSprintRunning(false);
+      // Auto-trigger post-bout active recall sandbox
+      setIsRecallModalOpen(true);
+    }
+    return () => clearInterval(timer);
+  }, [isSprintRunning, isMicroRestActive, sprintSecondsLeft, sprintTotalDuration, hasAutoTriggeredMicroRest]);
+
+  // Micro-Rest Timer Effect (15s count down)
+  useEffect(() => {
+    let microTimer: any = null;
+    if (isMicroRestActive && microRestSeconds > 0) {
+      microTimer = setInterval(() => {
+        setMicroRestSeconds((prev) => prev - 1);
+      }, 1000);
+    } else if (isMicroRestActive && microRestSeconds === 0) {
+      setIsMicroRestActive(false);
+      setMicroRestsCompleted((c) => c + 1);
+    }
+    return () => clearInterval(microTimer);
+  }, [isMicroRestActive, microRestSeconds]);
+
+  const handleStartSprint = (q: QuestionMetadata, minutes = 10) => {
+    setSprintQuestion(q);
+    setSprintTotalDuration(minutes * 60);
+    setSprintSecondsLeft(minutes * 60);
+    setHasAutoTriggeredMicroRest(false);
+    setMicroRestsCompleted(0);
+    setIsMicroRestActive(false);
+    setIsRecallModalOpen(false);
+    setRecallDraft('');
+    setRecallSavedSuccess(false);
+    setIsSprintRunning(true);
+    if (onStartFocusFromQuestion) {
+      onStartFocusFromQuestion(`Study Topic ${q.num}: ${q.text.split(/[?.:+\[]/)[0]}`);
+    }
+  };
+
+  const triggerManualMicroRest = () => {
+    setIsMicroRestActive(true);
+    setMicroRestSeconds(15);
+  };
+
+  const handleSaveRecall = async () => {
+    if (!sprintQuestion || !recallDraft.trim()) return;
+    setIsRecallSaving(true);
+    try {
+      const recallRecord: ISessionRecall = {
+        id: 'recall_' + Date.now(),
+        subject: activeSubject,
+        topicTitle: `Topic ${sprintQuestion.num}: ${sprintQuestion.text}`,
+        recallContent: recallDraft.trim(),
+        durationMinutes: Math.round(sprintTotalDuration / 60),
+        phoneDistanced,
+        microRestsCompleted,
+        createdAt: Date.now(),
+      };
+      await saveRecallLogToFirestore(recallRecord);
+      setRecallSavedSuccess(true);
+      setTimeout(() => {
+        setIsRecallModalOpen(false);
+        setSprintQuestion(null);
+      }, 1500);
+    } catch (err) {
+      console.warn('Failed to save recall:', err);
+    } finally {
+      setIsRecallSaving(false);
+    }
+  };
   
   // Expanded questions state
   const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>(() => {
@@ -1573,19 +1699,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
           {/* Actions */}
           <div className="flex items-center gap-2 shrink-0 ml-4 self-center">
             <button
-              onClick={() =>
-                onStartFocusFromQuestion(
-                  `Study ${
-                    activeSubject === 'deep-learning'
-                      ? 'DL'
-                      : activeSubject === 'bda'
-                      ? 'BDA'
-                      : activeSubject === 'bct'
-                      ? 'BCT'
-                      : 'MIS'
-                  } Q${q.num}: ${q.text.split(/[?.:+\[]/)[0]}`
-                )
-              }
+              onClick={() => handleStartSprint(q, 10)}
               className={`px-2.5 py-1.5 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition-all shadow-xs cursor-pointer font-sans ${
                 activeSubject === 'deep-learning'
                   ? 'bg-rose-600 hover:bg-rose-700'
@@ -1595,7 +1709,7 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
                   ? 'bg-purple-600 hover:bg-purple-700'
                   : 'bg-emerald-600 hover:bg-emerald-700'
               }`}
-              title="Launch 10-minute study sprint in My Flow"
+              title="Launch 10-minute focus sprint timer"
             >
               <Play className="w-3 h-3 fill-current" />
               <span className="hidden sm:inline">Study Sprint</span>
@@ -1785,6 +1899,54 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
           </div>
         </div>
       </header>
+
+      {/* NeuroDeck Controller (Audio Entrainment & Breathing Reset) */}
+      <NeuroDeck
+        onOpenWoop={onOpenWoopModal || (() => {})}
+        activeWoopCount={woopGoals.length}
+      />
+
+      {/* WOOP Urgency Anchor Banner — Integrated Light Card */}
+      {woopGoals.length > 0 && (
+        <div className="mb-6 p-4 rounded-2xl bg-white border border-[#c2c8c0] shadow-xs font-sans">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-100">
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-xs border border-emerald-200">
+                <Target className="w-3.5 h-3.5" />
+              </span>
+              <span className="text-xs font-extrabold uppercase tracking-wider text-[#181c1e] font-mono">
+                Active WOOP Anchor &bull; Mental Contrasting
+              </span>
+              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold border border-slate-200 font-mono">
+                {woopGoals[0].targetSubject || 'General Focus'}
+              </span>
+            </div>
+            {onOpenWoopModal && (
+              <button
+                onClick={onOpenWoopModal}
+                className="text-[11px] font-bold text-[#43664c] hover:text-[#34513c] hover:underline flex items-center gap-1 transition cursor-pointer"
+              >
+                <Sparkles className="w-3 h-3" /> Manage WOOP Anchors
+              </button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+            <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <span className="text-[10px] uppercase font-bold text-emerald-800 block mb-0.5 font-mono">1. Wish</span>
+              <p className="text-emerald-950 font-semibold">{woopGoals[0].wish}</p>
+            </div>
+            <div className="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200">
+              <span className="text-[10px] uppercase font-bold text-amber-800 block mb-0.5 font-mono">2. Obstacle</span>
+              <p className="text-amber-950 font-semibold">{woopGoals[0].obstacle}</p>
+            </div>
+            <div className="p-2.5 rounded-xl bg-blue-50/70 border border-blue-200">
+              <span className="text-[10px] uppercase font-bold text-blue-800 block mb-0.5 font-mono">3. If-Then Plan</span>
+              <p className="text-blue-950 font-bold">{woopGoals[0].plan}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Subject Tabs */}
       <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6 gap-1 sm:gap-2">
@@ -2185,6 +2347,322 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({ onStartFocusFromQuestion
           )}
         </div>
       </footer>
+
+      {/* ================= SDAP WAKING MICRO-REST FULL-SCREEN OVERLAY ================= */}
+      {isMicroRestActive && (
+        <div className="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300 font-sans">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center flex flex-col items-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold mb-4 font-mono">
+              <Wind className="w-3.5 h-3.5 text-cyan-600" />
+              NIH PROTOCOL &bull; ACCELERATED REPLAY
+            </div>
+
+            <div className="relative w-36 h-36 mb-6 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border border-cyan-200 bg-cyan-50/60 animate-ping opacity-40" />
+              <div className="w-28 h-28 rounded-full bg-cyan-600 text-white flex flex-col items-center justify-center shadow-lg shadow-cyan-200">
+                <span className="text-4xl font-black font-mono tracking-tight">
+                  {microRestSeconds}
+                </span>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider opacity-90 font-mono">
+                  Sec
+                </span>
+              </div>
+            </div>
+
+            <h3 className="text-xl font-extrabold text-[#181c1e] mb-1">
+              Do Absolutely Nothing
+            </h3>
+            <p className="text-xs text-[#545f72] max-w-xs leading-relaxed mb-6">
+              Close your eyes. Let your mind drift. No tabs, no phone. Your hippocampus is replaying new synaptic connections at <span className="font-bold text-cyan-800">20x speed</span>.
+            </p>
+
+            <button
+              onClick={() => {
+                setIsMicroRestActive(false);
+                setMicroRestsCompleted((c) => c + 1);
+              }}
+              className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer"
+            >
+              Resume Sprint
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ================= POST-BOUT ACTIVE RECALL SANDBOX MODAL ================= */}
+      {isRecallModalOpen && sprintQuestion && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200 font-sans">
+          <div className="bg-white border border-slate-200 rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden flex flex-col">
+            {/* Modal Header */}
+            <div className="bg-[#181c1e] text-white p-5 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <span className="p-2 rounded-xl bg-emerald-500/20 text-emerald-300 text-sm">
+                  <Brain className="w-5 h-5" />
+                </span>
+                <div>
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-400 font-bold block">
+                    Active Recall Sandbox &bull; Roediger Protocol
+                  </span>
+                  <h3 className="text-sm font-bold truncate max-w-[280px] sm:max-w-sm">
+                    Topic {sprintQuestion.num}: {sprintQuestion.text.split(/[?.:+\[]/)[0]}
+                  </h3>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setIsRecallModalOpen(false);
+                  setSprintQuestion(null);
+                }}
+                className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-white/10 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 sm:p-7">
+              {/* Badges */}
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <span className="px-2.5 py-1 rounded-xl bg-slate-100 text-[11px] font-bold text-slate-700 font-mono flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5 text-emerald-600" />
+                  {Math.round(sprintTotalDuration / 60)}m Focus Bout
+                </span>
+                {phoneDistanced && (
+                  <span className="px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-800 flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    Attentional Shield 🛡️
+                  </span>
+                )}
+                {microRestsCompleted > 0 && (
+                  <span className="px-2.5 py-1 rounded-xl bg-cyan-50 border border-cyan-200 text-[11px] font-bold text-cyan-800 flex items-center gap-1.5">
+                    <Wind className="w-3.5 h-3.5 text-cyan-600" />
+                    {microRestsCompleted} Neural Replays (20x)
+                  </span>
+                )}
+              </div>
+
+              <p className="text-xs text-[#545f72] mb-2 leading-relaxed">
+                <strong className="text-[#181c1e] font-bold">Retrieval Practice:</strong> Without checking notes, write down core formulas, definitions, diagrams, and bullet points from memory:
+              </p>
+
+              <textarea
+                value={recallDraft}
+                onChange={(e) => setRecallDraft(e.target.value)}
+                placeholder="e.g. 1. Architecture details / flow&#10;2. Key formulas and variables&#10;3. Why this solution works..."
+                className="w-full h-36 px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-slate-900 text-xs font-mono focus:outline-none focus:border-emerald-600 focus:bg-white resize-none mb-4 leading-relaxed"
+                autoFocus
+              />
+
+              {recallSavedSuccess ? (
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-center gap-2 animate-in fade-in">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  Memory Consolidated &bull; Logged in Firestore 🚀
+                </div>
+              ) : (
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => {
+                      setIsRecallModalOpen(false);
+                      setSprintQuestion(null);
+                    }}
+                    className="px-4 py-2.5 rounded-xl text-slate-500 hover:text-slate-800 text-xs font-semibold transition cursor-pointer"
+                  >
+                    Skip for Now
+                  </button>
+                  <button
+                    disabled={!recallDraft.trim() || isRecallSaving}
+                    onClick={handleSaveRecall}
+                    className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center gap-2 shadow-xs disabled:opacity-40 transition cursor-pointer"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    {isRecallSaving ? 'Consolidating...' : 'Lock In Recall to Memory'}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MAIN FOCUS SPRINT MODAL ================= */}
+      {sprintQuestion && !isRecallModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200 font-sans">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full overflow-hidden flex flex-col">
+            {/* Modal Header */}
+            <div className="bg-[#181c1e] text-white p-5 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 bg-rose-500/20 text-rose-300 rounded-lg text-sm">
+                  ⚡
+                </span>
+                <div>
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-rose-400 font-bold block">
+                    SDAP Focus Sprint &bull; Topic {sprintQuestion.num}
+                  </span>
+                  <h3 className="text-sm font-bold truncate max-w-[280px] sm:max-w-sm">
+                    {sprintQuestion.text}
+                  </h3>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setIsSprintRunning(false);
+                  setSprintQuestion(null);
+                }}
+                className="p-1.5 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Pre-Sprint Phone Distance "Shields Up" Pledge */}
+            <div className="px-6 py-2.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={phoneDistanced}
+                  onChange={(e) => setPhoneDistanced(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded bg-white border-slate-300 text-emerald-600 focus:ring-0"
+                />
+                <span className="text-slate-700 font-medium flex items-center gap-1.5">
+                  <PhoneOff className="w-3.5 h-3.5 text-emerald-600" />
+                  Phone out of sight / in other room
+                </span>
+              </label>
+              {phoneDistanced ? (
+                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-200 font-mono">
+                  Shield Active 🛡️
+                </span>
+              ) : (
+                <span className="text-[10px] text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                  Attentional Leak Warning ⚠️
+                </span>
+              )}
+            </div>
+
+            {/* Timer Display */}
+            <div className="p-6 flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-white">
+              <div className="text-5xl sm:text-6xl font-extrabold font-mono tracking-tight text-slate-900 mb-4">
+                {String(Math.floor(sprintSecondsLeft / 60)).padStart(2, '0')}:
+                {String(sprintSecondsLeft % 60).padStart(2, '0')}
+              </div>
+
+              {/* Progress Bar */}
+              <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden max-w-xs mb-6">
+                <div
+                  className="h-full bg-rose-600 transition-all duration-300 rounded-full"
+                  style={{
+                    width: `${
+                      sprintTotalDuration > 0
+                        ? Math.max(0, Math.min(100, ((sprintTotalDuration - sprintSecondsLeft) / sprintTotalDuration) * 100))
+                        : 0
+                    }%`,
+                  }}
+                />
+              </div>
+
+              {/* Timer Controls */}
+              <div className="flex flex-wrap items-center justify-center gap-2.5">
+                <button
+                  onClick={() => setIsSprintRunning(!isSprintRunning)}
+                  className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold flex items-center gap-2 shadow-sm transition-all cursor-pointer text-sm"
+                >
+                  {isSprintRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+                  <span>{isSprintRunning ? 'Pause' : sprintSecondsLeft === 0 ? 'Restart' : 'Focus'}</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setSprintSecondsLeft((prev) => prev + 300);
+                    setSprintTotalDuration((prev) => prev + 300);
+                  }}
+                  className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-all cursor-pointer text-xs"
+                >
+                  +5 Min
+                </button>
+
+                {/* Manual Waking Micro-Rest Trigger */}
+                <button
+                  onClick={triggerManualMicroRest}
+                  className="px-3.5 py-2.5 bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 rounded-xl font-bold transition-all cursor-pointer text-xs flex items-center gap-1.5"
+                  title="NIH 15-second accelerated neural replay pause"
+                >
+                  <Wind className="w-3.5 h-3.5 text-cyan-600" />
+                  Waking Rest
+                </button>
+
+                {/* Finish & Recall Trigger */}
+                <button
+                  onClick={() => {
+                    setIsSprintRunning(false);
+                    setIsRecallModalOpen(true);
+                  }}
+                  className="px-3.5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition-all cursor-pointer text-xs flex items-center gap-1.5 shadow-xs"
+                >
+                  <Brain className="w-3.5 h-3.5" />
+                  Recall
+                </button>
+
+                <button
+                  onClick={() => {
+                    setIsSprintRunning(false);
+                    setSprintSecondsLeft(sprintTotalDuration);
+                  }}
+                  className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition-all cursor-pointer"
+                  title="Reset timer"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Checklist inside sprint */}
+            <div className="p-5 border-t border-slate-100 bg-slate-50/50">
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 font-mono">
+                Sprint Mastery Checklist
+              </p>
+              <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                {sprintQuestion.tasks.map((task) => {
+                  const key = `${sprintQuestion.id}_${task.id}`;
+                  const currentProgress =
+                    activeSubject === 'deep-learning'
+                      ? progressDL
+                      : activeSubject === 'bda'
+                      ? progressBDA
+                      : activeSubject === 'bct'
+                      ? progressBCT
+                      : progressMIS;
+                  const isChecked = !!currentProgress[key];
+
+                  return (
+                    <div
+                      key={task.id}
+                      onClick={() => toggleSubTask(sprintQuestion.id, task.id)}
+                      className={`flex items-center gap-2.5 px-3 py-2 rounded-xl border transition-all cursor-pointer text-xs ${
+                        isChecked
+                          ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                          : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                      }`}
+                    >
+                      <div
+                        className={`w-4 h-4 rounded flex items-center justify-center border text-[10px] shrink-0 ${
+                          isChecked
+                            ? 'bg-emerald-600 border-emerald-600 text-white'
+                            : 'border-slate-300 bg-white'
+                        }`}
+                      >
+                        {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                      <span className="shrink-0">{task.icon}</span>
+                      <span className={isChecked ? 'line-through text-slate-400 font-semibold' : 'font-semibold'}>
+                        {task.label}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

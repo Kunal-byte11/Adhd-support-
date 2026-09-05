@@ -1,6 +1,24 @@
-export type ScreenType = 'now' | 'roadmap' | 'intake' | 'urges' | 'recovery' | 'adhd-helper' | 'daily-plan' | 'partner-hq' | 'sem7';
+export type ScreenType =
+  | 'sem7'
+  | 'roadmap'
+  | 'woop'
+  | 'recalls'
+  | 'breathing'
+  | 'sounds'
+  | 'partner-hq'
+  | 'neuro';
 
 export type UserRole = 'kunal' | 'partner';
+
+export interface StudyTheaterVideo {
+  id: string;
+  title: string;
+  youtubeUrl: string;
+  subject?: string;
+  difficulty?: string;
+  category?: string;
+  startSeconds?: number;
+}
 
 export interface PartnerNudge {
   id: string;
@@ -22,45 +40,6 @@ export interface StagedReward {
   isUnlocked: boolean;
   unlockedAt?: number;
   createdAt: number;
-}
-
-export interface DailyScheduleSubStep {
-  id: string;
-  title: string;
-  minutes: number;
-  isCompleted: boolean;
-  importance?: TaskImportance;
-}
-
-export interface DailyScheduleBlock {
-  id: string;
-  timeSlot: string;
-  title: string;
-  category: 'dsa' | 'genai' | 'revision' | 'steps' | 'english' | 'break' | 'custom';
-  durationMinutes: number;
-  icon: string;
-  description: string;
-  isCompleted: boolean;
-  stepsTarget?: number;
-  subSteps: DailyScheduleSubStep[];
-  whyItMatters?: string;
-  curriculumRef?: string;
-  youtubeUrl?: string;
-}
-
-export interface DailyPlanState {
-  userName: string;
-  dsaHours: number;
-  genAiHours: number;
-  revisionHours: number;
-  stepGoal: number;
-  currentSteps: number;
-  englishMinutes: number;
-  englishCompleted: boolean;
-  startTime: string;
-  scheduleBlocks: DailyScheduleBlock[];
-  notes?: string;
-  lastGeneratedDate?: string;
 }
 
 export interface PartnerReward {
@@ -114,50 +93,40 @@ export interface ChecklistItem {
   isChecked: boolean;
 }
 
-export interface UrgeLog {
+// ======================= NEUROSCIENCE PROTOCOLS =======================
+
+export interface IWoopGoal {
   id: string;
-  timestamp: number;
-  triggerTime: string;
-  urgeType: string;
-  feelingNow: string;
-  feelingTomorrow: string;
-  durationSeconds: number;
-  timerCompleted: boolean;
-  preventedAction: boolean;
+  wish: string;
+  outcome: string;
+  obstacle: string; // Hyperrealistic distraction/laziness obstacle
+  plan: string;     // If-Then plan (e.g. "If [obstacle], then I will [action]")
+  targetSubject?: string;
+  createdAt: number;
+  updatedAt?: number;
 }
 
-export interface MicroTask {
+export interface ITimestampNote {
   id: string;
-  title: string;
-  subtitle: string;
-  icon: string;
-  actionHint?: string;
+  timestampSeconds: number;
+  timestampFormatted: string; // e.g. "04:15" or "1:12:00"
+  note: string;
+  isRevisit: boolean; // Flagged as confusing / need to revisit
+  createdAt: number;
 }
 
-export interface AutoChunkResponse {
-  goal: string;
-  importanceVerdict?: string;
-  visualSummary?: string;
-  whatIsCritical?: string;
-  whatCanWait?: string;
-  actionPlan: {
-    stepNumber: number;
-    title: string;
-    description: string;
-    estimatedMinutes: number;
-    importance?: TaskImportance;
-    whyItMatters?: string;
-  }[];
-  preFlightChecklist: {
-    label: string;
-    icon: string;
-  }[];
-  providerUsed?: string;
+export interface ISessionRecall {
+  id: string;
+  subject: string;
+  topicTitle: string;
+  recallContent: string;
+  timestampNotes?: ITimestampNote[];
+  durationMinutes: number;
+  phoneDistanced: boolean;
+  microRestsCompleted: number;
+  createdAt: number;
 }
 
-export interface RecalibrateResponse {
-  status: string;
-  delayMinutesAdded: number;
-  newEstimatedCompletion: string;
-  message: string;
-}
+export type BinauralSoundMode = 'off' | 'binaural-40hz' | 'brown-noise' | 'pink-noise';
+
+

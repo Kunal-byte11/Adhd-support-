@@ -8,29 +8,17 @@ import {
   ImportanceLevel,
   GenAiPhase,
 } from '../data/curriculumData';
+import { StudyTheaterVideo } from '../types';
 import {
-  BookOpen,
   Sparkles,
   Play,
-  CheckCircle2,
   ExternalLink,
   Youtube,
   Search,
-  Filter,
-  Layers,
   Code2,
   BrainCircuit,
   Clock,
-  ArrowRight,
-  Flame,
-  AlertCircle,
-  Zap,
-  Target,
-  ListOrdered,
-  Tag,
   Check,
-  Award,
-  ChevronRight,
 } from 'lucide-react';
 
 interface RoadmapScreenProps {
@@ -38,6 +26,7 @@ interface RoadmapScreenProps {
   onSendToIntake: (goalTitle: string) => void;
   completedIds: Set<string>;
   onToggleComplete: (id: string) => void;
+  onWatchVideo?: (video: StudyTheaterVideo) => void;
 }
 
 const IMPORTANCE_CONFIG: Record<
@@ -88,19 +77,17 @@ const ALL_PHASES: GenAiPhase[] = [
 ];
 
 export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
-  onStartFocusFromItem,
   onSendToIntake,
   completedIds,
   onToggleComplete,
+  onWatchVideo,
 }) => {
   const [activeTab, setActiveTab] = useState<'ai' | 'dsa'>('dsa');
   const [selectedModule, setSelectedModule] = useState<number | 'all'>('all');
   const [selectedAiCategory, setSelectedAiCategory] = useState<string>('all');
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
-  const [selectedImportance, setSelectedImportance] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'completed'>('all');
-  const [viewMode, setViewMode] = useState<'systematic_phases' | 'flat_priority'>('systematic_phases');
 
   // Filtered DSA Problems
   const filteredDsaProblems = useMemo(() => {
@@ -121,12 +108,27 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
     });
   }, [selectedModule, searchQuery, statusFilter, completedIds]);
 
+  // Group filtered DSA by Chapter
+  const dsaByChapter = useMemo(() => {
+    const map = new Map<number, { title: string; problems: DsaProblem[] }>();
+    DSA_CHAPTERS.forEach((ch) => {
+      map.set(ch.id, { title: ch.title, problems: [] });
+    });
+
+    filteredDsaProblems.forEach((prob) => {
+      const existing = map.get(prob.moduleIndex) || { title: prob.moduleName, problems: [] };
+      existing.problems.push(prob);
+      map.set(prob.moduleIndex, existing);
+    });
+
+    return map;
+  }, [filteredDsaProblems]);
+
   // Filtered AI Courses
   const filteredAiCourses = useMemo(() => {
     return AI_DATA_SCIENCE_COURSES.filter((item) => {
       const matchCategory = selectedAiCategory === 'all' || item.category === selectedAiCategory;
       const matchPhase = selectedPhase === 'all' || item.phase === selectedPhase;
-      const matchImportance = selectedImportance === 'all' || item.importance === selectedImportance;
       const matchSearch =
         searchQuery.trim() === '' ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -139,11 +141,11 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         (statusFilter === 'completed' && isDone) ||
         (statusFilter === 'pending' && !isDone);
 
-      return matchCategory && matchPhase && matchImportance && matchSearch && matchStatus;
+      return matchCategory && matchPhase && matchSearch && matchStatus;
     }).sort((a, b) => a.recommendedOrder - b.recommendedOrder);
-  }, [selectedAiCategory, selectedPhase, selectedImportance, searchQuery, statusFilter, completedIds]);
+  }, [selectedAiCategory, selectedPhase, searchQuery, statusFilter, completedIds]);
 
-  // Group by Phase for Systematic Learning view
+  // Group AI courses by Phase
   const coursesByPhase = useMemo(() => {
     const map = new Map<GenAiPhase, AiCourse[]>();
     ALL_PHASES.forEach((p) => map.set(p, []));
@@ -162,18 +164,11 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
   const completedDsaCount = DSA_PROBLEMS_DATA.filter((p) => completedIds.has(p.id)).length;
   const dsaProgressPercent = Math.round((completedDsaCount / totalDsaCount) * 100);
 
-  // Core DSA (Chapters 1 to 10)
   const coreDsaCount = DSA_PROBLEMS_DATA.filter((p) => p.moduleIndex <= 10).length;
   const completedCoreDsaCount = DSA_PROBLEMS_DATA.filter(
     (p) => p.moduleIndex <= 10 && completedIds.has(p.id)
   ).length;
   const coreDsaProgressPercent = Math.round((completedCoreDsaCount / coreDsaCount) * 100);
-
-  // Optional DSA (Chapters 11 to 17)
-  const optionalDsaCount = DSA_PROBLEMS_DATA.filter((p) => p.moduleIndex > 10).length;
-  const completedOptionalDsaCount = DSA_PROBLEMS_DATA.filter(
-    (p) => p.moduleIndex > 10 && completedIds.has(p.id)
-  ).length;
 
   const totalAiCount = AI_DATA_SCIENCE_COURSES.length;
   const criticalMustWatchCount = AI_DATA_SCIENCE_COURSES.filter(
@@ -183,53 +178,43 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
     (c) => c.importance === 'CRITICAL_MUST_WATCH' && completedIds.has(c.id)
   ).length;
   const completedAiCount = AI_DATA_SCIENCE_COURSES.filter((c) => completedIds.has(c.id)).length;
-  const aiProgressPercent = Math.round((completedAiCount / totalAiCount) * 100);
-
-  const handleLaunchSprint = (title: string, description: string, url?: string) => {
-    onStartFocusFromItem(title, description, url);
-  };
 
   return (
     <main
       id="screen-roadmap"
-      className="flex-1 md:ml-64 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full"
+      className="flex-1 md:ml-64 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full font-sans"
     >
-      {/* Top Header */}
       <header className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#006494] bg-[#5fafe9]/20 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#006494] bg-[#5fafe9]/20 px-2.5 py-0.5 rounded-full flex items-center gap-1 font-mono">
               <BrainCircuit className="w-3.5 h-3.5 text-[#006494]" />
               Systematic GenAI &amp; DSA Roadmap
             </span>
           </div>
           <h1 className="text-[28px] sm:text-[34px] font-extrabold text-[#181c1e] tracking-tight">
-            Study Roadmap &amp; Master Playlist
+            Curriculum &amp; Master Playlist
           </h1>
-          <p className="text-[14px] sm:text-[15px] text-[#545f72] mt-0.5">
-            DSA Core (Chapters 1–10) + AI Foundations prioritized into sequential phases.
-          </p>
         </div>
 
-        {/* Progress Overview Card */}
         <div className="bg-[#ffffff] border border-[#c2c8c0] rounded-2xl p-3.5 sm:p-4 shadow-xs flex items-center gap-4 self-start md:self-auto">
           <div className="text-center pr-4 border-r border-[#c2c8c0]">
-            <p className="text-[11px] font-bold text-rose-600 uppercase">Must-Watch AI</p>
-            <p className="text-lg font-bold text-rose-700">
+            <p className="text-[11px] font-bold text-rose-600 uppercase font-mono">Must-Watch AI</p>
+            <p className="text-lg font-bold text-rose-700 font-mono">
               {completedCriticalCount}/{criticalMustWatchCount}
             </p>
             <div className="w-20 h-1.5 bg-rose-100 rounded-full mt-1 overflow-hidden">
               <div
                 className="h-full bg-rose-600 rounded-full transition-all"
                 style={{
-                  width: `${Math.round((completedCriticalCount / criticalMustWatchCount) * 100)}%`,
+                  width: `${criticalMustWatchCount > 0 ? Math.round((completedCriticalCount / criticalMustWatchCount) * 100) : 0}%`,
                 }}
               />
             </div>
           </div>
           <div className="text-center pr-4 border-r border-[#c2c8c0]">
-            <p className="text-[11px] font-semibold text-[#545f72] uppercase">Core DSA (Ch 1-10)</p>
-            <p className="text-lg font-bold text-[#43664c]">
+            <p className="text-[11px] font-semibold text-[#545f72] uppercase font-mono">Core DSA</p>
+            <p className="text-lg font-bold text-[#43664c] font-mono">
               {completedCoreDsaCount}/{coreDsaCount}
             </p>
             <div className="w-20 h-1.5 bg-[#ebeef0] rounded-full mt-1 overflow-hidden">
@@ -240,8 +225,8 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
             </div>
           </div>
           <div className="text-center">
-            <p className="text-[11px] font-semibold text-[#545f72] uppercase">Total Mastered</p>
-            <p className="text-lg font-bold text-[#006494]">
+            <p className="text-[11px] font-semibold text-[#545f72] uppercase font-mono">Total</p>
+            <p className="text-lg font-bold text-[#006494] font-mono">
               {completedAiCount + completedDsaCount}/{totalAiCount + totalDsaCount}
             </p>
             <div className="w-20 h-1.5 bg-[#ebeef0] rounded-full mt-1 overflow-hidden">
@@ -258,7 +243,6 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         </div>
       </header>
 
-      {/* Main Track Selection Tabs */}
       <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6">
         <button
           onClick={() => {
@@ -267,12 +251,12 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
           }}
           className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'dsa'
-              ? 'border-[#43664c] text-[#43664c] bg-[#8bb192]/10 rounded-t-lg'
+              ? 'border-[#43664c] text-[#43664c] bg-[#8bb192]/10 rounded-t-lg font-extrabold'
               : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
           }`}
         >
-          <Code2 className="w-4 h-4 text-emerald-700" />
-          <span>Code &amp; Debug DSA Python Course ({totalDsaCount} Lessons • 17 Chapters)</span>
+          <Code2 className="w-4 h-4 text-[#43664c]" />
+          <span>Code &amp; Debug DSA</span>
         </button>
 
         <button
@@ -282,20 +266,16 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
           }}
           className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'ai'
-              ? 'border-[#006494] text-[#006494] bg-[#5fafe9]/10 rounded-t-lg'
+              ? 'border-[#006494] text-[#006494] bg-[#5fafe9]/10 rounded-t-lg font-extrabold'
               : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
           }`}
         >
           <BrainCircuit className="w-4 h-4 text-[#006494]" />
-          <span>Krish Naik GenAI Track ({totalAiCount} Courses)</span>
+          <span>Krish Naik GenAI &amp; ML</span>
         </button>
       </div>
 
-
-
-      {/* Search and Filter Controls */}
       <div className="bg-[#ffffff] border border-[#c2c8c0] rounded-2xl p-4 mb-6 shadow-xs flex flex-col md:flex-row gap-3 items-center justify-between">
-        {/* Search input */}
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#727971]" />
           <input
@@ -307,13 +287,13 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                 ? 'Search LangChain, RAG, Transformers, Docker...'
                 : 'Search problems, algorithms, LeetCode...'
             }
-            className="w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:border-[#006494] focus:bg-white focus:outline-none transition-all placeholder-[#727971]"
+            className={`w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:bg-white focus:outline-none transition-all placeholder-[#727971] ${
+              activeTab === 'dsa' ? 'focus:border-[#43664c]' : 'focus:border-[#006494]'
+            }`}
           />
         </div>
 
-        {/* Filter buttons */}
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
-          {/* Status Filter */}
           <div className="flex items-center gap-1 bg-[#f1f4f6] p-1 rounded-xl border border-[#c2c8c0]/50 text-xs">
             {(['all', 'pending', 'completed'] as const).map((st) => (
               <button
@@ -321,7 +301,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                 onClick={() => setStatusFilter(st)}
                 className={`px-3 py-1 rounded-lg font-semibold capitalize transition-all cursor-pointer ${
                   statusFilter === st
-                    ? 'bg-[#ffffff] text-[#181c1e] shadow-xs'
+                    ? 'bg-[#ffffff] text-[#181c1e] shadow-xs font-bold'
                     : 'text-[#545f72] hover:text-[#181c1e]'
                 }`}
               >
@@ -332,7 +312,6 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         </div>
       </div>
 
-      {/* Chapter Filter Pills */}
       {activeTab === 'dsa' && (
         <div className="mb-6">
           <div className="overflow-x-auto pb-1 flex gap-2 no-scrollbar">
@@ -344,7 +323,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                   : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
               }`}
             >
-              All 17 Chapters ({totalDsaCount})
+              All Chapters ({totalDsaCount})
             </button>
             {DSA_CHAPTERS.map((ch) => {
               const isSelected = selectedModule === ch.id;
@@ -358,15 +337,8 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                       : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
                   }`}
                 >
-                  <span className="opacity-75">Ch {ch.id}:</span>
+                  <span className="opacity-75 font-mono">Ch {ch.id}:</span>
                   <span>{ch.title}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
-                    }`}
-                  >
-                    {ch.count}
-                  </span>
                 </button>
               );
             })}
@@ -376,17 +348,16 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
 
       {activeTab === 'ai' && (
         <div className="mb-6 space-y-2">
-          {/* Phase Filter Bar */}
           <div className="overflow-x-auto pb-1 flex gap-2 no-scrollbar">
             <button
               onClick={() => setSelectedPhase('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 selectedPhase === 'all'
-                  ? 'bg-[#006494] text-white shadow-xs'
+                  ? 'bg-[#006494] text-white shadow-xs font-bold'
                   : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#006494]'
               }`}
             >
-              All 6 Phases ({totalAiCount})
+              All Phases
             </button>
             {ALL_PHASES.map((ph, idx) => {
               const isSelected = selectedPhase === ph;
@@ -397,42 +368,12 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                   onClick={() => setSelectedPhase(ph)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1 ${
                     isSelected
-                      ? 'bg-[#006494] text-white shadow-xs'
+                      ? 'bg-[#006494] text-white shadow-xs font-bold'
                       : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#006494]'
                   }`}
                 >
-                  <span className="opacity-75">P{idx + 1}:</span>
+                  <span className="opacity-75 font-mono">P{idx + 1}:</span>
                   <span>{shortName}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Category Filter Pills */}
-          <div className="overflow-x-auto pb-1 flex gap-2 no-scrollbar">
-            {(
-              [
-                'all',
-                'Generative AI',
-                'Agentic AI',
-                'Deep Learning',
-                'Machine Learning',
-                'MLOps & Deployment',
-                'Python & Math',
-              ] as const
-            ).map((cat) => {
-              const isSelected = selectedAiCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedAiCategory(cat)}
-                  className={`px-2.5 py-1 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all cursor-pointer ${
-                    isSelected
-                      ? 'bg-blue-100 text-[#006494] font-bold border border-blue-300'
-                      : 'bg-[#ffffff] border border-[#c2c8c0]/60 text-[#545f72] hover:border-[#006494]'
-                  }`}
-                >
-                  {cat === 'all' ? 'All Subjects' : cat}
                 </button>
               );
             })}
@@ -440,184 +381,131 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         </div>
       )}
 
-      {/* Task List - AI Courses (SYSTEMATIC PHASES VIEW) */}
-      {activeTab === 'ai' && viewMode === 'systematic_phases' && (
-        <div className="space-y-6">
-          {Array.from(coursesByPhase.entries()).map(([phaseTitle, courses], phaseIndex) => {
+      {activeTab === 'ai' && (
+        <div className="space-y-8">
+          {Array.from(coursesByPhase.entries()).map(([phaseTitle, courses]) => {
             if (courses.length === 0) return null;
             const phaseCompletedCount = courses.filter((c) => completedIds.has(c.id)).length;
-            const phaseProgress = Math.round((phaseCompletedCount / courses.length) * 100);
 
             return (
-              <section
-                key={phaseTitle}
-                className="bg-white border border-[#c2c8c0] rounded-3xl p-5 md:p-6 shadow-xs space-y-4"
-              >
-                {/* Phase Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-100 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-[#006494] text-white flex items-center justify-center font-bold text-sm">
-                      {phaseIndex + 1}
-                    </div>
-                    <div>
-                      <h2 className="text-base sm:text-lg font-extrabold text-[#181c1e]">
-                        {phaseTitle}
-                      </h2>
-                      <p className="text-xs text-[#545f72]">
-                        {courses.length} courses in sequence • {phaseCompletedCount} completed
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Phase mini progress */}
-                  <div className="flex items-center gap-2 self-start sm:self-auto">
-                    <div className="w-24 h-2 bg-[#ebeef0] rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-[#006494] rounded-full transition-all"
-                        style={{ width: `${phaseProgress}%` }}
-                      />
-                    </div>
-                    <span className="text-xs font-bold text-[#006494]">{phaseProgress}%</span>
-                  </div>
+              <div key={phaseTitle} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-base font-extrabold text-[#006494] tracking-wide border-l-4 border-[#006494] pl-3 py-0.5 flex items-center gap-2">
+                    <span>{phaseTitle}</span>
+                    <span className="text-xs font-semibold text-[#545f72] font-mono">
+                      ({phaseCompletedCount}/{courses.length})
+                    </span>
+                  </h2>
                 </div>
 
-                {/* Course Cards inside this phase */}
                 <div className="space-y-3">
                   {courses.map((course) => {
                     const isDone = completedIds.has(course.id);
                     const importanceInfo = IMPORTANCE_CONFIG[course.importance];
+                    const ytId = course.youtubeUrl
+                      ? course.youtubeUrl.match(
+                          /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
+                        )?.[1]
+                      : null;
 
                     return (
                       <div
                         key={course.id}
-                        className={`w-full rounded-2xl p-4 sm:p-5 border transition-all duration-200 ${
+                        className={`w-full rounded-2xl border transition-all duration-200 overflow-hidden ${
                           isDone
-                            ? 'border-[#c4eccb] bg-[#c4eccb]/15'
-                            : 'border-[#e2e8f0] bg-[#ffffff] hover:border-[#006494] hover:shadow-xs'
+                            ? 'border-[#c4eccb] bg-[#c4eccb]/10'
+                            : 'border-slate-200 bg-white hover:border-[#006494]/60 hover:shadow-xs'
                         }`}
                       >
-                        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                          {/* Left: Checkbox + Badges + Title + Description + Key Takeaways */}
-                          <div className="flex items-start gap-3.5 flex-1 min-w-0">
+                        <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="flex items-start gap-3.5 flex-1 min-w-0 font-sans">
                             <button
                               onClick={() => onToggleComplete(course.id)}
-                              className={`mt-1 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
+                              className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
                                 isDone
                                   ? 'bg-[#006494] border-[#006494] text-white'
-                                  : 'border-[#727971] hover:border-[#006494] bg-white'
+                                  : 'border-slate-400 hover:border-[#006494] hover:bg-blue-50 bg-white'
                               }`}
-                              title={isDone ? 'Mark as pending' : 'Mark as completed'}
                             >
-                              {isDone && <CheckCircle2 className="w-4 h-4" />}
+                              {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                             </button>
 
-                            <div className="flex-1 min-w-0">
-                              {/* Meta badges: Order + Importance + Category + Duration */}
-                              <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                                <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full font-mono">
+                            {ytId && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (onWatchVideo) {
+                                    onWatchVideo({
+                                      id: course.id,
+                                      title: course.title,
+                                      youtubeUrl: course.youtubeUrl!,
+                                      subject: course.category,
+                                      difficulty: course.importance.replace(/_/g, ' '),
+                                    });
+                                  } else {
+                                    window.open(course.youtubeUrl, '_blank');
+                                  }
+                                }}
+                                className="relative hidden sm:block w-24 h-14 rounded-lg overflow-hidden shrink-0 border border-slate-200 group text-left cursor-pointer"
+                                title="Watch in Study Theater"
+                              >
+                                <img
+                                  src={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`}
+                                  alt={course.title}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <Youtube className="w-5 h-5 text-white drop-shadow-md" />
+                                </div>
+                              </button>
+                            )}
+
+                            <div className="min-w-0 flex-1">
+                              <div className="flex flex-wrap items-center gap-2 mb-1">
+                                <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono">
                                   #{course.recommendedOrder}
                                 </span>
-
                                 <span
-                                  className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${importanceInfo.bg} ${importanceInfo.text} ${importanceInfo.border}`}
-                                  title={importanceInfo.desc}
+                                  className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1 font-mono ${importanceInfo.bg} ${importanceInfo.text} ${importanceInfo.border}`}
                                 >
                                   <span>{importanceInfo.icon}</span>
                                   <span>{importanceInfo.label}</span>
                                 </span>
-
-                                <span className="text-[11px] font-bold text-[#006494] bg-[#5fafe9]/20 px-2 py-0.5 rounded-full">
-                                  {course.category}
-                                </span>
-
-                                {course.durationHours && (
-                                  <span className="text-[11px] text-[#545f72] font-mono flex items-center gap-1">
-                                    <Clock className="w-3 h-3" />
-                                    {course.durationHours}
-                                  </span>
-                                )}
-
-                                <span className="text-[11px] text-[#545f72] bg-[#ebeef0] px-2 py-0.5 rounded">
-                                  {course.instructor}
-                                </span>
                               </div>
-
-                              {/* Course Title */}
-                              <h3
-                                className={`text-[15px] sm:text-[16px] font-bold ${
-                                  isDone ? 'line-through text-[#545f72]' : 'text-[#181c1e]'
-                                }`}
-                              >
+                              <h3 className={`text-[15px] font-bold ${isDone ? 'text-slate-400 line-through' : 'text-[#181c1e]'}`}>
                                 {course.title}
                               </h3>
-
-                              {/* Description */}
-                              <p className="text-[13px] text-[#545f72] mt-1 line-clamp-2">
-                                {course.description}
-                              </p>
-
-                              {/* Key Takeaways & Prerequisites */}
-                              <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-                                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-                                  Core Takeaways:
-                                </span>
-                                {course.keyTakeaways.map((takeaway) => (
-                                  <span
-                                    key={takeaway}
-                                    className="text-[11px] bg-slate-100 text-slate-700 font-medium px-2 py-0.5 rounded-md"
-                                  >
-                                    {takeaway}
-                                  </span>
-                                ))}
-                              </div>
-
-                              {course.prerequisites && course.prerequisites.length > 0 && (
-                                <div className="mt-1.5 text-[11px] text-[#717d74] flex items-center gap-1">
-                                  <span className="font-semibold text-gray-500">Prerequisites:</span>
-                                  <span>{course.prerequisites.join(' • ')}</span>
-                                </div>
-                              )}
                             </div>
                           </div>
 
-                          {/* Right: Actions */}
-                          <div className="flex items-center gap-2 self-end lg:self-center shrink-0 pt-2 lg:pt-0">
+                          <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
                             {course.youtubeUrl && (
-                              <a
-                                href={course.youtubeUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors flex items-center justify-center"
-                                title="Watch YouTube Lecture Video"
+                              <button
+                                onClick={() => {
+                                  if (onWatchVideo) {
+                                    onWatchVideo({
+                                      id: course.id,
+                                      title: course.title,
+                                      youtubeUrl: course.youtubeUrl!,
+                                      subject: course.category,
+                                      difficulty: course.importance.replace(/_/g, ' '),
+                                    });
+                                  } else {
+                                    window.open(course.youtubeUrl, '_blank');
+                                  }
+                                }}
+                                className="px-3.5 py-2 bg-[#006494] hover:bg-[#004e75] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer"
                               >
-                                <Youtube className="w-4 h-4" />
-                              </a>
+                                <Play className="w-3.5 h-3.5 fill-current" />
+                                <span>Watch</span>
+                              </button>
                             )}
-
                             <button
                               onClick={() => onSendToIntake(course.title)}
-                              className="px-3 py-2 bg-[#ebeef0] hover:bg-[#e0e3e5] text-[#181c1e] text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
-                              title="Deconstruct this course with AI into bite-sized 10m micro-steps"
+                              className="px-3 py-2 bg-[#f1f4f6] hover:bg-[#e5e9eb] text-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition cursor-pointer"
                             >
                               <Sparkles className="w-3.5 h-3.5 text-[#006494]" />
-                              <span>AI Chunk</span>
-                            </button>
-
-                            <button
-                              onClick={() =>
-                                handleLaunchSprint(
-                                  course.title,
-                                  `Watch & study: ${course.title}. Take notes on ${course.keyTakeaways.join(
-                                    ', '
-                                  )}.`,
-                                  course.youtubeUrl
-                                )
-                              }
-                              className="px-3.5 py-2 bg-[#006494] hover:bg-[#004e75] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
-                              title="Launch a focused 10-minute study sprint on this course"
-                            >
-                              <Play className="w-3.5 h-3.5 fill-current" />
-                              <span>Focus 10m</span>
                             </button>
                           </div>
                         </div>
@@ -625,285 +513,144 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                     );
                   })}
                 </div>
-              </section>
+              </div>
             );
           })}
         </div>
       )}
 
-      {/* Task List - AI Courses (FLAT PRIORITY VIEW) */}
-      {activeTab === 'ai' && viewMode === 'flat_priority' && (
-        <div className="space-y-3">
-          {filteredAiCourses.length === 0 ? (
-            <div className="bg-[#ffffff] border border-[#c2c8c0] rounded-2xl p-8 text-center text-[#545f72]">
-              No courses found for this filter. Try adjusting your search query.
-            </div>
-          ) : (
-            filteredAiCourses.map((course) => {
-              const isDone = completedIds.has(course.id);
-              const importanceInfo = IMPORTANCE_CONFIG[course.importance];
-
-              return (
-                <div
-                  key={course.id}
-                  className={`w-full bg-[#ffffff] border rounded-2xl p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4 transition-all shadow-xs ${
-                    isDone
-                      ? 'border-[#c4eccb] bg-[#c4eccb]/15'
-                      : 'border-[#c2c8c0] hover:border-[#006494]'
-                  }`}
-                >
-                  {/* Left: Checkbox + Badges + Title */}
-                  <div className="flex items-start gap-3.5 flex-1 min-w-0">
-                    <button
-                      onClick={() => onToggleComplete(course.id)}
-                      className={`mt-1 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
-                        isDone
-                          ? 'bg-[#006494] border-[#006494] text-white'
-                          : 'border-[#727971] hover:border-[#006494] bg-white'
-                      }`}
-                      title={isDone ? 'Mark as pending' : 'Mark as completed'}
-                    >
-                      {isDone && <CheckCircle2 className="w-4 h-4" />}
-                    </button>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                        <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full font-mono">
-                          #{course.recommendedOrder}
-                        </span>
-
-                        <span
-                          className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${importanceInfo.bg} ${importanceInfo.text} ${importanceInfo.border}`}
-                          title={importanceInfo.desc}
-                        >
-                          <span>{importanceInfo.icon}</span>
-                          <span>{importanceInfo.label}</span>
-                        </span>
-
-                        <span className="text-[11px] font-bold text-[#006494] bg-[#5fafe9]/20 px-2.5 py-0.5 rounded-full">
-                          {course.phase.split(':')[1] || course.phase}
-                        </span>
-
-                        {course.durationHours && (
-                          <span className="text-[11px] text-[#545f72] font-mono flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            {course.durationHours}
-                          </span>
-                        )}
-                      </div>
-
-                      <h3
-                        className={`text-[16px] font-bold ${
-                          isDone ? 'line-through text-[#545f72]' : 'text-[#181c1e]'
-                        }`}
-                      >
-                        {course.title}
-                      </h3>
-
-                      <p className="text-[13px] text-[#545f72] mt-1 line-clamp-2">
-                        {course.description}
-                      </p>
-
-                      <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                        {course.keyTakeaways.map((takeaway) => (
-                          <span
-                            key={takeaway}
-                            className="text-[11px] bg-slate-100 text-slate-700 font-medium px-2 py-0.5 rounded-md"
-                          >
-                            {takeaway}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right: Actions */}
-                  <div className="flex items-center gap-2 self-end lg:self-center shrink-0">
-                    {course.youtubeUrl && (
-                      <a
-                        href={course.youtubeUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors flex items-center justify-center"
-                        title="Watch YouTube Lecture Video"
-                      >
-                        <Youtube className="w-4 h-4" />
-                      </a>
-                    )}
-
-                    <button
-                      onClick={() => onSendToIntake(course.title)}
-                      className="px-3 py-2 bg-[#ebeef0] hover:bg-[#e0e3e5] text-[#181c1e] text-xs font-semibold rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer"
-                    >
-                      <Sparkles className="w-3.5 h-3.5 text-[#006494]" />
-                      <span>AI Chunk</span>
-                    </button>
-
-                    <button
-                      onClick={() =>
-                        handleLaunchSprint(
-                          course.title,
-                          `Watch & study: ${course.title}. Key topics: ${course.keyTakeaways.join(
-                            ', '
-                          )}.`,
-                          course.youtubeUrl
-                        )
-                      }
-                      className="px-3.5 py-2 bg-[#006494] hover:bg-[#004e75] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
-                    >
-                      <Play className="w-3.5 h-3.5 fill-current" />
-                      <span>Focus 10m</span>
-                    </button>
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-      )}
-
-      {/* Task List - DSA Problems */}
       {activeTab === 'dsa' && (
-        <div className="space-y-3">
-          {filteredDsaProblems.length === 0 ? (
-            <div className="bg-[#ffffff] border border-[#c2c8c0] rounded-2xl p-8 text-center text-[#545f72]">
-              No problems match your current filter. Try adjusting your search query.
-            </div>
-          ) : (
-            filteredDsaProblems.map((prob) => {
-              const isDone = completedIds.has(prob.id);
-              return (
-                <div
-                  key={prob.id}
-                  className={`w-full bg-[#ffffff] border rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all shadow-xs ${
-                    isDone
-                      ? 'border-[#c4eccb] bg-[#c4eccb]/15'
-                      : 'border-[#c2c8c0] hover:border-[#8bb192]'
-                  }`}
-                >
-                  {/* Left: Checkbox + Thumbnail + Title + Meta */}
-                  <div className="flex items-start gap-3.5 flex-1 min-w-0">
-                    <button
-                      onClick={() => onToggleComplete(prob.id)}
-                      className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
-                        isDone
-                          ? 'bg-[#43664c] border-[#43664c] text-white'
-                          : 'border-[#727971] hover:border-[#43664c] bg-white'
-                      }`}
-                      title={isDone ? 'Mark as pending' : 'Mark as completed'}
-                    >
-                      {isDone && <CheckCircle2 className="w-4 h-4" />}
-                    </button>
+        <div className="space-y-8">
+          {Array.from(dsaByChapter.entries()).map(([chapterId, chapterData]) => {
+            if (chapterData.problems.length === 0) return null;
+            const chapterCompletedCount = chapterData.problems.filter((p) => completedIds.has(p.id)).length;
 
-                    {/* Video Thumbnail Preview */}
-                    {prob.youtubeUrl && (() => {
-                      const ytId = prob.youtubeUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/)?.[1];
-                      if (!ytId) return null;
-                      return (
-                        <a
-                          href={prob.youtubeUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="relative hidden sm:block w-24 h-14 rounded-lg overflow-hidden shrink-0 border border-slate-200 group"
-                        >
-                          <img
-                            src={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`}
-                            alt={prob.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Youtube className="w-5 h-5 text-white drop-shadow-md" />
-                          </div>
-                        </a>
-                      );
-                    })()}
+            return (
+              <div key={chapterId} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-base font-extrabold text-[#43664c] tracking-wide border-l-4 border-[#43664c] pl-3 py-0.5 flex items-center gap-2">
+                    <span>Ch {chapterId}: {chapterData.title}</span>
+                    <span className="text-xs font-semibold text-[#545f72] font-mono">
+                      ({chapterCompletedCount}/{chapterData.problems.length})
+                    </span>
+                  </h2>
+                </div>
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full text-[#43664c] bg-[#8bb192]/20 border border-[#8bb192]/30">
-                          Ch {prob.moduleIndex}: {prob.moduleName}
-                        </span>
-                        {prob.difficulty && (
-                          <span
-                            className={`text-[11px] font-bold px-2 py-0.5 rounded ${
-                              prob.difficulty === 'Easy'
-                                ? 'bg-emerald-100 text-emerald-800'
-                                : prob.difficulty === 'Medium'
-                                ? 'bg-amber-100 text-amber-800'
-                                : 'bg-rose-100 text-rose-800'
-                            }`}
-                          >
-                            {prob.difficulty}
-                          </span>
-                        )}
-                        {prob.practicePlatform && (
-                          <span className="text-[11px] text-[#545f72] bg-[#ebeef0] px-2 py-0.5 rounded">
-                            {prob.practicePlatform}
-                          </span>
-                        )}
-                      </div>
+                <div className="space-y-3">
+                  {chapterData.problems.map((prob) => {
+                    const isDone = completedIds.has(prob.id);
+                    const ytId = prob.youtubeUrl
+                      ? prob.youtubeUrl.match(
+                          /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
+                        )?.[1]
+                      : null;
 
-                      <h3
-                        className={`text-[15px] sm:text-[16px] font-bold ${
-                          isDone ? 'line-through text-[#545f72]' : 'text-[#181c1e]'
+                    return (
+                      <div
+                        key={prob.id}
+                        className={`w-full rounded-2xl border transition-all duration-200 overflow-hidden ${
+                          isDone
+                            ? 'border-[#c4eccb] bg-[#c4eccb]/10'
+                            : 'border-slate-200 bg-white hover:border-[#43664c]/60 hover:shadow-xs'
                         }`}
                       >
-                        {prob.title}
-                      </h3>
+                        <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="flex items-start gap-3.5 flex-1 min-w-0 font-sans">
+                            <button
+                              onClick={() => onToggleComplete(prob.id)}
+                              className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
+                                isDone
+                                  ? 'bg-[#43664c] border-[#43664c] text-white'
+                                  : 'border-slate-400 hover:border-[#43664c] hover:bg-emerald-50 bg-white'
+                              }`}
+                            >
+                              {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                            </button>
 
-                      {prob.submoduleName && (
-                        <p className="text-xs text-[#717d74] mt-0.5">
-                          Topic: {prob.submoduleName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
+                            {ytId && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  if (onWatchVideo) {
+                                    onWatchVideo({
+                                      id: prob.id,
+                                      title: prob.title,
+                                      youtubeUrl: prob.youtubeUrl!,
+                                      subject: `Ch ${prob.moduleIndex}: ${prob.moduleName}`,
+                                      difficulty: prob.difficulty,
+                                    });
+                                  } else {
+                                    window.open(prob.youtubeUrl, '_blank');
+                                  }
+                                }}
+                                className="relative hidden sm:block w-24 h-14 rounded-lg overflow-hidden shrink-0 border border-slate-200 group text-left cursor-pointer"
+                                title="Watch in Study Theater"
+                              >
+                                <img
+                                  src={`https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`}
+                                  alt={prob.title}
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <Youtube className="w-5 h-5 text-white drop-shadow-md" />
+                                </div>
+                              </button>
+                            )}
 
-                  {/* Right: Actions & Links */}
-                  <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-                    {prob.youtubeUrl && (
-                      <a
-                        href={prob.youtubeUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors flex items-center gap-1 text-xs font-bold"
-                        title="Watch Code &amp; Debug YouTube Video Tutorial"
-                      >
-                        <Youtube className="w-4 h-4" />
-                        <span className="hidden md:inline">Watch Video</span>
-                      </a>
-                    )}
-                    {prob.practiceUrl && (
-                      <a
-                        href={prob.practiceUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
-                        title="Open Practice Problem on Coding Platform"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    )}
-                    <button
-                      onClick={() =>
-                        handleLaunchSprint(
-                          prob.title,
-                          `Solve & understand: ${prob.title} (${prob.moduleName}). Practice and trace test cases.`,
-                          prob.youtubeUrl
-                        )
-                      }
-                      className="px-3.5 py-2 bg-[#43664c] hover:bg-[#38553f] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
-                      title="Start a dedicated 10-minute focus sprint on this problem right now"
-                    >
-                      <Play className="w-3.5 h-3.5 fill-current" />
-                      <span>Focus 10m</span>
-                    </button>
-                  </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="flex flex-wrap items-center gap-2 mb-1">
+                                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full text-[#43664c] bg-[#8bb192]/20 border border-[#8bb192]/30 font-mono">
+                                  Ch {prob.moduleIndex}: {prob.moduleName}
+                                </span>
+                              </div>
+                              <h3 className={`text-[15px] font-bold ${isDone ? 'text-slate-400 line-through' : 'text-[#181c1e]'}`}>
+                                {prob.title}
+                              </h3>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 shrink-0 self-end md:self-center">
+                            {prob.youtubeUrl && (
+                              <button
+                                onClick={() => {
+                                  if (onWatchVideo) {
+                                    onWatchVideo({
+                                      id: prob.id,
+                                      title: prob.title,
+                                      youtubeUrl: prob.youtubeUrl!,
+                                      subject: `Ch ${prob.moduleIndex}: ${prob.moduleName}`,
+                                      difficulty: prob.difficulty,
+                                    });
+                                  } else {
+                                    window.open(prob.youtubeUrl, '_blank');
+                                  }
+                                }}
+                                className="px-3.5 py-2 bg-[#43664c] hover:bg-[#34513c] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                              >
+                                <Play className="w-3.5 h-3.5 fill-current" />
+                                <span>Watch</span>
+                              </button>
+                            )}
+                            {prob.practiceUrl && (
+                              <a
+                                href={prob.practiceUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="px-3 py-2 bg-[#f1f4f6] hover:bg-[#e5e9eb] text-blue-700 text-xs font-bold rounded-xl flex items-center gap-1.5 transition cursor-pointer"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" />
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })
-          )}
+              </div>
+            );
+          })}
         </div>
       )}
     </main>

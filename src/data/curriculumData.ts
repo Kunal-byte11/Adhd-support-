@@ -1,3 +1,5 @@
+import { StudyTheaterVideo, ITimestampNote } from '../types';
+
 export interface DsaProblem {
   id: string;
   moduleIndex: number;
@@ -2702,3 +2704,128 @@ export const DSA_PROBLEMS_DATA: DsaProblem[] = [
     youtubeUrl: 'https://youtu.be/f9PKrK0pqOo',
   },
 ];
+
+export function getCurriculumVideoById(id: string): StudyTheaterVideo | null {
+  const cleanId = id.startsWith('video_note_') ? id.replace('video_note_', '') : id;
+  const aiCourse = AI_DATA_SCIENCE_COURSES.find((c) => c.id === cleanId);
+  if (aiCourse && aiCourse.youtubeUrl) {
+    return {
+      id: aiCourse.id,
+      title: aiCourse.title,
+      youtubeUrl: aiCourse.youtubeUrl,
+      subject: aiCourse.category || 'Generative AI',
+      category: 'genai',
+      difficulty: aiCourse.importance,
+    };
+  }
+  const dsaProblem = DSA_PROBLEMS_DATA.find((p) => p.id === cleanId);
+  if (dsaProblem && dsaProblem.youtubeUrl) {
+    return {
+      id: dsaProblem.id,
+      title: dsaProblem.title,
+      youtubeUrl: dsaProblem.youtubeUrl,
+      subject: dsaProblem.moduleName || 'DSA',
+      category: 'dsa',
+      difficulty: dsaProblem.difficulty,
+    };
+  }
+  return null;
+}
+
+export function parseTimestampToSeconds(ts: string): number {
+  if (!ts) return 0;
+  const clean = ts.replace(/[\[\]@\(\)]/g, '').trim();
+
+  // Match mm:ss or hh:mm:ss or m:ss
+  const colonMatch = clean.match(/\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b/);
+  if (colonMatch) {
+    if (colonMatch[3] !== undefined) {
+      // hh:mm:ss
+      const h = parseInt(colonMatch[1], 10);
+      const m = parseInt(colonMatch[2], 10);
+      const s = parseInt(colonMatch[3], 10);
+      return h * 3600 + m * 60 + s;
+    } else {
+      // mm:ss
+      const m = parseInt(colonMatch[1], 10);
+      const s = parseInt(colonMatch[2], 10);
+      return m * 60 + s;
+    }
+  }
+
+  // Match 4m15s or 4m or 30s
+  const minMatch = clean.match(/(\d+)\s*m(?:in)?/i);
+  const secMatch = clean.match(/(\d+)\s*s(?:ec)?/i);
+  if (minMatch || secMatch) {
+    const m = minMatch ? parseInt(minMatch[1], 10) : 0;
+    const s = secMatch ? parseInt(secMatch[1], 10) : 0;
+    return m * 60 + s;
+  }
+
+  // Plain digits
+  const rawDigits = clean.match(/^\d+$/);
+  if (rawDigits) {
+    return parseInt(rawDigits[0], 10);
+  }
+
+  return 0;
+}
+
+export function formatSecondsToTimestamp(secs: number): string {
+  const safeSecs = Math.max(0, Math.floor(isNaN(secs) ? 0 : secs));
+  const h = Math.floor(safeSecs / 3600);
+  const m = Math.floor((safeSecs % 3600) / 60);
+  const s = safeSecs % 60;
+  if (h > 0) {
+    return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+export function parseMarkdownToTimestampNotes(raw: string): ITimestampNote[] {
+  if (!raw || !raw.trim()) return [];
+  const lines = raw.split('\n');
+  const results: ITimestampNote[] = [];
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+    if (!trimmed) return;
+
+    // Look for timestamp pattern
+    const match = trimmed.match(/(?:\[|@|\(|\b)(\d{1,2}:\d{2}(?::\d{2})?)(?:\]|\)|\b)/);
+    if (match) {
+      const tsFormatted = match[1];
+      const tsSecs = parseTimestampToSeconds(tsFormatted);
+      const isRevisit =
+        trimmed.includes('⚠️') ||
+        trimmed.toLowerCase().includes('revisit') ||
+        trimmed.toLowerCase().includes('confusion') ||
+        trimmed.toLowerCase().includes('doubt');
+
+      // Clean the note text
+      let noteText = trimmed
+        .replace(/(?:\[|@|\()?\d{1,2}:\d{2}(?::\d{2})?(?:\]|\))?/, '')
+        .replace(/^[-\*\•\d\.\s]+/, '')
+        .replace(/⚠️/g, '')
+        .replace(/^[-\s:]+/, '')
+        .trim();
+
+      if (!noteText) {
+        noteText = 'Key concept / bookmark';
+      }
+
+      results.push({
+        id: `ts_note_${Date.now()}_${index}`,
+        timestampSeconds: tsSecs,
+        timestampFormatted: formatSecondsToTimestamp(tsSecs),
+        note: noteText,
+        isRevisit,
+        createdAt: Date.now() - (lines.length - index) * 1000,
+      });
+    }
+  });
+
+  return results.sort((a, b) => a.timestampSeconds - b.timestampSeconds);
+}
+
+

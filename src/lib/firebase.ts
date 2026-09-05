@@ -73,11 +73,12 @@ export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId || undefi
 
 // Collections
 export const TASKS_COLLECTION = 'focus_tasks';
-export const URGES_COLLECTION = 'focus_urges';
 export const CURRICULUM_COLLECTION = 'curriculum_progress';
 export const REWARDS_COLLECTION = 'partner_rewards';
 export const PARTNER_NOTES_COLLECTION = 'partner_notes';
 export const NUDGES_COLLECTION = 'partner_nudges';
+export const WOOP_COLLECTION = 'woop_goals';
+export const RECALLS_COLLECTION = 'session_recalls';
 
 export {
   collection,
