@@ -1,0 +1,820 @@
+Title,Description,Thumbnail url,Channel name,Views,Likes,Comments,Duration in seconds,Duration in minutes,Duration in timestamp,Duration,Uploaded Time,Video url,Tags,Tags (in description),Emails (in description),Links (in description)
+Agentic AI using LangGraph | New Playlist | LangGraph Tutorial,"This playlist is your hands-on guide to building agentic AI systems using LangGraph—a powerful framework for managing multi-step, multi-agent workflows.
+
+You’ll learn how to:
+
+Understand the core ideas behind agentic workflows
+Use LangGraph to define stateful agents and tasks
+Coordinate multiple tools, APIs, and LLM calls
+Handle memory, branching, and real-time decision logic
+Build real applications like assistants, planners, and autonomous agents.
+
+Just clear explanations, code demos, and practical projects.
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:30 - Why this Playlist?
+04:22 - Vision behind this Playlist
+07:13 - Curriculum [Tentative]
+13:05 - Prerequisites
+14:50 - FAQs",https://i.ytimg.com/vi/yC36gN-rqjo/maxresdefault.jpg,CampusX,559395,9293,617,1018,16.97,16:58,"16 Minutes, 58 Seconds",2025-06-17T09:20:33,https://www.youtube.com/watch?v=yC36gN-rqjo,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],[]
+Generative AI vs Agentic AI | Agentic AI using LangGraph | Video 1 | CampusX,"In this video, we break down the key difference between Generative AI and Agentic AI—and why it matters.
+
+You’ll learn:
+What Generative AI does (text, images, code)
+What makes Agentic AI different (goals, memory, decisions)
+Real-world use cases of Agentic AI
+How LangGraph helps you build these systems step by step
+
+We’ll also show you how LangGraph brings structure, memory, and control to LLM workflows—so your AI agents can actually reason, act, and adapt.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:18 - What is GEN AI
+07:03 - GEN AI vs Traditional AI
+12:17 - Applications of GEN AI
+20:08 - Chatbot 1
+28:50 - Problems
+31:47 - Chatbot 2 [RAG Based]
+38:57 - Problems
+40:13 - Chatbot 3 [Tool Augmented]
+48:31 - Problems
+50:28 - Chatbot 4 [Agentic AI]
+57:25 - Problems
+58:41 - Conclusion",https://i.ytimg.com/vi/xdA0pGDiUPE/maxresdefault.jpg,CampusX,188223,6331,289,3764,62.73,1:02:44,"1 Hours, 2 Minutes, 44 Seconds",2025-06-24T12:28:44,https://www.youtube.com/watch?v=xdA0pGDiUPE,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+What is Agentic AI? | Agentic AI using LangGraph | Video 2 | CampusX,"This video explains what Agentic AI really means—and how it goes beyond traditional Generative AI.
+
+You’ll learn:
+The core idea behind Agentic AI: autonomous decision-making
+How agents use memory, tools, and goals to act
+Why this matters for real-world AI applications
+How LangGraph helps you build and manage agent workflows
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:31 - What is Agentic AI?
+06:15 - Example of Agentic AI
+15:26 - Key Characteristics
+16:50 - Autonomy
+24:32 - Goal Oriented
+29:05 - Planning
+35:45 - Reasoning
+41:46 - Adaptability
+45:56 - Context Awareness
+51:53 - Components of Agentic AI
+52:40 - Brain
+54:05 - Orchestrator
+55:58 - Tools
+56:55 - Memory 
+57:35 - Supervisor",https://i.ytimg.com/vi/GWnSsjT4V68/maxresdefault.jpg,CampusX,153063,5073,283,3625,60.42,1:00:25,"1 Hours, 0 Minutes, 25 Seconds",2025-06-27T13:46:52,https://www.youtube.com/watch?v=GWnSsjT4V68,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+LangChain Vs LangGraph | Agentic AI using LangGraph | Video 3 | CampusX,"This video walks you through the key concepts of building automated, agentic workflows using LangGraph. We cover what LangGraph is, how it’s used, and dive deep into topics like control flow, state management, event-driven execution, fault tolerance, human-in-the-loop setups, and nested workflows. Perfect if you're exploring complex AI systems with real-world use in mind.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:30 - Goal
+03:40 - Disclaimer
+05:20 - What is LangChain
+10:15 - LangChain Use
+15:40 - Understanding Automated Workflow
+27:36 - Control Flow Complexity
+39:16 - Handling State
+49:50 - Event Driven Execution
+55:55 - Fault Tolerance
+01:02:26 - Human in the loop
+01:08:54 - Nested Workflows
+01:15:53 - Observability
+01:22:38 - Conclusion/Revision",https://i.ytimg.com/vi/31qyMKNB2RA/maxresdefault.jpg,CampusX,174248,4993,284,5249,87.48,1:27:29,"1 Hours, 27 Minutes, 29 Seconds",2025-07-04T08:40:03,https://www.youtube.com/watch?v=31qyMKNB2RA,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+LangGraph Core Concepts | Agentic AI using LangGraph | Video 4 | CampusX,"This video breaks down the key building blocks of LangGraph. You’ll learn how to design and manage LLM workflows using concepts like prompt chaining, routing, parallel execution, and graph-based orchestration.
+
+We cover:
+
+How LangGraph structures workflows with nodes and edges
+How state, reducers, and orchestrators work together
+The full execution model that powers agentic AI systems
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:14 - What is LangGraph?
+05:43 - LLM WorkFlows
+09:07 - Prompt Chaining
+11:17 - Routing
+13:14 - Parallelization
+16:11 - Orchestrator Workers
+19:48 - Evaluator Optimizer
+23:00 - Graphs Nodes and Edges
+30:53 - State
+36:07 - Reducers
+44:38 - LangGraph Execution Model",https://i.ytimg.com/vi/D5KhiCDM9XQ/maxresdefault.jpg,CampusX,152437,5258,177,3112,51.87,51:52,"51 Minutes, 52 Seconds",2025-07-09T17:05:37,https://www.youtube.com/watch?v=D5KhiCDM9XQ,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Sequential Workflows in LangGraph | Agentic AI using LangGraph | Video 5 | CampusX,"This video shows you how to build sequential workflows using LangGraph, step by step. You’ll start from installation, build your first simple workflow, and then move on to LLM-based workflows with prompt chaining.
+
+What’s covered:
+Setting up LangGraph
+Building and running your first workflow
+Creating LLM workflows with clear, step-by-step sequences
+Using prompt chaining to structure outputs
+
+Perfect if you’re just getting started with LangGraph and want to understand how sequential AI workflows actually work.
+
+Code - https://github.com/campusx-official/langgraph-tutorials
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:43 - Installation
+07:17 - First Workflow
+26:11 - LLM Workflow
+36:55 - Prompt Chaining
+49:03 - Outro",https://i.ytimg.com/vi/bAWujyAl1Kk/maxresdefault.jpg,CampusX,132740,3775,164,2953,49.22,49:13,"49 Minutes, 13 Seconds",2025-07-11T14:30:29,https://www.youtube.com/watch?v=bAWujyAl1Kk,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Parallel Workflows in LangGraph | Agentic AI using LangGraph | Video 6 | CampusX,"This video teaches you how to build parallel workflows using LangGraph. You’ll learn how to run multiple tasks at the same time, manage branching logic, and combine results effectively.
+
+What’s covered:
+How to structure parallel tasks in LangGraph
+Running independent nodes simultaneously
+Merging outputs from parallel workflows
+Practical examples for faster, more efficient LLM applications
+
+If you want to scale your AI workflows with speed and flexibility, this is a great place to start.
+
+Code - https://github.com/campusx-official/langgraph-tutorials
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:43 - Installation
+07:15 - First Workflow
+26:11 - LLM Workflow
+36:55 - Prompt Chaining",https://i.ytimg.com/vi/O6ryuSpqdOw/maxresdefault.jpg,CampusX,104443,3327,188,3569,59.48,59:29,"59 Minutes, 29 Seconds",2025-07-14T10:44:41,https://www.youtube.com/watch?v=O6ryuSpqdOw,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Conditional Workflows in LangGraph | Agentic AI using LangGraph | Video 7 | CampusX,"This video shows you how to build conditional workflows using LangGraph—where the next step depends on specific outcomes or decisions.
+
+What’s covered:
+Designing workflows with branching logic
+Handling quality evaluation (QE) checks
+Using LLM outputs to guide different paths (e.g., review handling)
+
+Perfect if you want more control over how your AI workflows adapt to different scenarios.
+
+Code - https://github.com/campusx-official/langgraph-tutorials
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+04:38 - Conditional Workflow / QE
+24:20 - LLM - Review Handling",https://i.ytimg.com/vi/I-dvZqTz-Wc/maxresdefault.jpg,CampusX,83025,3000,136,2858,47.63,47:38,"47 Minutes, 38 Seconds",2025-07-16T15:26:28,https://www.youtube.com/watch?v=I-dvZqTz-Wc,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Iterative Workflows in LangGraph | Agentic AI using LangGraph | Video 8 | CampusX,"Code - https://github.com/campusx-official/langgraph-tutorials
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+01:51 - Plan of Action
+08:15 - Building the Workflow
+29:45 - Testing",https://i.ytimg.com/vi/7CbSqrovcsE/maxresdefault.jpg,CampusX,69404,2618,143,2234,37.23,37:14,"37 Minutes, 14 Seconds",2025-07-21T17:54:31,https://www.youtube.com/watch?v=7CbSqrovcsE,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+How to build a Chatbot using LangGraph,"Code - https://github.com/campusx-official/langgraph-tutorials
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Plan of Action
+03:04 - Design and Code",https://i.ytimg.com/vi/51Ve2tE3Zns/sddefault.jpg,CampusX,100273,3229,172,2198,36.63,36:38,"36 Minutes, 38 Seconds",2025-07-25T14:59:01,https://www.youtube.com/watch?v=51Ve2tE3Zns,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Persistence in LangGraph | Time Travel in LangGraph | CampusX,"Code - https://github.com/campusx-official/langgraph-tutorials
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:03 - What is Persistence
+07:25 - Speciality of Persistance
+11:21 - Building Chatbots
+14:50 - Checkpointer
+17:39 - Example of Checkpointer
+20:10 - Threads
+25:35 - Implementation/Code
+35:51 - Benefits of Persistence
+36:45 - Short Term Memory
+38:05 - Fault Tolerance
+44:28 - Human in Loop
+47:36 - Time Travel
+57:30 - Outro",https://i.ytimg.com/vi/_IPP7_Bi8uA/sddefault.jpg,CampusX,90807,3223,140,3494,58.23,58:14,"58 Minutes, 14 Seconds",2025-07-31T02:48:54,https://www.youtube.com/watch?v=_IPP7_Bi8uA,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Building a Chatbot with UI in LangGraph & Streamlit | CampusX,"Code -  https://github.com/campusx-official/chatbot-in-langgraph
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:15 - Chatbot Demo
+03:48 - Plan of Action
+06:42 - Code Setup
+08:30 - Chat Interface in Streamlit
+25:05 - Final Demo",https://i.ytimg.com/vi/voZAgDmO-rk/sddefault.jpg,CampusX,78045,2476,102,1948,32.47,32:28,"32 Minutes, 28 Seconds",2025-08-01T14:30:52,https://www.youtube.com/watch?v=voZAgDmO-rk,[],[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Streaming in LangGraph | CampusX,"Code - https://github.com/campusx-official/chatbot-in-langgraph
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:55 - Streaming Demo
+04:13 - What is Streaming?
+05:35 - Importance of streaming
+12:15 - Implementing Streaming
+14:08 - Code",https://i.ytimg.com/vi/D1PcZaeQ2eg/maxresdefault.jpg,CampusX,57703,2155,89,1500,25,25:00,"25 Minutes, 0 Seconds",2025-08-03T17:30:05,https://www.youtube.com/watch?v=D1PcZaeQ2eg,[],[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+How to build a Resume Chat feature like ChatGPT? | CampusX,"Code - https://github.com/campusx-official/chatbot-in-langgraph
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+01:50 - Resume Demo
+05:30 - Break Down of the features
+35:30 - Final Demo
+37:20 - Task for you",https://i.ytimg.com/vi/N2nVG2MGWJ8/maxresdefault.jpg,CampusX,61746,2200,115,2380,39.67,39:40,"39 Minutes, 40 Seconds",2025-08-06T14:30:26,https://www.youtube.com/watch?v=N2nVG2MGWJ8,[],[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+LangGraph + SQLite | Chatbot with Database Integration | CampusX,"Code - https://github.com/campusx-official/chatbot-in-langgraph
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+03:39 - Integrating Database
+19:10 - Frontend Code",https://i.ytimg.com/vi/c6a47iX5JkU/maxresdefault.jpg,CampusX,55206,2134,117,1728,28.8,28:48,"28 Minutes, 48 Seconds",2025-08-08T18:29:31,https://www.youtube.com/watch?v=c6a47iX5JkU,[],[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+LangSmith Crash Course | LangSmith Tutorial for Beginners | Observability in GenAI | CampusX,"Code - https://github.com/campusx-official/langsmith-masterclass
+
+Additional Code:
+OPENAI_API_KEY = '[REDACTED]'
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT='https://api.smith.langchain.com'
+LANGCHAIN_API_KEY='[REDACTED]'
+LANGCHAIN_PROJECT='langsmith-demo'
+
+In this LangSmith Crash Course, you’ll learn the essentials of LangSmith for observability in GenAI applications. This step-by-step tutorial covers why LangSmith is important, core concepts, tracing, testing queries, and integrating with LangGraph. With practical code demos and real-world examples, this video is perfect for beginners who want to get hands-on with LangSmith and understand its key features.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:53 - Why LangSmith?
+08:30 - Example 2
+22:15 - Observability
+26:30 - What does LangSmith Trace?
+29:00 - Setting up Agenda
+33:10 - Code Demo
+34:50 - Core Concepts
+38:00 - Code Demo
+54:17 - Tracing RAG App
+01:27:10 - Testing Query
+01:33:55 - LangGraph + LangSmith Integration
+01:47:24 - Features of LangSmith
+02:07:25 - Outro",https://i.ytimg.com/vi/4FFspU4riHk/maxresdefault.jpg,CampusX,111197,3588,294,7660,127.67,2:07:40,"2 Hours, 7 Minutes, 40 Seconds",2025-08-18T18:16:55,https://www.youtube.com/watch?v=4FFspU4riHk,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://api.smith.langchain.com, https://github.com/campusx-official/langsmith-masterclass, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Observability in LangGraph | LangSmith Integration with LangGraph,"Code - https://github.com/campusx-official/chatbot-in-langgraph
+
+LangSmith Video Link - https://youtu.be/4FFspU4riHk
+
+Additional Code:
+
+OPENAI_API_KEY = '[REDACTED]'
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT='https://api.smith.langchain.com'
+LANGCHAIN_API_KEY='[REDACTED]'
+LANGCHAIN_PROJECT='Chatbot Project'
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Intro
+00:10 - Recap
+03:25 - Getting API Key
+13:00 - Logging your first Thread",https://i.ytimg.com/vi/ikzN6byFNWw/maxresdefault.jpg,CampusX,39600,1569,62,1300,21.67,21:40,"21 Minutes, 40 Seconds",2025-08-20T16:59:35,https://www.youtube.com/watch?v=ikzN6byFNWw,[],[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://youtu.be/4FFspU4riHk, https://api.smith.langchain.com, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Tools in LangGraph | Agentic AI using LangGraph | CampusX,"Code - https://github.com/campusx-official/chatbot-in-langgraph
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Intro & Demo
+05:37 - Plan of action
+06:48 - Tools in LangGraph
+11:15 - Definition of ToolNode
+13:05 - Code implementation
+33:00 - Final Changes",https://i.ytimg.com/vi/_UuUigoM9MA/maxresdefault.jpg,CampusX,61813,2001,160,2060,34.33,34:20,"34 Minutes, 20 Seconds",2025-08-24T09:54:16,https://www.youtube.com/watch?v=_UuUigoM9MA,[],[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+How to build MCP Client using LangGraph | Agentic AI using LangGraph | CampusX,"Code - https://github.com/campusx-official/chatbot-in-langgraph
+
+https://github.com/campusx-official/mcp-client-langgraph
+
+In this video we continue the LangGraph Agentic AI playlist and implement MCP (Model Context Protocol) in LangGraph. First we recap what we’ve covered so far (Agentic AI vs Generative AI, LangGraph core concepts, workflows, and the chatbot project). Then we convert a synchronous chatbot to asynchronous (required by the MCP client library), build an MCP client in LangGraph, and connect it to a local math MCP server and a remote expense-tracker MCP server. The demo shows how MCP removes the maintenance brittleness of tool-based integrations by separating server-side tool logic from a lightweight client-side config.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 – Intro and why the playlist was paused
+00:56 – Recap of playlist (18 videos so far)
+02:30 – Topic: what MCP is and why it matters
+04:22 –  Example: multiple tools (search, calculator, stock) and GitHub integration
+07:48 – Problem: brittleness of tool-based approach and API version changes
+11:31 – MCP solution: separation of concerns (server tools vs client config)
+14:37 – Why we must convert sync → async (MCP libraries are async-only)
+20:06 – Async conversion demo and a quick primer on async programming
+26:35 –  Building an MCP client in LangGraph (local math server demo)
+33:24 – Adding a remote MCP server (expense-tracker) and listing tools
+36:51 – Using expense-tracker: add, list, summarise — no client-side code changes needed
+41:11 – Code structure and key changes (LangGraph, MCP client, Streamlit → async streams, SQLite → aiosqlite)
+44:09 – Next video preview: add RAG capability",https://i.ytimg.com/vi/yZGjVA4uDc4/maxresdefault.jpg,CampusX,55189,1616,79,2671,44.52,44:31,"44 Minutes, 31 Seconds",2025-11-19T18:28:52,https://www.youtube.com/watch?v=yZGjVA4uDc4,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://github.com/campusx-official/mcp-client-langgraph]"
+RAG using LangGraph | Agentic AI using LangGraph | CampusX,"Code - https://github.com/campusx-official/langgraph-tutorials
+Code - https://github.com/campusx-official/chatbot-in-langgraph
+RAG for beginners: https://youtu.be/X0btK9X0Xnk
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+This video continues the LangGraph Agentic AI playlist and shows how to convert a plain chatbot into a RAG (Retrieval-Augmented Generation) chatbot. We recap previous incremental features (UI, streaming, persistence, observability, tools, MCP), demo a multi-utility chatbot that accepts PDF uploads, and walk through a three-step plan: (1) quick RAG recap, (2) build a RAG tool from scratch in LangGraph, (3) integrate RAG into the existing chatbot project. Demo includes uploading a PDF, asking document-grounded questions, and mixing RAG with existing tools (calculator, stock price, MCP). Code is run in a Jupyter notebook; vector store used is FAISS.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 – Intro and playlist progress recap (UI, streaming, persistence, observability, tools, MCP)
+01:12 –  Goal: convert chatbot into a RAG chatbot (upload documents → question answering) and UI demo
+03:28 –  Demo: upload PDF, ask document-grounded questions; tools continue to work (stock price example)
+04:32 – Plan of action: three conceptual parts (RAG recap, standalone RAG code, integrate into existing project)
+06:15 – Why RAG: outdated knowledge, privacy (private docs), and hallucination reduction
+10:08 – RAG principle: provide LLM with additional context (context-learning) rather than pasting full documents
+12:47 –  Need for context filtering and splitting to respect token limits
+14:38 – RAG architecture: split → embed → store (vector DB) → retrieve → build prompt → answer
+20:27 – Implementation setup: packages, LLM (gpt-4o-mini example), PDF loader, text splitter
+23:04 – Embeddings (OpenAI embeddings), vector store (FAISS) — indexing pipeline completed
+24:44 – Retriever demo: retriever.invoke() returns top-k similar chunks from the vector store
+28:07 – Wrap retriever as a RAG tool, bind tool to LLM, build LangGraph nodes (chat node + tool node)
+30:23 – Live queries demo: document-grounded answers take ~8–9s (search → retrieve → LLM)
+31:38 – LangChain/LangX tracing: visualize step-by-step flow (chat node → tools → retriever → answer)
+34:44 – Integration into existing project: new backend/front-end files, ingest_pdf() function, minor stream/thread handling
+36:54 – Code and repo: full code link provided in the description for replication and study",https://i.ytimg.com/vi/E1qP9Xsnmik/maxresdefault.jpg,CampusX,55508,1567,86,2232,37.2,37:12,"37 Minutes, 12 Seconds",2025-11-22T16:30:06,https://www.youtube.com/watch?v=E1qP9Xsnmik,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://github.com/campusx-official/chatbot-in-langgraph, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://youtu.be/X0btK9X0Xnk, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Human in the loop (HITL) using LangGraph | CampusX,"Code - https://github.com/campusx-official/langgraph-tutorials
+
+In this video, we explore Human-in-the-Loop (HITL)—one of the most important concepts for building safe, reliable, and production-ready agentic AI systems using LangGraph.
+
+We begin with a clear, intuitive explanation of what HITL is and why fully autonomous AI systems are not enough in real-world applications. You’ll understand where AI agents struggle today—ambiguity, hallucinations, financial actions, and ethical judgment—and why human intervention is critical at key decision points.
+
+The video covers:
+
+Why autonomy alone is risky in agentic AI systems
+The two core reasons HITL exists: system reliability and accountability
+How HITL improves accuracy, safety, and user trust
+Common HITL patterns such as:
+Action approval
+Output review and editing
+Ambiguity clarification
+Escalation to human agents
+
+From there, we shift to LangGraph’s implementation of HITL, explaining the concepts of interrupt, pause-and-resume execution, checkpoints, and commands in a simple, intuitive way.
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00:00 - Introduction: What is Human-in-the-Loop (HITL)?
+00:01:14 - Why Agentic AI Needs Human Oversight
+00:03:44 - HITL Explained with Real-World Examples
+00:04:22 - Core Reasons for HITL: Accuracy & Accountability
+00:08:46 - Benefits of HITL in Agentic Systems
+00:11:36 - Common HITL Patterns in AI Systems
+00:14:21 - HITL from a LangGraph Perspective
+00:16:30 - Conceptual Workflow: HITL with Interrupts
+00:22:49 - Basic HITL Code Example in LangGraph
+00:31:22 - Advanced Example: HITL in a Tool-Using Chatbot
+00:39:42 - Key Takeaways and Final Thoughts",https://i.ytimg.com/vi/xxqZzVZ4gE0/maxresdefault.jpg,CampusX,41042,1398,75,2404,40.07,40:04,"40 Minutes, 4 Seconds",2025-12-12T08:02:29,https://www.youtube.com/watch?v=xxqZzVZ4gE0,[],[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials]"
+How to build Subgraphs in LangGraph,"Code - https://github.com/campusx-official/langgraph-tutorials
+
+In this video, we dive deep into how to build and use subgraphs in LangGraph—a critical concept for designing scalable, modular, and multi-agent GenAI systems. We start by understanding what subgraphs are at a conceptual level and why they become essential as GenAI workflows grow in complexity. You’ll see how large agentic systems can be broken down into smaller, independent agents, each represented as a subgraph with its own logic, tools, memory, and state.
+
+The video then covers:
+
+Why subgraphs are important for multi-agent architectures
+How subgraphs improve modularity, reusability, and maintainability
+LangGraph-specific benefits like failure isolation, state separation, and observability
+The two ways to implement subgraphs in LangGraph:
+Invoking a subgraph from inside a node (isolated state)
+Adding a subgraph directly as a node (shared state)
+
+Finally, we walk through a practical coding example where a parent graph generates an answer and a subgraph handles translation, showing both implementation patterns side by side.
+
+If you’re building agentic AI systems, multi-agent workflows, or production-grade GenAI applications with LangGraph, this video will give you a strong foundation to design cleaner and more scalable architectures.
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00:00 - Introduction: Subgraphs in Agentic AI and LangGraph
+00:01:06 - What Are Subgraphs? (Conceptual Understanding)
+00:02:19 - Why Subgraphs Are Needed in Complex GenAI Workflows
+00:05:57 - Subgraphs for Multi-Agent Architectures
+00:07:04 - Core Benefits: Modularity, Reusability, Maintainability
+00:08:09 - LangGraph-Specific Benefits of Subgraphs
+00:11:08 - Ways to Implement Subgraphs in LangGraph
+00:13:40 - Practical Example: Translation Workflow with Subgraphs
+00:19:11 - Two Subgraph Mechanisms Compared (Isolated vs Shared State)
+00:21:26 - Best Practices, Persistence, and Observability
+00:22:36 - Wrap-up",https://i.ytimg.com/vi/wcHcocpAoX4/maxresdefault.jpg,CampusX,27198,1126,73,1367,22.78,22:47,"22 Minutes, 47 Seconds",2025-12-16T07:15:56,https://www.youtube.com/watch?v=wcHcocpAoX4,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/langgraph-tutorials]"
+LLMs Don’t Have Memory — So How Do They Remember?,"This video explains how memory works in GenAI systems and why it is essential for building chatbots and AI agents.
+
+It starts by showing why LLMs are stateless by default, then builds the idea of memory from first principles—covering short-term memory using conversation history and its limitations. The video then introduces long-term memory, explains why it’s needed for personalization and continuity, and breaks down its types (episodic, semantic, and procedural) and how they work at a high level.
+
+By the end, you’ll understand how modern GenAI applications add memory around LLMs to make them useful in real-world systems.
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00:00 - Introduction: Why Memory Matters in GenAI
+00:02:01 - How LLMs Work at Inference (Stateless by Design)
+00:09:44 - The Core Problem: LLMs Have No Memory
+00:12:28 - Building Memory Around LLMs (First-Principles Approach)
+00:13:05 - Context Window and In-Context Learning
+00:18:51 - Short-Term Memory Using Conversation History
+00:23:43 - How Chatbots Implement Short-Term Memory
+00:26:33 - Limitations of Short-Term Memory
+00:40:06 - Why We Need Long-Term Memory
+00:43:32 - Types of Long-Term Memory (Episodic, Semantic, Procedural)
+00:47:20 - How Long-Term Memory Works (High-Level Architecture)
+00:53:36 - Challenges and Tools for Memory Systems
+00:56:40 - Future of Memory in LLMs
+00:57:39 - Closing Thoughts",https://i.ytimg.com/vi/DcPKJrOF9Wo/maxresdefault.jpg,CampusX,54183,2303,121,3464,57.73,57:44,"57 Minutes, 44 Seconds",2025-12-29T07:12:34,https://www.youtube.com/watch?v=DcPKJrOF9Wo,[],[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.instagram.com/campusx.official, https://www.linkedin.com/in/nitish-singh-03412789]"
+How To Implement Short Term Memory Using LangGraph,"In this video, we continue the Agentic AI using LangGraph series by learning how to implement short-term memory in LLM-based systems. The video explains why LLMs are stateless, how short-term memory works using conversation history, and how to implement it in LangGraph using checkpointers and thread IDs. You’ll then learn why in-memory storage is not suitable for production and how to persist conversation state using PostgreSQL with Docker. Finally, the video covers the context window problem in LLMs and teaches practical techniques like trimming, deletion, and summarization to handle long conversations safely and reliably in real-world agentic AI systems.
+
+Code -https://github.com/campusx-official/memory-in-llms
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Introduction and video overview
+00:01:38 - Recap: LLMs are stateless and memory fundamentals
+00:03:33 - Short-term memory concept and checkpointers in LangGraph
+00:04:46 - Implementing short-term memory with threads and in-memory storage
+00:09:22 - Limitations of in-memory memory storage
+00:11:16 - Need for persistence in production systems
+00:12:38 - Setting up PostgreSQL using Docker
+00:15:54 - Implementing persistent memory with PostgreSQL checkpointer
+00:17:36 - Verifying persistence after application restart
+00:19:30 - Context window and context overflow problem
+00:21:38 - Trimming strategy to control token limits
+00:31:19 - Limitations of trimming
+00:32:03 - Summarization concept for long conversations
+00:35:24 - Deletion and its role in summarization
+00:40:12 - Implementing summarization workflow in LangGraph
+00:49:26 - Testing summarization behavior in practice
+00:52:08 - Final recap and key takeaways",https://i.ytimg.com/vi/FSBkTI1QuvY/maxresdefault.jpg,CampusX,39889,1241,89,3166,52.77,52:46,"52 Minutes, 46 Seconds",2026-01-03T14:30:12,https://www.youtube.com/watch?v=FSBkTI1QuvY,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/memory-in-llms, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Long Term Memory in LangGraph,"Code - https://github.com/campusx-official/memory-in-llms
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes",https://i.ytimg.com/vi/KrXBcokM3Tc/maxresdefault.jpg,CampusX,63034,1350,126,3935,65.58,1:05:35,"1 Hours, 5 Minutes, 35 Seconds",2026-01-07T14:30:19,https://www.youtube.com/watch?v=KrXBcokM3Tc,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://github.com/campusx-official/memory-in-llms]"
+"This AI Agent Plans, Researches & Writes Blogs Automatically using LangGraph | Agentic AI Project","In this video, we build a real AI agent using LangGraph, going beyond simple prompts to design a planning-based, production-style agent system that plans before execution, decides when internet research is required, breaks tasks into parallel subtasks, uses multiple worker agents, adds citations and images automatically, and generates a complete blog end-to-end; you’ll learn how modern AI agents are actually designed using the orchestrator–worker architecture, along with key concepts like router, planner, worker, and reducer nodes, research-powered agents with Tavily, image-aware content generation, and how to turn an AI agent into a real, interview-ready project using LangGraph, LangChain, OpenAI, Gemini, Python, and Streamlit.
+
+Resources: https://github.com/campusx-official/blog-writing-agent
+Gen AI Courses: https://learnwith.campusx.in/s/store/courses/Paid%20Courses
+DSA Course: https://learnwith.campusx.in/courses/DSA-69527ab734c0815fe15a08d9
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 – Introduction & What We’re Building
+02:10 – What Is a Planning AI Agent (vs Direct Execution)
+06:30 – Demo: AI Blog Writing Agent in Action
+11:00 – High-Level Agent Architecture Overview
+15:30 – Orchestrator–Worker Pattern Explained
+20:45 – Building the Basic Blog Writing Agent (Stage 1)
+32:00 – Improving Output with Better Planning & Prompts
+36:30 – Adding Internet Research with Router & Tavily (Stage 2)
+49:50 – Research-Aware Planning & Worker Execution
+59:40 – Adding Automatic Image Generation (Stage 3)
+01:14:20 – Reducer Logic: Merging Content & Placing Images
+01:16:20 – Final Blog Output with Images
+01:16:30 – Building the Streamlit UI (Stage 4)
+01:18:40 – Project Wrap-up & Portfolio Advice",https://i.ytimg.com/vi/Ou_v9lk0rxg/maxresdefault.jpg,CampusX,71162,1931,173,4804,80.07,1:20:04,"1 Hours, 20 Minutes, 4 Seconds",2026-01-31T12:30:37,https://www.youtube.com/watch?v=Ou_v9lk0rxg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://learnwith.campusx.in/s/store/courses/Paid%20Courses, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/courses/DSA-69527ab734c0815fe15a08d9, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/blog-writing-agent]"
+Advanced RAG: How Corrective RAG (CRAG) Solves Traditional RAG Problems | CampusX,"Traditional RAG systems often suffer from ""blind trust,"" where they generate answers based on irrelevant retrieved documents, leading to hallucinations. In this video, we explore Corrective RAG (CRAG), a robust architecture that evaluates the quality of retrieval before generating a response.
+
+We walk through the first principles of CRAG, moving from a traditional RAG setup to a complete system featuring Retrieval Evaluation, Knowledge Refinement, and Web Search integration using tools like Tavily. Whether the retrieval is correct, ambiguous, or incorrect, you'll learn how to ensure your LLM always has the best context to provide accurate answers.
+
+Resources:
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+Github: https://github.com/campusx-official/corrective-rag
+Paper: https://arxiv.org/pdf/2401.15884
+CampusX Blog [Bookmark It]: https://campusxainewsletter.my.canva.site/campusx-weekly-ai-insights
+CampusX Courses: https://learnwith.campusx.in/s/store
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 – What is Corrective RAG (CRAG)?
+01:12 – The problem with Traditional RAG: ""Blind Trust"" & Hallucinations
+02:00 – Visualising the Vector Database & Retrieval Workflow
+04:22 – Practical Example: When LLMs fail on ""Out of Distribution"" queries
+07:04 – Code Walkthrough: Loading ML books and creating a basic Retriever
+10:17 – Testing the Baseline: Bias-Variance Tradeoff vs. Recent AI News
+13:51 – Identifying Hallucinations in the Transformer architecture query
+15:53 – Deep Dive: The CRAG Research Paper & Proposed Architecture
+17:20 – The 3 Retrieval Cases: Correct, Incorrect, and Ambiguous
+21:01 – Retrieval Evaluator: Refining Internal vs. External Knowledge
+23:02 – Iteration 1: Knowledge Refinement (Decomposition & Filtration)
+30:11 – Code: Building the Refined Value Node with Sentence Strips
+35:40 – Iteration 2: Retrieval Evaluation (Thresholding Logic)
+45:36 – Code: Implementing the Evaluation Node & Pydantic Schema
+51:40 – Testing the Evaluator: Correct vs. Incorrect Verdicts
+53:42 – Iteration 3: Web Search Integration using Tavily
+01:00:43 – Iteration 4: Query Rewriting for Better Search Results
+01:07:18 – Handling Ambiguous Knowledge: Merging Internal & External Context
+01:14:19 – Conclusion: Comparing our implementation to the Original Paper",https://i.ytimg.com/vi/41XDn81nR5c/maxresdefault.jpg,CampusX,60678,1734,173,4509,75.15,1:15:09,"1 Hours, 15 Minutes, 9 Seconds",2026-02-09T13:30:05,https://www.youtube.com/watch?v=41XDn81nR5c,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://arxiv.org/pdf/2401.15884, https://www.linkedin.com/company/campusx-official, https://campusxainewsletter.my.canva.site/campusx-weekly-ai-insights, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/corrective-rag, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Self-RAG Tutorial: How to Make Your AI Fact-Check Itself | Advanced RAG | CampusX,"In this video, we dive deep into Self-RAG (Self-Reflective Retrieval-Augmented Generation), a powerful technique designed to fix the biggest flaws in traditional RAG systems: unnecessary retrievals, irrelevant documents, and hallucinations
+
+Resources: https://github.com/campusx-official/self-rag
+OG RAG Tutorial: https://youtu.be/X0btK9X0Xnk
+Courses: https://learnwith.campusx.in/s/store
+Queries:  https://www.instagram.com/campusx.official
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Introduction to Advanced RAG Techniques 
+01:00 - Prerequisites & Disclaimer 
+01:48 - 3 Major Problems with Traditional RAG 
+02:14 - Problem 1: Indiscriminate/Unnecessary Retrieval 
+05:17 - Problem 2: Blind Trust in Documents 
+06:55 - Problem 3: Lack of Answer Verification 
+07:34 - What is Self-RAG? (Self-Reflective RAG) 
+08:24 - The 4 Key Questions Self-RAG Answers 
+12:40 - Architectural Overview & Logic 
+15:05 - Step 1: Implementing the Retrieval Decision Node 
+35:30 - Step 2: Filtering Relevant Documents 
+41:00 - Step 3: Generating Answers from Context 
+45:56 - Step 4: Detecting Hallucinations (Support Node) 
+53:36 - Step 5: Implementing the Revised Answer Loop 
+58:23 - Step 6: Testing Answer Usefulness & Query Rewriting 
+01:08:13 - Conclusion & Final Summary",https://i.ytimg.com/vi/BbO_XaEjzaA/maxresdefault.jpg,CampusX,49799,1379,155,4120,68.67,1:08:40,"1 Hours, 8 Minutes, 40 Seconds",2026-02-18T12:41:03,https://www.youtube.com/watch?v=BbO_XaEjzaA,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/campusx-official/self-rag, https://youtu.be/X0btK9X0Xnk, https://www.instagram.com/campusx.official]"

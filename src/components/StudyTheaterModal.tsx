@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { StudyTheaterVideo, BinauralSoundMode, ISessionRecall, ITimestampNote } from '../types';
 import { saveRecallLogToFirestore } from '../lib/firestoreService';
 import {
   parseTimestampToSeconds,
   formatSecondsToTimestamp,
   parseMarkdownToTimestampNotes,
+  getCurriculumPlaylistContext,
+  PlaylistContext,
 } from '../data/curriculumData';
 import {
   X,
@@ -21,6 +23,7 @@ import {
   PanelRightClose,
   PanelRightOpen,
   ChevronRight,
+  ChevronLeft,
   Bookmark,
   Sparkles,
   Tag,
@@ -36,6 +39,9 @@ import {
   Check,
   ClipboardPaste,
   ArrowRight,
+  ListVideo,
+  SkipForward,
+  SkipBack,
 } from 'lucide-react';
 import { neuroAudio } from '../lib/audioSynthesizer';
 
@@ -44,6 +50,8 @@ interface StudyTheaterModalProps {
   onClose: () => void;
   onCompleteTopic?: (id: string) => void;
   isCompleted?: boolean;
+  onSelectVideo?: (video: StudyTheaterVideo) => void;
+  completedIds?: Set<string>;
 }
 
 export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
@@ -51,10 +59,13 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   onClose,
   onCompleteTopic,
   isCompleted = false,
+  onSelectVideo,
+  completedIds,
 }) => {
   // Mode: 'cinema' (100% full screen video with zero distractions) or 'split' (side notes & timer)
   const [viewMode, setViewMode] = useState<'cinema' | 'split'>('cinema');
-  const [notesViewTab, setNotesViewTab] = useState<'timeline' | 'markdown' | 'batch'>('timeline');
+  const [notesViewTab, setNotesViewTab] = useState<'timeline' | 'markdown' | 'batch' | 'playlist'>('timeline');
+  const [isCinemaPlaylistOpen, setIsCinemaPlaylistOpen] = useState(false);
 
   // Iframe ref for YouTube Player API postMessage seeking
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -64,10 +75,59 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   // Browser Fullscreen API State
   const [isBrowserFullscreen, setIsBrowserFullscreen] = useState(false);
 
-  // Timer State (Default 25 min Pomodoro for videos)
-  const [secondsLeft, setSecondsLeft] = useState<number>(1500);
-  const [totalDuration, setTotalDuration] = useState<number>(1500);
-  const [isRunning, setIsRunning] = useState<boolean>(true);
+  // Persistent Timer State: Preserved continuously across video switches & navigation
+  const [secondsLeft, setSecondsLeft] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('focusflow_study_theater_timer');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.secondsLeft === 'number' && parsed.secondsLeft > 0) {
+          return parsed.secondsLeft;
+        }
+      }
+    } catch {}
+    return 1500;
+  });
+  const [totalDuration, setTotalDuration] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('focusflow_study_theater_timer');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.totalDuration === 'number' && parsed.totalDuration > 0) {
+          return parsed.totalDuration;
+        }
+      }
+    } catch {}
+    return 1500;
+  });
+  const [isRunning, setIsRunning] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('focusflow_study_theater_timer');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed.isRunning === 'boolean') {
+          return parsed.isRunning;
+        }
+      }
+    } catch {}
+    return true;
+  });
+
+  // Save timer state whenever it updates
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        'focusflow_study_theater_timer',
+        JSON.stringify({ secondsLeft, totalDuration, isRunning })
+      );
+    } catch {}
+  }, [secondsLeft, totalDuration, isRunning]);
+
+  // Derive Playlist / Adjacent Videos context for instant seamless navigation
+  const playlistContext: PlaylistContext | null = useMemo(() => {
+    if (!video) return null;
+    return getCurriculumPlaylistContext(video.id);
+  }, [video?.id]);
 
   // Scratchpad Notes (Persisted per topic)
   const [notes, setNotes] = useState<string>('');
@@ -234,9 +294,8 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
         }
       } catch {}
 
-      setSecondsLeft(1500);
-      setTotalDuration(1500);
-      setIsRunning(true);
+      // NOTE: Timer is deliberately NOT reset here so your 25-minute Pomodoro focus sprint
+      // remains continuous and uninterrupted when moving to the next video or changing lessons!
       setSyncStatus('synced');
 
       const initialStart = video.startSeconds && video.startSeconds > 0 ? video.startSeconds : 0;
@@ -245,6 +304,70 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
       setComposerTimeInput(formatSecondsToTimestamp(initialStart));
     }
   }, [video?.id, video?.startSeconds]);
+
+  // Explicit timer reset action (user triggered)
+  const handleResetTimer = () => {
+    setSecondsLeft(1500);
+    setTotalDuration(1500);
+    setIsRunning(true);
+    try {
+      localStorage.setItem(
+        'focusflow_study_theater_timer',
+        JSON.stringify({ secondsLeft: 1500, totalDuration: 1500, isRunning: true })
+      );
+    } catch {}
+    setJumpToast('⏱️ Focus Timer reset to 25:00');
+    setTimeout(() => setJumpToast(null), 2500);
+  };
+
+  // Switch to another video seamlessly without leaving the player tab or interrupting the timer
+  const handleSwitchVideo = (nextVid: StudyTheaterVideo) => {
+    if (!nextVid || nextVid.id === video?.id) return;
+
+    // 1. Flush & sync current video's notes to recall archive
+    if (video) {
+      const currentMd = buildMarkdownFromTimestampNotes(timestampNotes);
+      syncNotesToRecall(notes || currentMd, timestampNotes, video, totalDuration - secondsLeft);
+    }
+
+    // 2. Call parent callback to update active video
+    if (onSelectVideo) {
+      onSelectVideo(nextVid);
+    }
+
+    setJumpToast(`🎬 Loaded: ${nextVid.title}`);
+    setTimeout(() => setJumpToast(null), 2500);
+  };
+
+  // Keyboard navigation shortcuts (Shift+N: Next Video, Shift+P: Previous Video)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      if (e.shiftKey && (e.key === 'N' || e.key === 'n')) {
+        if (playlistContext?.nextVideo) {
+          e.preventDefault();
+          handleSwitchVideo(playlistContext.nextVideo);
+        }
+      } else if (e.shiftKey && (e.key === 'P' || e.key === 'p')) {
+        if (playlistContext?.prevVideo) {
+          e.preventDefault();
+          handleSwitchVideo(playlistContext.prevVideo);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [playlistContext, video, notes, timestampNotes, totalDuration, secondsLeft]);
 
   // Sprint Timer
   useEffect(() => {
@@ -528,10 +651,68 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
           )}
         </div>
 
+        {/* Center: Prev / Next Lesson Navigation (Change video without leaving the tab!) */}
+        {playlistContext && playlistContext.totalCount > 1 && (
+          <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-700/80 px-1.5 py-1 rounded-xl shrink-0 mx-2">
+            <button
+              disabled={!playlistContext.prevVideo}
+              onClick={() => playlistContext.prevVideo && handleSwitchVideo(playlistContext.prevVideo)}
+              className={`px-2 py-1 rounded-lg transition flex items-center gap-1 text-xs font-mono font-bold ${
+                playlistContext.prevVideo
+                  ? 'text-slate-200 hover:text-white hover:bg-slate-800 cursor-pointer'
+                  : 'text-slate-600 opacity-40 cursor-not-allowed'
+              }`}
+              title={
+                playlistContext.prevVideo
+                  ? `Previous Lesson (Shift+P): ${playlistContext.prevVideo.title}`
+                  : 'First lesson'
+              }
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+              <span className="hidden md:inline">Prev</span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (viewMode === 'cinema') {
+                  setIsCinemaPlaylistOpen(!isCinemaPlaylistOpen);
+                } else {
+                  setNotesViewTab('playlist');
+                }
+              }}
+              className="px-2 py-0.5 text-[11px] font-bold font-mono text-emerald-400 hover:text-emerald-300 hover:bg-emerald-950/40 rounded-md transition cursor-pointer flex items-center gap-1.5"
+              title="Click to view full course lessons queue"
+            >
+              <ListVideo className="w-3 h-3 text-emerald-400" />
+              <span>
+                {playlistContext.currentIndex + 1} / {playlistContext.totalCount}
+              </span>
+            </button>
+
+            <button
+              disabled={!playlistContext.nextVideo}
+              onClick={() => playlistContext.nextVideo && handleSwitchVideo(playlistContext.nextVideo)}
+              className={`px-2 py-1 rounded-lg transition flex items-center gap-1 text-xs font-mono font-bold ${
+                playlistContext.nextVideo
+                  ? 'text-emerald-400 hover:text-emerald-300 hover:bg-emerald-950/40 cursor-pointer'
+                  : 'text-slate-600 opacity-40 cursor-not-allowed'
+              }`}
+              title={
+                playlistContext.nextVideo
+                  ? `Next Lesson (Shift+N): ${playlistContext.nextVideo.title}`
+                  : 'Last lesson'
+              }
+            >
+              <span className="hidden md:inline">Next</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
         {/* Center/Right: Quick Floating Focus Controls */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Quick Focus Timer Mini-Pill */}
-          <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-700/80 px-2.5 py-1 rounded-xl text-xs font-mono">
+          {/* Quick Focus Timer Mini-Pill with Persistent Time & Reset */}
+          <div className="flex items-center gap-1 bg-slate-900 border border-slate-700/80 px-2.5 py-1 rounded-xl text-xs font-mono">
             <Clock className="w-3.5 h-3.5 text-rose-400" />
             <span className="font-bold text-slate-100">
               {String(Math.floor(secondsLeft / 60)).padStart(2, '0')}:
@@ -543,6 +724,13 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               title={isRunning ? 'Pause Timer' : 'Resume Timer'}
             >
               {isRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 fill-current" />}
+            </button>
+            <button
+              onClick={handleResetTimer}
+              className="p-1 text-slate-400 hover:text-rose-400 rounded transition cursor-pointer"
+              title="Reset Timer back to 25:00"
+            >
+              <RotateCcw className="w-3 h-3" />
             </button>
           </div>
 
@@ -630,6 +818,95 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               <span>{jumpToast}</span>
             </div>
           )}
+
+          {/* Floating Next Video Quick Bar (bottom-right of player) */}
+          {playlistContext?.nextVideo && (
+            <div className="absolute bottom-4 right-4 z-20 hidden sm:flex items-center gap-2">
+              <button
+                onClick={() => handleSwitchVideo(playlistContext.nextVideo!)}
+                className="px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-emerald-500/40 hover:border-emerald-400 text-white text-xs font-bold shadow-2xl backdrop-blur-md transition-all duration-200 cursor-pointer flex items-center gap-2.5 group"
+                title={`Next Lesson: ${playlistContext.nextVideo.title}`}
+              >
+                <div className="text-left max-w-[220px] truncate">
+                  <span className="text-[10px] text-emerald-400 block font-mono uppercase tracking-wider">
+                    Next Lesson ({playlistContext.currentIndex + 2}/{playlistContext.totalCount})
+                  </span>
+                  <span className="text-xs truncate block font-medium group-hover:text-emerald-200">
+                    {playlistContext.nextVideo.title}
+                  </span>
+                </div>
+                <div className="w-7 h-7 rounded-lg bg-emerald-600 group-hover:bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <ChevronRight className="w-4 h-4" />
+                </div>
+              </button>
+            </div>
+          )}
+
+          {/* Slide-over Playlist Drawer in Cinema Mode */}
+          {viewMode === 'cinema' && isCinemaPlaylistOpen && playlistContext && (
+            <div className="absolute top-0 right-0 bottom-0 w-80 sm:w-96 bg-[#11161a]/95 border-l border-slate-800 z-40 flex flex-col p-4 backdrop-blur-xl shadow-2xl animate-in slide-in-from-right duration-200">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="min-w-0 flex-1 pr-2">
+                  <span className="text-[10px] text-emerald-400 font-mono font-bold uppercase tracking-wider">
+                    Course Lessons Queue
+                  </span>
+                  <h3 className="text-xs font-bold text-white truncate">
+                    {playlistContext.courseTitle}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setIsCinemaPlaylistOpen(false)}
+                  className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-white/10 transition cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto space-y-1.5 py-3 pr-1">
+                {playlistContext.videos.map((vid, i) => {
+                  const isCurrent = vid.id === video.id;
+                  const isVidDone = completedIds ? completedIds.has(vid.id) : false;
+                  return (
+                    <div
+                      key={vid.id}
+                      onClick={() => {
+                        handleSwitchVideo(vid);
+                        setIsCinemaPlaylistOpen(false);
+                      }}
+                      className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-2.5 ${
+                        isCurrent
+                          ? 'bg-emerald-950/50 border-emerald-500/60 text-white shadow-xs ring-1 ring-emerald-500/30'
+                          : 'bg-slate-900/50 hover:bg-slate-800/80 border-slate-800/70 text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      <span className="text-[11px] font-mono font-bold text-slate-400 shrink-0 w-6">
+                        #{i + 1}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className={`text-xs font-semibold truncate ${isCurrent ? 'text-emerald-300 font-bold' : ''}`}>
+                          {vid.title}
+                        </p>
+                        {vid.duration && (
+                          <span className="text-[10px] text-slate-400 font-mono">
+                            {vid.duration}
+                          </span>
+                        )}
+                      </div>
+                      {isCurrent ? (
+                        <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold font-mono shrink-0">
+                          PLAYING
+                        </span>
+                      ) : isVidDone ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                      ) : (
+                        <Play className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Right Panel: Clean Multi-Note Timestamped Workspace */}
@@ -637,7 +914,7 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
           <aside className="w-full lg:w-[440px] bg-[#11161a] border-t lg:border-t-0 lg:border-l border-slate-800 flex flex-col shrink-0 p-3.5 sm:p-4 gap-3 text-white overflow-y-auto animate-in slide-in-from-right-4 duration-200">
             {/* Panel Header & View Tabs */}
             <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 flex-wrap">
                 <button
                   onClick={() => setNotesViewTab('timeline')}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold font-mono flex items-center gap-1.5 transition cursor-pointer ${
@@ -672,6 +949,20 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
                   <ClipboardPaste className="w-3.5 h-3.5" />
                   <span>Batch</span>
                 </button>
+                {playlistContext && (
+                  <button
+                    onClick={() => setNotesViewTab('playlist')}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold font-mono flex items-center gap-1.5 transition cursor-pointer ${
+                      notesViewTab === 'playlist'
+                        ? 'bg-emerald-700 text-white shadow-xs'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                    title="View all lessons in this course"
+                  >
+                    <ListVideo className="w-3.5 h-3.5" />
+                    <span>Lessons ({playlistContext.totalCount})</span>
+                  </button>
+                )}
               </div>
 
               <div className="flex items-center gap-2">
@@ -1091,6 +1382,96 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
                     <span>Import All Notes</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
+                </div>
+              </div>
+            )}
+
+            {/* ================= TAB 4: LESSONS QUEUE / PLAYLIST ================= */}
+            {notesViewTab === 'playlist' && playlistContext && (
+              <div className="flex-1 flex flex-col min-h-[220px] bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 space-y-2.5">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                  <div className="min-w-0 flex-1 pr-2">
+                    <span className="text-[10px] text-emerald-400 font-mono font-bold uppercase tracking-wider block">
+                      Course Lessons
+                    </span>
+                    <h3 className="text-xs font-bold text-white truncate">
+                      {playlistContext.courseTitle}
+                    </h3>
+                  </div>
+                  <span className="text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/70 border border-emerald-800/80 px-2 py-0.5 rounded-lg shrink-0">
+                    {playlistContext.currentIndex + 1} of {playlistContext.totalCount}
+                  </span>
+                </div>
+
+                <div className="flex-1 overflow-y-auto space-y-1.5 max-h-[calc(100vh-250px)] pr-1">
+                  {playlistContext.videos.map((vid, idx) => {
+                    const isCurrent = vid.id === video.id;
+                    const isVidDone = completedIds ? completedIds.has(vid.id) : false;
+                    return (
+                      <div
+                        key={vid.id}
+                        onClick={() => handleSwitchVideo(vid)}
+                        className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-3 ${
+                          isCurrent
+                            ? 'bg-emerald-950/50 border-emerald-500/70 text-white shadow-xs ring-1 ring-emerald-500/30'
+                            : 'bg-slate-950/60 hover:bg-slate-800/80 border-slate-800 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        {onCompleteTopic ? (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onCompleteTopic(vid.id);
+                            }}
+                            className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all shrink-0 cursor-pointer ${
+                              isVidDone
+                                ? 'bg-emerald-600 border-emerald-500 text-white'
+                                : 'border-slate-600 hover:border-emerald-500 bg-slate-900'
+                            }`}
+                            title={isVidDone ? 'Completed' : 'Mark complete'}
+                          >
+                            {isVidDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                          </button>
+                        ) : (
+                          <span className="text-xs font-mono font-bold text-slate-400 w-5 text-center shrink-0">
+                            #{idx + 1}
+                          </span>
+                        )}
+
+                        <div className="min-w-0 flex-1">
+                          <p className={`text-xs font-semibold truncate ${isCurrent ? 'text-emerald-300 font-bold' : ''}`}>
+                            {vid.title}
+                          </p>
+                          <div className="flex items-center gap-2 mt-0.5">
+                            <span className="text-[10px] text-slate-400 font-mono">
+                              Lesson #{idx + 1}
+                            </span>
+                            {vid.duration && (
+                              <span className="text-[10px] text-emerald-400/80 font-mono">
+                                {vid.duration}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {isCurrent ? (
+                          <span className="px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-[10px] font-bold font-mono shrink-0 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            PLAYING
+                          </span>
+                        ) : (
+                          <button
+                            type="button"
+                            className="p-1 text-slate-400 hover:text-emerald-400 transition"
+                            title="Play this lesson"
+                          >
+                            <Play className="w-3.5 h-3.5 fill-current" />
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}

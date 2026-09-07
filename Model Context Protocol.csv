@@ -1,0 +1,331 @@
+Title,Description,Thumbnail url,Channel name,Views,Likes,Comments,Duration in seconds,Duration in minutes,Duration in timestamp,Duration,Uploaded Time,Video url,Tags,Tags (in description),Emails (in description),Links (in description)
+Model Context Protocol | Mini Playlist | MCP Trilogy | CampusX,"In this video, we introduce a brand-new mini-series on the Model Context Protocol (MCP)—a powerful framework that connects AI tools and workflows seamlessly.
+
+The trilogy will cover:
+1️⃣ The Why – Why MCP was created and the problems it solves.
+2️⃣ The What – MCP architecture: servers, clients, hosts & interactions.
+3️⃣ The How – Hands-on coding demos and real-world use cases.
+
+Before diving into these tutorials, this trailer gives you a sneak peek with a real project built at CampusX: an AI-powered newsletter generator. Using MCP + Claude AI, we automated the entire process—research, drafting, and design—showing how MCP can make AI workflows truly powerful.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Intro
+01:30 - Mini Playlist Details
+03:49 - Problem Statement
+07:48 - The Structure
+10:17 - Defining the Process
+11:33 - Deciding the tool
+13:29 - Research Phase
+17:01 - Editing Phase
+18:30 - Designing Phase
+36:50 - Outro",https://i.ytimg.com/vi/3_TN1i3MTEU/maxresdefault.jpg,CampusX,187008,5280,623,2227,37.12,37:07,"37 Minutes, 7 Seconds",2025-08-29T17:26:28,https://www.youtube.com/watch?v=3_TN1i3MTEU,[],[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+Model Context Protocol - The Why | MCP Trilogy | CampusX,"Link for slides - https://docs.google.com/presentation/d/1OQzPhi73EUUbYXrIkOwGLnQYTSK8xU8T_zrtZcfgN0Q/edit?usp=drivesdk
+
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Intro
+02:16 - Arrival of LLMs
+04:36 - Waves of Adoption
+09:48 - The Problem of Fragmentation
+11:26 - Vision vs Reality
+12:21 - What is Context
+14:37 - Example of Soft Engg
+17:03 - Workflow with AI
+18:21 - Copy-Paste Hell
+21:20 - Function Calling
+23:20 - Rise of Tools
+24:13 - Implication of Tools
+26:28 - New Scenario
+30:02 - Problem with Tools
+34:39 - Overview of the Problem
+35:36 - The Solution
+36:10 - MCP
+39:08 - MCP vs Tool Calling
+40:26 - MCP vs API
+42:00 - Server does the Heavy Lifting
+43:26 - Benefits
+47:28 - MCP Ecosystem
+51:35 - Outro",https://i.ytimg.com/vi/Zmy439spZB4/maxresdefault.jpg,CampusX,96423,4103,229,3121,52.02,52:01,"52 Minutes, 1 Seconds",2025-09-07T05:17:34,https://www.youtube.com/watch?v=Zmy439spZB4,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/presentation/d/1OQzPhi73EUUbYXrIkOwGLnQYTSK8xU8T_zrtZcfgN0Q/edit?usp=drivesdk]"
+MCP Architecture | Model Context Protocol Architecture | CampusX,"In this video, we dive deep into the Model Context Protocol (MCP) Architecture and break it down from first principles. 
+
+We’ll cover:
+
+The core building blocks of MCP → Host, Client, and Server
+How they communicate and why the Client is essential
+Real-world examples (GitHub, Slack, Google Drive)
+The power of primitives: Tools, Resources, and Prompts
+Standard operations like tools/list, resources/read, and more
+The role of the Data Layer (JSON-RPC 2.0) and why it’s better than REST
+The Transport Layer and how messages actually move between systems
+
+By the end of this video, you’ll have a crystal-clear understanding of how MCP enables AI chatbots to seamlessly connect with external tools, scale across multiple services, and maintain safe, decoupled communication.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Recap
+02:00 - Architecture
+12:17 - Benefits
+15:30 - MCP Primitives
+18:32 - The Prompt Primitives
+22:40 - Primitives - Std Operations
+25:37 - Quick Summary
+27:20 - MCP Data Layer
+29:35 - JSON RPC 2.0
+46:45 - Why RPC for Data Layer?
+53:23 - MCP Transport Layer
+55:27 - MCP - Types of Servers
+59:36 - Local Servers - STDIO
+01:01:45 - How does STDIO work?
+01:03:00 - Demo
+01:06:22 - Benefits of STDIO Transport
+01:07:36 - Remote Servers - HTTP + SSE",https://i.ytimg.com/vi/nQa31xdXbGk/maxresdefault.jpg,CampusX,95829,3777,216,4629,77.15,1:17:09,"1 Hours, 17 Minutes, 9 Seconds",2025-09-12T17:51:19,https://www.youtube.com/watch?v=nQa31xdXbGk,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw]"
+The MCP Lifecycle | MCP Trilogy | CampusX,"In this video, we continue our MCP (Model Context Protocol) playlist. So far, we’ve covered why MCP is needed and its architecture in detail. Today, we’ll move one step further and explore a very important concept – the MCP Life Cycle.
+
+You’ll learn:
+
+1. What an MCP session is and how it works
+2. The three main stages of the MCP Life Cycle: Initialization, Normal Operation, and Shutdown
+3. A step-by-step breakdown of how a host, client, and server interact during a session
+4. Key rules you must follow during initialization to avoid errors
+5. How version negotiation and capability negotiation take place
+6. A practical demo using Claude Desktop and a File System server to show you how the process works behind the scenes with JSON-RPC messages
+
+This concept is not just theory – it’s the foundation for when we start coding our own servers and clients later in the series.
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Recap
+01:25 - MCP Lifecycle
+03:07 - MCP Lifecycle
+04:10 - Initialization Phase
+05:50 - Step 1
+07:27 - Step 2
+08:12 - Step 3
+09:00 - Important Rules
+10:56 - Practical Demo
+15:08 - version Negotiation
+16:57 - Capability Negotiation
+24:47 - Operation Phase
+25:30 - Capability Discovery
+29:47 - Tool Calling
+32:30 - Shutdown Phase
+34:06 - Shutdown in STDIO
+36:45 - Shutdown in HTTP
+39:33 - Special Cases
+40:00 - Pings
+41:25 - When is Ping used?
+42:33 - Error Handling
+44:55 - Error Object Structure
+46:07 - Common Error Codes
+47:15 - Timeout
+49:57 - Cancellation
+50:57 - Progress Notification
+54:25 - Outro",https://i.ytimg.com/vi/sBHeMcxupmE/maxresdefault.jpg,CampusX,59231,2312,125,3305,55.08,55:05,"55 Minutes, 5 Seconds",2025-09-17T15:45:07,https://www.youtube.com/watch?v=sBHeMcxupmE,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.instagram.com/campusx.official, https://www.linkedin.com/in/nitish-singh-03412789]"
+Model Context Protocol | The How | How to connect MCP Servers to Claude Desktop | CampusX,"Download Claude Desktop: https://claude.ai/download
+MANIM MPC Server: https://github.com/abhiemj/manim-mcp-server
+Twitter MCP Server: https://github.com/EnesCinr/twitter-mcp
+Weather MCP Server: https://github.com/adhikasp/mcp-weather
+New MCP Servers: https://github.com/punkpeye/awesome-mcp-servers
+
+In this video, we continue our MCP (Model Context Protocol) playlist and move into the How part. So far, we’ve covered Why MCP is needed and What MCP actually is (its architecture and lifecycle).
+
+Now, we begin the practical part: How to use MCP in real projects. In this first “How” video, we’ll use Claude Desktop (as the client) and connect it with 4 different MCP servers — two local and two remote:
+
+1. Local Servers: File System, Manim
+2. Remote Servers: Google Drive, X (Twitter)
+
+You’ll also learn about connectors vs. config files, why both options exist, and how connectors make MCP integration easier, safer, and more consistent.
+
+By the end of this video, you’ll see how to install Claude Desktop, set up access to different directories, and practically experience MCP server communication using ready-made tools.
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Recap
+00:50 - Strategy
+02:32 - Plan of Action
+04:08 - Type of Connections
+04:59 - What are connectors
+08:47 - Why not use connectors always?
+12:40 - Downloading Claude Desktop
+15:15 - Configuration and Demo
+33:30 - Integrating Twitter MCP Server
+40:25 - Weather MCP Server
+44:45 - New MCP Servers",https://i.ytimg.com/vi/y-uPv3ltOTY/maxresdefault.jpg,CampusX,54957,2051,146,2777,46.28,46:17,"46 Minutes, 17 Seconds",2025-09-20T05:15:05,https://www.youtube.com/watch?v=y-uPv3ltOTY,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://claude.ai/download, https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://github.com/adhikasp/mcp-weather, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/punkpeye/awesome-mcp-servers, https://github.com/EnesCinr/twitter-mcp, https://github.com/abhiemj/manim-mcp-server, https://www.instagram.com/campusx.official]"
+How to Build Local MCP Servers | MCP Trilogy | CampusX,"Code - https://github.com/campusx-official/expense-tracker-mcp-server
+Quick Revision -  https://docs.google.com/document/d/1xLHPVi07Jy3vZUjDNnC7BivUpN1Ro0aYDxP09yD3pzs/edit?usp=sharing
+
+In this video, we continue our MCP (Model Context Protocol) playlist and show you how to build your own MCP server from scratch. We focus on creating a local Expense Tracker MCP server that can integrate with chatbot clients like Clot Desktop, so you can manage expenses using natural language commands.
+
+You’ll see how to:
+Set up the environment and install dependencies
+Write and run Python code with FastMCP (a beginner-friendly layer over the MCP SDK)
+Create MCP tools like add, list, and summarize expenses
+Connect the server with Clot Desktop for real interaction
+Debug using MCP Inspector
+Store and manage expenses with an SQLite database
+Add features like date-range filtering and category consistency
+
+Along the way, we explain the MCP ecosystem, the difference between the official SDK and FastMCP, and why FastMCP makes development easier. We also show how to enforce categories with JSON resources and even convert a FastAPI app into an MCP server — a big advantage for businesses building multi-platform apps.
+
+By the end of this tutorial, you’ll have a working expense tracker MCP server and a clear roadmap to turn it into a production-ready remote server.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Introduction and playlist recap  
+00:40 - Overview of MCP Why, What, How structure  
+02:01 - Setting goals for today: building a local MCP Expense Tracker server  
+04:19 - Demonstration of natural language expense tracking with chatbot integration  
+13:59 - Explanation of MCP SDK vs FastMCP libraries and ecosystem history  
+26:00 - Step-by-step coding: setting up the environment, installing dependencies  
+29:00 - Writing MCP server tools: dice roll and add numbers example  
+31:34 - Running and debugging MCP server using MCP Inspector  
+35:34 - Integrating server with Clot Desktop client  
+40:30 - Adding SQLite database for storing expenses  
+43:50 - Implementing features: add expense, list expenses, summarize expenses  
+49:51 - Improving server with date range filtering and category consistency  
+58:36 - Using JSON resource for category management  
+01:02:49 - Discussion on FastMCP and FastAPI compatibility and benefits for businesses  
+01:08:37 - Converting FastAPI app into MCP server for multi-platform deployment  
+01:11:28 - Conclusion and next steps: converting local server to remote server",https://i.ytimg.com/vi/tc2oOznpdE0/maxresdefault.jpg,CampusX,67037,1945,152,4331,72.18,1:12:11,"1 Hours, 12 Minutes, 11 Seconds",2025-09-27T06:00:54,https://www.youtube.com/watch?v=tc2oOznpdE0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://docs.google.com/document/d/1xLHPVi07Jy3vZUjDNnC7BivUpN1Ro0aYDxP09yD3pzs/edit?usp=sharing, https://github.com/campusx-official/expense-tracker-mcp-server]"
+How to Build & Deploy Remote MCP Servers | MCP Trilogy | CampusX,"Code - https://github.com/campusx-official/test-remote-mcp-server
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Quick Revision -  https://docs.google.com/document/d/1QyQKI8s23L3QQQwaq6sabsw4dqbYJngXswK-94tsL78/edit?usp=sharing
+MindMap: https://whimsical.com/remote-mcp-servers-XvEKLRbGEZU8wEUPzmSBgo
+
+In this video, we continue our MCP (Model Context Protocol) playlist and move from local MCP servers to remote MCP servers using the FastMCP library.
+
+You’ll first learn the difference between local and remote servers, why remote servers are important for enterprise use, and their pros and cons. Then, step by step, we’ll build a simple remote MCP server, test it, and deploy it using FastMCP Cloud (a free hosting service).
+
+What you’ll learn in this video:
+
+The difference between local and remote MCP servers
+Building a basic remote MCP server (with simple tools like add and random number generator)
+Running and debugging your server with MCP Inspector
+Deploying the server on FastMCP Cloud and sharing it globally
+Connecting your remote MCP server with Claude Desktop (via custom connectors)
+Converting and deploying your Expense Tracker MCP server as a remote server
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 - Recap
+02:50 - Plan of Attack
+04:50 - Steps for a simple remote server
+11:55 - Creating Repo
+18:29 - Expense Tracker Remote MCP Server
+29:40 - Fixing Flaws in the Server
+35:42 - Adding Connectors Manually",https://i.ytimg.com/vi/GF7-ZzUausU/maxresdefault.jpg,CampusX,42551,1388,143,2749,45.82,45:49,"45 Minutes, 49 Seconds",2025-09-30T16:41:33,https://www.youtube.com/watch?v=GF7-ZzUausU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://github.com/campusx-official/test-remote-mcp-server, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://docs.google.com/document/d/1QyQKI8s23L3QQQwaq6sabsw4dqbYJngXswK-94tsL78/edit?usp=sharing, https://whimsical.com/remote-mcp-servers-XvEKLRbGEZU8wEUPzmSBgo]"
+How to build MCP Clients | MCP Trilogy | CampusX,"In this video, we learn how to build your own MCP client and connect it to multiple MCP servers — including a local Math server, a remote Expense Tracker server, and even a Manim animation server. We go step-by-step through the setup, tool-calls, and finally create a clean Streamlit-based chatbot UI that can talk to all these servers. Perfect for anyone learning MCP, LangChain, or custom AI tool integrations.
+
+Code: https://github.com/campusx-official/mcp-client
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Quick Revision: https://docs.google.com/document/d/1I26xHGosv0B7zgDl0sM_GZtlX20rPWYBPZHEcoREN7A/edit?usp=sharing
+Learn LangGraph: https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL
+Config Part: https://youtu.be/y-uPv3ltOTY?t=915&si=ObvzsrnWJZjDkG33
+Async/Await Tutorial: https://realpython.com/async-io-python/
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Chapters⌚
+
+00:00 — Intro & playlist recap (apology + what we covered so far)
+00:28 — MCP playlist structure & approach (WHY / WHAT / HOW)
+03:54 — Video goal & servers overview (what we’ll build — Math + Expense servers)
+06:13 — Local Math MCP server demo & testing (uvicorn, inspector)
+08:07 — Project setup & dependencies (folder, uv init, install libs)
+09:23 — Build client: skeleton, async structure & server config
+14:06 — Tools & LLM binding (fetch tools, name-tools dict, bind OpenAI LLM)
+19:18 — Tool-call flow & invocation (extract tool calls, invoke tools, get results)
+23:32 — Returning tool results to LLM & final response (ToolMessage + history)
+29:29 — Multi-server support (loop handling + add remote Expense Tracker)
+33:37 — External servers & Manim animation integration (generate animations)
+35:21 — Streamlit GUI: convert logic to UI and live demo
+39:25 — Summary, next steps (LangGraph playlist) & outro",https://i.ytimg.com/vi/o4ajsc-tSBc/maxresdefault.jpg,CampusX,31868,1196,112,2400,40,40:00,"40 Minutes, 0 Seconds",2025-11-13T04:30:28,https://www.youtube.com/watch?v=o4ajsc-tSBc,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://youtu.be/y-uPv3ltOTY?t=915&si=ObvzsrnWJZjDkG33, https://github.com/campusx-official/mcp-client, https://docs.google.com/document/d/1I26xHGosv0B7zgDl0sM_GZtlX20rPWYBPZHEcoREN7A/edit?usp=sharing, https://realpython.com/async-io-python/, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL]"

@@ -18,6 +18,9 @@ export interface StudyTheaterVideo {
   difficulty?: string;
   category?: string;
   startSeconds?: number;
+  duration?: string;
+  thumbnailUrl?: string;
+  description?: string;
 }
 
 export interface PartnerNudge {

@@ -339,6 +339,8 @@ export default function App() {
         onClose={() => setActiveTheaterVideo(null)}
         onCompleteTopic={handleToggleCurriculumComplete}
         isCompleted={activeTheaterVideo ? completedCurriculumIds.has(activeTheaterVideo.id) : false}
+        onSelectVideo={setActiveTheaterVideo}
+        completedIds={completedCurriculumIds}
       />
 
       {/* WOOP Urgency Board Modal */}

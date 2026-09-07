@@ -1,0 +1,855 @@
+Title,Description,Thumbnail url,Channel name,Views,Likes,Comments,Duration in seconds,Duration in minutes,Duration in timestamp,Duration,Uploaded Time,Video url,Tags,Tags (in description),Emails (in description),Links (in description)
+Print Function in Python | 100 Days of Python Programming,"In this video, we'll explore the ins and outs of printing in Python. From basic syntax to advanced formatting tricks, join us on a journey to master the art of displaying information in your Python scripts.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day1-print-data-types-and-comments
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/u1RKh1kQqaE/maxresdefault.jpg,CampusX,479789,4716,124,424,7.07,7:04,"7 Minutes, 4 Seconds",2021-06-11T10:07:21,https://www.youtube.com/watch?v=u1RKh1kQqaE,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day1-print-data-types-and-comments, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Data Types in Python | 100 Days of Python Programming,"In this video, we'll break down the fundamental building blocks that store and represent information. From numbers and strings to lists and dictionaries, join us on a journey to understand how Python handles different types of data.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day1-print-data-types-and-comments
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/NQ0JI5IKggI/maxresdefault.jpg,CampusX,127018,1736,40,479,7.98,7:59,"7 Minutes, 59 Seconds",2021-06-12T12:30:04,https://www.youtube.com/watch?v=NQ0JI5IKggI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day1-print-data-types-and-comments, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Comments in Python | 100 Days of Python Programming,"In this video, we'll guide you through the significance of comments and their impact on code readability. From single-line comments to multi-line explanations, join us as we explore how comments play a crucial role in conveying your thoughts and enhancing collaboration in Python programming.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day1-print-data-types-and-comments
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/JAigPIhUIM8/maxresdefault.jpg,CampusX,77086,984,24,188,3.13,3:08,"3 Minutes, 8 Seconds",2021-06-14T12:30:03,https://www.youtube.com/watch?v=JAigPIhUIM8,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building, #Python programming]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day1-print-data-types-and-comments, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Variables in Python | Dynamic Typing | Dynamic Binding in Python,"In this video, we'll unravel the concepts of dynamic typing and dynamic binding, exploring how Python manages and adapts variables during runtime.
+
+Code : https://github.com/campusx-official/100-days-of-python-programming/tree/main/day2-variables-keywords-and-identifiers
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/_pNx8uEmHI0/maxresdefault.jpg,CampusX,90808,1606,33,617,10.28,10:17,"10 Minutes, 17 Seconds",2021-06-15T12:30:12,https://www.youtube.com/watch?v=_pNx8uEmHI0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day2-variables-keywords-and-identifiers]"
+Keywords and Identifiers in Python,"Let's uncover the ABCs of Python coding with this video on keywords and identifiers. Learn the fundamental building blocks that make up Python's vocabulary, including reserved keywords and user-defined identifiers.
+
+Code : https://github.com/campusx-official/100-days-of-python-programming/tree/main/day2-variables-keywords-and-identifiers
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/QmSL27U7RDc/maxresdefault.jpg,CampusX,80004,1288,25,507,8.45,8:27,"8 Minutes, 27 Seconds",2021-06-16T12:30:12,https://www.youtube.com/watch?v=QmSL27U7RDc,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day2-variables-keywords-and-identifiers]"
+Taking user input in Python | The input function,"The input() Function: Dive into the interactive side of Python with this video on taking user input. We'll explore the 'input()' function, understanding the process of gathering information directly from users.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day5-user-input-and-type-conversion
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/15sdH57DtsU/maxresdefault.jpg,CampusX,75439,1186,34,625,10.42,10:25,"10 Minutes, 25 Seconds",2021-06-17T12:30:00,https://www.youtube.com/watch?v=15sdH57DtsU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day5-user-input-and-type-conversion]"
+Type Conversion in Python,"Discover how to seamlessly convert one data type to another, allowing flexibility in your code. Join us on this journey to understand the importance of type conversion and its practical applications in Python programming.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day5-user-input-and-type-conversion
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/YjLFP8pW764/maxresdefault.jpg,CampusX,69081,1056,21,504,8.4,8:24,"8 Minutes, 24 Seconds",2021-06-18T12:30:19,https://www.youtube.com/watch?v=YjLFP8pW764,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day5-user-input-and-type-conversion]"
+Literals in Python | 100 Days of Python Programming,"In this video, learn about different types of literals, from numeric and string literals to Boolean and special literals.
+
+Code: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day6-literals-and-operators
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/u6UpEKy_ocM/maxresdefault.jpg,CampusX,83365,1431,21,589,9.82,9:49,"9 Minutes, 49 Seconds",2021-06-19T12:30:12,https://www.youtube.com/watch?v=u6UpEKy_ocM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day6-literals-and-operators, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Operators in Python | 100 Days of Python Programming,"We'll cover the various types of operators, from arithmetic and comparison to logical and assignment operators. Join us on this coding adventure to understand how operators enable you to perform diverse operations, making your Python programs dynamic and powerful.
+
+Code : https://github.com/campusx-official/100-days-of-python-programming/tree/main/day6-literals-and-operators
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/cPmiugHYvSI/maxresdefault.jpg,CampusX,66571,1174,29,931,15.52,15:31,"15 Minutes, 31 Seconds",2021-06-21T12:30:06,https://www.youtube.com/watch?v=cPmiugHYvSI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day6-literals-and-operators, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+If-else Statements in Python | Nested If-else | Day 7 | 100 Days of Python Programming,"If-else Statements in Python | Nested If-else: Master the art of decision-making in Python with this video on if-else statements, including nested if-else structures. We'll guide you through the syntax and usage of these fundamental control flow statements. 
+
+Code : https://github.com/campusx-official/100-days-of-python-programming/tree/main/day7-control-statements
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/EHxqc8Vy3H8/maxresdefault.jpg,CampusX,66481,1203,28,802,13.37,13:22,"13 Minutes, 22 Seconds",2021-06-23T12:30:02,https://www.youtube.com/watch?v=EHxqc8Vy3H8,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day7-control-statements, https://www.instagram.com/campusx.official]"
+Indentation in Python | Day 7 | 100 Days of Python Programming,"Indentation in Python: Uncover the significance of indentation in Python programming with this video. Learn why proper indentation is crucial for code structure and readability.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day7-control-statements
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/PbpuN5yI68o/maxresdefault.jpg,CampusX,50626,935,25,548,9.13,9:08,"9 Minutes, 8 Seconds",2021-06-22T12:30:09,https://www.youtube.com/watch?v=PbpuN5yI68o,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day7-control-statements, https://www.instagram.com/campusx.official]"
+While Loop in Python | Day 8 | 100 Days of Python Programming,"Learn the power of repetitive tasks with this video on while loops in Python. Learn how to create loops that continue executing as long as a certain condition is true. 
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/fGckTEH5DPI/maxresdefault.jpg,CampusX,57330,1131,32,669,11.15,11:09,"11 Minutes, 9 Seconds",2021-06-24T12:30:19,https://www.youtube.com/watch?v=fGckTEH5DPI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops]"
+Guessing Game in Python,"Learn how to build a simple yet engaging program that challenges users to guess a number. Join us on this hands-on journey to enhance your Python skills and create interactive games with ease.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/Ai4fEP-QKSI/maxresdefault.jpg,CampusX,55538,1020,25,562,9.37,9:22,"9 Minutes, 22 Seconds",2021-06-25T12:30:02,https://www.youtube.com/watch?v=Ai4fEP-QKSI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops]"
+For Loop In Python,"Discover the syntax and functionality of for loops, a versatile tool for executing a block of code multiple times. Join us on this coding journey to understand how for loops enhance the efficiency and readability of your Python programs.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/mMCelsWjfac/maxresdefault.jpg,CampusX,54140,976,28,578,9.63,9:38,"9 Minutes, 38 Seconds",2021-06-26T12:30:09,https://www.youtube.com/watch?v=mMCelsWjfac,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops]"
+Nested Loops in Python,"Dive into the world of complex iterations with this video on nested loops in Python. Learn how to use multiple loops within each other to solve intricate problems and handle multidimensional data. 
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/QU3zhcSBWKU/maxresdefault.jpg,CampusX,48493,839,38,411,6.85,6:51,"6 Minutes, 51 Seconds",2021-06-28T12:30:06,https://www.youtube.com/watch?v=QU3zhcSBWKU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops]"
+"Break, Continue and Pass Statements in Python","Break, Continue, and Pass statements in Python are essential for controlling the flow of loops. 'Break' terminates the loop prematurely when a condition is met, 'Continue' skips the rest of the code within a loop for a specific condition, and 'Pass' is a no-operation placeholder, ensuring syntactic correctness when no action is needed. These statements provide flexibility and control in loop structures.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/lgs_o6mDzdU/maxresdefault.jpg,CampusX,42711,855,14,458,7.63,7:38,"7 Minutes, 38 Seconds",2021-06-29T12:30:08,https://www.youtube.com/watch?v=lgs_o6mDzdU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day8-loops]"
+Built-in Functions in Python,"Built-in functions in Python are pre-defined functions that come with the Python interpreter. These functions serve various purposes, from performing basic operations like 'len()' for getting the length of an object to more complex tasks like 'sum()' for adding up elements in a sequence. Leveraging built-in functions enhances code efficiency and readability, making Python a powerful and user-friendly programming language.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day9-built-in-functions-and-modules
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/hCMnJT14XTw/maxresdefault.jpg,CampusX,61268,1253,24,641,10.68,10:41,"10 Minutes, 41 Seconds",2021-07-05T12:30:07,https://www.youtube.com/watch?v=hCMnJT14XTw,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day9-built-in-functions-and-modules]"
+Built-in Modules in Python | How to use Modules in Python,"Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day9-built-in-functions-and-modules
+
+About CampusX:
+
+CampusX is an online mentorship program for engineering students. We offer a 6-month long mentorship to students in the latest cutting - edge technologies like Machine Learning, Python, Web Development, and Deep Learning & Neural networks.
+
+At its core, CampusX aims to change this education system of India. We believe that high-quality education is not just for the privileged few. It is the right of everyone who seeks it. Through our mentorship program, we aim to bring quality education to every single student. A mentored student is provided with guidance on how to ace a technology through 24x7 mentorship, live and recorded video lectures, daily skill-building activities, project assignments, and evaluation, hackathons, interactions with industry experts, soft skill training, personal counseling, and comprehensive reports. All we need from you is intent, a ray of passion to learn. 
+
+Connect with us:
+
+Website: http://www.campusx.in
+
+Medium Blog: https://medium.com/campusx
+
+Facebook: https://www.facebook.com/campusx.official
+
+Linkedin: linkedin.com/company/campusx-official
+
+Instagram: https://www.instagram.com/campusx.official/
+
+Github: https://github.com/campusx-official
+
+Email: support@campusx.in",https://i.ytimg.com/vi/sM5-_9bJgdw/maxresdefault.jpg,CampusX,52703,1017,20,615,10.25,10:15,"10 Minutes, 15 Seconds",2021-07-06T12:30:18,https://www.youtube.com/watch?v=sM5-_9bJgdw,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://github.com/campusx-official, https://www.instagram.com/campusx.official/, https://medium.com/campusx, https://www.facebook.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day9-built-in-functions-and-modules, http://www.campusx.in]"
+Strings in Python | Part 1,"This video simplifies the process of accessing substrings, offering practical examples to boost your understanding of Python string operations.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings
+
+Read more about Unicode Strings: https://docs.python.org/3.3/howto/unicode.html
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/cNy9Pc35fRw/maxresdefault.jpg,CampusX,45209,770,12,418,6.97,6:58,"6 Minutes, 58 Seconds",2021-07-12T10:19:00,https://www.youtube.com/watch?v=cNy9Pc35fRw,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings, https://docs.python.org/3.3/howto/unicode.html]"
+Accessing Substrings from a String | Indexing and Slicing in Python Strings | Part 2,"This video simplifies the process of accessing substrings, offering practical examples to boost your understanding of Python string operations.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/ue1dZQKKLM8/maxresdefault.jpg,CampusX,41660,695,7,631,10.52,10:31,"10 Minutes, 31 Seconds",2021-07-12T10:21:07,https://www.youtube.com/watch?v=ue1dZQKKLM8,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings]"
+Editing and Deleting Strings in Python | Part 3,"This video guides you through editing and deleting operations, providing practical insights to enhance your Python programming skills.
+
+Code Used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/DZmJxCEfkCs/maxresdefault.jpg,CampusX,33508,569,11,298,4.97,4:58,"4 Minutes, 58 Seconds",2021-07-12T10:21:49,https://www.youtube.com/watch?v=DZmJxCEfkCs,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings]"
+String Operations in Python | Part 4,"This video breaks down various string operations, making it easy to understand and apply in your Python coding. Enhance your skills and level up your programming game!
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/Hc-Dwy35DRQ/maxresdefault.jpg,CampusX,36240,595,12,516,8.6,8:36,"8 Minutes, 36 Seconds",2021-07-12T10:23:14,https://www.youtube.com/watch?v=Hc-Dwy35DRQ,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings]"
+String Functions in Python | Part 5,"Learn essential string functions in Python that make handling and processing text a breeze. Watch and learn how to use these functions for efficient string manipulation in your Python projects.
+
+Code used: https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/iMToFoTl2Z8/maxresdefault.jpg,CampusX,45158,897,29,1147,19.12,19:07,"19 Minutes, 7 Seconds",2021-07-12T10:26:31,https://www.youtube.com/watch?v=iMToFoTl2Z8,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://github.com/campusx-official/100-days-of-python-programming/tree/main/day10-strings]"
+Python Lists | Complete Explanation in Hindi |  100 Days of Python Programing,"Lists in Python are versatile and mutable collections that can store multiple items of different data types. They are created using square brackets and support various operations like adding, removing, and modifying elements. Lists are commonly used for tasks involving dynamic data where elements may change during the program.
+
+Join this channel to get access to the perks:
+https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Python #DataStructures #Programming #Lists #Mutable #Coding #PythonBasics
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:05 - What is a List?
+03:55 - Types of List
+07:05 - Tips to access elements
+11:50 - Editing elements in a list
+13:34 - Adding an element to a list
+17:30 - Deleting a List
+20:35 - Operations in List
+23:00 - Functions in a List
+26:00 - Coding Exercise",https://i.ytimg.com/vi/l0rgITwCXKg/maxresdefault.jpg,CampusX,61283,951,39,2028,33.8,33:48,"33 Minutes, 48 Seconds",2021-12-23T14:00:30,https://www.youtube.com/watch?v=l0rgITwCXKg,[],"[#Coding, #Python, #PythonBasics, #Lists, #DataStructures, #Programming, #Mutable]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join, https://www.instagram.com/campusx.official]"
+Python Tuples | Complete Explanation in Hindi | 100 Days of Python Programming,"Tuples in Python are similar to lists, but they are immutable, meaning their elements cannot be changed after creation. They are created using parentheses and can store different data types. Tuples are often used when the data should remain constant throughout the program. They're efficient for representing fixed collections of values.
+
+Join this channel to get access to the perks:
+https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Python #DataStructures #Programming #Tuples #Immutable #Coding #PythonBasics
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:10 - What is a Tuple
+00:57 - Create an empty Tuple
+04:15 - Access items from a Tuple
+05:10 - Editing a Tuple
+05:40 - Rules about Tuples
+06:55 - Deleting a Tuple
+07:55 - Operations in a Tuple",https://i.ytimg.com/vi/-ePqwviZx4I/maxresdefault.jpg,CampusX,38810,620,15,735,12.25,12:15,"12 Minutes, 15 Seconds",2021-12-24T14:00:01,https://www.youtube.com/watch?v=-ePqwviZx4I,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Tuples, #Coding, #Python, #PythonBasics, #DataStructures, #Programming, #Immutable]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join, https://www.instagram.com/campusx.official]"
+Python Sets  | Complete Explanation in Hindi | 100 Days of Python Programming,"In Python, sets are collections of unique elements. Unlike lists or tuples, sets don't allow duplicate values. They provide efficient methods for common set operations like union, intersection, and difference. Sets are handy for tasks requiring uniqueness, such as removing duplicates from a list or checking membership efficiently.
+
+Join this channel to get access to the perks:
+https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Python #DataStructures #Programming #Sets #UniqueElements #Coding #PythonBasics
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:20 - Rules about Sets
+02:35 - Creating a Set
+07:20 - Access Items in a Set
+08:10 - Editing Items in a Set?
+10:15 - Adding Items to a set
+11:13 - Deleting items from a set
+13:12 - Set Operations",https://i.ytimg.com/vi/XPDzwN1aXAQ/maxresdefault.jpg,CampusX,33451,669,15,1085,18.08,18:05,"18 Minutes, 5 Seconds",2021-12-25T14:00:25,https://www.youtube.com/watch?v=XPDzwN1aXAQ,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Coding, #UniqueElements, #Python, #PythonBasics, #DataStructures, #Programming, #Sets]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join, https://www.instagram.com/campusx.official]"
+Python Dictionary | Complete Explanation in Hindi | 100 Days of Python Programming,"Python dictionaries are powerful data structures that store key-value pairs. Think of them like real-world dictionaries, where you look up words to find their meanings. In Python, you use keys to access values, making it efficient for data retrieval. Dictionaries are versatile and widely used for tasks like data mapping, configuration settings, and more.
+
+Join this channel to get access to the perks:
+https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Python #DataStructures #Programming #KeyValues #Coding #PythonBasics
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:20 - What is a Dictionary?
+01:00 - Rules in Dictionary
+02:20 - Mutability and Immutability
+03:25 - Creating a Dictionary
+07:10 - Accessing Items from a Dictionary
+08:30 - Editing a Dictionary
+10:50 - Using the .get function
+11:23 - Adding new Key-Value Pairs
+12:37 - Deleting from a dictionary
+13:45 - Operations in a dictionary",https://i.ytimg.com/vi/39FONNQb-vc/maxresdefault.jpg,CampusX,39241,651,21,1049,17.48,17:29,"17 Minutes, 29 Seconds",2021-12-26T14:00:03,https://www.youtube.com/watch?v=39FONNQb-vc,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Coding, #Python, #PythonBasics, #DataStructures, #Programming, #KeyValues]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/channel/UCCWi3hpnq_Pe03nGxuS7isg/join, https://www.instagram.com/campusx.official]"
+Python Deep Dive | Mutability | Garbage Collection | Variable Referencing,"Mutability refers to the ability of objects to be changed after creation, influencing how data is stored and manipulated. Garbage collection is Python's automatic memory management system, responsible for reclaiming memory occupied by objects that are no longer in use. Variable referencing explores how variables in Python act as references to objects, affecting the understanding of object assignment and modification.
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PythonDeepDive #Mutability #GarbageCollection #VariableReferencing #PythonProgramming #MemoryManagement #programmingconcepts 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:30 - Variable and Memory References
+06:12 - Aliasing
+09:25 - Reference Counting
+12:30 - Garbage Collection
+15:30 - Weird Stuff
+34:00 - Mutability
+39:00 - Side Effects of Mutability",https://i.ytimg.com/vi/GaJ_LmHd0E8/maxresdefault.jpg,CampusX,62844,1115,55,3090,51.5,51:30,"51 Minutes, 30 Seconds",2022-01-02T14:00:12,https://www.youtube.com/watch?v=GaJ_LmHd0E8,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#PythonProgramming, #Mutability, #PythonDeepDive, #MemoryManagement, #programmingconcepts, #VariableReferencing, #GarbageCollection]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Functions in Python | End to End Video | Complete Video,"In this tutorial, we'll cover end to end about functions in python. If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science! Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#PythonFunctions #ProgrammingBasics #PythonProgramming #CodingTutorial #FunctionsInPython #learnpython 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:21 - What are functions?
+03:05 - Components of a function
+41:05 - Important concepts
+46:15 - Nested function is hidden from the main program
+52:20 - Everything in python is an object",https://i.ytimg.com/vi/XTVP2gS6ftk/maxresdefault.jpg,CampusX,77505,1496,62,3815,63.58,1:03:35,"1 Hours, 3 Minutes, 35 Seconds",2022-01-09T14:00:12,https://www.youtube.com/watch?v=XTVP2gS6ftk,"[#python functions, #functions in python, #python course for beginners, #full python course in hindi, #python course, #types of arguments in python, #campusx, #nitish sir campusx, #functions as objects in python]","[#FunctionsInPython, #PythonProgramming, #learnpython, #CodingTutorial, #ProgrammingBasics, #PythonFunctions]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Recursion using Python | Recursion with examples | Memoization,"This tutorial explores the concept of recursion, providing clear examples to deepen your understanding. Discover the elegance of solving problems through recursive functions and learn how to implement memoization for optimized performance. 
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PythonRecursion #RecursionExamples #Memoization #ProgrammingTutorial #PythonBasics #recursivefunctions 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+19:32 - The rabbit problem",https://i.ytimg.com/vi/cNvZK0Wyoik/maxresdefault.jpg,CampusX,75903,1408,48,2707,45.12,45:07,"45 Minutes, 7 Seconds",2022-01-12T14:00:15,https://www.youtube.com/watch?v=cNvZK0Wyoik,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#PythonRecursion, #PythonBasics, #ProgrammingTutorial, #recursivefunctions, #Memoization, #RecursionExamples]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+"Lambda Functions in Python | Map, Filter and Reduce | Higher Order Functions in Python","In this tutorial, we delve into the world of anonymous functions and explore how Lambda functions streamline your code. Learn how to use Lambda with Map, Filter, and Reduce functions, and grasp the concept of higher-order functions.
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PythonLambdaFunctions #MapFilterReduce #HigherOrderFunctions #PythonProgramming #CodingTutorial #PythonBasics",https://i.ytimg.com/vi/ww2uPkwSjjY/maxresdefault.jpg,CampusX,65655,1399,35,2098,34.97,34:58,"34 Minutes, 58 Seconds",2022-01-18T14:00:32,https://www.youtube.com/watch?v=ww2uPkwSjjY,"[#lambda function in python, #map filter and reduce, #higher order function in python, #list comprehension, #dictionary comprehension python]","[#HigherOrderFunctions, #PythonBasics, #PythonLambdaFunctions, #PythonProgramming, #CodingTutorial, #MapFilterReduce]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Complete OOP in Python in 1 Video | End to End OOP in Python in 4 hours,"If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science! Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+0:00 Importance of OOP
+10:30 Class
+19:49 Object
+21:45 Practical implementation of class and object
+29:20 Constructor
+56:00 self in python
+1:06:18 Create own data type (Fraction) & corresponding methods to add, sub, mul and divide fractions
+1:23:15 Encapsulation
+1:49:20 Reference Variable
+1:51:30 Pass by reference
+2:11:40 Collection of objects
+2:16:45 Static Variables and methods
+2:31:05 Class relationship - Aggregation
+2:43:27 Inheritance
+2:55:26 Class diagram
+3:01:00 Polymorphism
+3:10:20 User of super()
+3:22:10 Types of inheritance
+3:28:10 MRO - Method Resolution Order
+3:35:35 Method overloading and operator overloading
+3:44:25 Project",https://i.ytimg.com/vi/Mf2RdpEiXjU/maxresdefault.jpg,CampusX,668658,13174,736,14578,242.97,4:02:58,"4 Hours, 2 Minutes, 58 Seconds",2022-01-24T14:00:10,https://www.youtube.com/watch?v=Mf2RdpEiXjU,"[#oop in python, #python oop, #class and object in python, #inheritance in python, #encapsulation in python, #polymorphism in python, #python oop example, #method overriding in python, #method overloading in python, #operator overloading in python, #python complete tutorials, #python tutorials for beginners]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+100 Python Problems with Solutions for Beginners | Most Common Python Programs for Practice,"In this video, we present '100 Python Problems with Solutions for Beginners.' If you're starting your Python journey or looking to enhance your skills, this compilation of common Python programs is designed for hands-on practice. From basic concepts to real-world applications, tackle these problems and level up your Python proficiency.
+
+Document Link:
+https://docs.google.com/document/d/1CuKacG3lnnt5B-7kB9p1DiJ2PLFW8TQWn9JG1lTYRJs/edit?usp=sharing
+
+Solutions:
+https://www.youtube.com/playlist?list=PL0eRyVnlnoVTLmcg67vTBip1h4KFN-CFq
+
+100 Days of Python Programming:
+https://www.youtube.com/playlist?list=PLKnIA16_Rmvb1RYR-iTA_hzckhdONtSW4
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+✨ Hashtags✨
+ #PythonProgramming #CodingPractice #LearnPython",https://i.ytimg.com/vi/szkZ1DwABUs/maxresdefault.jpg,CampusX,116424,3393,102,413,6.88,6:53,"6 Minutes, 53 Seconds",2022-06-05T14:00:19,https://www.youtube.com/watch?v=szkZ1DwABUs,"[#python practice problems, #python programs, #python coding problems, #python common programs, #python interview, #python interview questions, #python interview questions for data analyst, #python interview questions for freshers, #campusx]","[#PythonProgramming, #LearnPython, #CodingPractice]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/playlist?list=PL0eRyVnlnoVTLmcg67vTBip1h4KFN-CFq, https://www.youtube.com/playlist?list=PLKnIA16_Rmvb1RYR-iTA_hzckhdONtSW4, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1CuKacG3lnnt5B-7kB9p1DiJ2PLFW8TQWn9JG1lTYRJs/edit?usp=sharing]"
+Threading | Threading and Multi Processing in Python Part 1,"Threading is a very important concept for parallelization. In this video, we explain:
+- What is Threading?
+- When and Where Threading is Used?
+- Implementation in Python
+- Synchronizing multiple Threads
+
+Music: https://www.bensound.com/
+
+(00:00): Introduction
+(00:22): What is Threading?
+(01:18): Examples
+(04:34): Implementation in Python
+(13:03): Threading Synchronization
+
+About CampusX:
+
+CampusX is an online mentorship program for engineering students. We offer a 6-month long mentorship to students in the latest cutting - edge technologies like Machine Learning, Python, Web Development, and Deep Learning & Neural networks.
+
+At its core, CampusX aims to change this education system of India. We believe that high-quality education is not just for the privileged few. It is the right of everyone who seeks it. Through our mentorship program, we aim to bring quality education to every single student. A mentored student is provided with guidance on how to ace a technology through 24x7 mentorship, live and recorded video lectures, daily skill-building activities, project assignments, and evaluation, hackathons, interactions with industry experts, soft skill training, personal counseling, and comprehensive reports. All we need from you is intent, a ray of passion to learn. 
+
+Connect with us:
+
+Website: http://www.campusx.in
+
+Medium Blog: https://medium.com/campusx
+
+Facebook: https://www.facebook.com/campusx.official
+
+Linkedin: linkedin.com/company/campusx-official
+
+Instagram: https://www.instagram.com/campusx.official/
+
+Github: https://github.com/campusx-official
+
+Email: support@campusx.in",https://i.ytimg.com/vi/Vdz0usYmSsU/sddefault.jpg,CampusX,18762,236,15,1152,19.2,19:12,"19 Minutes, 12 Seconds",2021-01-12T15:44:56,https://www.youtube.com/watch?v=Vdz0usYmSsU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://github.com/campusx-official, https://www.instagram.com/campusx.official/, https://medium.com/campusx, https://www.facebook.com/campusx.official, https://www.bensound.com/, http://www.campusx.in]"
+What is Iterators in Python?,"In this video, we'll explore what Iterators are and how they elevate your Python programming experience. Join us for a straightforward explanation, and learn how to use Iterators effectively in your code.
+
+Code - https://github.com/campusx-official/python-iterators-and-iterables
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Python #Iterators #ProgrammingExplained #PythonProgramming #CodingSkills #SimplifiedLearning #LearnPython
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:20 - What is an iteration
+02:50 - What is iterator
+08:40 - What is iterable
+12:53 - Points to remember
+13:47 - Trick
+19:15 - Understanding how for loop works
+22:45 - Making our own for loop
+25:18 - Confusing point
+29:27 - Creating our own range() function
+35:42 - Outro",https://i.ytimg.com/vi/pH7YVRhnpUI/maxresdefault.jpg,CampusX,60943,1902,71,2289,38.15,38:09,"38 Minutes, 9 Seconds",2022-03-13T14:00:17,https://www.youtube.com/watch?v=pH7YVRhnpUI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#ProgrammingExplained, #LearnPython, #Python, #CodingSkills, #PythonProgramming, #SimplifiedLearning, #Iterators]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/campusx-official/python-iterators-and-iterables, https://www.instagram.com/campusx.official]"
+Generators in Python | Advanced Python Programming,"In this video, we'll  learn the concept of Generators, a dynamic feature that enhances efficiency in Python programming.
+
+Code - https://github.com/campusx-official/python-generators
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Python #Generators #ProgrammingTips #EfficientCode #PythonProgramming #CodingBasics #SimplifiedLearning #LearnPython",https://i.ytimg.com/vi/ZfJoU67tG1A/maxresdefault.jpg,CampusX,56301,1725,69,1493,24.88,24:53,"24 Minutes, 53 Seconds",2022-03-15T14:00:10,https://www.youtube.com/watch?v=ZfJoU67tG1A,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#EfficientCode, #LearnPython, #CodingBasics, #Python, #PythonProgramming, #Generators, #SimplifiedLearning, #ProgrammingTips]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://github.com/campusx-official/python-generators, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Build GUIs Using Python | Python Tkinter in 30 mins | Login App GUI,"Tkinter is the de facto way in Python to create Graphical User interfaces (GUIs) and is included in all standard Python Distributions. In fact, it's the only framework built into the Python standard library.
+
+Code - https://github.com/campusx-official/python-gui-tkinter
+
+Wallpaper Viewer App using Tkinter - https://youtu.be/vjh0Cqudqa0
+Calculator App - https://youtu.be/owbU6WzIhhg
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!",https://i.ytimg.com/vi/D0xVD8eUk4o/maxresdefault.jpg,CampusX,79618,1863,75,1704,28.4,28:24,"28 Minutes, 24 Seconds",2022-05-16T14:00:04,https://www.youtube.com/watch?v=D0xVD8eUk4o,"[#python, #python 3, #tkinter, #python tkinter, #programming, #python gui, #gui, #python application, #ui, #user interface, #gui python, #graphical user interface, #python ui, #python 3 programming, #ui design, #ui python, #good tkinter application, #how to program a tkinter application, #how to program, #python project, #tkinter library, #tk, #api, #tkinter tutorial, #tkinter course, #campusx, #nitish sir campusx]",[],[],"[https://discord.gg/PsWu8R87Z8, https://youtu.be/owbU6WzIhhg, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://youtu.be/vjh0Cqudqa0, https://github.com/campusx-official/python-gui-tkinter]"
+Wallpaper Viewer Application using Python | Tkinter GUI Tutorial | Mini Project,"Tkinter is the de facto way in Python to create Graphical User interfaces (GUIs) and is included in all standard Python Distributions. In fact, it's the only framework built into the Python standard library.
+
+In this video, I have developed a small Wallpaper viewer GUI application using Tkinter.
+
+Code used - https://github.com/campusx-official/python-gui-tkinter
+Learn basics of Tkinter - https://youtu.be/D0xVD8eUk4o
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!",https://i.ytimg.com/vi/vjh0Cqudqa0/maxresdefault.jpg,CampusX,18166,378,26,806,13.43,13:26,"13 Minutes, 26 Seconds",2022-05-16T14:00:20,https://www.youtube.com/watch?v=vjh0Cqudqa0,"[#python, #python 3, #tkinter, #python tkinter, #programming, #python gui, #gui, #python application, #ui, #user interface, #gui python, #graphical user interface, #python ui, #python 3 programming, #ui design, #ui python, #good tkinter application, #how to program a tkinter application, #how to program, #python project, #tkinter library, #tk, #api, #tkinter tutorial, #tkinter course, #wallpaper view application, #python mini project, #campusx]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://youtu.be/D0xVD8eUk4o, https://www.instagram.com/campusx.official, https://github.com/campusx-official/python-gui-tkinter]"
+Calculator GUI Application using Python | Tkinter Tutorial | Python Mini Project,"In this video, we guide you through creating a simple yet powerful calculator with a graphical user interface (GUI). Tkinter is a built-in python module using which you can build GUIs in Python. Whether you're a Python beginner or looking for a fun coding project, join us for a step-by-step tutorial on coding a calculator using Python.
+
+Learn the basics of Tkinter - https://www.youtube.com/watch?v=D0xVD8eUk4o&ab_channel=CampusX
+
+Code used - https://github.com/campusx-official/python-gui-tkinter
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PythonTutorial #CalculatorGUI #CodingProjects 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:54 - App Demo
+02:20 - Code
+29:23 - Outro",https://i.ytimg.com/vi/owbU6WzIhhg/maxresdefault.jpg,CampusX,39296,759,28,1782,29.7,29:42,"29 Minutes, 42 Seconds",2022-05-18T14:00:31,https://www.youtube.com/watch?v=owbU6WzIhhg,"[#windows calculator python projects, #calculator with gui using python tkinter (less than 200 lines of code), #python calculator, #calculator python, #build your own windows calculator clone (200 lines of python) | python projects for beginners, #windows calculator app, #tkinter, #python projects calculator, #python project calculator, #calculator in python, #build calculator in python, #python mini projects, #campusx, #nitish sir campusx]","[#CodingProjects, #CalculatorGUI, #PythonTutorial]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/watch?v=D0xVD8eUk4o&ab_channel=CampusX, https://www.instagram.com/campusx.official, https://github.com/campusx-official/python-gui-tkinter]"
+News Application in Python | Inshorts Clone using Python | GUI + OOP + API Tutorial in Python,"In this video, we will build a news application like Inshorts using Python. We will be fetching the data from the following website(API): https://newsapi.org/
+
+We will be building this application using GUI and OOP. Check the code here: https://github.com/campusx-official/python-gui-tkinter/blob/main/news_gui.py
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PythonTutorial #NewsApp #CodingProject
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:17 - GUI Demo
+03:00 - API
+05:09 - Code Demo
+33:51 - Outro",https://i.ytimg.com/vi/b-YBvPmCTew/maxresdefault.jpg,CampusX,31947,738,68,2066,34.43,34:26,"34 Minutes, 26 Seconds",2022-05-24T14:00:13,https://www.youtube.com/watch?v=b-YBvPmCTew,"[#news application using python, #python mini project, #gui using python, #tkinter python, #api python, #python project, #tkinter mini project, #campusx, #nitish sir campusx]","[#NewsApp, #PythonTutorial, #CodingProject]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://newsapi.org/, https://github.com/campusx-official/python-gui-tkinter/blob/main/news_gui.py]"

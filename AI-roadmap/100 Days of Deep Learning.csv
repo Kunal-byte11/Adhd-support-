@@ -1,0 +1,2584 @@
+Title,Description,Thumbnail url,Channel name,Views,Likes,Comments,Duration in seconds,Duration in minutes,Duration in timestamp,Duration,Uploaded Time,Video url,Tags,Tags (in description),Emails (in description),Links (in description)
+100 Days of Deep Learning | Course Announcement,"So we are finally starting with 100 days of Deep Learning Playlist!
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science! Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/2dH_qjc9mFg/maxresdefault.jpg,CampusX,1231897,20367,518,1112,18.53,18:32,"18 Minutes, 32 Seconds",2022-02-15T14:00:03,https://www.youtube.com/watch?v=2dH_qjc9mFg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+What is Deep Learning? Deep Learning Vs Machine Learning | Complete Deep Learning Course,"Deep Learning is a subset of machine learning that involves neural networks with multiple layers (deep neural networks). It is designed to automatically learn hierarchical representations of data through the composition of increasingly complex features.
+
+Deep Learning vs. Machine Learning:
+
+Depth of Representation: Deep Learning involves deep neural networks with multiple layers, allowing it to learn intricate features automatically.
+Feature Engineering: Deep Learning often eliminates the need for manual feature engineering as it learns hierarchical representations.
+Task Complexity: While both are used for various tasks, Deep Learning excels in complex tasks like image and speech recognition.
+Data Requirements: Deep Learning models typically require more data for training.
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#DeepLearning #MachineLearning #NeuralNetworks #ArtificialIntelligence #DataScience
+
+⌚Time Stamps⌚
+
+0:00 - Intro
+1:52 - Deep Learning Definition 1
+13:17 - Deep Learning Definition 2
+20:00 - Deep Learning Vs Machine Learning
+34:45 - Factors Behind Deep Learning's Success
+1:06:00 - Outro",https://i.ytimg.com/vi/fHF22Wxuyw4/maxresdefault.jpg,CampusX,383558,18568,608,4018,66.97,1:06:58,"1 Hours, 6 Minutes, 58 Seconds",2022-02-17T14:00:14,https://www.youtube.com/watch?v=fHF22Wxuyw4,"[#what is deep learning, #what is deep learning in hindi, #what is deep learning in ai, #ml vs dl, #ml vs dl vs ai, #machine learning vs deep learning in hindi, #machine learning vs deep learning, #deep learning full course, #deep learning course in hindi]","[#ArtificialIntelligence, #NeuralNetworks, #DataScience, #DeepLearning, #MachineLearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Types of Neural Networks | History of Deep Learning | Applications of Deep Learning,"In this video, we'll break down the different types of neural networks, take a journey through the history of deep learning, and uncover real-world applications. Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+1. About ANN - https://en.wikipedia.org/wiki/Artificial_neural_network
+2. About CNN - https://en.wikipedia.org/wiki/Convolutional_neural_network
+3. yann le cunn - https://en.wikipedia.org/wiki/Yann_LeCun
+4. About RNN - https://en.wikipedia.org/wiki/Recurrent_neural_network
+5. About Autoencoders - https://en.wikipedia.org/wiki/Autoencoder
+6. About GAN - https://machinelearningmastery.com/what-are-generative-adversarial-networks-gans/ 
+7. Unsupervised Pre-training - https://www.jmlr.org/papers/volume11/erhan10a/erhan10a.pdf
+8. ImageNET - https://www.image-net.org/
+9. Alphago - https://www.youtube.com/watch?v=WXuK6gekU1Y
+10. Image Colorization - https://pyimagesearch.com/2019/02/25/black-and-white-image-colorization-with-opencv-and-deep-learning/
+11. Audio gen in mute video - https://www.youtube.com/watch?v=QZGqLlsNArg
+12. Image Caption gen - https://www.analyticsvidhya.com/blog/2021/12/step-by-step-guide-to-build-image-caption-generator-using-deep-learning/
+13. Pixel Restoration - https://www.analyticsvidhya.com/blog/2021/05/deep-learning-for-image-super-resolution/
+14. This person does not exist - https://thispersondoesnotexist.com/
+15. AI generates story - https://www.youtube.com/watch?v=LY7x2Ihqjmc
+15. Deep Dream - https://www.youtube.com/watch?v=nelv5kkNxis
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+⌚Time Stamps⌚
+
+0:00 - Intro
+2:05 - Types of Neural Network
+8:25 - History of Deep Learning
+20:48 - Applications of Deep Learning
+32:13 - Outro
+
+✨ Hashtags✨
+#NeuralNetworks #DeepLearningHistory #AIApplications #EasyLearning",https://i.ytimg.com/vi/fne_UE7hDn0/maxresdefault.jpg,CampusX,261849,13454,264,1996,33.27,33:16,"33 Minutes, 16 Seconds",2022-02-19T14:00:30,https://www.youtube.com/watch?v=fne_UE7hDn0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#EasyLearning, #NeuralNetworks, #AIApplications, #DeepLearningHistory]",[],"[https://www.linkedin.com/company/campusx-official, https://en.wikipedia.org/wiki/Artificial_neural_network, https://pyimagesearch.com/2019/02/25/black-and-white-image-colorization-with-opencv-and-deep-learning/, https://thispersondoesnotexist.com/, https://www.youtube.com/watch?v=LY7x2Ihqjmc, https://www.youtube.com/watch?v=nelv5kkNxis, https://en.wikipedia.org/wiki/Convolutional_neural_network, https://discord.gg/PsWu8R87Z8, https://en.wikipedia.org/wiki/Yann_LeCun, https://www.jmlr.org/papers/volume11/erhan10a/erhan10a.pdf, https://machinelearningmastery.com/what-are-generative-adversarial-networks-gans/, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/watch?v=QZGqLlsNArg, https://www.youtube.com/watch?v=WXuK6gekU1Y, https://en.wikipedia.org/wiki/Recurrent_neural_network, https://www.instagram.com/campusx.official, https://en.wikipedia.org/wiki/Autoencoder, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://www.analyticsvidhya.com/blog/2021/05/deep-learning-for-image-super-resolution/, https://www.analyticsvidhya.com/blog/2021/12/step-by-step-guide-to-build-image-caption-generator-using-deep-learning/, https://www.image-net.org/]"
+What is a Perceptron? Perceptron Vs Neuron | Perceptron Geometric Intuition,"Code - https://github.com/campusx-official/100-days-of-deep-learning/tree/main/day3
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+A Perceptron is a simple type of artificial neural network algorithm developed by Frank Rosenblatt in 1957. It's the basic unit of a neural network, taking multiple binary inputs and producing a single binary output. It computes a weighted sum of its input, applies an activation function, and produces an output.
+
+Perceptron vs. Neuron:
+
+Perceptron: Refers specifically to the algorithm developed by Rosenblatt, typically using a step function as the activation.
+Neuron: A more general term used in the context of biological and artificial neural networks. It encompasses various activation functions beyond the step function.
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Perceptron #Neuron #NeuralNetworks #MachineLearning #ArtificialIntelligence #DataScience
+
+⌚Time Stamps⌚
+
+0:00 Introduction
+2:08 What is a Perceptron?
+14:30 Neuron Vs Perceptron
+22:52 Geometric Intuition
+33:53 Code Example
+38:04 Outro",https://i.ytimg.com/vi/X7iIKPoZ0Sw/maxresdefault.jpg,CampusX,343232,15763,551,2314,38.57,38:34,"38 Minutes, 34 Seconds",2022-02-21T14:00:24,https://www.youtube.com/watch?v=X7iIKPoZ0Sw,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#ArtificialIntelligence, #NeuralNetworks, #DataScience, #Neuron, #MachineLearning, #Perceptron]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/campusx-official/100-days-of-deep-learning/tree/main/day3, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Perceptron Trick | How to train a Perceptron | Perceptron Part 2 |  Deep Learning Full Course,"Code - https://github.com/campusx-official/100-days-of-deep-learning/tree/main/day4
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Training a Perceptron involves adjusting its weights to correctly classify input data. The process typically follows these steps:
+
+Initialize Weights: Set initial weights randomly.
+Forward Pass: Compute the weighted sum of inputs and pass it through an activation function.
+Calculate Error: Compare the predicted output with the actual target.
+Update Weights: Adjust weights based on the error using a learning rate and the gradient descent algorithm.
+Repeat: Iterate through the dataset multiple times (epochs) until the model converges.
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PerceptronTraining #NeuralNetworks #MachineLearning #GradientDescent #DataScience #PerceptronAlgorithm
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:20 - Perceptron Trick
+10:35 - How to Label regions?
+13:25 - Transformations
+25:00 - Coding the Algorithm
+36:00 - Simplified Algorithm
+41:20 - Code Demo
+51:16 - Outro",https://i.ytimg.com/vi/Lu2bruOHN6g/maxresdefault.jpg,CampusX,289970,8484,320,3105,51.75,51:45,"51 Minutes, 45 Seconds",2022-02-23T14:00:13,https://www.youtube.com/watch?v=Lu2bruOHN6g,"[#perceptron trick, #perceptron algorithm, #training a perceptron, #deep learning course in hindi, #deep learning end to end course]","[#DataScience, #NeuralNetworks, #GradientDescent, #MachineLearning, #PerceptronTraining, #PerceptronAlgorithm]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://github.com/campusx-official/100-days-of-deep-learning/tree/main/day4]"
+Perceptron Loss Function | Hinge Loss | Binary Cross Entropy | Sigmoid Function,"The Perceptron Loss Function is a measure used to quantify how well a perceptron classifies data points. Common loss functions for perceptrons include:
+
+Hinge Loss: Suitable for binary classification problems, encouraging correct classifications with a margin.
+Binary Cross Entropy: Often used with sigmoid activation for binary classification, measuring the dissimilarity between predicted and actual probabilities.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Perceptron Loss Function - https://scikit-learn.org/stable/modules/sgd.html
+
+Code - https://github.com/campusx-official/100-days-of-deep-learning/tree/main/day5%20-%20Perceptron%20Loss%20Function
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#PerceptronLossFunction #HingeLoss #BinaryCrossEntropy #SigmoidFunction #MachineLearning #NeuralNetworks #datascience 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:31 - Recap
+06:01 - Problem with perceptron trick
+10:35 - Loss Function
+15:08 - Perceptron Loss Function
+21:46 - SkLearn Documentation
+27:51 - Explanation of loss function
+39:08 - Gradient Descent
+44:59 - Code Demo
+47:54 - More Loss Functions
+58:18 - Outro",https://i.ytimg.com/vi/2_gCL5RAkHc/maxresdefault.jpg,CampusX,261686,8472,276,3553,59.22,59:13,"59 Minutes, 13 Seconds",2022-02-25T14:00:01,https://www.youtube.com/watch?v=2_gCL5RAkHc,"[#training a perceptron, #perceptron loss function, #perceptron sigmoid activation function, #binary cross entropy, #categorical cross entropy, #deep learning course in hindi, #deep learning course for beginners]","[#SigmoidFunction, #NeuralNetworks, #datascience, #PerceptronLossFunction, #BinaryCrossEntropy, #MachineLearning, #HingeLoss]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://github.com/campusx-official/100-days-of-deep-learning/tree/main/day5%20-%20Perceptron%20Loss%20Function, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://scikit-learn.org/stable/modules/sgd.html, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Problem with Perceptron,"The problem with Perceptrons lies in their limitation to learn complex patterns and functions, especially those that are not linearly separable. A Perceptron is a single-layer neural network with binary outputs, and it can only solve problems where the data points are linearly separable. If the data is not linearly separable, a Perceptron cannot converge and find a solution.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1x6detmf4WAUAT2pfdCts-dVrqnz4_gNB?usp=sharing
+
+TensorFlow Playground - https://playground.tensorflow.org/
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Perceptrons #NeuralNetworks #MachineLearning #DataScience #LinearSeparability #LimitationsInPerceptrons",https://i.ytimg.com/vi/Jp44b27VnOg/maxresdefault.jpg,CampusX,124346,5985,82,459,7.65,7:39,"7 Minutes, 39 Seconds",2022-02-27T14:00:11,https://www.youtube.com/watch?v=Jp44b27VnOg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#LinearSeparability, #NeuralNetworks, #DataScience, #LimitationsInPerceptrons, #Perceptrons, #MachineLearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://playground.tensorflow.org/, https://colab.research.google.com/drive/1x6detmf4WAUAT2pfdCts-dVrqnz4_gNB?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+MLP Notation,"Multi-Layer Perceptron (MLP) Notation refers to the symbolic representation used to illustrate the architecture and connections within a neural network. In MLP, nodes (neurons) are organized into layers, including an input layer, hidden layers, and an output layer. The notation visually represents the flow of information between layers through weights and activation functions.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#MLPNotation #NeuralNetworkArchitecture #DeepLearning #DataScience #MachineLearning #NeuralNetworkRepresentation #MLPStructure",https://i.ytimg.com/vi/H0_3SJh4Rqs/maxresdefault.jpg,CampusX,158298,8014,146,804,13.4,13:24,"13 Minutes, 24 Seconds",2022-03-03T14:00:13,https://www.youtube.com/watch?v=H0_3SJh4Rqs,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#DataScience, #MLPStructure, #DeepLearning, #NeuralNetworkRepresentation, #MachineLearning, #MLPNotation, #NeuralNetworkArchitecture]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Multi Layer Perceptron | MLP Intuition,"A Multi-Layer Perceptron (MLP) is a type of artificial neural network characterized by its multiple layers of nodes (neurons). It consists of an input layer, one or more hidden layers, and an output layer. Each connection between nodes is associated with a weight, and each node applies an activation function to the weighted sum of its inputs. MLPs are trained using algorithms like backpropagation to learn and make predictions.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Tensorflow Playground - https://playground.tensorflow.org/
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#MLP #MultiLayerPerceptron #NeuralNetworks #DeepLearning #ArtificialIntelligence #DataScience #machinelearning 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:28 - The problem
+02:42 - Perceptron with Sigmoid
+23:56 - Adding nodes in hidden layer
+26:58 - Adding nodes in input
+28:50 - Adding nodes in output node
+29:53 - Deep Neural Network
+31:53 - TF Playground Demo
+37:21 - Outro",https://i.ytimg.com/vi/qw7wFGgNCSU/maxresdefault.jpg,CampusX,199553,10230,462,2266,37.77,37:46,"37 Minutes, 46 Seconds",2022-03-01T14:00:19,https://www.youtube.com/watch?v=qw7wFGgNCSU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#ArtificialIntelligence, #MultiLayerPerceptron, #NeuralNetworks, #DataScience, #DeepLearning, #machinelearning, #MLP]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://playground.tensorflow.org/, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Forward Propagation | How a neural network predicts output?,"Forward Propagation is a fundamental step in the functioning of neural networks. It involves the transmission of input data through the network's layers to produce an output. Each layer processes the input using weights and activation functions, ultimately generating a prediction. This process is crucial for understanding how neural networks make predictions.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#ForwardPropagation #NeuralNetworks #MachineLearningBasics #PredictionGeneration #DataScience #NeuralNetworkMechanism",https://i.ytimg.com/vi/7MuiScUkboE/maxresdefault.jpg,CampusX,181597,8166,203,931,15.52,15:31,"15 Minutes, 31 Seconds",2022-03-05T14:00:04,https://www.youtube.com/watch?v=7MuiScUkboE,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#NeuralNetworks, #MachineLearningBasics, #DataScience, #NeuralNetworkMechanism, #PredictionGeneration, #ForwardPropagation]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Customer Churn Prediction using ANN | Keras and Tensorflow | Deep Learning Classification,"Customer Churn Prediction using Artificial Neural Networks (ANN) involves building a model to forecast whether a customer is likely to leave or continue using a service. The ANN learns from historical data, considering factors like usage patterns, customer interactions, and feedback to make predictions.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://www.kaggle.com/campusx/notebook8ad570467f
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#CustomerChurn #ANN #PredictiveAnalytics #CustomerRetention #MachineLearning #DataScience #BusinessAnalytics #neuralnetworks 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:22 - The Dataset
+03:28 - Code Demo
+17:49 - Neural Network Architecture
+32:45 - Training error reduction plot
+34:40 - Outro",https://i.ytimg.com/vi/9wmImImmgcI/maxresdefault.jpg,CampusX,199303,7395,194,2123,35.38,35:23,"35 Minutes, 23 Seconds",2022-03-07T14:00:05,https://www.youtube.com/watch?v=9wmImImmgcI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#DataScience, #neuralnetworks, #CustomerRetention, #ANN, #CustomerChurn, #MachineLearning, #BusinessAnalytics, #PredictiveAnalytics]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://www.kaggle.com/campusx/notebook8ad570467f]"
+Handwritten Digit Classification using ANN | MNIST Dataset,"Handwritten Digit Classification using Artificial Neural Networks (ANN) involves training a model to recognize and classify handwritten digits, typically from 0 to 9. The ANN learns patterns from labeled datasets, allowing it to generalize and accurately identify handwritten digits in unseen data.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Link - https://colab.research.google.com/drive/1SqETl3Zi1EEesdJfEv6_QimB-M-YjKGx?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#MachineLearning #ImageRecognition #HandwrittenDigits #NeuralNetworks #DataScience #classificationmodel 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:40 - MNIST Dataset
+05:20 - Code Demo
+25:28 - Accuracy Plot
+28:06 - Outro",https://i.ytimg.com/vi/3xPT2Pk0Jds/maxresdefault.jpg,CampusX,161650,5835,188,1720,28.67,28:40,"28 Minutes, 40 Seconds",2022-03-09T14:00:01,https://www.youtube.com/watch?v=3xPT2Pk0Jds,"[#Education, #Engineering, #Campus, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#DataScience, #NeuralNetworks, #classificationmodel, #MachineLearning, #ImageRecognition, #HandwrittenDigits]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1SqETl3Zi1EEesdJfEv6_QimB-M-YjKGx?usp=sharing]"
+Graduate Admission Prediction using ANN,"In the world of artificial neural networks (ANN), predicting gre admissions becomes an exciting application. Using ANN, we create a predictive model that learns patterns from historical data, considering factors such as GRE scores, GPA, and other relevant features. The network optimizes its parameters during training to make accurate predictions regarding the likelihood of admission.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://www.kaggle.com/campusx/gre-admission-prediction
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#ArtificialNeuralNetworks #GraduateAdmissions #PredictiveModeling #DataScience #machinelearning 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:24 - Exploring the dataset
+06:28 - Neural Network Architecture
+16:45 - Curve Graph
+17:10 - Outro",https://i.ytimg.com/vi/RCmiPBiA4qg/maxresdefault.jpg,CampusX,92693,4436,122,1063,17.72,17:43,"17 Minutes, 43 Seconds",2022-03-11T14:00:16,https://www.youtube.com/watch?v=RCmiPBiA4qg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#DataScience, #ArtificialNeuralNetworks, #machinelearning, #PredictiveModeling, #GraduateAdmissions]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://www.kaggle.com/campusx/gre-admission-prediction, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Loss Functions in Deep Learning | Deep Learning | CampusX,"In this video, we'll understand the concept of Loss Functions and their role in training neural networks. Join me for a straightforward explanation to grasp how these functions impact model performance. 
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#DeepLearning #LossFunctions #NeuralNetworks #MachineLearning #AI #LearningBasics #SimplifiedLearning #modeltraining 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:09 - What is loss function?
+11:08 - Loss functions in deep learning
+14:20 - Loss function vs cost function
+24:35 - Advantages/Disadvantages
+59:13 - Outro",https://i.ytimg.com/vi/gb5nm_3jBIo/maxresdefault.jpg,CampusX,219280,8974,250,3596,59.93,59:56,"59 Minutes, 56 Seconds",2022-03-23T14:00:31,https://www.youtube.com/watch?v=gb5nm_3jBIo,"[#loss functions in machine learning, #loss functions in deep learning, #mse, #mae, #huber loss, #mean squared error, #mean absolute error, #binary cross entropy, #categorical cross entropy, #sparse categorical cross entropy]","[#NeuralNetworks, #DeepLearning, #MachineLearning, #LearningBasics, #LossFunctions, #AI, #SimplifiedLearning, #modeltraining]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Backpropagation in Deep Learning | Part 1 | The What?,"In this video, we'll break down the fundamentals of Backpropagation, a key concept in neural networks. Join us for a simplified explanation and demystify the process that makes deep learning possible.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Video on Gradient Descent
+https://www.youtube.com/watch?v=ORyfPJypKuU&t=4072s&ab_channel=CampusX
+
+Video on Forward Propagation
+https://www.youtube.com/watch?v=7MuiScUkboE&ab_channel=CampusX
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Backpropagation #NeuralNetworks #DeepLearning #MachineLearning #AI #LearningBasics #SimplifiedLearning
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:40 - What is Backpropagation?
+09:06 - Step by Step Explanation
+53:53 - Outro",https://i.ytimg.com/vi/6M1wWQmcUjQ/maxresdefault.jpg,CampusX,256971,8921,376,3259,54.32,54:19,"54 Minutes, 19 Seconds",2022-03-30T14:00:07,https://www.youtube.com/watch?v=6M1wWQmcUjQ,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Backpropagation, #NeuralNetworks, #DeepLearning, #MachineLearning, #LearningBasics, #AI, #SimplifiedLearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.youtube.com/watch?v=ORyfPJypKuU&t=4072s&ab_channel=CampusX, https://www.youtube.com/watch?v=7MuiScUkboE&ab_channel=CampusX, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Backpropagation Part 2 | The How | Complete Deep Learning Playlist,"In this video, we'll break down the fundamentals of Backpropagation, a key concept in neural networks. Join us for a simplified explanation and demystify the process that makes deep learning possible.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code used
+Regression - https://colab.research.google.com/drive/1kIljMvDFx7dyyDXTMsd1fEkg9Q24xhIE?usp=sharing
+Classification - https://colab.research.google.com/drive/1dJZZdhngq4eN83sQCupyh2QbyzrsBB-e?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Backpropagation #DeepLearning #NeuralNetworks #LearningJourney #MachineLearning #AI #TutorialSeries #SimplifiedLearning
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:50 - Regression Problem
+05:08 - Code Demo
+29:50 - Classification Example
+59:24 - Outro",https://i.ytimg.com/vi/ma6hWrU-LaI/maxresdefault.jpg,CampusX,162468,5020,192,3596,59.93,59:56,"59 Minutes, 56 Seconds",2022-04-03T14:00:19,https://www.youtube.com/watch?v=ma6hWrU-LaI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Backpropagation, #TutorialSeries, #NeuralNetworks, #LearningJourney, #DeepLearning, #MachineLearning, #AI, #SimplifiedLearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1kIljMvDFx7dyyDXTMsd1fEkg9Q24xhIE?usp=sharing, https://colab.research.google.com/drive/1dJZZdhngq4eN83sQCupyh2QbyzrsBB-e?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Backpropagation Part 3 | The Why | Complete Deep Learning Playlist,"Don't forget to check out the complete Deep Learning playlist for a comprehensive learning experience!
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Backprop Google Tool
+https://developers-dot-devsite-v2-prod.appspot.com/machine-learning/crash-course/backprop-scroll
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Backpropagation #DeepLearning #NeuralNetworks #LearningJourney #MachineLearning #AI #TutorialSeries #SimplifiedLearning
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:34 - The intuition behind the algorithm
+09:09 - Concept of Gradient
+14:22 - Concept of derivative
+19:05 - Concept of Minima
+22:23 - Intuition of Backpropagation
+35:21 - Demo
+36:59 - What is convergence?
+45:05 - Outro",https://i.ytimg.com/vi/6xO-x8y0YSY/maxresdefault.jpg,CampusX,106749,5284,189,2421,40.35,40:21,"40 Minutes, 21 Seconds",2022-04-05T14:00:04,https://www.youtube.com/watch?v=6xO-x8y0YSY,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Backpropagation, #TutorialSeries, #NeuralNetworks, #LearningJourney, #DeepLearning, #MachineLearning, #AI, #SimplifiedLearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://developers-dot-devsite-v2-prod.appspot.com/machine-learning/crash-course/backprop-scroll, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Vanishing Gradient Problem in ANN | Exploding Gradient Problem | Code Example,"Learn about the Vanishing and Exploding Gradient Problems in Artificial Neural Networks (ANNs) with practical code examples. Understand the challenges and solutions for training deep networks effectively. Improve your grasp on these important concepts in neural network training. 
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1j1qAWzo6sjNU3f_vkMMijOAuFi1JoV8p?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#GradientProblems #NeuralNetworks #codeexamples 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:11 - Vanishing Gradient Problem
+12:20 - Code Demo
+18:00 - How to handle VG problem
+20:17 - Code Demo
+23:18 - RELU Activation function
+25:27 - Code Demo
+27:28 - Weight Initialization Techniques
+28:11 - Batch Normalization
+28:34 - Residual Network
+31:51 - Outro",https://i.ytimg.com/vi/uCrevbBh0zM/maxresdefault.jpg,CampusX,125519,5280,122,1936,32.27,32:16,"32 Minutes, 16 Seconds",2022-04-17T14:00:22,https://www.youtube.com/watch?v=uCrevbBh0zM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#codeexamples, #NeuralNetworks, #GradientProblems]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1j1qAWzo6sjNU3f_vkMMijOAuFi1JoV8p?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+MLP Memoization | Complete Deep Learning Playlist,"In this video, we'll delve into the concept of Memoization, a technique to enhance performance in Machine Learning. Understand how MLPs benefit from this strategy, making computations more efficient. 
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#Memoization #MachineLearning #MLPTips #Optimization #SimplifiedLearning #DeepLearning #ArtificialIntelligence #efficiencytips 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:21 - What is Memoization?
+02:55 - Code Demo - Fibonacci Sequence
+09:39 - MLP Memoization
+25:05 - Outro",https://i.ytimg.com/vi/rW0eeTXas4k/maxresdefault.jpg,CampusX,94087,4938,149,1524,25.4,25:24,"25 Minutes, 24 Seconds",2022-04-09T14:00:19,https://www.youtube.com/watch?v=rW0eeTXas4k,"[#deep learning playlist, #complete deep learning in hindi, #complete deep learning, #memoization, #dynamic programming, #campusx, #nitish sir campusx, #backpropation, #neural networks, #artificial neural network, #ann]","[#ArtificialIntelligence, #Optimization, #MLPTips, #efficiencytips, #DeepLearning, #MachineLearning, #SimplifiedLearning, #Memoization]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Gradient Descent in Neural Networks | Batch vs Stochastics vs Mini Batch Gradient Descent,"This video breaks down Batch, Stochastic, and Mini-Batch methods, explaining their impact on the learning process. Discover the differences between them in simple terms.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code used - https://colab.research.google.com/drive/131xWdpUiy_f87tN0dRpKaEvOxR9DoiSB?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#NeuralNetworks #GradientDescent #MachineLearning #DeepLearning #DataScience #AI #LearningBasics #simplifiedlearning 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:42 - Gradient Descent
+03:05 - Back Propagation Algorithm
+90:00 - Batch Gradient Descent
+15:25 - Questions/Differences
+16:30 - Code Demo
+19:29 - Which is faster to converge?
+23:30 - Stochastic Gradient Descent
+30:09 - Vectorization
+31:02 - Mini Batch Gradient Descent
+35:00 - Why batch size is provided in multiple of 2
+36:12 - What if batch size doesn't divide number of rows?
+37:10 - Code Demo
+37:42 - Outro",https://i.ytimg.com/vi/7z6yXpYk7sw/maxresdefault.jpg,CampusX,166658,5854,159,2273,37.88,37:53,"37 Minutes, 53 Seconds",2022-04-14T14:00:06,https://www.youtube.com/watch?v=7z6yXpYk7sw,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#NeuralNetworks, #DataScience, #GradientDescent, #simplifiedlearning, #DeepLearning, #MachineLearning, #LearningBasics, #AI]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://colab.research.google.com/drive/131xWdpUiy_f87tN0dRpKaEvOxR9DoiSB?usp=sharing, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+How to Improve the Performance of a Neural Network,"In this video, we share practical tips on enhancing the performance of your Neural Network.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Notes - https://drive.google.com/file/d/1FsOzMQltwI3CURqL9X6SJ-OBOqSDti1i/view?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#NeuralNetworks #PerformanceImprovement #DeepLearningTips
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:11 - How to improve a neural network?
+09:10 - Fine Tuning Hyperparameters
+29:05 - Outro",https://i.ytimg.com/vi/Ue_6n1yT_R8/maxresdefault.jpg,CampusX,102497,5343,115,1824,30.4,30:24,"30 Minutes, 24 Seconds",2022-04-29T14:00:24,https://www.youtube.com/watch?v=Ue_6n1yT_R8,[],"[#DeepLearningTips, #PerformanceImprovement, #NeuralNetworks]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://drive.google.com/file/d/1FsOzMQltwI3CURqL9X6SJ-OBOqSDti1i/view?usp=sharing]"
+Early Stopping In Neural Networks | End to End Deep Learning Course,"Early stopping is a method in Deep Learning that allows you to specify an arbitrarily large number of training epochs and stop training once the model performance stops improving on the validation dataset.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1JG6PCAa5A0-CLOcKhugqU4uyZXWNjtKP?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!",https://i.ytimg.com/vi/Ygvskt5HadI/maxresdefault.jpg,CampusX,96392,4017,90,720,12,12:00,"12 Minutes, 0 Seconds",2022-05-02T14:00:27,https://www.youtube.com/watch?v=Ygvskt5HadI,"[#early stopping to avoid overfitting in neural network, #early stopping in keras to prevent overfitting, #early stopping keras, #early stopping, #deep learning course, #deep learning tutorial]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1JG6PCAa5A0-CLOcKhugqU4uyZXWNjtKP?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Data Scaling in Neural Network | Feature Scaling in ANN | End to End Deep Learning Course,"Data scaling is a recommended pre-processing step when working with deep learning neural networks. Data scaling can be achieved by normalizing or standardizing real-valued input and output variables.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1lexRUY37fJd6op-WiJicPRB65PwA8YaO?usp=sharing
+
+Video on Standardization: https://www.youtube.com/watch?v=1Yw9sC0PNwY
+Video on Normalization: https://www.youtube.com/watch?v=eBrGyuA2MIg
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+03:15 - Code Demo/Feature Scaling
+06:00 - Intuition",https://i.ytimg.com/vi/mzRO0cVppQ0/maxresdefault.jpg,CampusX,79564,4160,88,1015,16.92,16:55,"16 Minutes, 55 Seconds",2022-05-05T14:00:16,https://www.youtube.com/watch?v=mzRO0cVppQ0,"[#feature scaling in neural network, #standardization in ann, #normalization in deep learning, #normalization in neural network, #feature scaling in deep learning, #how to improve a neural network, #improve performance of a neural network, #end to end deep learning course in hindi, #campusx, #nitish sir campusx]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://colab.research.google.com/drive/1lexRUY37fJd6op-WiJicPRB65PwA8YaO?usp=sharing, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.youtube.com/watch?v=1Yw9sC0PNwY, https://www.instagram.com/campusx.official, https://www.youtube.com/watch?v=eBrGyuA2MIg, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Dropout Layer in Deep Learning | Dropouts in ANN | End to End Deep Learning,"Dropout is an approach to regularization in neural networks which helps reduce interdependent learning amongst the neurons. Dropout is used as a regularization technique in order to reduce overfitting.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Dropouts original paper - https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#DeepLearningExplained #DropoutLayers #NeuralNetworks101
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:25 - Problem of Overfitting
+03:52 - Solutions for Overfitting
+06:08 - Dropouts
+13:14 - Why it works?
+18:50 - Random Forest Analogy
+23:45 - How prediction works?
+27:10 - Outro",https://i.ytimg.com/vi/gyTlcHVeBjM/maxresdefault.jpg,CampusX,105754,4902,109,1671,27.85,27:51,"27 Minutes, 51 Seconds",2022-05-12T14:00:14,https://www.youtube.com/watch?v=gyTlcHVeBjM,"[#dropout layer in neural network, #dropout layer before or after activation, #dropout layer deep learning, #dropout layer in ann, #dropout layer in cnn, #dropout layer for regularization, #dropout layer overfitting, #overfitting in neural networks, #deep learning course in hindi, #campusx, #nitish sir campusx]","[#DeepLearningExplained, #NeuralNetworks101, #DropoutLayers]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Dropout Layers in ANN | Code Example | Regression | Classification,"In this video, we explore the power of Dropout Layers with code examples for both Regression and Classification tasks.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Classification Code - https://colab.research.google.com/drive/1KyMLdV1yB0qVdS-1huxKMN9xVKhrfxGL?usp=sharing
+
+Regression Code - https://drive.google.com/file/d/1p9I76sny0zyIX9VNBEivj6TJaFGwj0GG/view?usp=sharing
+
+Paper link - https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!",https://i.ytimg.com/vi/tgIx04ML7-Y/maxresdefault.jpg,CampusX,72707,4203,93,1157,19.28,19:17,"19 Minutes, 17 Seconds",2022-05-15T14:00:22,https://www.youtube.com/watch?v=tgIx04ML7-Y,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://jmlr.org/papers/volume15/srivastava14a/srivastava14a.pdf, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://colab.research.google.com/drive/1KyMLdV1yB0qVdS-1huxKMN9xVKhrfxGL?usp=sharing, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://drive.google.com/file/d/1p9I76sny0zyIX9VNBEivj6TJaFGwj0GG/view?usp=sharing]"
+Regularization in Deep Learning | L2 Regularization in ANN | L1 Regularization | Weight Decay in ANN,"Regularization is a set of techniques that can prevent overfitting in neural networks and thus improve the accuracy of a Deep Learning model when facing completely new data from the problem domain.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1PObj5KrXLDDmHjoJ1x0bVmxAFbif5s7q?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#DeepLearningExplained #RegularizationTechniques #NeuralNetworksTips
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:40 - Improving NN Performance
+01:53 - Overfitting
+04:52 - Why Neural networks overfit?
+09:08 - Ways to solve overfitting
+12:10 - Regularization
+19:40 - Intuition behind Regularization
+26:38 - Code Demo
+35:35 - Outro",https://i.ytimg.com/vi/4xRonrhtkzc/maxresdefault.jpg,CampusX,130424,4835,95,2157,35.95,35:57,"35 Minutes, 57 Seconds",2022-05-20T14:00:03,https://www.youtube.com/watch?v=4xRonrhtkzc,"[#keras, #deep learning, #machine learning, #artificial neural network, #neural network, #neural net, #sequential model, #relu, #educational, #data augmentation, #dropout, #regularization explained, #regularization python, #regularization for deep learning, #regularization in machine learning, #regularization machine learning, #overfitting vs underfitting, #overfitting in machine learning, #l1 and l2 regularization, #l1 and l2 regularization in machine learning, #l2 regularization, #l1 regularization]","[#DeepLearningExplained, #NeuralNetworksTips, #RegularizationTechniques]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1PObj5KrXLDDmHjoJ1x0bVmxAFbif5s7q?usp=sharing]"
+"Activation Functions in Deep Learning | Sigmoid, Tanh and Relu Activation Function","In artificial neural networks, each neuron forms a weighted sum of its inputs and passes the resulting scalar value through a function referred to as an activation function or transfer function. In this video, we explain the basics of Sigmoid, Tanh, and Relu—important parts of how computers learn.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+✨ Hashtags✨
+#SimpleLearning #ActivationFunctionsExplained #EasyTech
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:47 - What are activation functions?
+03:28 - Importance of AF
+04:58 - Code Demo
+06:38 - Why activation functions are needed?
+11:05 - Ideal Activation function
+18:41 - Sigmoid Activation Function
+20:37 - Advantages
+22:56 - Disadvantages
+36:15 - Tan h Activation Function
+38:00 - Advantages
+39:02 - Disadvantages
+40:17 - Relu Activation Function
+40:50 - Advantages
+42:43 - Disadvantages
+44:24 - Outro",https://i.ytimg.com/vi/7LcUkgzx3AY/maxresdefault.jpg,CampusX,171843,5621,114,2692,44.87,44:52,"44 Minutes, 52 Seconds",2022-06-01T14:00:06,https://www.youtube.com/watch?v=7LcUkgzx3AY,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#SimpleLearning, #EasyTech, #ActivationFunctionsExplained]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Relu Variants Explained | Leaky Relu | Parametric Relu | Elu | Selu | Activation Functions Part 2,"This is part 2 of the Activation Function Series. In this video, we will discuss the dying relu problem and then learn about the following variants of Relu activation function:
+
+1. Leaky Relu
+2. Parametric Relu
+3. Elu
+4. Selu
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science! Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+✨ Hashtags✨
+#ActivationFunctions #ReluVariants #NeuralNetworksExplained
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:44 - Dying Relu Problem
+17:12 - Solutions
+20:05 - Leaky Relu
+22:47 - Advantages
+24:29 - Parametric Relu
+25:44 - Exponential Linear Unit
+28:40 - Disadvantages
+29:09 - Scaled Exponential Linear Unit
+33:00 - Outro",https://i.ytimg.com/vi/2OwWs7Hzr9g/maxresdefault.jpg,CampusX,92842,3984,106,2005,33.42,33:25,"33 Minutes, 25 Seconds",2022-06-09T14:00:02,https://www.youtube.com/watch?v=2OwWs7Hzr9g,"[#dying relu issue, #dying relu problem, #relu, #leaky relu activation function, #leaky relu vs relu, #parametric relu activation function, #parametric relu, #parametric relu vs leaky relu, #elu activation function, #exponential linear unit, #scaled exponential linear unit, #selu, #activation function in deep learning, #campusx]","[#ActivationFunctions, #ReluVariants, #NeuralNetworksExplained]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Weight Initialization Techniques | What not to do? | Deep Learning,"In this video, I'll guide you through weight initialization techniques in neural networks and highlight what NOT to do. From common mistakes to misconceptions, I'll help you navigate the dos and don'ts in optimizing your network's performance.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+🧑‍💻Code:
+https://colab.research.google.com/drive/1M4q5yRA0iQXh9h8Y3J7zFGIQzO_Pv9n0?usp=sharing
+
+https://colab.research.google.com/drive/1bsVRmTjYjiQUFee3REHCYeY3vv5r7nfH?usp=sharing
+
+Viz Tool:
+https://www.deeplearning.ai/ai-notes/initialization/
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#WeightInitialization #DeepLearningTips #NeuralNetworks 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:02 - Why weight initialization is important?
+04:31 - Case 1
+11:16 - Code Example
+14:25 - Sigmoid
+23:47 - Code Example
+26:52 - Case 2
+30:34 - Code Example
+32:08 - Case 3
+41:04 - Code Example
+42:43 - RELU
+43:55 - Random Initialization (Large Values)
+49:07 - Outro",https://i.ytimg.com/vi/2MSY0HwH5Ss/maxresdefault.jpg,CampusX,103789,4325,148,2964,49.4,49:24,"49 Minutes, 24 Seconds",2022-06-23T14:00:01,https://www.youtube.com/watch?v=2MSY0HwH5Ss,[],"[#DeepLearningTips, #NeuralNetworks, #WeightInitialization]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1M4q5yRA0iQXh9h8Y3J7zFGIQzO_Pv9n0?usp=sharing, https://colab.research.google.com/drive/1bsVRmTjYjiQUFee3REHCYeY3vv5r7nfH?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://www.deeplearning.ai/ai-notes/initialization/]"
+Xavier/Glorat And He Weight Initialization in Deep Learning,"In this video, I will talk about weight initialization techniques in a Neural network. The following pointers would be discussed:
+
+1.  Weight initialization techniques in neural networks
+2.  Xavier initialization in neural network 
+3.  He initialization in neural network
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+🧑‍💻Code: https://colab.research.google.com/drive/1Z3pWYFWgUKP7htokOj201APi574a3-vY?usp=sharing
+
+Part 1 of this video: https://youtu.be/2MSY0HwH5Ss
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#NeuralNetworks #WeightInitialization #DeepLearningExplained
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:33 - Insights
+07:01 - Intuition
+14:12 - Code Demo
+16:03 - He Normal 
+17:05 - Uniform Distribution
+18:45 - Initialization in KERAS
+20:33 - Outro",https://i.ytimg.com/vi/nwVOSgcrbQI/maxresdefault.jpg,CampusX,73976,4018,81,1267,21.12,21:07,"21 Minutes, 7 Seconds",2022-06-25T14:00:32,https://www.youtube.com/watch?v=nwVOSgcrbQI,"[#weight initialization techniques in neural network, #how to initialize weight in a deep neural network, #xavier initialization in neural network, #weight initialization in neural network, #weight initialization, #weight initialization deep learning, #he initialization formula, #xavier initialization, #xavier initialization formula, #campusx]","[#DeepLearningExplained, #NeuralNetworks, #WeightInitialization]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://youtu.be/2MSY0HwH5Ss, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1Z3pWYFWgUKP7htokOj201APi574a3-vY?usp=sharing]"
+Batch Normalization in Deep Learning | Batch Learning in Keras,"This video explores how Batch Normalization transforms the internal workings of neural networks by normalizing inputs within each mini-batch. By maintaining stable activations throughout the training process, Batch Normalization improves convergence speed and aids in tackling the vanishing/exploding gradient problem.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1473vOd0lCPbRW-co_Rm-_TBXgeajkJZ_?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+00:00 - Intro
+00:40 - What is Batch Normalization
+03:11 - Why use batch Normalization
+06:58 - Internal Co-Variate Shift
+14:40 - Batch Normalization - The How?
+31:41 - Batch Normalization During Test
+35:32 - The Advantages
+39:47 - Keras Implementation
+43:24 - Outro
+
+#DeepLearning #BatchNormalization",https://i.ytimg.com/vi/2AscwXePInA/maxresdefault.jpg,CampusX,143452,5425,165,2619,43.65,43:39,"43 Minutes, 39 Seconds",2022-07-01T14:00:03,https://www.youtube.com/watch?v=2AscwXePInA,[],"[#DeepLearning, #BatchNormalization]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1473vOd0lCPbRW-co_Rm-_TBXgeajkJZ_?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Optimizers in Deep Learning | Part 1 | Complete Deep Learning Course,"This video breaks down the key algorithms that fine-tune neural network parameters for optimal performance. From classic techniques like Gradient Descent to advanced methods like Adam and RMSprop, explore how optimizers play a crucial role in training models effectively. Watch to gain insights into choosing the right optimizer for your deep learning tasks and enhancing model convergence. 
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+00:00 - Intro
+00:28 - Intro to Optimizers
+02:33 - Role Of optimizers
+08:00 -Types Of Optimizers
+11:08 - The Challenges?
+21:06 - What next?",https://i.ytimg.com/vi/iCTTnQJn50E/maxresdefault.jpg,CampusX,154077,4727,87,1354,22.57,22:34,"22 Minutes, 34 Seconds",2022-07-06T14:00:19,https://www.youtube.com/watch?v=iCTTnQJn50E,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Exponentially Weighted Moving Average or Exponential Weighted Average | Deep Learning,"Exponentially Weighted Moving Average  is a very important concept to understand Optimization in Deep Learning. It means that as we move forward, we simultaneously calculate the average of the points. In Exponentially Weighted Moving Average, we consider a few points, calculate their approximate weighted average, and then plot the graph. Then consider the next point as we move forward in time, calculate its approximate weighted average of the new set of points, and then again plot the graph and so on.
+
+The catch here is that we are calculating the weighted average, and it means that, we give more weight to some points and less weight to others.
+
+Optimization in Deep Learning like Momentum, RMSProp, and Adam can only be implemented with the help of Exponentially Weighted Moving Average. Thus it is very important to understand it.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:43 - What is EWMA?
+05:13 - Mathematical Formulation
+13:08 - Mathematical Intuition
+16:48 - Python Code Demo
+18:39 - Outro",https://i.ytimg.com/vi/jAqVuYJ8TP8/maxresdefault.jpg,CampusX,91891,3897,111,1131,18.85,18:51,"18 Minutes, 51 Seconds",2022-07-18T14:00:34,https://www.youtube.com/watch?v=jAqVuYJ8TP8,"[#exponentially weighted moving average, #exponential weighted average, #optimization techniques in deep learning, #optimization algorithms python, #optimization in machine learning, #optimization in deep learning, #campusx]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+SGD with Momentum Explained in Detail with Animations | Optimizers in Deep Learning Part 2,"In this video, we will understand in detail what is Momentum Optimizer in Deep Learning. Momentum Optimizer in Deep Learning is a technique that reduces the time taken to train a model.  The path of learning in mini-batch gradient descent is zig-zag, and not straight. Thus, some time gets wasted in moving in a zig-zag direction. Momentum Optimizer in Deep Learning smooths out the zig-zag path and makes it much straighter, thus reducing the time taken to train the model.
+
+Momentum Optimizer uses Exponentially Weighted Moving Average, which averages out the vertical movement and the net movement is mostly in the horizontal direction. Thus zig-zag path becomes straighter.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Convex Vs Non-convex Cost Function:
+https://www.youtube.com/watch?v=TXVtbgaEyms&t=1s&ab_channel=CampusX
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:24 - Understanding Graphs
+07:13 - Image Representation
+10:41 - Convex vs Non-Convex Optimization
+18:13 - Momentum Optimization
+20:49 - The What?
+24:23 - How to implement the concept Mathematically
+28:41 - Effect of Beta
+34:33 - Problems with Momentum Optimization
+35:54 - Visualization
+38:04 - Outro",https://i.ytimg.com/vi/vVS4csXRlcQ/maxresdefault.jpg,CampusX,108651,5530,158,2305,38.42,38:25,"38 Minutes, 25 Seconds",2022-07-20T14:00:26,https://www.youtube.com/watch?v=vVS4csXRlcQ,"[#momentum in sgd, #understanding momentum in stochastic gradient descent, #stochastic gradient descent, #gradient descent, #stochastic gradient descent python, #how momentum works in sgd, #smoothing, #exponential smoothing, #campusx]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.youtube.com/watch?v=TXVtbgaEyms&t=1s&ab_channel=CampusX, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Nesterov Accelerated Gradient (NAG) Explained in Detail | Animations | Optimizers in Deep Learning,"The acceleration of momentum can overshoot the minima at the bottom of basins or valleys. Nesterov momentum is an extension of momentum that involves calculating the decaying moving average of the gradients of projected positions in the search space rather than the actual positions themselves.
+
+This has the effect of harnessing the accelerating benefits of momentum whilst allowing the search to slow down when approaching the optima and reduce the likelihood of missing or overshooting it.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:47 - What is NAG?
+09:12 - Mathematical Intuition of NAG
+12:52 - Momentum
+17:59 - Geometric Intuition of NAG
+24:39 - Disadvantages - (1)
+25:55 - KERAS Code Implementation
+27:30 - Outro",https://i.ytimg.com/vi/rKG9E6rce1c/maxresdefault.jpg,CampusX,82410,3795,82,1670,27.83,27:50,"27 Minutes, 50 Seconds",2022-07-26T14:00:33,https://www.youtube.com/watch?v=rKG9E6rce1c,"[#deep learning optimizers, #momentum, #momentum with nag, #nesterov momentum, #nesterov accelerrated gradients, #deep learning course in hindi, #deep learning course, #campusx]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+AdaGrad Explained in Detail with Animations | Optimizers in Deep Learning Part 4,"Adaptive Gradient Algorithm (Adagrad) is an algorithm for gradient-based optimization. The learning rate is adapted component-wise to the parameters by incorporating knowledge of past observations.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:15 - Adaptive Gradient Introduction
+03:42 - Elongated Bowl Problem
+07:22 - Visual Reprensation
+09:42 - How do Optimizers behave?
+17:22 - Mathematical Intuition
+24:20 - Disadvantage
+26:16 - Outro",https://i.ytimg.com/vi/nqL9xYmhEpg/maxresdefault.jpg,CampusX,84337,3808,132,1589,26.48,26:29,"26 Minutes, 29 Seconds",2022-08-03T14:00:22,https://www.youtube.com/watch?v=nqL9xYmhEpg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+RMSProp Explained in Detail with Animations | Optimizers in Deep Learning Part 5,"Root Mean Squared Propagation, or RMSProp, is an extension of gradient descent and the AdaGrad version of gradient descent that uses a decaying average of partial gradients in the adaptation of the step size for each parameter.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:15 - What is RMSProp
+03:33 - The Math behind RMSProp
+10:35 - Understanding with Animation
+11:28 - Disadvantages
+12:25 - Outro",https://i.ytimg.com/vi/p0wSmKslWi0/maxresdefault.jpg,CampusX,69423,3296,52,758,12.63,12:38,"12 Minutes, 38 Seconds",2022-08-05T14:00:35,https://www.youtube.com/watch?v=p0wSmKslWi0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Adam Optimizer Explained in Detail with Animations | Optimizers in Deep Learning Part 5,"Adaptive Moment Estimation is an algorithm for optimization technique for gradient descent. The method is really efficient when working with large problems involving a lot of data or parameters. It requires less memory and is efficient. Intuitively, it is a combination of the ‘gradient descent with momentum’ algorithm and the ‘RMSP’ algorithm.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:40 - What is Adaptive Moment Estimation? ADAM
+05:45 - Math behind ADAM
+11:24 - The Verdict",https://i.ytimg.com/vi/N5AynalXD9g/maxresdefault.jpg,CampusX,110574,3632,72,759,12.65,12:39,"12 Minutes, 39 Seconds",2022-08-07T14:00:09,https://www.youtube.com/watch?v=N5AynalXD9g,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Keras Tuner | Hyperparameter Tuning a Neural Network,"KerasTuner is an easy-to-use, scalable hyperparameter optimization framework that solves the pain points of hyperparameter search. Easily configure your search space with a define-by-run syntax, then leverage one of the available search algorithms to find the best hyperparameter values for your models. KerasTuner comes with Bayesian Optimization, Hyperband, and Random Search algorithms built-in, and is also designed to be easy for researchers to extend in order to experiment with new search algorithms.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+00:00 - Intro
+01:16 - Usage
+02:25 - Code Example
+
+#Keras #KerasTuner",https://i.ytimg.com/vi/oYnyNLj8RMA/maxresdefault.jpg,CampusX,97349,3818,194,3934,65.57,1:05:34,"1 Hours, 5 Minutes, 34 Seconds",2022-08-11T14:00:21,https://www.youtube.com/watch?v=oYnyNLj8RMA,"[#keras tuner hyperparameters, #keras tuner bayesian optimization, #keras tuner ann, #keras tuner cnn, #deep learning hyperparameter tuning, #deep learning hyperparameter optimization]","[#KerasTuner, #Keras]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+What is Convolutional Neural Network (CNN) | CNN Intution,"In this video, we will start our discussion around CNN. CNNs are one of the most popular neural network architectures. CNNs are used extensively in image-related data in applications like image classification, object detection, etc.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+⌚Time Stamps⌚
+
+0:00 - Intro
+1:25 - What are CNNs
+6:56 - Why not use ANNs?
+12:56 - CNN Intuition
+19:33 - CNN Applications
+23:55 - CNN Roadmap
+26:49 - Outro
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!",https://i.ytimg.com/vi/hDVFXf74P-U/maxresdefault.jpg,CampusX,299047,8255,159,1630,27.17,27:10,"27 Minutes, 10 Seconds",2022-08-17T14:00:31,https://www.youtube.com/watch?v=hDVFXf74P-U,"[#cnn deep learning, #cnn, #convolutional neural network, #campusx, #cnn explained step by step, #cnn explained easy]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+CNN Vs Visual Cortex | The Famous Cat Experiment | History of CNN,"In this video, we will discuss the history of CNNs. We will discuss how CNNs are inspired by our own Visual Cortex, we will also discuss about the famous Cat Experiment conducted by Hubel and Weisel that led to the discovery of CNNs.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:58 - Human Visual Cortex
+05:10 - The Cat Experiment
+08:32 - Conclusion
+11:56 - Development
+14:51 - Outro",https://i.ytimg.com/vi/aslTGS9ef98/maxresdefault.jpg,CampusX,126976,5153,88,902,15.03,15:02,"15 Minutes, 2 Seconds",2022-08-19T14:00:01,https://www.youtube.com/watch?v=aslTGS9ef98,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+CNN Part 3 | Convolution Operation,"Convolution is one of the main building blocks of a CNN. The term convolution refers to the mathematical combination of two functions to produce a third function. It merges two sets of information.
+
+In the case of a CNN, the convolution is performed on the input data with the use of a filter or kernel (these terms are used interchangeably) to then produce a feature map.
+
+We execute a convolution by sliding the filter over the input. At every location, matrix multiplication is performed and sums the result onto the feature map.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Demo used in the video - https://deeplizard.com/resource/pavq7noze2
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:39 - Recap
+03:45 - Basics of Images
+07:33 - Edge Detection
+15:20 - 17:40 - Filters in CNN are managed by back propagation😊
+22:30 - 26:45 - Shape of the filter output(Grey scale and RGB)
+26:50 - 28:39 - Multiple filters
+28:40 - Outro",https://i.ytimg.com/vi/cgJx3GvQ5y8/maxresdefault.jpg,CampusX,170406,6585,160,1754,29.23,29:14,"29 Minutes, 14 Seconds",2022-08-23T14:00:15,https://www.youtube.com/watch?v=cgJx3GvQ5y8,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://deeplizard.com/resource/pavq7noze2, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Padding & Strides in CNN | CNN Lecture 4 | Deep Learning,"Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code used - https://colab.research.google.com/drive/1HBMLctcBnhvV6Rj62Zc8eAXERQw54l2H?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:23 - Why is padding required?
+02:40 - What is Padding?
+07:20 - KERAS Demo
+09:58 - Strides
+15:53 - Special Case with Strides
+19:48 - Why are Strides required?
+21:34 - Code Demo
+23:56 - Outro",https://i.ytimg.com/vi/btWE6SsdDZA/maxresdefault.jpg,CampusX,153893,5550,95,1466,24.43,24:26,"24 Minutes, 26 Seconds",2022-08-27T14:00:15,https://www.youtube.com/watch?v=btWE6SsdDZA,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1HBMLctcBnhvV6Rj62Zc8eAXERQw54l2H?usp=sharing]"
+Pooling Layer in CNN | MaxPooling in Convolutional Neural Network,"The pooling operation involves sliding a two-dimensional filter over each channel of the feature map and summarising the features lying within the region covered by the filter.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colab.research.google.com/drive/1F4F6Q9O-hPvCDeOWcqMUa5BuBOvuOBWc?usp=sharing
+Demo - https://deeplizard.com/resource/pavq7noze3
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:36 - The Problem with Convolution
+05:10 - What is translation variance?
+07:46 - What is Pooling?
+13:05 - Pooling Demo
+15:01 - Pooling on Volumes
+16:37 - KERAS Demo
+18:14 - Advantages of Pooling
+22:47 - Types of Pooling
+25:36 - Disadvantages of Pooling
+27:42 - Outro",https://i.ytimg.com/vi/DwmGefkowCU/maxresdefault.jpg,CampusX,164856,6504,103,1674,27.9,27:54,"27 Minutes, 54 Seconds",2022-09-02T14:00:08,https://www.youtube.com/watch?v=DwmGefkowCU,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://colab.research.google.com/drive/1F4F6Q9O-hPvCDeOWcqMUa5BuBOvuOBWc?usp=sharing, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://deeplizard.com/resource/pavq7noze3]"
+CNN Architecture | LeNet -5 Architecture,"In this tutorial, we unravel the layers and workings of LeNet-5, a pioneering CNN architecture. Whether you're a student, developer, or just curious about neural networks, this video provides an accessible breakdown of LeNet-5. Watch now to deepen your understanding of CNNs and their applications in the field of deep learning!
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:19 - CNN Architecture/RECAP
+09:47 - LeNET
+16:15 - Code Example
+19:20 - Outro",https://i.ytimg.com/vi/ewsvsJQOuTI/maxresdefault.jpg,CampusX,157967,5599,100,1200,20,20:00,"20 Minutes, 0 Seconds",2022-09-04T14:00:15,https://www.youtube.com/watch?v=ewsvsJQOuTI,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Comparing CNN Vs ANN  | CampusX,"Know the differences between Convolutional Neural Networks (CNNs) and Artificial Neural Networks (ANNs) in our latest video. We explore the unique architectures of CNNs and ANNs, comparing their structures, applications, and strengths. 
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:45 - CNN vs ANN
+12:00 - Learnable Parameters
+17:23 - Outro",https://i.ytimg.com/vi/niE5DRKvD_E/maxresdefault.jpg,CampusX,99865,4598,139,1062,17.7,17:42,"17 Minutes, 42 Seconds",2022-09-08T14:00:21,https://www.youtube.com/watch?v=niE5DRKvD_E,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Backpropagation in CNN | Part 1 | Deep Learning,"This is part 1 of a 3-part series where we will discuss in detail how the backpropagation algorithm works in a CNN.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:12 - Back Propogation in CNN
+05:50 - Trainable Parameters
+11:39 - Logical Flow
+13:07 - Forward Propogation
+35:33 - Outro",https://i.ytimg.com/vi/RvCCFttGFMY/maxresdefault.jpg,CampusX,126389,6940,198,2181,36.35,36:21,"36 Minutes, 21 Seconds",2022-09-10T14:00:14,https://www.youtube.com/watch?v=RvCCFttGFMY,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+"CNN Backpropagation Part 2 | How Backpropagation works on Convolution, Maxpooling and Flatten Layers","This video explains in great detail how the backpropagation algorithm works in the case of CNN. We will learn how to apply backprop on flatten, maxpooling and convolution layers.
+
+I recommend you watch the 1st part before watching this one. Here is the link:
+https://www.youtube.com/watch?v=RvCCFttGFMY&ab_channel=CampusX
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - intro
+00:05 - Backpropagation in CNN explained for convolution, max pooling, and flatten layers
+01:23 - Recap/Back Propogation in CNN
+02:46 - Backpropagation involves applying gradients to update weights and calculate loss
+07:46 - Changing w1 affects Z1.
+11:53 - Backpropagation in Maxpooling Layers
+17:31 - Backpropagation on max pooling works by selecting the maximum item in each window
+21:23 - The Backpropagation process involves minimizing the inverse of max pooling and calculating the derivative of Z1.
+25:07 - Backpropagation process for Convolution, Maxpooling, and Flatten layers
+30:48 - Backpropagation involves expanding and differentiating expressions to calculate derivatives.
+36:35 - Backpropagation involves multiplication and deconvolution operations.",https://i.ytimg.com/vi/OoSDzOodY3Y/maxresdefault.jpg,CampusX,85289,5114,229,2607,43.45,43:27,"43 Minutes, 27 Seconds",2022-09-15T14:00:12,https://www.youtube.com/watch?v=OoSDzOodY3Y,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.youtube.com/watch?v=RvCCFttGFMY&ab_channel=CampusX, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Cat Vs Dog Image Classification Project | Deep Learning Project | CNN Project,"Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Dataset used - https://www.kaggle.com/datasets/salader/dogsvscats
+
+Google Colab Notebook (Updated Jun 2026) - https://colab.research.google.com/drive/1S6CYa2sOwluV8xz2RF0QDrpXjdNs3RKE?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:15 - Kaggle Dataset
+03:15 - Code Exmaple",https://i.ytimg.com/vi/0K4J_PTgysc/maxresdefault.jpg,CampusX,338269,7376,392,1649,27.48,27:29,"27 Minutes, 29 Seconds",2022-09-19T14:00:00,https://www.youtube.com/watch?v=0K4J_PTgysc,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1S6CYa2sOwluV8xz2RF0QDrpXjdNs3RKE?usp=sharing, https://www.kaggle.com/datasets/salader/dogsvscats]"
+Data Augmentation in Deep Learning | CNN,"In this tutorial, we explore the concept of Data Augmentation, a technique that enhances model performance by diversifying training data.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:15 - What is Data Augmentation?
+07:15 - Code Implementation",https://i.ytimg.com/vi/sM2C-SsREgM/maxresdefault.jpg,CampusX,107526,4025,111,1609,26.82,26:49,"26 Minutes, 49 Seconds",2022-09-21T14:00:34,https://www.youtube.com/watch?v=sM2C-SsREgM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Pretrained models in CNN | ImageNET Dataset | ILSVRC | Keras Code,"A pre-trained model is a model created and trained by someone else to solve a problem that is similar to ours. In practice, someone is almost always a tech giant or a group of star researchers. They usually choose a very large dataset as their base datasets such as ImageNet or the Wikipedia Corpus. Then, they create a large neural network (e.g., VGG19 has 143,667,240 parameters) to solve a particular problem (e.g., this problem is image classification for VGG19). Of course, this pre-trained model must be made public so that we can take these models and repurpose them.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:11 - Why use pre-trained models?
+04:19 - ImageNET Dataset
+09:16 - ILSVRC
+13:24 - Architecture of AlexNET
+15:05 - Famous Architectures
+17:45 - Idea of pre-trained models
+21:20 - Code Example",https://i.ytimg.com/vi/0MVXteg7TB4/maxresdefault.jpg,CampusX,106495,3965,113,1468,24.47,24:28,"24 Minutes, 28 Seconds",2022-10-03T14:00:00,https://www.youtube.com/watch?v=0MVXteg7TB4,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+What does a CNN see? | Visualizing CNN Filters and Feature Maps | CampusX,"Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code was taken from this awesome blog post - https://machinelearningmastery.com/how-to-visualize-filters-and-feature-maps-in-convolutional-neural-networks/
+
+Code - https://colab.research.google.com/drive/1HmL5auiKu3vbKDOTjbnofEmsqMWYViG9?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!",https://i.ytimg.com/vi/WJysB1RK2vM/maxresdefault.jpg,CampusX,69492,3721,96,783,13.05,13:03,"13 Minutes, 3 Seconds",2022-10-06T14:00:15,https://www.youtube.com/watch?v=WJysB1RK2vM,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://machinelearningmastery.com/how-to-visualize-filters-and-feature-maps-in-convolutional-neural-networks/, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1HmL5auiKu3vbKDOTjbnofEmsqMWYViG9?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+What is Transfer Learning? Transfer Learning in Keras | Fine Tuning Vs Feature Extraction,"Transfer learning is a research problem in machine learning that focuses on storing knowledge gained while solving one problem and applying it to a different but related problem. For example, knowledge gained while learning to recognize cars could apply when trying to recognize trucks.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Dataset - https://www.kaggle.com/datasets/salader/dogs-vs-cats
+
+Codes 
+https://colab.research.google.com/drive/1VxoR4vMmZJAOCsDUnfezPuFQqHdKabcL?usp=sharing
+https://colab.research.google.com/drive/1q_INiVDAzhSy1L_A87fBTf2wC3l3MiWy?usp=sharing
+https://colab.research.google.com/drive/1mEWfubs2tR0CkqyxqP49cK30n7V5_NCm?usp=sharing
+
+Pretrained Model video - https://www.youtube.com/watch?v=0MVXteg7TB4&ab_channel=CampusX
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:50 - problem with training your own model
+02:35 - Using Pre-trained Model
+07:01 - Using Transfer Learning
+13:54 - Why Transfer Learning Works?
+17:41 - Ways of doing Transfer Learning
+20:54 - Code Example using KERAS",https://i.ytimg.com/vi/WWcgHjuKVqA/maxresdefault.jpg,CampusX,173557,6163,209,2033,33.88,33:53,"33 Minutes, 53 Seconds",2022-10-10T14:00:20,https://www.youtube.com/watch?v=WWcgHjuKVqA,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.youtube.com/watch?v=0MVXteg7TB4&ab_channel=CampusX, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1VxoR4vMmZJAOCsDUnfezPuFQqHdKabcL?usp=sharing, https://colab.research.google.com/drive/1q_INiVDAzhSy1L_A87fBTf2wC3l3MiWy?usp=sharing, https://colab.research.google.com/drive/1mEWfubs2tR0CkqyxqP49cK30n7V5_NCm?usp=sharing, https://www.instagram.com/campusx.official, https://www.kaggle.com/datasets/salader/dogs-vs-cats, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Keras Functional Model | How to build non-linear Neural Networks?,"The Keras functional API is a way to create models that are more flexible than the Sequential API. The functional API can handle models with non-linear topology, shared layers, and even multiple inputs or outputs.
+
+The main idea is that a deep learning model is usually a directed acyclic graph (DAG) of layers. So the functional API is a way to build graphs of layers.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Codes:
+https://colab.research.google.com/drive/1uCHf6hoLR1a-46RznVjqnhVZNechF0fz?usp=sharing
+https://colab.research.google.com/drive/1pKfnYBal9HhuwRADU0FrWaVJ11_llk8-?usp=sharing
+https://colab.research.google.com/drive/1B2azaSX9g55olY473c7WAMf3E5-717Ge?usp=sharing
+
+Dataset Link:
+https://www.kaggle.com/datasets/jangedoo/utkface-new
+
+Blog:
+https://machinelearningmastery.com/keras-functional-api-deep-learning/
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:48 - The Problem with Sequential Model
+07:35 - A Simple Example
+09:01 - Code Implementation
+15:29 - Complex Examples
+17:56 - Multi Output Model
+24:35 - Machine Learning Mastery Blog Post",https://i.ytimg.com/vi/OvQQP1QVru8/maxresdefault.jpg,CampusX,74069,3404,112,1538,25.63,25:38,"25 Minutes, 38 Seconds",2022-10-14T14:00:12,https://www.youtube.com/watch?v=OvQQP1QVru8,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://www.kaggle.com/datasets/jangedoo/utkface-new, https://machinelearningmastery.com/keras-functional-api-deep-learning/, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://colab.research.google.com/drive/1pKfnYBal9HhuwRADU0FrWaVJ11_llk8-?usp=sharing, https://colab.research.google.com/drive/1uCHf6hoLR1a-46RznVjqnhVZNechF0fz?usp=sharing, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1B2azaSX9g55olY473c7WAMf3E5-717Ge?usp=sharing]"
+Why RNNs are needed | RNNs Vs ANNs | RNN Part 1,"A recurrent neural network (RNN) is a class of artificial neural networks where connections between nodes can create a cycle, allowing output from some nodes to affect subsequent input to the same nodes. This allows it to exhibit temporal dynamic behavior.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:45 - Sequential Data
+07:35 - Why Use RNN?
+17:00 - Reasons
+20:30 - Demo and Applications of RNN
+28:07 - Roadmap for RNN",https://i.ytimg.com/vi/4KpRP-YUw6c/maxresdefault.jpg,CampusX,218789,5908,153,1819,30.32,30:19,"30 Minutes, 19 Seconds",2022-10-23T14:00:04,https://www.youtube.com/watch?v=4KpRP-YUw6c,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Recurrent Neural Network | Forward Propagation | Architecture,"A recurrent neural network (RNN) is a class of artificial neural networks where connections between nodes can create a cycle, allowing output from some nodes to affect subsequent input to the same nodes. This allows it to exhibit temporal dynamic behavior.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:44 - Why RNNs?
+04:20 - Data for RNN
+09:54 - How RNN works?
+22:50 - Code Example
+25:12 - RNN Forward Propagation
+36:59 - Simplified Representation",https://i.ytimg.com/vi/BjWqCcbusMM/maxresdefault.jpg,CampusX,227400,6843,209,2504,41.73,41:44,"41 Minutes, 44 Seconds",2022-10-29T14:20:13,https://www.youtube.com/watch?v=BjWqCcbusMM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+RNN Sentiment Analysis | RNN Code Example in Keras | CampusX,"Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code:
+https://colab.research.google.com/drive/1uY7NEHi59w4FkB8TViwLjUDKxgCA8W5G?usp=sharing
+https://colab.research.google.com/drive/1FLJZ0LeMiW_6OkzFrC-o035YZPBFEFR4?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:30 - Keras Code Example
+21:10 - Embedding
+33:26 - Model Architecture",https://i.ytimg.com/vi/JgnbwKnHMZQ/maxresdefault.jpg,CampusX,137898,4433,162,2217,36.95,36:57,"36 Minutes, 57 Seconds",2022-11-09T14:00:09,https://www.youtube.com/watch?v=JgnbwKnHMZQ,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1uY7NEHi59w4FkB8TViwLjUDKxgCA8W5G?usp=sharing, https://www.instagram.com/campusx.official, https://colab.research.google.com/drive/1FLJZ0LeMiW_6OkzFrC-o035YZPBFEFR4?usp=sharing, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Types of RNN | Many to Many | One to Many | Many to One RNNs,"Explore the different types of Recurrent Neural Networks (RNNs) in our latest video, focusing on Many-to-Many, One-to-Many, and Many-to-One architectures.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:38 - Recap
+02:28 - Types of RNN Architechtures
+03:18 - Many to One
+07:29 - One to Many
+10:53 - Many to Many
+15:20 - Variable Length
+19:52 - One to One
+22:05 - Outro",https://i.ytimg.com/vi/TkOBxzhIySg/maxresdefault.jpg,CampusX,105992,4229,75,1340,22.33,22:20,"22 Minutes, 20 Seconds",2022-11-17T14:00:15,https://www.youtube.com/watch?v=TkOBxzhIySg,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+How Backpropagation works in RNN | Backpropagation Through Time,"This video dives into the mechanics of Backpropagation in Recurrent Neural Networks (RNNs), specifically exploring the concept of Backpropagation Through Time (BPTT). Learn how RNNs handle the flow of gradients over time, allowing the network to learn and optimize for sequential data.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:22 - Summary of Previous lectures
+01:59 - How Backpropagation works?
+33:30 - Outro",https://i.ytimg.com/vi/OvCz1acvt-k/maxresdefault.jpg,CampusX,124299,4676,161,2038,33.97,33:58,"33 Minutes, 58 Seconds",2022-12-01T14:30:04,https://www.youtube.com/watch?v=OvCz1acvt-k,[],[],[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Problems with RNN | 100 Days of Deep Learning,"In this video, we explore the common challenges and problems associated with Recurrent Neural Networks (RNNs). From vanishing and exploding gradients to difficulties in capturing long-term dependencies, we delve into the limitations of RNNs.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:48 - Problem with RNN
+09:02 - Problem of long term dependency
+26:41 - Solutions
+
+#deeplearning #machinelearning #datascience",https://i.ytimg.com/vi/AWHSZzp96kM/maxresdefault.jpg,CampusX,100917,3902,189,1938,32.3,32:18,"32 Minutes, 18 Seconds",2022-12-19T14:00:04,https://www.youtube.com/watch?v=AWHSZzp96kM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#datascience, #deeplearning, #machinelearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+LSTM | Long Short Term Memory | Part 1 | The What? | CampusX,"In today's video, we're diving deep into the world of neural networks to unravel the secrets of Long Short Term Memory (LSTM). If you've ever wondered how neural networks remember and learn from sequences, this is the video for you!
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Blog - https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+04:17 - Recap
+12:24 - LSTM Core Idea
+33:27 - LSTM Gates
+38:17 - Summary
+
+✨ Hashtags✨
+#DataScience #MachineLearning #Deeplearning #CampusX",https://i.ytimg.com/vi/z7IPBg6MyrU/maxresdefault.jpg,CampusX,203756,8685,407,2538,42.3,42:18,"42 Minutes, 18 Seconds",2023-08-21T15:50:17,https://www.youtube.com/watch?v=z7IPBg6MyrU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#MachineLearning, #CampusX, #DataScience, #Deeplearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colah.github.io/posts/2015-08-Understanding-LSTMs/]"
+LSTM Architecture | Part 2 | The How? | CampusX,"This is the part 2 of the LSTM series. Watch the video till the end to understand the concept in detail.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:32 - The Architecture
+09:37 - The gates
+13:13 - What are Ct and Ht?
+16:17 - What is Xt?
+19:50 - What are ft,it,ot and Ct?
+21:39 - Pointwise Operations
+24:24 - Neural Network Layers
+27:34 - The forget Gate
+42:06 - The input Gate
+01:00:18 - The Output Gate
+01:08:02 - LSTM Cell
+01:09:52 - Outro
+
+✨ Hashtags✨
+#DataScience #MachineLearning #Deeplearning #CampusX",https://i.ytimg.com/vi/Akv3poqqwI4/maxresdefault.jpg,CampusX,176260,7135,477,4213,70.22,1:10:13,"1 Hours, 10 Minutes, 13 Seconds",2023-08-30T14:00:11,https://www.youtube.com/watch?v=Akv3poqqwI4,[],"[#MachineLearning, #CampusX, #DataScience, #Deeplearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colah.github.io/posts/2015-08-Understanding-LSTMs/]"
+LSTM | Part 3 | Next Word Predictor Using | CampusX,"In this video, we talk about Next Word Predictor Using LSTM. Watch the video till the end to understand the concept in detail.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Notebook:
+https://colab.research.google.com/drive/1e55Lnl0I0gFgzrbOwEAGsqmnKKwAWpRO?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:03 - What is next word predictor?
+05:40 - The Strategy
+35:37 - The Architechture
+57:11 - How to improve the performance?
+
+✨ Hashtags✨
+#DataScience #MachineLearning #Deeplearning #CampusX",https://i.ytimg.com/vi/fiqo6uPCJVI/maxresdefault.jpg,CampusX,128736,4296,165,3605,60.08,1:00:05,"1 Hours, 0 Minutes, 5 Seconds",2023-09-12T14:00:27,https://www.youtube.com/watch?v=fiqo6uPCJVI,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#MachineLearning, #CampusX, #DataScience, #Deeplearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1e55Lnl0I0gFgzrbOwEAGsqmnKKwAWpRO?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Gated Recurrent Unit | Deep Learning | GRU | CampusX,"In this video, we talk about Gated Recurrent Unit. Watch the video till the end to understand the concept in detail.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:06 - What is GRU?
+07:05 - The idea behind GRU
+09:47 - The Setup
+21:43 - The Input XT
+25:24 - Architechture
+29:30 - What is hiddent state?
+54:30 - Calculating the reset gate
+01:23:30 - LSTM vs GRU
+01:26:08 - Outro
+
+✨ Hashtags✨
+#DataScience #MachineLearning #Deeplearning #CampusX",https://i.ytimg.com/vi/QQfZAoNGQmE/maxresdefault.jpg,CampusX,134443,6000,221,5182,86.37,1:26:22,"1 Hours, 26 Minutes, 22 Seconds",2023-10-05T15:15:38,https://www.youtube.com/watch?v=QQfZAoNGQmE,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#MachineLearning, #CampusX, #DataScience, #Deeplearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Deep RNNs | Stacked RNNs | Stacked LSTMs | Stacked GRUs | CampusX,"In this video, we talk about Deep RNNs. Watch the video till the end to understand the concept in detail.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Notebook - https://colab.research.google.com/drive/1c4eN4cPxajCpFG6yr1mAUi3sV1JaGLDY?usp=sharing
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:50 - What is deep RNN?
+09:13 - Architecture
+21:12 - Notation
+26:46 - Why and When to use?
+34:14 - Demo Code
+40:48 - Variants
+43:30 - Disadvantages
+45:00 - Outro
+
+✨ Hashtags✨
+#DataScience #MachineLearning #Deeplearning #CampusX",https://i.ytimg.com/vi/mlDkTrlLaio/maxresdefault.jpg,CampusX,71749,3193,78,2708,45.13,45:08,"45 Minutes, 8 Seconds",2023-10-18T11:14:53,https://www.youtube.com/watch?v=mlDkTrlLaio,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#MachineLearning, #CampusX, #DataScience, #Deeplearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://colab.research.google.com/drive/1c4eN4cPxajCpFG6yr1mAUi3sV1JaGLDY?usp=sharing, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Bidirectional RNN | BiLSTM | Bidirectional LSTM | Bidirectional GRU,"Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+⌚Time Stamps ⌚
+
+00:00 - Intro
+00:44 - The Why?
+08:30 - Bidirectional RNN Architechture
+17:23 - Demo Code
+21:08 - Applications and Drawbacks
+25:27 - Outro
+
+✨ Hashtags✨
+#DataScience #deeplearning",https://i.ytimg.com/vi/k2NSm3MNdYg/maxresdefault.jpg,CampusX,74409,3179,91,1541,25.68,25:41,"25 Minutes, 41 Seconds",2023-10-27T03:27:27,https://www.youtube.com/watch?v=k2NSm3MNdYg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building, #Bidirectional RNN, #BiLSTM, #Bidirectional LSTM, #Bidirectional GRU, #Sequence Processing, #Deep Learning, #RNN Architecture, #Neural Networks, #Sequence Models, #Recurrent Neural Networks, #LSTM, #GRU, #Deep Learning Explained, #CampusX]","[#deeplearning, #DataScience]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+The Epic History of Large Language Models (LLMs) | From LSTMs to ChatGPT | CampusX,"Dive into the captivating journey of Large Language Models (LLMs) in this exploration!  From their humble beginnings to transforming natural language processing, understand the evolution of these giants in the world of AI. Whether you're a tech enthusiast or just curious about the incredible progress in language models, this video takes you on a fascinating ride through their complete history.
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+⌚Time Stamps ⌚
+
+00:00 - Introduction
+18:18 - Stage 1 - Encoder-Decoder Architecture
+26:26 - Stage 2 - Attention Mechanism
+39:30 - Stage 3 - Transformers
+47:08 - Stage 4 - Transfer Learning
+01:07:00 - Stage 5 - LLMs
+01:16:10 - The Finale - ChatGPT
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#DataScience #MachineLearning #LLM #CampusX",https://i.ytimg.com/vi/8fX3rOjTloc/maxresdefault.jpg,CampusX,238766,8360,461,5226,87.1,1:27:06,"1 Hours, 27 Minutes, 6 Seconds",2023-11-22T13:00:10,https://www.youtube.com/watch?v=8fX3rOjTloc,"[#Large Language Models, #LLMs, #Natural Language Processing, #NLP, #AI History, #Language Models Evolution, #Transformer Models, #GPT, #BERT, #BARD, #Deep Learning, #AI Innovation, #Machine Learning, #Tech History, #Neural Networks, #Language Processing Breakthroughs, #chatgpt]","[#MachineLearning, #LLM, #DataScience, #CampusX]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official]"
+Encoder Decoder | Sequence-to-Sequence Architecture | Deep Learning | CampusX,"In this video, we unravel the complexities of the Encoder-Decoder architecture, focusing on its application in sequence-to-sequence tasks. Whether you're a student, developer, or tech enthusiast, join us on this learning journey as we break down the fundamentals of this powerful model.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+🔗 Research Paper: https://arxiv.org/pdf/1409.3215.pdf
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science! 
+Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+Thank you for joining us on this exploration of the Encoder-Decoder architecture. Stay curious, and let's decode the future together! 🚀🤖
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:22 - SEQ2SEQ Data
+08:04 - Things to Know Before You Start
+10:05 - High Level Overview
+13:43 - What's under the hood?
+19:25 - Training the Architecture using Backpropagation
+48:44 - Prediction
+55:35 - Improvement 1 - Embeddings
+1:00:30 - Improvement 2 - Deep LSTMs
+1:10:45 - Original Research Paper
+1:10:58 - The Sutskever Architecture
+
+✨ Hashtags✨
+#EncoderDecoder #SequenceToSequence #DeepLearning #MachineLearning #CampusX #TechExplained #AI #NeuralNetworks #LSTM #AlgorithmExplained",https://i.ytimg.com/vi/KiL74WsgxoA/maxresdefault.jpg,CampusX,194120,6308,236,4422,73.7,1:13:42,"1 Hours, 13 Minutes, 42 Seconds",2023-12-10T03:40:52,https://www.youtube.com/watch?v=KiL74WsgxoA,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building, #encoder, #decoder, #campusx, #Encoder Decoder, #Sequence-to-Sequence, #Deep Learning, #Neural Networks, #Autoencoder, #Natural Language Processing, #Image Processing, #Attention Mechanism, #Recurrent Neural Network, #LSTM, #GRU, #Neural Network Architecture, #Data Compression, #Image Generation, #Computer Vision, #Transfer Learning, #AI Architectures, #Unsupervised Learning, #Pattern Recognition]","[#NeuralNetworks, #TechExplained, #EncoderDecoder, #DeepLearning, #AlgorithmExplained, #LSTM, #MachineLearning, #AI, #CampusX, #SequenceToSequence]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://arxiv.org/pdf/1409.3215.pdf, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Attention Mechanism in 1 video | Seq2Seq Networks | Encoder Decoder Architecture,"In this video, we introduce the importance of attention mechanisms, provide a quick overview of the encoder-decoder structure, and explain how the workflow functions.
+
+An attention mechanism is a key concept in the field of machine learning, particularly in the context of sequence-to-sequence (Seq2Seq) models with encoder-decoder architecture. Instead of processing an entire input sequence all at once, attention mechanisms allow the model to focus on specific parts of the input sequence while generating the output sequence. This mimics the human ability to selectively attend to different elements when processing information. Watch the video till the end to develop a deep understanding about this concept.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+🔗 Research Paper: https://arxiv.org/pdf/1409.0473.pdf
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+
+👍If you find this video helpful, consider giving it a thumbs up and subscribing for more educational videos on data science!
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+⌚Time Stamps ⌚
+
+00:00 - 00:55 - Intro 
+00:56 - 08:39 - The Why
+08:40 - 11:20 - The Solution
+11:21 - 41:10 - The What
+41:11 - 41:23 - Conclusion
+
+✨ Hashtags✨
+#DataScience #MachineLearning #Deeplearning #CampusX",https://i.ytimg.com/vi/rj5V6q6-XUM/maxresdefault.jpg,CampusX,153339,5223,185,2484,41.4,41:24,"41 Minutes, 24 Seconds",2023-12-21T08:55:17,https://www.youtube.com/watch?v=rj5V6q6-XUM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#MachineLearning, #CampusX, #DataScience, #Deeplearning]",[],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://arxiv.org/pdf/1409.0473.pdf, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Bahdanau Attention Vs Luong Attention,"Bahdanau Attention and Luong Attention are two mechanisms used in the context of sequence-to-sequence models, especially in machine translation tasks. These attention mechanisms allow the model to focus on different parts of the input sequence when generating each element of the output sequence. While Bahdanau Attention introduces alignment scores, Luong Attention simplifies this process by using a global score. Understanding the differences between these attention mechanisms is crucial for optimizing performance in sequence-based tasks.
+
+🔗Research Paper Links:
+Bahdanau Attention - https://arxiv.org/abs/1409.0473
+Luong Attention - https://arxiv.org/abs/1508.04025
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#AttentionMechanism #BahdanauAttention #LuongAttention #SequenceToSequence #MachineTranslation #DeepLearning #NeuralNetworks #DataScience
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:13 - Recap
+14:00 - Bahdanau Attention Overview
+20:12 - Neural Network Implementation
+21:36 - Architecture
+40:20 - Luong Attention
+46:25 - Architecture",https://i.ytimg.com/vi/0hZT4_fHfNQ/maxresdefault.jpg,CampusX,87785,3697,163,3153,52.55,52:33,"52 Minutes, 33 Seconds",2024-01-17T05:16:23,https://www.youtube.com/watch?v=0hZT4_fHfNQ,[],"[#LuongAttention, #NeuralNetworks, #DataScience, #DeepLearning, #MachineTranslation, #AttentionMechanism, #BahdanauAttention, #SequenceToSequence]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://arxiv.org/abs/1409.0473, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://arxiv.org/abs/1508.04025]"
+Introduction to Transformers | Transformers Part 1,"Transformers are a powerful class of models in natural language processing and machine learning, revolutionizing various tasks. From attention mechanisms to self-attention, transformers have reshaped the landscape of deep learning.
+
+Introduced by Vaswani et al., transformers use self-attention mechanisms to process input data in parallel, making them highly efficient for tasks like language translation, summarization, and various other sequence-based tasks.
+
+A Comprehensive Survey on Applications of Transformers for Deep Learning Tasks:
+
+https://arxiv.org/abs/2306.07303
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+ #Transformers #NLP #MachineLearning #deeplearning 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:01 - What is Transformer? / Overview
+05:12 - History of Transformer / Research Paper
+07:55 - Impact of Transformers in NLP
+10:29 - Democratizing AI
+13:08 - Multimodal Capability of Transformers
+16:28 - Acceleration of Gen AI
+19:07 - Unification of Deep Learning
+21:09 - Why transformers were created? / Seq-to-Seq Learning with Neural Networks
+25:25 - Neural Machine Translation by Jointly Learning to Align and Translate
+33:16 - Attention is all you need
+39:10 - The Timeline of Transformers
+41:42 - The Advantages of Transformers 
+46:30 - Real World Application of Transformers
+47:30 - DALL*E 2
+48:20 - AlphaFold by Google Deepmind
+49:08 - OpenAI Codex
+49:41 - A Comprehensive Survey on Applications of Transformers for Deep Learning Tasks
+50:30 - Disadvantages of Transformers
+54:40 - The Future of Transformers
+59:20 - Outro",https://i.ytimg.com/vi/BjRVS2wTtcA/maxresdefault.jpg,CampusX,352629,9009,315,3605,60.08,1:00:05,"1 Hours, 0 Minutes, 5 Seconds",2024-01-28T07:20:42,https://www.youtube.com/watch?v=BjRVS2wTtcA,[],"[#NLP, #MachineLearning, #Transformers, #deeplearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://arxiv.org/abs/2306.07303, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+What is Self Attention | Transformers Part 2 | CampusX,"Self Attention is a mechanism that enables transformers to weigh the importance of different words in a sequence relative to each other. It allows the model to focus on relevant information, improving its ability to capture long-range dependencies in data.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#SelfAttention #DeepLearning #CampusX #NLP
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:50 - What is Self Attention?
+11:41 - The problem of ""Average Meaning""
+22:46 - Outro",https://i.ytimg.com/vi/XnGGmvpDLA0/maxresdefault.jpg,CampusX,163948,5444,195,1401,23.35,23:21,"23 Minutes, 21 Seconds",2024-02-05T12:33:29,https://www.youtube.com/watch?v=XnGGmvpDLA0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#NLP, #CampusX, #SelfAttention, #DeepLearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Self Attention in Transformers | Deep Learning | Simple Explanation with Code!,"Self Attention works by computing attention scores for each word in a sequence based on its relationship with every other word. These scores determine how much focus each word receives during processing, allowing the model to prioritize relevant information and capture complex dependencies across the sequence.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Do you want to learn from me?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#SelfAttention #DeepLearning #CampusX  #Transformers #NLP #GENAI
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:37 - Revision [What is Self Attention]
+07:00 - How does Self Attention work?
+24:45 - Parallel Operations
+29:40 - No Learning Parameters Involved
+39:10 - Progress Summarization
+50:15 - Query, Key & Value Vectors
+52:28 - A Relatable Example
+01:07:52 - How to build vectors based on Embedding vector
+01:20:08 - Summarized Matrix Attention
+01:22:45 - Outro",https://i.ytimg.com/vi/-tCKPl_8Xb8/maxresdefault.jpg,CampusX,222382,10847,1015,5004,83.4,1:23:24,"1 Hours, 23 Minutes, 24 Seconds",2024-02-09T03:51:00,https://www.youtube.com/watch?v=-tCKPl_8Xb8,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#GENAI, #SelfAttention, #DeepLearning, #NLP, #Transformers, #CampusX]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Scaled Dot Product Attention | Why do we scale Self Attention?,"Scaling Self Attention in Scaled Dot Product Attention is crucial for stabilizing training, optimizing dataset utilization, and improving the model's ability to focus on relevant information within sequences by standardizing the variance of dot products.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in/s/store
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+💭Share your thoughts, experiences, or questions in the comments below. I love hearing from you!
+
+✨ Hashtags✨
+#ScaledDotproductAttention #DeepLearning #campusx 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:45 - Revision
+05:00 - The Why
+07:25 - The What
+42:32 - Summarizing the concept
+49:49 - Outro",https://i.ytimg.com/vi/r7mAt0iVqwo/maxresdefault.jpg,CampusX,119826,6426,691,3042,50.7,50:42,"50 Minutes, 42 Seconds",2024-03-01T13:50:43,https://www.youtube.com/watch?v=r7mAt0iVqwo,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#campusx, #ScaledDotproductAttention, #DeepLearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in/s/store, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Self Attention Geometric Intuition | How to Visualize Self Attention | CampusX,"Visualizing Self Attention offers insights into how attention weights are computed and distributed across input tokens. By understanding the geometric interpretation, we can perceive how attention mechanisms dynamically focus on relevant information during processing. Learn how to visualize Self Attention to gain deeper insights into model behavior and interpretability.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#SelfAttention #DeepLearning #CampusX
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:19 - Recap
+04:40 - Visualizing data into 2D
+06:20 - Geometric Intuition
+20:40 - Outro",https://i.ytimg.com/vi/5ZgGuujZSbs/maxresdefault.jpg,CampusX,79701,4795,276,1252,20.87,20:52,"20 Minutes, 52 Seconds",2024-03-09T03:20:21,https://www.youtube.com/watch?v=5ZgGuujZSbs,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#CampusX, #SelfAttention, #DeepLearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+"Why is Self Attention called ""Self""? | Self Attention Vs Luong Attention in Depth Lecture | CampusX","The term ""self"" in ""self-attention"" refers to the fact that the attention mechanism is applied to the same sequence or input, rather than relating an input to an output sequence. In other words, self-attention allows the model to learn about the relationships and dependencies within a single sequence, such as a sentence in natural language processing or a sequence of images in computer vision. This is in contrast to traditional attention mechanisms, which often involve conditioning on the output sequence or comparing the input to a separate reference sequence.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#SelfAttention #DeepLearning #CampusX
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:40 - How is Self Attention is an ""Attention"" Mechanism?
+03:30 - Quick Recap
+12:17 - How is self attention similar to Bahdanau & Luong Attention?
+21:27 - Why is it called ""Self"" Attention?
+22:00 - Outro",https://i.ytimg.com/vi/o4ZVA0TuDRg/maxresdefault.jpg,CampusX,64936,4274,216,1355,22.58,22:35,"22 Minutes, 35 Seconds",2024-03-13T12:28:56,https://www.youtube.com/watch?v=o4ZVA0TuDRg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#CampusX, #SelfAttention, #DeepLearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+What is Multi-head Attention in Transformers | Multi-head Attention v Self Attention | Deep Learning,"Multi-head Attention enhances the expressiveness and representational capacity of Transformers by allowing the model to attend to different parts of the input data simultaneously. By utilizing multiple attention heads, the model can capture diverse patterns and relationships in the data, enabling more effective information processing and feature extraction. This mechanism enhances the model's ability to handle complex sequences and tasks in natural language processing and other domains.
+
+Viz Tool - https://colab.research.google.com/drive/1hXIQ77A4TYS4y3UthWF-Ci7V7vVUoxmQ#scrollTo=YLAhBxDSScmV
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#Datascience #NLP #Chatgpt #CampusX #Multiheadattention
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:05 - Recap - Self Attention
+06:33 - The problem with Self attention
+11:20 - How does multi head attention work?
+19:55 - How is Multi Head attention applied?
+27:37 - Multi head attention visualization",https://i.ytimg.com/vi/bX2QwpjsmuA/maxresdefault.jpg,CampusX,106880,5300,203,2307,38.45,38:27,"38 Minutes, 27 Seconds",2024-04-15T14:12:00,https://www.youtube.com/watch?v=bX2QwpjsmuA,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#Datascience, #Multiheadattention, #NLP, #Chatgpt, #scrollTo, #CampusX]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://colab.research.google.com/drive/1hXIQ77A4TYS4y3UthWF-Ci7V7vVUoxmQ#scrollTo=YLAhBxDSScmV]"
+Positional Encoding in Transformers | Deep Learning | CampusX,"Positional Encoding is a technique used in transformers to inject information about the position of tokens in a sequence. Since transformers lack inherent sequence order awareness, positional encodings enable the model to capture the order of words, crucial for understanding context. These encodings are added to the input embeddings, allowing the model to process and learn relationships based on token positions.
+
+Blog link - https://blog.timodenk.com/linear-relationships-in-the-transformers-positional-encoding/
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#datascience #positionalencoding #campusx #deeplearning 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+01:18 - Why Positional encoding is required?
+07:58 - Proposing a simple solution
+22:17 - The sine function as a solution
+34:26 - Explaining Positional encoding
+55:25 - Interesting Observations
+01:04:06 - Mind blowing solution
+01:10:13 - Blog for mathematical intuition
+01:12:45 - Outro",https://i.ytimg.com/vi/GeoQBNNqIbM/maxresdefault.jpg,CampusX,120512,7094,475,4395,73.25,1:13:15,"1 Hours, 13 Minutes, 15 Seconds",2024-05-24T05:01:12,https://www.youtube.com/watch?v=GeoQBNNqIbM,[],"[#datascience, #campusx, #positionalencoding, #heading, #deeplearning]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://blog.timodenk.com/linear-relationships-in-the-transformers-positional-encoding/, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Layer Normalization in Transformers | Layer Norm Vs Batch Norm,"Layer Normalization is a technique used to stabilize and accelerate the training of transformers by normalizing the inputs across the features. It adjusts and scales the activations, ensuring consistent output distributions. This helps in reducing training time and improving model performance, making it a key component in transformer architectures.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+CampusX on Instagram for daily tips: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#deeplearning #campusx #transformers #transformerarchitechture
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:20 - What is Normalization
+03:50 - What do we normalize?
+05:30 - Benefits of Normalization in DL
+07:10 - Internal Covariate Shift
+12:49 - Batch Normalization Revision
+22:56 - Why don't we use Batch Norm in Transformers?
+38:25 - How does Layer Normalization works?
+43:00 - Layer Normalization in Transformer",https://i.ytimg.com/vi/qti0QPdaelg/maxresdefault.jpg,CampusX,93256,4240,220,2817,46.95,46:57,"46 Minutes, 57 Seconds",2024-06-07T02:16:18,https://www.youtube.com/watch?v=qti0QPdaelg,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#transformers, #campusx, #deeplearning, #heading, #transformerarchitechture]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Transformer Architecture | Part 1 Encoder Architecture | CampusX,"The Encoder in transformer architecture processes input sequences by applying layers of multi-head self-attention and feed-forward networks. Each layer consists of self-attention mechanisms followed by layer normalization and feed-forward neural networks. This architecture enables the model to capture complex patterns and relationships in the input data, facilitating tasks like language translation and text summarization.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+✨ Hashtags✨
+#campusx #deeplearning #transformers 
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:36 - Recap/Prerequisite
+05:10 - Understanding Architecture
+13:02 - Encoder Architecture
+28:50 - Encoder - Feed Forward Network
+41:39 - Some Questions
+54:45 - Outro",https://i.ytimg.com/vi/Vs87qcdm8l0/maxresdefault.jpg,CampusX,113826,5114,324,3298,54.97,54:58,"54 Minutes, 58 Seconds",2024-07-10T03:16:41,https://www.youtube.com/watch?v=Vs87qcdm8l0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#campusx, #heading, #deeplearning, #transformers]",[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Masked Self Attention | Masked Multi-head Attention in Transformer | Transformer Decoder,"Masked Multi-head Attention is used in transformer models to ensure that each token in a sequence only attends to previous tokens and itself, not future tokens. This masking is essential for autoregressive tasks like language generation, enabling the model to generate sequences one step at a time without peeking ahead. By employing multiple attention heads, the model captures diverse contextual information while maintaining the sequential integrity.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:46 - Recap
+05:25 - Autoregressive Models
+17:57 - Transformer as an Autoregressive Model - Proof of concept
+35:25 - The problem in Parellelizing
+49:47 - Answering the Problem
+01:00:15 - Outro",https://i.ytimg.com/vi/m6onaKFzF94/maxresdefault.jpg,CampusX,88411,5800,355,3654,60.9,1:00:54,"1 Hours, 0 Minutes, 54 Seconds",2024-07-26T05:48:36,https://www.youtube.com/watch?v=m6onaKFzF94,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Cross Attention in Transformers | 100 Days Of Deep Learning | CampusX,"Cross Attention is a mechanism in transformer models where the attention is applied between different sequences, typically between the output of one layer and the input of another. It allows the model to focus on relevant parts of the input sequence while generating output, making it crucial in tasks like translation, where the decoder attends to the encoder's output to generate accurate translations.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Plan Of Action
+03:11 - What is Cross attention
+11:35 - The ""HOW"" of Cross attention
+12:45 - Self Attention vs Cross Attention(Input)
+15:02 - Self Attention vs Cross Attention (Processing)
+24:18 - Self Attention vs Cross Attention (Output)
+29:01 - Cross Attention vs Bahdanau/Luang Attention
+32:00 - Use Cases",https://i.ytimg.com/vi/smOnJtCevoU/maxresdefault.jpg,CampusX,71650,3503,166,2047,34.12,34:07,"34 Minutes, 7 Seconds",2024-08-13T11:15:38,https://www.youtube.com/watch?v=smOnJtCevoU,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Transformer Decoder Architecture | Deep Learning | CampusX,"The Decoder in a transformer architecture generates output sequences by attending to both the previous tokens (via masked self-attention) and the encoder’s output (via cross-attention). Each decoder layer consists of multi-head self-attention, cross-attention, and feed-forward layers. This structure allows the model to generate coherent sequences by considering both past outputs and relevant input context, making it effective for tasks like text generation and translation.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Plan of Attack
+02:22 - Simplified View
+10:10 - Deep Dive into Architecture",https://i.ytimg.com/vi/DI2_hrAulYo/maxresdefault.jpg,CampusX,76057,3693,199,2906,48.43,48:26,"48 Minutes, 26 Seconds",2024-08-22T20:02:39,https://www.youtube.com/watch?v=DI2_hrAulYo,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Transformer Inference | How Inference is done in Transformer? | Deep Learning | CampusX,"Inference in transformers involves generating predictions from the trained model. During inference, the decoder predicts one token at a time, using previously generated tokens and attending to the encoder's output. The process continues iteratively until the end of the sequence is reached, making it suitable for tasks like language translation and text generation.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in",https://i.ytimg.com/vi/FtsMOzlwxws/maxresdefault.jpg,CampusX,81378,4204,628,2712,45.2,45:12,"45 Minutes, 12 Seconds",2024-09-04T13:25:36,https://www.youtube.com/watch?v=FtsMOzlwxws,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[#heading],[support@campusx.in],"[https://discord.gg/PsWu8R87Z8, https://www.linkedin.com/company/campusx-official, https://learnwith.campusx.in, https://www.linkedin.com/in/nitish-singh-03412789, https://www.instagram.com/campusx.official, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"

@@ -1,0 +1,404 @@
+Title,Description,Thumbnail url,Channel name,Views,Likes,Comments,Duration in seconds,Duration in minutes,Duration in timestamp,Duration,Uploaded Time,Video url,Tags,Tags (in description),Emails (in description),Links (in description)
+What is an API? | Introduction to APIs | FAST API for Machine Learning | CampusX,"New to APIs or wondering what FastAPI is all about? This playlist breaks it down in simple terms.
+
+We’ll start with the basics—what an API is, why it matters, and how it connects different apps. Then, we’ll dive into FastAPI, a powerful Python framework that makes building APIs fast and easy.
+
+This is the first video in our end-to-end FastAPI series. By the end of the playlist, you’ll know how to build, test, and deploy real-world APIs from scratch.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - About this Playlist
+08:43 - What is an API
+11:42 - Analogy
+14:12 - Need for APIs
+37:22 - ML Perspective
+46:00 - Outro",https://i.ytimg.com/vi/WJKsPchji0Q/maxresdefault.jpg,CampusX,520013,12407,563,2797,46.62,46:37,"46 Minutes, 37 Seconds",2025-05-09T02:45:34,https://www.youtube.com/watch?v=WJKsPchji0Q,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+FastAPI Philosophy | How to setup FastAPI | Installation and Code Demo | Video 2 | CampusX,"In this video, we cover three key things to get you started with FastAPI:
+
+The philosophy behind FastAPI — why it exists and what makes it different
+How to set it up properly on your machine
+A quick demo to show how simple it is to write your first FastAPI app
+
+FastAPI is built for speed, simplicity, and clean code. If you like Python and want to build APIs without the usual mess, you’ll enjoy this.
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro 
+05:05 - Philosophy of FastAPI  
+26:47 - Second Philosophy (Why FastAPI is fast to code)  
+31:53 - Installation and Code Demo",https://i.ytimg.com/vi/lXx-_1r0Uss/maxresdefault.jpg,CampusX,208432,6704,218,2527,42.12,42:07,"42 Minutes, 7 Seconds",2025-05-13T11:07:55,https://www.youtube.com/watch?v=lXx-_1r0Uss,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+HTTP Methods in FastAPI | Video 3 | CampusX,"Code - https://github.com/campusx-official/fastapi-demo-api
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+00:46 - Project Overview
+05:46 - HTTP Methods
+17:48 - HTTP Methods Demo
+20:21 - Project w Code Demo
+26:25 - Outro",https://i.ytimg.com/vi/O8KrViWNhOM/maxresdefault.jpg,CampusX,156189,4878,153,1621,27.02,27:01,"27 Minutes, 1 Seconds",2025-05-15T03:00:03,https://www.youtube.com/watch?v=O8KrViWNhOM,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://github.com/campusx-official/fastapi-demo-api, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Path & Query Params in FastAPI | Video 4 | CampusX,"Code - https://github.com/campusx-official/fastapi-demo-api
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Path Params
+04:49 - Code Demo
+12:00 - Path Function
+15:05 - HTTP status codes
+23:05 - Query Parameter
+28:56 - Code Demo",https://i.ytimg.com/vi/VVVKEfhXCQ4/maxresdefault.jpg,CampusX,159991,4151,115,2472,41.2,41:12,"41 Minutes, 12 Seconds",2025-05-17T09:53:44,https://www.youtube.com/watch?v=VVVKEfhXCQ4,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://github.com/campusx-official/fastapi-demo-api, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Pydantic Crash Course | Data Validation in Python | CampusX,"Code - https://github.com/campusx-official/pydantic-crash-course
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+Pydantic helps you define clear, type-safe data models and automatically validates the data—saving you tons of time. We'll cover:
+
+What Pydantic is and why it’s so useful
+How to define data models with Pydantic
+How it performs automatic data validation, parsing, and error handling
+Real-world examples to show Pydantic in action
+
+If you’re working with APIs, web apps, or data-driven projects, this crash course will help you write cleaner, more reliable code.
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:25 - Why is Pydantic used?
+13:24 - How does Pydantic Works?
+49:30 - Field Validator
+01:03:25 - Model Validator
+01:06:45 - Computed Fields
+01:11:44 - Nested Models
+01:18:50 - Serialization
+01:25:00 - Outro",https://i.ytimg.com/vi/lRArylZCeOs/maxresdefault.jpg,CampusX,209523,6038,300,5131,85.52,1:25:31,"1 Hours, 25 Minutes, 31 Seconds",2025-05-20T13:54:16,https://www.youtube.com/watch?v=lRArylZCeOs,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://github.com/campusx-official/pydantic-crash-course, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Post Request in FastAPI | What is Request Body? | Video 5 | CampusX,"Code - https://github.com/campusx-official/fastapi-demo-api/
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+04:02 - Plan of Action
+06:50 - Request Body
+09:54 - Code Demo",https://i.ytimg.com/vi/sw8V7mLl3OI/maxresdefault.jpg,CampusX,103580,3159,109,2142,35.7,35:42,"35 Minutes, 42 Seconds",2025-05-22T10:22:05,https://www.youtube.com/watch?v=sw8V7mLl3OI,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://github.com/campusx-official/fastapi-demo-api/, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+PUT & DELETE in FastAPI | Video 6 | CampusX,"Code - https://github.com/campusx-official/fastapi-demo-api
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+01:56 - Update Endpoint
+06:00 - Code Demo",https://i.ytimg.com/vi/XVu22pTwWE8/maxresdefault.jpg,CampusX,68505,2564,90,1871,31.18,31:11,"31 Minutes, 11 Seconds",2025-05-24T10:59:44,https://www.youtube.com/watch?v=XVu22pTwWE8,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://github.com/campusx-official/fastapi-demo-api, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Serving ML Models with FastAPI | Video 7 | CampusX,"Code - https://github.com/campusx-official/fastapi-demo-api
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+03:00 - Plan of Attack
+04:17 - Flow Diagram
+06:48 - Building and Exporting the Model
+12:22 - Code Demo
+17:42 - Building the API Endpoint
+21:20 - Code Demo
+39:00 - Testing the API
+46:00 - Outro",https://i.ytimg.com/vi/JdDoMi_vqbM/maxresdefault.jpg,CampusX,92371,2837,126,2797,46.62,46:37,"46 Minutes, 37 Seconds",2025-05-29T03:29:14,https://www.youtube.com/watch?v=JdDoMi_vqbM,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://github.com/campusx-official/fastapi-demo-api, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Improving the FastAPI API | Video 8 | CampusX,"Code - https://github.com/campusx-official/insurance-premium-prediction-fastapi
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:40 - Improvement Plan
+05:00 - First Improvement
+11:34 - Second Improvement
+14:20 - Third Improvement
+18:19 - Fourth Improvement
+20:25 - Fifth Improvement
+28:49 - Sixth Improvement
+29:45 - Seventh Improvement
+33:25 - Final Improvement",https://i.ytimg.com/vi/M17qwKnmG38/maxresdefault.jpg,CampusX,60989,1931,82,2435,40.58,40:35,"40 Minutes, 35 Seconds",2025-06-04T05:52:23,https://www.youtube.com/watch?v=M17qwKnmG38,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://github.com/campusx-official/insurance-premium-prediction-fastapi, https://www.instagram.com/campusx.official, https://learnwith.campusx.in, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://learnwith.campusx.in/products#nav_bar, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+Docker for Machine Learning | Docker Crash Course | CampusX,"Notes - https://drive.google.com/file/d/1AGcGb49pU55Dm2B7aBRBgaTKMNrBIXm6/view?usp=sharing
+
+ML project link - https://github.com/campusx-official/laptop-price-predictor-regression-project
+
+Docker for ML Course: https://learnwith.campusx.in/courses/Docker-for-Machine-Learning-68a022773f7a067efc5df47e
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Intro
+02:24 - What is Docker?
+06:40 - Need for Docker
+16:20 - How is Docker used?
+17:26 - Docker Engine
+21:00 - Docker Image
+24:30 - DockerFile
+26:30 - DockerContainer
+28:30 - Registry
+33:00 - LifeCycle
+35:35 - Use-Cases
+38:46 - Setup
+48:40 - Verify Installation
+53:05 - Pulling Image from GitHub
+01:00:40 - Dockerizing Flask App
+01:11:00 - Pushing Image to Docker Hub",https://i.ytimg.com/vi/GToyQTGDOS4/maxresdefault.jpg,CampusX,210911,5517,293,5205,86.75,1:26:45,"1 Hours, 26 Minutes, 45 Seconds",2025-05-31T14:00:23,https://www.youtube.com/watch?v=GToyQTGDOS4,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]","[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://drive.google.com/file/d/1AGcGb49pU55Dm2B7aBRBgaTKMNrBIXm6/view?usp=sharing, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://learnwith.campusx.in/courses/Docker-for-Machine-Learning-68a022773f7a067efc5df47e, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://www.linkedin.com/in/nitish-singh-03412789, https://github.com/campusx-official/laptop-price-predictor-regression-project]"
+FastAPI + Docker Tutorial for Beginners | How to Dockerize a FastAPI API Application | CampusX,"Docker Tutorial - https://www.youtube.com/watch?v=GToyQTGDOS4
+
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Code - https://github.com/campusx-official/insurance-premium-prediction-fastapi
+
+Docker Image Link - https://hub.docker.com/repository/docker/tweakster24/insurance-premium-api/general
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+04:34 - Setup
+06:15 - Create a Dockerfile
+10:35 - Building Docker Image
+12:40 - Login to Docker
+13:26 - Push Docker Image
+15:00 - Pull the Docker Image
+16:50 - Run Image Locally",https://i.ytimg.com/vi/jlLs6hfAga4/maxresdefault.jpg,CampusX,52941,1529,69,1162,19.37,19:22,"19 Minutes, 22 Seconds",2025-06-06T06:45:22,https://www.youtube.com/watch?v=jlLs6hfAga4,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://github.com/campusx-official/insurance-premium-prediction-fastapi, https://www.instagram.com/campusx.official, https://www.youtube.com/watch?v=GToyQTGDOS4, https://learnwith.campusx.in, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://learnwith.campusx.in/products#nav_bar, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://hub.docker.com/repository/docker/tweakster24/insurance-premium-api/general]"
+How to Deploy a FastAPI API on AWS | Video 10 | CampusX,"Code - https://github.com/campusx-official/fastapi-demo-api
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes
+
+Instructions:
+ 1. create an EC2 instance
+ 2. Connect to the EC2 instance
+
+ 3. Run the following commands
+  a. sudo apt-get update
+  b. sudo apt-get install -y docker.io
+  c. sudo systemctl start docker
+  d. sudo systemctl enable docker
+  e. sudo usermod -aG docker $USER
+  f. exit
+ 
+ 4. Restart a new connection to EC2 instance
+ 5. Run the following commands
+  a. docker pull tweakster24/insurance-premium-api:latest
+  b. docker run -p 8000:8000 tweakster24/insurance-premium-api
+
+ 6. change security group settings
+ 7. Check the API 
+ 8. Change the frontend code
+
+Advanced Course: https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+
+My Notes: https://learnwith.campusx.in/products#nav_bar
+
+============================
+Did you like my teaching style?
+Check my affordable mentorship program at : https://learnwith.campusx.in
+DSMP FAQ: https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw
+============================
+
+📱 Grow with us:
+CampusX' LinkedIn: https://www.linkedin.com/company/campusx-official
+Slide into our DMs: https://www.instagram.com/campusx.official
+My LinkedIn: https://www.linkedin.com/in/nitish-singh-03412789
+Discord: https://discord.gg/PsWu8R87Z8
+E-mail us at support@campusx.in
+
+⌚Time Stamps⌚
+
+00:00 - Recap
+04:48 - Steps for Deployment
+18:40 - Outro",https://i.ytimg.com/vi/X0lnToYN21k/maxresdefault.jpg,CampusX,44506,1611,110,1138,18.97,18:58,"18 Minutes, 58 Seconds",2025-06-08T14:00:49,https://www.youtube.com/watch?v=X0lnToYN21k,[],"[#nav_bar, #heading]",[support@campusx.in],"[https://www.linkedin.com/company/campusx-official, https://discord.gg/PsWu8R87Z8, https://docs.google.com/document/d/1OsMe9jGHoZS67FH8TdIzcUaDWuu5RAbCbBKk2cNq6Dk/edit#heading=h.gvv0r2jo3vjw, https://www.instagram.com/campusx.official, https://github.com/campusx-official/fastapi-demo-api, https://learnwith.campusx.in, https://learnwith.campusx.in/products#nav_bar, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe, https://www.linkedin.com/in/nitish-singh-03412789, https://learnwith.campusx.in/s/store/courses/YouTube%20Notes]"
+FastAPI Course Launch,"Link - https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe
+Notes: https://learnwith.campusx.in/s/store/courses/YouTube%20Notes",https://i.ytimg.com/vi/VjPrWc0NQP0/maxresdefault.jpg,CampusX,48485,1343,187,742,12.37,12:22,"12 Minutes, 22 Seconds",2025-08-11T20:07:52,https://www.youtube.com/watch?v=VjPrWc0NQP0,"[#Education, #Engineering, #Campus, #Placement, #Skills, #Machine Learning, #Software, #Web Development, #Profile Building]",[],[],"[https://learnwith.campusx.in/s/store/courses/YouTube%20Notes, https://learnwith.campusx.in/courses/FastAPI-6873cb2075f40c2715c809fe]"
