@@ -37,6 +37,7 @@ import {
 } from '../data/curriculumData';
 import { WoopBoardModal } from './WoopBoardModal';
 import { PhysiologicalSighGuide } from './PhysiologicalSighGuide';
+import { parseWoopPlan } from '../lib/woopUtils';
 
 interface NeuroFocusScreenProps {
   woopGoals: IWoopGoal[];
@@ -433,17 +434,17 @@ export const NeuroFocusScreen: React.FC<NeuroFocusScreenProps> = ({
                         <Target className="w-4 h-4" />
                       </div>
                       <div>
-                        <h2 className="text-base font-extrabold text-[#181c1e]">WOOP Urgency Anchors</h2>
-                        <p className="text-[11px] text-[#545f72]">Wish &bull; Outcome &bull; Obstacle &bull; Plan</p>
+                        <h2 className="text-base font-bold text-[#181c1e]">WOOP Urgency Anchors</h2>
+                        <p className="text-[11px] text-[#545f72]">Mental contrasting &amp; implementation intentions</p>
                       </div>
                     </div>
 
                     <button
                       onClick={() => setIsWoopModalOpen(true)}
-                      className="px-3 py-1.5 rounded-xl bg-[#43664c] hover:bg-[#34513c] text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-[#43664c] hover:bg-[#34513c] text-white font-semibold text-xs flex items-center gap-1.5 shadow-xs transition cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5" />
-                      New Anchor
+                      New anchor
                     </button>
                   </div>
 
@@ -454,47 +455,58 @@ export const NeuroFocusScreen: React.FC<NeuroFocusScreenProps> = ({
                       <p className="text-[11px] text-slate-400 mt-0.5">Create a 2-minute anchor before diving into deep work.</p>
                       <button
                         onClick={() => setIsWoopModalOpen(true)}
-                        className="mt-3 px-4 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-xs hover:bg-emerald-100 transition cursor-pointer"
+                        className="mt-3 px-4 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-semibold text-xs hover:bg-emerald-100 transition cursor-pointer"
                       >
-                        + Create First Anchor
+                        + Create first anchor
                       </button>
                     </div>
                   ) : (
                     <div className="space-y-3 max-h-[340px] overflow-y-auto pr-1">
-                      {woopGoals.map((g) => (
-                        <div
-                          key={g.id}
-                          className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 relative group"
-                        >
-                          <div className="flex items-start justify-between gap-2 mb-1.5">
-                            <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold font-mono">
-                              {g.targetSubject || 'General'}
-                            </span>
-                            <button
-                              onClick={() => handleDeleteWoop(g.id)}
-                              className="text-slate-400 hover:text-rose-600 p-1 rounded transition cursor-pointer"
-                              title="Delete goal"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-                          <h4 className="text-xs font-extrabold text-[#181c1e] mb-2">{g.wish}</h4>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
-                            <div className="p-2 rounded-xl bg-cyan-50/70 border border-cyan-100 text-cyan-950">
-                              <span className="font-bold text-cyan-800 block text-[9px] uppercase font-mono">Outcome</span>
-                              {g.outcome}
+                      {woopGoals.map((g) => {
+                        const parsed = parseWoopPlan(g.plan, g.obstacle);
+                        return (
+                          <div
+                            key={g.id}
+                            className="p-3.5 rounded-xl bg-white border border-slate-200/90 hover:border-slate-300 transition-all shadow-2xs relative group"
+                          >
+                            <div className="flex items-start justify-between gap-2 mb-1.5">
+                              <span className="text-[10px] px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 font-medium border border-emerald-100">
+                                {g.targetSubject || 'General'}
+                              </span>
+                              <button
+                                onClick={() => handleDeleteWoop(g.id)}
+                                className="text-slate-400 hover:text-rose-600 p-1 rounded transition cursor-pointer"
+                                title="Delete goal"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
                             </div>
-                            <div className="p-2 rounded-xl bg-amber-50/70 border border-amber-100 text-amber-950">
-                              <span className="font-bold text-amber-800 block text-[9px] uppercase font-mono">Obstacle</span>
-                              {g.obstacle}
+                            <h4 className="text-xs font-bold text-[#181c1e] mb-2">{g.wish}</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                              <div>
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block shrink-0" />
+                                  <span className="text-[10px] text-slate-500 font-medium">Outcome</span>
+                                </div>
+                                <p className="text-slate-700 leading-relaxed text-[11px]">{g.outcome}</p>
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block shrink-0" />
+                                  <span className="text-[10px] text-slate-500 font-medium">Obstacle</span>
+                                </div>
+                                <p className="text-slate-700 leading-relaxed text-[11px]">{g.obstacle}</p>
+                              </div>
+                            </div>
+                            <div className="mt-2.5 p-2.5 rounded-lg bg-emerald-50/80 border border-emerald-200/80 text-[11px]">
+                              <p className="font-medium text-emerald-800 mb-0.5">{parsed.condition}</p>
+                              {parsed.action && (
+                                <p className="font-medium text-slate-900 leading-relaxed">{parsed.action}</p>
+                              )}
                             </div>
                           </div>
-                          <div className="mt-2 p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 text-[11px] font-bold">
-                            <span className="font-bold text-emerald-800 block text-[9px] uppercase font-mono">If-Then Plan</span>
-                            {g.plan}
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </div>

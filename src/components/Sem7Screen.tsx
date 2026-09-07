@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { IWoopGoal, ISessionRecall } from '../types';
 import { saveRecallLogToFirestore } from '../lib/firestoreService';
+import { parseWoopPlan } from '../lib/woopUtils';
 import { NeuroDeck } from './NeuroDeck';
 
 interface ChecklistTask {
@@ -1907,46 +1908,55 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({
       />
 
       {/* WOOP Urgency Anchor Banner — Integrated Light Card */}
-      {woopGoals.length > 0 && (
-        <div className="mb-6 p-4 rounded-2xl bg-white border border-[#c2c8c0] shadow-xs font-sans">
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-100">
-            <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-xs border border-emerald-200">
-                <Target className="w-3.5 h-3.5" />
-              </span>
-              <span className="text-xs font-extrabold uppercase tracking-wider text-[#181c1e] font-mono">
-                Active WOOP Anchor &bull; Mental Contrasting
-              </span>
-              <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold border border-slate-200 font-mono">
-                {woopGoals[0].targetSubject || 'General Focus'}
-              </span>
+      {woopGoals.length > 0 && (() => {
+        const activeGoal = woopGoals[0];
+        const parsed = parseWoopPlan(activeGoal.plan, activeGoal.obstacle);
+        return (
+          <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs font-sans">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <span className="p-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs border border-emerald-100">
+                  <Target className="w-3.5 h-3.5" />
+                </span>
+                <span className="text-xs font-bold text-[#181c1e]">
+                  Active WOOP anchor
+                </span>
+                <span className="text-xs px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 font-medium border border-emerald-100">
+                  {activeGoal.targetSubject || 'General focus'}
+                </span>
+              </div>
+              {onOpenWoopModal && (
+                <button
+                  onClick={onOpenWoopModal}
+                  className="text-xs font-medium text-[#43664c] hover:text-[#34513c] hover:underline flex items-center gap-1 transition cursor-pointer"
+                >
+                  <Sparkles className="w-3 h-3" /> Manage anchors
+                </button>
+              )}
             </div>
-            {onOpenWoopModal && (
-              <button
-                onClick={onOpenWoopModal}
-                className="text-[11px] font-bold text-[#43664c] hover:text-[#34513c] hover:underline flex items-center gap-1 transition cursor-pointer"
-              >
-                <Sparkles className="w-3 h-3" /> Manage WOOP Anchors
-              </button>
-            )}
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-            <div className="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200">
-              <span className="text-[10px] uppercase font-bold text-emerald-800 block mb-0.5 font-mono">1. Wish</span>
-              <p className="text-emerald-950 font-semibold">{woopGoals[0].wish}</p>
-            </div>
-            <div className="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200">
-              <span className="text-[10px] uppercase font-bold text-amber-800 block mb-0.5 font-mono">2. Obstacle</span>
-              <p className="text-amber-950 font-semibold">{woopGoals[0].obstacle}</p>
-            </div>
-            <div className="p-2.5 rounded-xl bg-blue-50/70 border border-blue-200">
-              <span className="text-[10px] uppercase font-bold text-blue-800 block mb-0.5 font-mono">3. If-Then Plan</span>
-              <p className="text-blue-950 font-bold">{woopGoals[0].plan}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
+              <div>
+                <p className="text-xs text-slate-500 font-medium mb-0.5">Wish</p>
+                <h4 className="text-sm font-bold text-[#181c1e] leading-snug">{activeGoal.wish}</h4>
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block shrink-0" />
+                  <span className="text-xs text-slate-500 font-medium">Obstacle</span>
+                </div>
+                <p className="text-xs text-slate-700 leading-relaxed">{activeGoal.obstacle}</p>
+              </div>
+              <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-xs">
+                <p className="font-medium text-emerald-800 mb-0.5">{parsed.condition}</p>
+                {parsed.action && (
+                  <p className="font-medium text-slate-900 leading-relaxed">{parsed.action}</p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Subject Tabs */}
       <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6 gap-1 sm:gap-2">

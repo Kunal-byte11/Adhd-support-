@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const renderNavGroup = (title: string, items: NavItem[]) => (
     <div className="mb-4">
       <div className="px-6 mb-2">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 font-mono">
+        <span className="text-[11px] font-semibold text-slate-500">
           {title}
         </span>
       </div>
@@ -89,11 +89,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     >
       {/* Brand Header */}
       <div className="px-6 mb-4">
-        <h1 className="text-[26px] font-extrabold text-[#43664c] tracking-tight leading-tight">
+        <h1 className="text-[24px] font-extrabold text-[#43664c] tracking-tight leading-tight">
           Momentum
         </h1>
         <p className="text-[12px] text-[#545f72] font-medium">
-          Semester 7 &bull; Focus &amp; Memory
+          Semester 7 focus &amp; memory hub
         </p>
       </div>
 
@@ -125,8 +125,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Navigation Items grouped cleanly */}
       <div className="flex flex-col w-full flex-1 overflow-y-auto pr-1">
-        {renderNavGroup('STUDY & TASKS', coreNavItems)}
-        {renderNavGroup('NEURO PROTOCOLS', neuroNavItems)}
+        {renderNavGroup('Study & Tasks', coreNavItems)}
+        {renderNavGroup('Neuro Protocols', neuroNavItems)}
       </div>
     </nav>
   );
