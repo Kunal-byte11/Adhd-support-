@@ -321,20 +321,20 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
             </>
           )}
 
-          {/* Quick Add Page Button */}
+          {/* Compact Add Page Button */}
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg flex items-center gap-1 shadow-xs transition cursor-pointer disabled:opacity-50"
-            title="Upload new handwritten note photo"
+            className="px-2 py-1 bg-amber-500/90 hover:bg-amber-500 text-white text-[11px] font-semibold rounded-lg flex items-center gap-1 shadow-xs transition cursor-pointer disabled:opacity-50"
+            title="Upload new handwritten note page (or Ctrl+V to paste)"
           >
-            <Plus className="w-3.5 h-3.5" />
+            <Plus className="w-3 h-3" />
             <span>Add Page</span>
           </button>
 
           <button
             onClick={() => setShowSettingsModal(true)}
-            className="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition"
+            className="p-1 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition"
             title="Storage Settings"
           >
             <Settings className="w-3.5 h-3.5" />
@@ -394,67 +394,69 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
           </div>
         ) : (
           /* High-Performance Smooth Zoom & Pan Stationary Reader */
-          <TransformWrapper
-            ref={transformComponentRef}
-            initialScale={1}
-            minScale={0.4}
-            maxScale={4.5}
-            centerOnInit={true}
-            wheel={{ step: 0.15 }}
-            doubleClick={{ mode: 'toggle' }}
-          >
-            {({ zoomIn, zoomOut, resetTransform }) => (
-              <div className="relative w-full h-full flex flex-col items-center justify-center">
-                {/* Floating On-Canvas Mini Zoom Controls */}
-                <div className="absolute top-3 right-3 z-20 flex items-center gap-1 bg-slate-900/80 backdrop-blur-md px-1.5 py-1 rounded-xl border border-slate-700/60 shadow-xl opacity-75 hover:opacity-100 transition">
-                  <button
-                    onClick={() => zoomOut(0.25)}
-                    className="p-1 hover:bg-slate-800 text-slate-300 hover:text-white rounded transition"
-                    title="Zoom Out"
-                  >
-                    <ZoomOut className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => resetTransform()}
-                    className="text-[10px] font-mono font-bold text-slate-300 hover:text-amber-400 px-1 py-0.5 rounded transition"
-                    title="Reset Zoom"
-                  >
-                    100%
-                  </button>
-                  <button
-                    onClick={() => zoomIn(0.25)}
-                    className="p-1 hover:bg-slate-800 text-slate-300 hover:text-white rounded transition"
-                    title="Zoom In"
-                  >
-                    <ZoomIn className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                {/* The Pan-Zoom Image Canvas */}
-                <TransformComponent
-                  wrapperClass="w-full h-full flex items-center justify-center cursor-grab active:cursor-grabbing"
-                  contentClass="flex items-center justify-center"
-                >
-                  <div
-                    style={{
-                      transform: `rotate(${rotationDegrees}deg)`,
-                      transition: 'transform 0.15s ease-out',
-                    }}
-                    className="flex items-center justify-center p-2"
-                  >
-                    {currentPage && (
-                      <img
-                        src={currentPage.imageUrl}
-                        alt={currentPage.title || `Note Page ${activePageIndex + 1}`}
-                        className={`max-h-[calc(100vh-210px)] max-w-full object-contain rounded-lg shadow-2xl transition duration-150 ${filterStyles}`}
-                        draggable={false}
-                      />
-                    )}
+          <div className="w-full h-full relative flex items-center justify-center p-2 bg-[#0d1117]">
+            <TransformWrapper
+              ref={transformComponentRef}
+              initialScale={1}
+              minScale={0.8}
+              maxScale={5}
+              centerOnInit={true}
+              wheel={{ step: 0.15 }}
+              doubleClick={{ mode: 'toggle', step: 0.7 }}
+            >
+              {({ zoomIn, zoomOut, resetTransform }) => (
+                <div className="relative w-full h-full flex flex-col items-center justify-center">
+                  {/* Floating On-Canvas Mini Zoom Controls */}
+                  <div className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-slate-900/90 backdrop-blur-md px-1.5 py-1 rounded-xl border border-slate-700/80 shadow-2xl">
+                    <button
+                      onClick={() => zoomOut(0.25)}
+                      className="p-1 hover:bg-slate-800 text-slate-300 hover:text-white rounded transition cursor-pointer"
+                      title="Zoom Out"
+                    >
+                      <ZoomOut className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => resetTransform()}
+                      className="text-[10px] font-mono font-bold text-slate-300 hover:text-amber-400 px-1 py-0.5 rounded transition cursor-pointer"
+                      title="Fit to Page / Reset Zoom"
+                    >
+                      Fit
+                    </button>
+                    <button
+                      onClick={() => zoomIn(0.25)}
+                      className="p-1 hover:bg-slate-800 text-slate-300 hover:text-white rounded transition cursor-pointer"
+                      title="Zoom In"
+                    >
+                      <ZoomIn className="w-3.5 h-3.5" />
+                    </button>
                   </div>
-                </TransformComponent>
-              </div>
-            )}
-          </TransformWrapper>
+
+                  {/* The Pan-Zoom Image Canvas */}
+                  <TransformComponent
+                    wrapperClass="!w-full !h-full flex items-center justify-center cursor-grab active:cursor-grabbing"
+                    contentClass="!w-full !h-full flex items-center justify-center"
+                  >
+                    <div
+                      style={{
+                        transform: `rotate(${rotationDegrees}deg)`,
+                        transition: 'transform 0.15s ease-out',
+                      }}
+                      className="w-full h-full flex items-center justify-center p-1"
+                    >
+                      {currentPage && (
+                        <img
+                          src={currentPage.imageUrl}
+                          alt={currentPage.title || `Note Page ${activePageIndex + 1}`}
+                          className={`max-h-full max-w-full w-auto h-auto object-contain rounded-xl shadow-2xl transition duration-150 select-none ${filterStyles}`}
+                          draggable={false}
+                        />
+                      )}
+                    </div>
+                  </TransformComponent>
+                </div>
+              )}
+            </TransformWrapper>
+          </div>
         )}
       </div>
 

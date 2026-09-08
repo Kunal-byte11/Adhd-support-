@@ -3350,6 +3350,25 @@ export function getCurriculumVideoById(id: string): StudyTheaterVideo | null {
       }
     }
   }
+  for (const courseId in AI_PLAYLIST_VIDEOS) {
+    const playlist = AI_PLAYLIST_VIDEOS[courseId];
+    const vid = playlist.find((v) => v.id === cleanId);
+    if (vid) {
+      const course = AI_DATA_SCIENCE_COURSES.find((c) => c.id === courseId);
+      return {
+        id: vid.id,
+        title: vid.title,
+        youtubeUrl: vid.youtubeUrl,
+        subject: course?.category || course?.title || 'Generative AI',
+        category: 'genai',
+        difficulty: course?.tier,
+        duration: vid.durationTimestamp,
+        thumbnailUrl: vid.thumbnailUrl,
+        description: vid.description,
+        startSeconds: vid.startSeconds || 0,
+      };
+    }
+  }
   const dsaProblem = DSA_PROBLEMS_DATA.find((p) => p.id === cleanId);
   if (dsaProblem && dsaProblem.youtubeUrl) {
     return {

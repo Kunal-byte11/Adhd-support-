@@ -52,7 +52,8 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   onSelectVideo,
   completedIds,
 }) => {
-  // Default mode: 'dual' (Side-by-Side Video + Stationary Notebook) or 'cinema' (Pure 100% Video)
+  // Mobile Tab view: 'video' | 'notes' (or split on desktop)
+  const [mobileTab, setMobileTab] = useState<'video' | 'notes'>('video');
   const [isDualPane, setIsDualPane] = useState<boolean>(true);
   const [isPlaylistDrawerOpen, setIsPlaylistDrawerOpen] = useState<boolean>(false);
 
@@ -146,10 +147,18 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-[#0a0d0f] flex flex-col w-screen h-screen overflow-hidden font-sans select-none animate-in fade-in duration-150">
       {/* 🎬 Stationary Top Workspace Header */}
-      <header className="bg-[#11161a] text-white px-4 sm:px-6 py-2.5 flex items-center justify-between border-b border-slate-800/80 shrink-0 z-30 gap-3">
+      <header className="bg-[#11161a] text-white px-3 sm:px-5 py-2 flex items-center justify-between border-b border-slate-800 shrink-0 z-30 gap-2">
         {/* Left: Lecture & Course Title */}
-        <div className="flex items-center gap-2.5 min-w-0 max-w-md md:max-w-xl">
-          <span className="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 text-[10px] font-bold font-mono tracking-wide shrink-0 flex items-center gap-1">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <button
+            onClick={onClose}
+            className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer shrink-0 md:hidden"
+            title="Back / Close"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <span className="px-1.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 text-[9px] sm:text-[10px] font-bold font-mono tracking-wide shrink-0 hidden xs:inline-flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
             THEATER
           </span>
@@ -159,27 +168,27 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               {video.title}
             </h1>
             {video.subject && (
-              <span className="text-[10px] text-slate-400 font-mono hidden sm:inline-block">
+              <span className="text-[10px] text-slate-400 font-mono hidden md:inline-block">
                 {video.subject} {video.difficulty ? `• ${video.difficulty}` : ''}
               </span>
             )}
           </div>
         </div>
 
-        {/* Center: Previous / Next Lecture Navigator */}
+        {/* Center: Previous / Next Lecture Navigator (Hidden on small mobile) */}
         {playlistContext && playlistContext.totalCount > 1 && (
-          <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded-xl shrink-0">
+          <div className="hidden sm:flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded-xl shrink-0">
             <button
               disabled={!playlistContext.prevVideo}
               onClick={() => playlistContext.prevVideo && handleSwitchVideo(playlistContext.prevVideo)}
               className="p-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 rounded transition cursor-pointer"
               title="Previous lesson"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setIsPlaylistDrawerOpen(!isPlaylistDrawerOpen)}
-              className="px-2 py-0.5 text-xs font-mono font-bold text-emerald-400 hover:text-emerald-300 transition cursor-pointer flex items-center gap-1"
+              className="px-1.5 py-0.5 text-xs font-mono font-bold text-emerald-400 hover:text-emerald-300 transition cursor-pointer flex items-center gap-1"
               title="Open all lessons in course"
             >
               <ListVideo className="w-3.5 h-3.5" />
@@ -193,17 +202,42 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               className="p-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 rounded transition cursor-pointer"
               title="Next lesson"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
         )}
 
-        {/* Right: Dual-Pane Toggle, Timer, Audio & Actions */}
-        <div className="flex items-center gap-2 shrink-0">
-          {/* Dual-Pane / Cinema Toggle */}
+        {/* Right: Actions, Mobile Tabs & Desktop Controls */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          {/* Mobile Tab Switcher (Only on small screens) */}
+          <div className="flex md:hidden items-center bg-slate-950 p-0.5 rounded-xl border border-slate-800 text-xs">
+            <button
+              onClick={() => setMobileTab('video')}
+              className={`px-2.5 py-1 rounded-lg font-bold transition ${
+                mobileTab === 'video' ? 'bg-[#006494] text-white' : 'text-slate-400'
+              }`}
+            >
+              Video
+            </button>
+            <button
+              onClick={() => setMobileTab('notes')}
+              className={`px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1 ${
+                mobileTab === 'notes' ? 'bg-amber-500 text-white' : 'text-slate-400'
+              }`}
+            >
+              <span>Notes</span>
+              {currentLectureNotesCount > 0 && (
+                <span className="text-[9px] bg-black/40 px-1 rounded font-mono">
+                  {currentLectureNotesCount}
+                </span>
+              )}
+            </button>
+          </div>
+
+          {/* Desktop Dual-Pane / Cinema Toggle */}
           <button
             onClick={() => setIsDualPane(!isDualPane)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono flex items-center gap-1.5 transition cursor-pointer shadow-xs ${
+            className={`hidden md:flex px-2.5 py-1.5 rounded-xl text-xs font-bold font-mono items-center gap-1.5 transition cursor-pointer shadow-xs ${
               isDualPane
                 ? 'bg-amber-400 text-black shadow-md font-black'
                 : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
@@ -229,7 +263,7 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
             }`}
             title="40Hz Gamma Focus Audio"
           >
-            <Headphones className="w-4 h-4" />
+            <Headphones className="w-3.5 h-3.5" />
           </button>
 
           {/* Mark Done */}
@@ -240,7 +274,7 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
                 setJumpToast('🎉 Lecture completed!');
                 setTimeout(() => setJumpToast(null), 3000);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 transition cursor-pointer ${
+              className={`px-2.5 py-1.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1 transition cursor-pointer ${
                 isCompleted
                   ? 'bg-emerald-600 text-white shadow-xs'
                   : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
@@ -248,28 +282,29 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               title="Mark lecture completed"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{isCompleted ? 'Done ✓' : 'Mark Done'}</span>
+              <span className="hidden sm:inline">{isCompleted ? 'Done ✓' : 'Done'}</span>
             </button>
           )}
 
           {/* Close Modal */}
           <button
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer"
+            className="hidden md:flex p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer"
             title="Close theater (Esc)"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
       </header>
 
       {/* 🖥️ Main Dual-Pane Stationary Desk Workspace */}
       <main className="flex-1 flex flex-col md:flex-row w-full h-full min-h-0 overflow-hidden relative">
-        {/* Left Pane: Full YouTube Player */}
+        {/* Left Pane: Full YouTube Player (Clean, zero overlapping floating buttons) */}
         <div
-          className={`h-full bg-black flex flex-col justify-center items-center relative overflow-hidden transition-all duration-200 ${
-            isDualPane ? 'w-full md:w-[55%] lg:w-[58%]' : 'w-full'
-          }`}
+          className={`bg-black flex flex-col justify-center items-center relative overflow-hidden transition-all duration-200 ${
+            // On mobile: show/hide based on mobileTab. On desktop: split width
+            mobileTab === 'video' ? 'flex flex-1 w-full h-full' : 'hidden md:flex'
+          } ${isDualPane ? 'md:w-1/2' : 'md:w-full'}`}
         >
           <iframe
             ref={iframeRef}
@@ -281,35 +316,26 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
             allowFullScreen
           />
 
-          {/* Floating Jump Toast */}
+          {/* Floating Jump Toast (Clean, auto-hides) */}
           {jumpToast && (
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-2xl bg-slate-900/90 border border-emerald-500/50 text-white text-xs font-mono font-bold shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150 flex items-center gap-2">
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-emerald-500/50 text-white text-xs font-mono font-bold shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150 flex items-center gap-2 pointer-events-none">
               <span>{jumpToast}</span>
             </div>
-          )}
-
-          {/* Floating Next Lesson Quick Button (when in cinema mode) */}
-          {!isDualPane && playlistContext?.nextVideo && (
-            <button
-              onClick={() => handleSwitchVideo(playlistContext.nextVideo!)}
-              className="absolute bottom-4 right-4 z-20 px-4 py-2 bg-slate-900/90 hover:bg-slate-800 border border-emerald-500/50 text-white text-xs font-bold rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-2 transition"
-            >
-              <span>Next: {playlistContext.nextVideo.title}</span>
-              <ChevronRight className="w-4 h-4 text-emerald-400" />
-            </button>
           )}
         </div>
 
         {/* Right Pane: Stationary Open Notebook Viewer */}
-        {isDualPane && (
-          <aside className="w-full md:w-[45%] lg:w-[42%] h-full border-t md:border-t-0 md:border-l border-slate-800 flex flex-col shrink-0 overflow-hidden bg-[#11161a] animate-in slide-in-from-right-4 duration-200">
-            <StationaryNotebookViewer
-              videoId={video.id}
-              videoTitle={video.title}
-              className="w-full h-full"
-            />
-          </aside>
-        )}
+        <aside
+          className={`h-full border-t md:border-t-0 md:border-l border-slate-800 flex flex-col shrink-0 overflow-hidden bg-[#11161a] transition-all duration-200 ${
+            mobileTab === 'notes' ? 'flex flex-1 w-full' : 'hidden md:flex'
+          } ${isDualPane ? 'md:w-1/2' : 'hidden'}`}
+        >
+          <StationaryNotebookViewer
+            videoId={video.id}
+            videoTitle={video.title}
+            className="w-full h-full"
+          />
+        </aside>
 
         {/* Course Playlist Drawer */}
         {isPlaylistDrawerOpen && playlistContext && (
