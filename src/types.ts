@@ -2,7 +2,7 @@ export type ScreenType =
   | 'sem7'
   | 'roadmap'
   | 'woop'
-  | 'recalls'
+  | 'notes'
   | 'breathing'
   | 'sounds'
   | 'neuro';

@@ -2,12 +2,10 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   StudyTheaterVideo,
   BinauralSoundMode,
-  ISessionRecall,
   ITimestampNote,
   ILecturePhotoNote,
 } from '../types';
 import {
-  saveRecallLogToFirestore,
   subscribeAllPhotoNotes,
 } from '../lib/firestoreService';
 import {
@@ -262,32 +260,17 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
     setTimeout(() => setJumpToast(null), 2500);
   };
 
-  // Sync function to write both to localStorage and Active Recall Archive
+  // Sync function to persist notes to localStorage
   const syncNotesToRecall = async (
     rawContent: string,
     tNotes: ITimestampNote[],
     vid: StudyTheaterVideo,
-    timeSpentSecs: number
+    _timeSpentSecs: number
   ) => {
     if (!vid) return;
     try {
       localStorage.setItem(`focusflow_video_notes_${vid.id}`, rawContent);
       localStorage.setItem(`focusflow_timestamp_notes_${vid.id}`, JSON.stringify(tNotes));
-
-      if (rawContent.trim().length > 0 || tNotes.length > 0) {
-        const recallRecord: ISessionRecall = {
-          id: `video_note_${vid.id}`,
-          subject: vid.subject || (vid.category === 'dsa' ? 'DSA Problem' : 'GenAI Curriculum'),
-          topicTitle: vid.title,
-          recallContent: rawContent.trim(),
-          timestampNotes: tNotes,
-          durationMinutes: Math.max(1, Math.round(timeSpentSecs / 60)),
-          phoneDistanced: true,
-          microRestsCompleted: 1,
-          createdAt: Date.now(),
-        };
-        await saveRecallLogToFirestore(recallRecord);
-      }
       setSyncStatus('synced');
     } catch (e) {
       console.warn('Error syncing video note:', e);

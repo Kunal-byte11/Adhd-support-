@@ -12,7 +12,7 @@ import { RoadmapScreen } from './components/RoadmapScreen';
 import { Sem7Screen } from './components/Sem7Screen';
 import { NeuroFocusScreen } from './components/NeuroFocusScreen';
 import { WoopScreen } from './components/WoopScreen';
-import { RecallArchiveScreen } from './components/RecallArchiveScreen';
+import { LectureNotesVaultScreen } from './components/LectureNotesVaultScreen';
 import { PhysiologicalSighScreen } from './components/PhysiologicalSighScreen';
 import { AudioSynthesizerScreen } from './components/AudioSynthesizerScreen';
 import { StudyTheaterModal } from './components/StudyTheaterModal';
@@ -197,8 +197,8 @@ export default function App() {
           <WoopScreen woopGoals={woopGoals} />
         )}
 
-        {currentScreen === 'recalls' && (
-          <RecallArchiveScreen onWatchVideo={setActiveTheaterVideo} />
+        {currentScreen === 'notes' && (
+          <LectureNotesVaultScreen onWatchVideo={setActiveTheaterVideo} />
         )}
 
         {currentScreen === 'breathing' && (

@@ -24,8 +24,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   const navItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
     { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
     { id: 'roadmap', label: 'Tasks', Icon: Map },
+    { id: 'notes', label: 'Notes 📸', Icon: BookOpen },
     { id: 'woop', label: 'WOOP', Icon: Target },
-    { id: 'recalls', label: 'Recalls', Icon: BookOpen },
     { id: 'breathing', label: 'Sigh', Icon: Wind },
     { id: 'sounds', label: '40Hz', Icon: Headphones },
   ];
