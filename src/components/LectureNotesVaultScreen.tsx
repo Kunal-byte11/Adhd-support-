@@ -28,7 +28,7 @@ import {
   DSA_PROBLEMS_DATA,
 } from '../data/curriculumData';
 import { AI_PLAYLIST_VIDEOS } from '../data/aiPlaylistVideos';
-import { PhotoNotesManager } from './PhotoNotesManager';
+import { StationaryNotebookViewer } from './StationaryNotebookViewer';
 
 interface LectureNotesVaultScreenProps {
   onWatchVideo?: (video: StudyTheaterVideo) => void;
@@ -404,22 +404,34 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
         </div>
       </main>
 
-      {/* Dedicated Photo Notes Modal for Lecture */}
+      {/* Dedicated Stationary Notebook Reader Modal for Lecture */}
       {activeLectureModal && (
         <div
           className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in"
           onClick={() => setActiveLectureModal(null)}
         >
           <div
-            className="bg-white rounded-3xl shadow-2xl border border-slate-200 w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden"
+            className="bg-[#11161a] rounded-3xl shadow-2xl border border-slate-800 w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <PhotoNotesManager
-              videoId={activeLectureModal.id}
-              videoTitle={`${activeLectureModal.courseTitle} • ${activeLectureModal.title}`}
-              onClose={() => setActiveLectureModal(null)}
-              isEmbedded={false}
-            />
+            <div className="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between text-white">
+              <span className="text-xs font-bold truncate text-slate-300">
+                {activeLectureModal.courseTitle} • {activeLectureModal.title}
+              </span>
+              <button
+                onClick={() => setActiveLectureModal(null)}
+                className="p-1 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="flex-1 min-h-0">
+              <StationaryNotebookViewer
+                videoId={activeLectureModal.id}
+                videoTitle={`${activeLectureModal.courseTitle} • ${activeLectureModal.title}`}
+                className="w-full h-full"
+              />
+            </div>
           </div>
         </div>
       )}
