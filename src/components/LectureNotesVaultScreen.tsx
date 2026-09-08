@@ -16,6 +16,7 @@ import {
   Eye,
   Check,
   X,
+  ChevronLeft,
 } from 'lucide-react';
 import { ILecturePhotoNote, StudyTheaterVideo } from '../types';
 import {
@@ -141,12 +142,14 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
     }
   };
 
+  const handleOpenLectureNotes = (lectureId: string) => {
+    setActiveViewerLectureId(lectureId);
+  };
+
   const handleOpenLectureInTheater = (lectureId: string) => {
     const vid = getCurriculumVideoById(lectureId);
     if (vid && onWatchVideo) {
       onWatchVideo(vid);
-    } else {
-      setActiveViewerLectureId(lectureId);
     }
   };
 
@@ -297,7 +300,7 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
                     {/* Topic Title */}
                     <div>
                       <h3
-                        onClick={() => handleOpenLectureInTheater(group.lectureId)}
+                        onClick={() => handleOpenLectureNotes(group.lectureId)}
                         className="text-sm font-bold text-slate-900 leading-snug line-clamp-2 hover:text-[#006494] cursor-pointer transition"
                         title={topicTitle}
                       >
@@ -308,7 +311,7 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
 
                   {/* Middle Section: Note Image (Square / Aspect Frame) */}
                   <div
-                    onClick={() => handleOpenLectureInTheater(group.lectureId)}
+                    onClick={() => handleOpenLectureNotes(group.lectureId)}
                     className="relative aspect-video sm:aspect-square bg-slate-950 overflow-hidden cursor-pointer mx-4 sm:mx-5 rounded-2xl border border-slate-200 shadow-inner group/img"
                   >
                     {previewNote ? (
@@ -333,7 +336,7 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
                           {/* Multi-page mini thumbnails strip if > 1 page */}
                           {group.notes.length > 1 && (
                             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-                              {group.notes.slice(0, 4).map((n, idx) => (
+                              {group.notes.slice(0, 4).map((n) => (
                                 <div
                                   key={n.id}
                                   className="w-7 h-7 rounded-md overflow-hidden border border-white/60 shadow-xs shrink-0 bg-slate-800"
@@ -376,7 +379,7 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
                       <span className="text-[11px] text-slate-400 italic">No link</span>
                     )}
 
-                    {/* Single Small Add Page Button + Open Theater */}
+                    {/* Single Small Add Page Button + Open Notes Viewer */}
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => {
@@ -391,12 +394,12 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
                       </button>
 
                       <button
-                        onClick={() => handleOpenLectureInTheater(group.lectureId)}
-                        className="px-3 py-1.5 bg-[#006494] hover:bg-[#004e75] text-white text-xs font-bold rounded-xl flex items-center gap-1 shadow-2xs transition cursor-pointer"
-                        title="Watch with stationary notebook"
+                        onClick={() => handleOpenLectureNotes(group.lectureId)}
+                        className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+                        title="Open full notes reader"
                       >
-                        <Play className="w-3 h-3 fill-current" />
-                        <span>View</span>
+                        <BookOpen className="w-3.5 h-3.5" />
+                        <span>Read Notes</span>
                       </button>
                     </div>
                   </div>
@@ -461,30 +464,48 @@ export const LectureNotesVaultScreen: React.FC<LectureNotesVaultScreenProps> = (
         </div>
       )}
 
-      {/* Standalone Stationary Viewer Modal */}
+      {/* Pure Full-Screen Notes Reader Modal (100% Edge-to-Edge on Mobile) */}
       {activeViewerLectureId && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in"
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-0 md:p-4 animate-in fade-in"
           onClick={() => setActiveViewerLectureId(null)}
         >
           <div
-            className="bg-[#11161a] rounded-3xl shadow-2xl border border-slate-800 w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden text-white"
+            className="bg-[#0e1317] rounded-none md:rounded-3xl shadow-2xl border-0 md:border md:border-slate-800 w-full h-[100dvh] md:h-[95vh] md:max-w-5xl flex flex-col overflow-hidden text-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="px-4 py-2.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-300 truncate">
-                {getCurriculumVideoById(activeViewerLectureId)?.title || activeViewerLectureId}
-              </span>
+            <div className="px-3 md:px-4 py-2 md:py-2.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between gap-2 shrink-0">
+              <div className="flex items-center gap-2 min-w-0">
+                <button
+                  onClick={() => setActiveViewerLectureId(null)}
+                  className="p-1 -ml-1 text-slate-400 hover:text-white rounded-lg md:hidden"
+                  title="Back"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold shrink-0 hidden xs:inline-block">
+                  NOTES
+                </span>
+                <span className="text-xs font-bold text-slate-200 truncate">
+                  {getCurriculumVideoById(activeViewerLectureId)?.title || activeViewerLectureId}
+                </span>
+              </div>
               <button
                 onClick={() => setActiveViewerLectureId(null)}
-                className="p-1 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white"
+                className="p-1 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white shrink-0"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="flex-1 min-h-0">
+            <div className="flex-1 min-h-0 w-full h-full">
               <StationaryNotebookViewer
                 videoId={activeViewerLectureId}
+                videoTitle={getCurriculumVideoById(activeViewerLectureId)?.title}
+                onReferVideo={() => {
+                  const targetId = activeViewerLectureId;
+                  setActiveViewerLectureId(null);
+                  handleOpenLectureInTheater(targetId);
+                }}
                 className="w-full h-full"
               />
             </div>

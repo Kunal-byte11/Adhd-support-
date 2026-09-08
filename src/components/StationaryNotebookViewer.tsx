@@ -33,12 +33,14 @@ import {
   Check,
   Maximize2,
   Minimize2,
+  Play,
 } from 'lucide-react';
 
 interface StationaryNotebookViewerProps {
   videoId: string;
   videoTitle?: string;
   className?: string;
+  onReferVideo?: () => void;
 }
 
 type FilterMode = 'normal' | 'dark-invert' | 'high-contrast';
@@ -47,6 +49,7 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
   videoId,
   videoTitle,
   className = '',
+  onReferVideo,
 }) => {
   const [allNotes, setAllNotes] = useState<ILecturePhotoNote[]>([]);
   const [activePageIndex, setActivePageIndex] = useState<number>(0);
@@ -224,19 +227,19 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
       />
 
       {/* 🧭 Stationary Notebook Header Bar */}
-      <div className="px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between gap-2 shrink-0 z-10 flex-wrap">
+      <div className="px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 bg-slate-900 border-b border-slate-800 flex items-center justify-between gap-1.5 sm:gap-2 shrink-0 z-10">
         {/* Left: Page Index & Quick Flipper */}
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="flex items-center gap-1 bg-slate-950 px-2 py-1 rounded-xl border border-slate-800 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+          <div className="flex items-center gap-0.5 bg-slate-950 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-xl border border-slate-800 shrink-0">
             <button
               disabled={activePageIndex <= 0}
               onClick={() => setActivePageIndex((p) => Math.max(0, p - 1))}
               className="p-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 rounded transition cursor-pointer"
               title="Previous Page (←)"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5" />
             </button>
-            <span className="text-xs font-mono font-bold text-amber-400 px-1">
+            <span className="text-xs font-mono font-bold text-amber-400 px-0.5">
               {lectureNotes.length > 0 ? `${activePageIndex + 1}/${lectureNotes.length}` : '0/0'}
             </span>
             <button
@@ -245,17 +248,17 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
               className="p-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 rounded transition cursor-pointer"
               title="Next Page (→)"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
-          <span className="text-xs font-semibold text-slate-300 truncate hidden sm:inline">
+          <span className="text-xs font-semibold text-slate-300 truncate hidden md:inline">
             {currentPage?.title || (lectureNotes.length > 0 ? `Page ${activePageIndex + 1}` : 'Notebook')}
           </span>
         </div>
 
         {/* Center/Right: Enhanced Reading Tools & Page Controls */}
-        <div className="flex items-center gap-1.5 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
           {lectureNotes.length > 0 && (
             <>
               {/* Dark Paper Invert Mode Toggle */}
@@ -266,10 +269,10 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
                     ? 'bg-amber-400 text-black shadow-xs'
                     : 'bg-slate-800 text-slate-300 hover:text-white'
                 }`}
-                title="🌙 Dark Paper Mode (Inverts white paper to dark - gentle on eyes!) [I]"
+                title="🌙 Dark Paper Mode [I]"
               >
                 <Moon className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">Dark Paper</span>
+                <span className="hidden sm:inline">Dark</span>
               </button>
 
               {/* High Contrast Ink Booster */}
@@ -319,6 +322,18 @@ export const StationaryNotebookViewer: React.FC<StationaryNotebookViewerProps> =
                 </button>
               )}
             </>
+          )}
+
+          {/* Optional Refer Video Button */}
+          {onReferVideo && (
+            <button
+              onClick={onReferVideo}
+              className="px-2.5 py-1 bg-[#006494] hover:bg-[#004e75] text-white text-[11px] font-bold rounded-lg flex items-center gap-1 shadow-xs transition cursor-pointer"
+              title="Not understanding from notes? Open the video lesson to learn"
+            >
+              <Play className="w-3 h-3 fill-current" />
+              <span>Refer Video</span>
+            </button>
           )}
 
           {/* Compact Add Page Button */}
