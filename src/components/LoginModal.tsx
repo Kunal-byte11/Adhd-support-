@@ -6,15 +6,14 @@ import {
   ArrowRight,
   ShieldCheck,
   Sparkles,
-  Heart,
   AlertCircle,
   CheckCircle2,
   Lock,
 } from 'lucide-react';
 
 interface LoginModalProps {
-  currentUserRole: UserRole;
-  onSelectRole: (role: UserRole) => void;
+  currentUserRole?: UserRole;
+  onSelectRole?: (role: UserRole) => void;
   onClose?: () => void;
   isOpen: boolean;
   googleUser: any;
@@ -31,15 +30,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onSignInGoogle,
   onSignOutGoogle,
 }) => {
-  const [selectedRole, setSelectedRole] = useState<UserRole>(currentUserRole);
   const [authError, setAuthError] = useState('');
 
   if (!isOpen) return null;
-
-  const handleConfirmLogin = (role: UserRole) => {
-    onSelectRole(role);
-    if (onClose) onClose();
-  };
 
   const handleGoogleSignIn = async () => {
     try {
@@ -62,7 +55,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             Secure Google Sign In
           </h2>
           <p className="text-sm text-[#545f72] mt-1 font-medium">
-            Authorized access only for Kunal &amp; Partner
+            Authorized access for Kunal's Study Hub
           </p>
         </div>
 

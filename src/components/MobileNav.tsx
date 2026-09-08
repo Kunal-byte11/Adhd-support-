@@ -2,10 +2,8 @@ import React from 'react';
 import { ScreenType, UserRole } from '../types';
 import {
   Map,
-  Heart,
   LucideIcon,
   BookOpen,
-  Brain,
   Headphones,
   Wind,
   Target,
@@ -13,18 +11,17 @@ import {
 
 interface MobileNavProps {
   currentScreen: ScreenType;
-  userRole: UserRole;
+  userRole?: UserRole;
   onNavigate: (screen: ScreenType) => void;
   onOpenLoginModal: () => void;
 }
 
 export const MobileNav: React.FC<MobileNavProps> = ({
   currentScreen,
-  userRole,
   onNavigate,
   onOpenLoginModal,
 }) => {
-  const kunalNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
+  const navItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
     { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
     { id: 'roadmap', label: 'Tasks', Icon: Map },
     { id: 'woop', label: 'WOOP', Icon: Target },
@@ -32,17 +29,6 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'breathing', label: 'Sigh', Icon: Wind },
     { id: 'sounds', label: '40Hz', Icon: Headphones },
   ];
-
-  const partnerNavItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
-    { id: 'partner-hq', label: 'Partner', Icon: Heart },
-    { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
-    { id: 'woop', label: 'WOOP', Icon: Target },
-    { id: 'recalls', label: 'Recalls', Icon: BookOpen },
-    { id: 'breathing', label: 'Sigh', Icon: Wind },
-    { id: 'sounds', label: '40Hz', Icon: Headphones },
-  ];
-
-  const navItems = userRole === 'partner' ? partnerNavItems : kunalNavItems;
 
   return (
     <nav
@@ -71,17 +57,17 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         );
       })}
 
-      {/* Switch profile shortcut */}
+      {/* Account / Google Sync shortcut */}
       <button
         onClick={onOpenLoginModal}
         className="flex flex-col items-center justify-center px-2 py-1 text-slate-500 active:scale-90 cursor-pointer min-w-[44px]"
-        title="Switch user"
+        title="Account & Google Sync"
       >
         <span className="text-sm mb-0.5">
-          {userRole === 'partner' ? '💖' : '👨‍💻'}
+          👨‍💻
         </span>
         <span className="text-[9px] font-bold text-slate-400 uppercase">
-          Switch
+          Sync
         </span>
       </button>
     </nav>

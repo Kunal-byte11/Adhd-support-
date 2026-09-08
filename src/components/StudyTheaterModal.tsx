@@ -8,6 +8,7 @@ import {
   getCurriculumPlaylistContext,
   PlaylistContext,
 } from '../data/curriculumData';
+import { buildChatGptNotesPrompt, openInChatGPT } from '../lib/chatGptExport';
 import {
   X,
   Play,
@@ -42,6 +43,8 @@ import {
   ListVideo,
   SkipForward,
   SkipBack,
+  Copy,
+  ExternalLink,
 } from 'lucide-react';
 import { neuroAudio } from '../lib/audioSynthesizer';
 
@@ -64,7 +67,7 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
 }) => {
   // Mode: 'cinema' (100% full screen video with zero distractions) or 'split' (side notes & timer)
   const [viewMode, setViewMode] = useState<'cinema' | 'split'>('cinema');
-  const [notesViewTab, setNotesViewTab] = useState<'timeline' | 'markdown' | 'batch' | 'playlist'>('timeline');
+  const [notesViewTab, setNotesViewTab] = useState<'timeline' | 'markdown' | 'batch' | 'playlist' | 'transcript'>('timeline');
   const [isCinemaPlaylistOpen, setIsCinemaPlaylistOpen] = useState(false);
 
   // Iframe ref for YouTube Player API postMessage seeking
@@ -134,6 +137,136 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   const [timestampNotes, setTimestampNotes] = useState<ITimestampNote[]>([]);
   const [syncStatus, setSyncStatus] = useState<'saved' | 'saving' | 'synced'>('synced');
   const syncTimeoutRef = useRef<any>(null);
+
+  // ChatGPT Study Notes Prompt State
+  const [showChatGptPromptModal, setShowChatGptPromptModal] = useState(false);
+  const [chatGptPromptText, setChatGptPromptText] = useState('');
+  const [promptCopied, setPromptCopied] = useState(false);
+  const [exportModalTab, setExportModalTab] = useState<'transcript' | 'prompt'>('transcript');
+
+  // Live YouTube Video Transcript State
+  const [videoTranscript, setVideoTranscript] = useState<string>('');
+  const [transcriptLines, setTranscriptLines] = useState<Array<{ offset: number; text: string; timestamp: string }>>([]);
+  const [isFetchingTranscript, setIsFetchingTranscript] = useState<boolean>(false);
+  const [transcriptError, setTranscriptError] = useState<string | null>(null);
+  const [transcriptSearch, setTranscriptSearch] = useState<string>('');
+
+  const loadVideoTranscript = async () => {
+    const cleanVidId = video ? getYouTubeId(video.youtubeUrl) : null;
+    if (!cleanVidId) return;
+
+    setIsFetchingTranscript(true);
+    setTranscriptError(null);
+    try {
+      const startSec = video.startSeconds || 0;
+      const params = new URLSearchParams({ videoId: cleanVidId });
+
+      let endSec: number | undefined = undefined;
+      if (playlistContext?.nextVideo && typeof playlistContext.nextVideo.startSeconds === 'number') {
+        endSec = playlistContext.nextVideo.startSeconds;
+      } else if (video.duration) {
+        endSec = startSec + parseTimestampToSeconds(video.duration);
+      }
+
+      if (typeof startSec === 'number' && startSec >= 0 && endSec && endSec > startSec) {
+        params.append('startSeconds', String(startSec));
+        params.append('endSeconds', String(endSec));
+      } else if (startSec > 0) {
+        params.append('startSeconds', String(startSec));
+        params.append('endSeconds', String(startSec + 1200));
+      }
+
+      const res = await fetch(`/api/video/transcript?${params.toString()}`);
+      const data = await res.json();
+      if (data && data.success) {
+        setVideoTranscript(data.rawText || '');
+        setTranscriptLines(data.lines || []);
+      } else {
+        setTranscriptError(data.message || 'No captions found for this video.');
+      }
+    } catch (e: any) {
+      setTranscriptError(e?.message || 'Failed to fetch transcript.');
+    } finally {
+      setIsFetchingTranscript(false);
+    }
+  };
+
+  // Automatically switch to transcript view if requested
+  useEffect(() => {
+    if (video?.openTranscript) {
+      setViewMode('split');
+      setNotesViewTab('transcript');
+    }
+  }, [video?.id, video?.openTranscript]);
+
+  // Pre-load transcript automatically when a video is loaded
+  useEffect(() => {
+    if (video) {
+      loadVideoTranscript();
+    }
+  }, [video?.id, video?.startSeconds]);
+
+  const filteredTranscriptLines = useMemo(() => {
+    if (!transcriptSearch.trim()) return transcriptLines;
+    const q = transcriptSearch.toLowerCase();
+    return transcriptLines.filter((l) => l.text.toLowerCase().includes(q));
+  }, [transcriptLines, transcriptSearch]);
+
+  const handleExportToChatGPT = async (customTranscript?: string) => {
+    let rawContent = (customTranscript || videoTranscript || '').trim();
+
+    if (!rawContent) {
+      setJumpToast('⏳ Fetching video transcript from YouTube...');
+      try {
+        const cleanVidId = video ? getYouTubeId(video.youtubeUrl) : null;
+        if (cleanVidId) {
+          const startSec = video.startSeconds || 0;
+          const params = new URLSearchParams({ videoId: cleanVidId });
+          let endSec: number | undefined = undefined;
+          if (playlistContext?.nextVideo && typeof playlistContext.nextVideo.startSeconds === 'number') {
+            endSec = playlistContext.nextVideo.startSeconds;
+          } else if (video.duration) {
+            endSec = startSec + parseTimestampToSeconds(video.duration);
+          }
+
+          if (typeof startSec === 'number' && startSec >= 0 && endSec && endSec > startSec) {
+            params.append('startSeconds', String(startSec));
+            params.append('endSeconds', String(endSec));
+          } else if (startSec > 0) {
+            params.append('startSeconds', String(startSec));
+            params.append('endSeconds', String(startSec + 1200));
+          }
+
+          const resp = await fetch(`/api/video/transcript?${params.toString()}`);
+          const data = await resp.json();
+          if (data && data.success && data.rawText && data.rawText.trim()) {
+            rawContent = data.rawText.trim();
+            setVideoTranscript(data.rawText);
+            setTranscriptLines(data.lines || []);
+          }
+        }
+      } catch (e) {
+        console.warn('Transcript fetch fallback:', e);
+      }
+    }
+
+    // Fallback to notes or description if transcript wasn't found
+    if (!rawContent) {
+      rawContent = (
+        notes ||
+        (timestampNotes.length > 0 ? timestampNotes.map((t) => `[${t.timestamp}] ${t.note}`).join('\n') : '') ||
+        video?.description ||
+        'No captions found for this video. Generate notes based on topic title.'
+      ).trim();
+    }
+
+    const fullPrompt = buildChatGptNotesPrompt(rawContent, video?.title);
+    setChatGptPromptText(fullPrompt);
+    setShowChatGptPromptModal(true);
+    openInChatGPT(fullPrompt);
+    setJumpToast('🚀 Video transcript & ADHD prompt ready! Opening ChatGPT...');
+    setTimeout(() => setJumpToast(null), 4000);
+  };
 
   // Multi-Note Composer Draft State
   const [composerSecs, setComposerSecs] = useState<number>(video?.startSeconds || 0);
@@ -617,16 +750,16 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-[#0a0d0f] flex flex-col w-screen h-screen overflow-hidden font-sans select-none animate-in fade-in duration-150">
       {/* 🎬 Sleek Distraction-Free Header Bar */}
-      <header className="bg-[#11161a] text-white px-4 sm:px-6 py-2.5 flex items-center justify-between border-b border-slate-800/80 shrink-0 z-20">
-        {/* Left: Video Metadata & Completion */}
-        <div className="flex items-center gap-3 min-w-0 flex-1 pr-4">
-          <span className="px-2 py-1 rounded-md bg-rose-500/20 text-rose-300 text-[11px] font-bold font-mono tracking-wide shrink-0 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+      <header className="bg-[#11161a] text-white px-3 sm:px-5 py-2 flex items-center justify-between border-b border-slate-800/80 shrink-0 z-20 gap-2 overflow-x-auto no-scrollbar">
+        {/* Left: Video Metadata */}
+        <div className="flex items-center gap-2.5 min-w-0 max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md shrink">
+          <span className="px-2 py-0.5 rounded-md bg-rose-500/20 text-rose-300 text-[10px] font-bold font-mono tracking-wide shrink-0 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
             THEATER
           </span>
 
           <div className="truncate min-w-0">
-            <h1 className="text-xs sm:text-sm font-bold text-white truncate">
+            <h1 className="text-xs sm:text-sm font-bold text-white truncate" title={video.title}>
               {video.title}
             </h1>
             {video.subject && (
@@ -635,18 +768,63 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               </span>
             )}
           </div>
+        </div>
 
+        {/* Center-Left: High Priority Transcript & ChatGPT Action Buttons (Always Visible!) */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          {/* 📜 Video Transcript Button */}
+          <button
+            onClick={() => {
+              setViewMode('split');
+              setNotesViewTab('transcript');
+              if (!videoTranscript && !isFetchingTranscript) {
+                loadVideoTranscript();
+              }
+            }}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono flex items-center gap-1.5 transition cursor-pointer shrink-0 shadow-xs ${
+              viewMode === 'split' && notesViewTab === 'transcript'
+                ? 'bg-amber-400 text-black shadow-md font-black ring-2 ring-amber-300'
+                : 'bg-amber-500/25 text-amber-300 hover:bg-amber-500/40 border border-amber-500/50'
+            }`}
+            title="Open video transcript with clickable timestamps and ChatGPT notes generator"
+          >
+            <FileText className="w-3.5 h-3.5 text-amber-400" />
+            <span>📜 Transcript</span>
+            {transcriptLines.length > 0 && (
+              <span className="text-[9px] bg-black/40 text-amber-200 px-1 py-0.2 rounded font-mono">
+                {transcriptLines.length}
+              </span>
+            )}
+          </button>
+
+          {/* 🚀 ChatGPT Export Button */}
+          <button
+            onClick={() => handleExportToChatGPT()}
+            className="px-3 py-1.5 rounded-xl text-xs font-bold font-mono bg-emerald-500/25 hover:bg-emerald-500/40 text-emerald-300 border border-emerald-500/50 flex items-center gap-1.5 transition cursor-pointer shrink-0 shadow-xs"
+            title="Generate ADHD study notes in ChatGPT from this video's transcript"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="hidden sm:inline">🚀 ChatGPT</span>
+            <span className="sm:hidden">AI</span>
+          </button>
+
+          {/* Mark Done Button */}
           {onCompleteTopic && (
             <button
-              onClick={() => onCompleteTopic(video.id)}
-              className={`ml-2 px-3 py-1 rounded-lg text-xs font-bold shrink-0 flex items-center gap-1.5 transition cursor-pointer ${
+              onClick={() => {
+                onCompleteTopic(video.id);
+                setShowChatGptPromptModal(true);
+                handleExportToChatGPT();
+              }}
+              className={`px-2.5 py-1.5 rounded-xl text-xs font-bold shrink-0 flex items-center gap-1.5 transition cursor-pointer ${
                 isCompleted
                   ? 'bg-emerald-600 text-white shadow-xs'
-                  : 'bg-white/10 hover:bg-white/20 text-slate-300'
+                  : 'bg-white/10 hover:bg-white/20 text-slate-300 border border-white/10'
               }`}
+              title="Mark lecture completed and open ADHD study notes prompt for ChatGPT"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{isCompleted ? 'Done ✓' : 'Mark Done'}</span>
+              <span className="hidden md:inline">{isCompleted ? 'Done ✓' : 'Mark Done'}</span>
             </button>
           )}
         </div>
@@ -819,6 +997,38 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
             </div>
           )}
 
+          {/* Floating Transcript & AI Notes Quick Pills on Video Player (Always Visible) */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+            <button
+              onClick={() => {
+                setViewMode('split');
+                setNotesViewTab('transcript');
+                if (!videoTranscript && !isFetchingTranscript) {
+                  loadVideoTranscript();
+                }
+              }}
+              className="px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-amber-400/60 hover:border-amber-300 text-amber-300 text-xs font-bold font-mono shadow-2xl backdrop-blur-md transition cursor-pointer flex items-center gap-1.5 group"
+              title="Open full video transcript with clickable timestamps"
+            >
+              <FileText className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
+              <span>📜 Transcript</span>
+              {transcriptLines.length > 0 && (
+                <span className="text-[10px] bg-amber-400/20 text-amber-200 px-1 rounded font-mono">
+                  {transcriptLines.length}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => handleExportToChatGPT()}
+              className="px-3 py-1.5 rounded-xl bg-emerald-950/90 hover:bg-emerald-900 border border-emerald-500/60 hover:border-emerald-400 text-emerald-300 text-xs font-bold font-mono shadow-2xl backdrop-blur-md transition cursor-pointer flex items-center gap-1.5 group"
+              title="Generate ADHD study notes in ChatGPT from this video's transcript"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400 group-hover:rotate-12 transition-transform" />
+              <span>🚀 ChatGPT</span>
+            </button>
+          </div>
+
           {/* Floating Next Video Quick Bar (bottom-right of player) */}
           {playlistContext?.nextVideo && (
             <div className="absolute bottom-4 right-4 z-20 hidden sm:flex items-center gap-2">
@@ -963,6 +1173,23 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
                     <span>Lessons ({playlistContext.totalCount})</span>
                   </button>
                 )}
+                <button
+                  onClick={() => {
+                    setNotesViewTab('transcript');
+                    if (!videoTranscript && !isFetchingTranscript) {
+                      loadVideoTranscript();
+                    }
+                  }}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold font-mono flex items-center gap-1.5 transition cursor-pointer ${
+                    notesViewTab === 'transcript'
+                      ? 'bg-amber-400 text-black shadow-xs font-black'
+                      : 'text-amber-400/90 hover:text-amber-300'
+                  }`}
+                  title="View YouTube video transcript with clickable timestamps"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Transcript</span>
+                </button>
               </div>
 
               <div className="flex items-center gap-2">
@@ -1475,6 +1702,134 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
                 </div>
               </div>
             )}
+
+            {/* ================= TAB 5: VIDEO TRANSCRIPT ================= */}
+            {notesViewTab === 'transcript' && (
+              <div className="flex-1 flex flex-col min-h-[320px] bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 space-y-3">
+                {/* Header & Quick Action Buttons */}
+                <div className="flex items-center justify-between border-b border-slate-800 pb-2.5 flex-wrap gap-2">
+                  <div className="min-w-0 flex-1 pr-2">
+                    <span className="text-[10px] text-amber-400 font-mono font-bold uppercase tracking-wider block">
+                      📜 Video Transcript & Captions
+                    </span>
+                    <h3 className="text-xs font-bold text-white truncate">
+                      {video.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <button
+                      onClick={() => handleExportToChatGPT(videoTranscript)}
+                      className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 shadow-sm shadow-emerald-900/40 cursor-pointer"
+                      title="Generate ADHD study notes from this transcript in ChatGPT"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Open in ChatGPT</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        if (videoTranscript) {
+                          navigator.clipboard.writeText(videoTranscript);
+                          setJumpToast('📋 Copied raw transcript!');
+                          setTimeout(() => setJumpToast(null), 2500);
+                        }
+                      }}
+                      disabled={!videoTranscript}
+                      className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition cursor-pointer disabled:opacity-40"
+                      title="Copy raw transcript text"
+                    >
+                      <ClipboardPaste className="w-3.5 h-3.5" />
+                      <span>Copy</span>
+                    </button>
+
+                    <button
+                      onClick={() => loadVideoTranscript()}
+                      disabled={isFetchingTranscript}
+                      className="p-1.5 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 cursor-pointer disabled:opacity-40"
+                      title="Reload transcript from YouTube"
+                    >
+                      <RotateCcw className={`w-3.5 h-3.5 ${isFetchingTranscript ? 'animate-spin' : ''}`} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Search Bar for Transcript */}
+                {transcriptLines.length > 0 && (
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={transcriptSearch}
+                      onChange={(e) => setTranscriptSearch(e.target.value)}
+                      placeholder="🔍 Search transcript words..."
+                      className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-hidden focus:border-amber-500"
+                    />
+                    {transcriptSearch && (
+                      <button
+                        onClick={() => setTranscriptSearch('')}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {/* Loading State */}
+                {isFetchingTranscript && (
+                  <div className="flex-1 flex flex-col items-center justify-center py-12 text-slate-400 gap-2">
+                    <RotateCcw className="w-6 h-6 animate-spin text-amber-400" />
+                    <p className="text-xs font-mono">Fetching YouTube captions & timestamps...</p>
+                  </div>
+                )}
+
+                {/* Error State */}
+                {!isFetchingTranscript && transcriptError && !videoTranscript && (
+                  <div className="flex-1 flex flex-col items-center justify-center py-10 px-4 text-center text-slate-400 gap-3">
+                    <AlertCircle className="w-8 h-8 text-amber-500/80" />
+                    <div>
+                      <p className="text-xs font-bold text-slate-300 mb-1">{transcriptError}</p>
+                      <p className="text-[11px] text-slate-500 max-w-xs">
+                        This video might not have public captions enabled, or you can paste your own notes in the Timeline/Markdown tab.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => loadVideoTranscript()}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                )}
+
+                {/* Transcript Lines List with Clickable Timestamps */}
+                {!isFetchingTranscript && transcriptLines.length > 0 && (
+                  <div className="flex-1 overflow-y-auto space-y-1.5 max-h-[calc(100vh-340px)] pr-1 text-xs">
+                    {filteredTranscriptLines.map((item, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => seekToSeconds(item.offset, item.timestamp)}
+                        className="p-2 rounded-lg bg-slate-950/50 hover:bg-slate-800/60 border border-slate-800/60 hover:border-amber-500/40 transition cursor-pointer flex items-start gap-2.5 group"
+                      >
+                        <span className="font-mono text-[11px] font-bold text-amber-400 bg-amber-950/40 border border-amber-800/50 px-1.5 py-0.5 rounded shrink-0 group-hover:bg-amber-400 group-hover:text-black transition">
+                          {item.timestamp}
+                        </span>
+                        <p className="text-slate-300 leading-relaxed group-hover:text-white flex-1">
+                          {item.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Raw Transcript Fallback if only rawText is present */}
+                {!isFetchingTranscript && transcriptLines.length === 0 && videoTranscript && (
+                  <div className="flex-1 overflow-y-auto max-h-[calc(100vh-340px)] p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-300 whitespace-pre-wrap leading-relaxed">
+                    {videoTranscript}
+                  </div>
+                )}
+              </div>
+            )}
           </aside>
         )}
 
@@ -1503,6 +1858,152 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
               >
                 Resume Video
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* 🚀 Dedicated ChatGPT & Transcript Export Modal */}
+        {showChatGptPromptModal && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-150">
+            <div className="bg-[#11161a] border border-slate-700/80 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden text-white">
+              {/* Header */}
+              <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-900/70">
+                <div className="flex items-center gap-3 min-w-0">
+                  <span className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/30 shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="text-sm sm:text-base font-bold text-white truncate">
+                      ADHD Study Notes & Video Transcript
+                    </h3>
+                    <p className="text-xs text-slate-400 truncate">
+                      {video.title}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowChatGptPromptModal(false)}
+                  className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-slate-800 transition cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Quick Action Top Banner */}
+              <div className="p-4 bg-emerald-950/40 border-b border-emerald-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-xs text-emerald-300">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>
+                    <strong>Prompt Ready!</strong> Sliced YouTube transcript + custom ADHD study rules copied to clipboard.
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <a
+                    href="https://chatgpt.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (chatGptPromptText) {
+                        navigator.clipboard.writeText(chatGptPromptText);
+                      }
+                    }}
+                    className="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/50 transition cursor-pointer"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Open ChatGPT (Paste Ctrl+V)</span>
+                  </a>
+                  <button
+                    onClick={() => {
+                      if (chatGptPromptText) {
+                        navigator.clipboard.writeText(chatGptPromptText);
+                        setPromptCopied(true);
+                        setTimeout(() => setPromptCopied(false), 2500);
+                      }
+                    }}
+                    className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold flex items-center gap-1.5 transition cursor-pointer shrink-0"
+                    title="Copy full prompt again"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span>{promptCopied ? 'Copied ✓' : 'Copy'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Body: Tabs between Transcript and ChatGPT Prompt */}
+              <div className="flex-1 flex flex-col min-h-0 p-4 space-y-3 overflow-hidden">
+                <div className="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs font-mono">
+                  <button
+                    onClick={() => setExportModalTab('transcript')}
+                    className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition cursor-pointer ${
+                      exportModalTab === 'transcript'
+                        ? 'bg-amber-400 text-black shadow-xs font-black'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>Video Transcript ({transcriptLines.length} lines)</span>
+                  </button>
+                  <button
+                    onClick={() => setExportModalTab('prompt')}
+                    className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition cursor-pointer ${
+                      exportModalTab === 'prompt'
+                        ? 'bg-emerald-500 text-black shadow-xs font-black'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Full ChatGPT Prompt Preview</span>
+                  </button>
+                </div>
+
+                {exportModalTab === 'transcript' ? (
+                  <div className="flex-1 overflow-y-auto space-y-1.5 bg-slate-950 p-3 rounded-2xl border border-slate-800 text-xs font-mono leading-relaxed">
+                    {transcriptLines.length > 0 ? (
+                      transcriptLines.map((l, i) => (
+                        <div
+                          key={i}
+                          onClick={() => {
+                            seekToSeconds(l.offset, l.timestamp);
+                            setShowChatGptPromptModal(false);
+                          }}
+                          className="flex items-start gap-2.5 hover:bg-slate-900 p-1.5 rounded cursor-pointer group transition"
+                          title="Jump video to this timestamp"
+                        >
+                          <span className="text-amber-400 font-bold shrink-0 bg-amber-950/40 group-hover:bg-amber-400 group-hover:text-black px-1.5 py-0.5 rounded border border-amber-800/40 transition">
+                            {l.timestamp}
+                          </span>
+                          <span className="text-slate-300 group-hover:text-white leading-relaxed">
+                            {l.text}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-slate-400 p-6 text-center">
+                        {isFetchingTranscript ? (
+                          <p>⏳ Fetching captions from YouTube...</p>
+                        ) : (
+                          <p>{videoTranscript || 'No captions found for this video.'}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex-1 overflow-y-auto bg-slate-950 p-3.5 rounded-2xl border border-slate-800 text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed select-text">
+                    {chatGptPromptText}
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="p-3.5 sm:p-4 border-t border-slate-800 bg-slate-900/60 flex items-center justify-between text-xs text-slate-400">
+                <span>💡 Sliced from YouTube and formatted with ADHD study rules.</span>
+                <button
+                  onClick={() => setShowChatGptPromptModal(false)}
+                  className="px-4 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold cursor-pointer transition"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         )}

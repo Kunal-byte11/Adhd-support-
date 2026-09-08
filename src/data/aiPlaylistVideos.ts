@@ -3787,5 +3787,227 @@ export const AI_PLAYLIST_VIDEOS: Record<string, AiVideoItem[]> = {
       "description": "Log-normal, Pareto (Power Law), Binomial, Bernoulli, and Poisson distributions.",
       "startSeconds": 18821
     }
+  ],
+  "ai-res-11": [
+    {
+      "id": "ai-gpt-1",
+      "courseId": "ai-res-11",
+      "videoIndex": 1,
+      "title": "1. Intro to ChatGPT, Transformers & nanoGPT (00:00)",
+      "durationTimestamp": "7:52",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=0s",
+      "description": "High-level overview of GPT, Language Models, ChatGPT vs raw Transformers, nanoGPT, and Tiny Shakespeare dataset.",
+      "startSeconds": 0
+    },
+    {
+      "id": "ai-gpt-2",
+      "courseId": "ai-res-11",
+      "videoIndex": 2,
+      "title": "2. Inspecting the Shakespeare Dataset (07:52)",
+      "durationTimestamp": "1:36",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=472s",
+      "description": "Inspecting raw input.txt (1M characters), determining unique characters, vocabulary size (vocab_size = 65).",
+      "startSeconds": 472
+    },
+    {
+      "id": "ai-gpt-3",
+      "courseId": "ai-res-11",
+      "videoIndex": 3,
+      "title": "3. Character Tokenization & Train/Val Split (09:28)",
+      "durationTimestamp": "4:59",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=568s",
+      "description": "Building character encoder/decoder (stoi and itos), tensor encoding, 90/10 train and validation split in PyTorch.",
+      "startSeconds": 568
+    },
+    {
+      "id": "ai-gpt-4",
+      "courseId": "ai-res-11",
+      "videoIndex": 4,
+      "title": "4. Data Loader: Context Length & Batches (14:27)",
+      "durationTimestamp": "7:44",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=867s",
+      "description": "Context length (block_size), batch dimension (batch_size), creating (x, y) target pairs across multiple context positions.",
+      "startSeconds": 867
+    },
+    {
+      "id": "ai-gpt-5",
+      "courseId": "ai-res-11",
+      "videoIndex": 5,
+      "title": "5. Simplest Baseline: Bigram Language Model (22:11)",
+      "durationTimestamp": "12:42",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=1331s",
+      "description": "Implementing BigramLanguageModel with nn.Embedding, cross-entropy loss, and autoregressive generation.",
+      "startSeconds": 1331
+    },
+    {
+      "id": "ai-gpt-6",
+      "courseId": "ai-res-11",
+      "videoIndex": 6,
+      "title": "6. Training the Bigram Model (34:53)",
+      "durationTimestamp": "3:07",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=2093s",
+      "description": "Training loop using torch.optim.AdamW, observing loss decrease from ~4.87 down to ~2.5.",
+      "startSeconds": 2093
+    },
+    {
+      "id": "ai-gpt-7",
+      "courseId": "ai-res-11",
+      "videoIndex": 7,
+      "title": "7. Porting to Standalone Training Script (38:00)",
+      "durationTimestamp": "4:13",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=2280s",
+      "description": "Refactoring notebook to bigram.py, device agnostic setup (CUDA vs CPU), and estimate_loss function with torch.no_grad.",
+      "startSeconds": 2280
+    },
+    {
+      "id": "ai-gpt-8",
+      "courseId": "ai-res-11",
+      "videoIndex": 8,
+      "title": "8. Context Aggregation V1: Naive For-Loops (42:13)",
+      "durationTimestamp": "4:58",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=2533s",
+      "description": "Weakest form of aggregation: averaging past token embeddings using nested Python loops (bag of words).",
+      "startSeconds": 2533
+    },
+    {
+      "id": "ai-gpt-9",
+      "courseId": "ai-res-11",
+      "videoIndex": 9,
+      "title": "9. Matrix Multiplication as Weighted Sum (47:11)",
+      "durationTimestamp": "4:43",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=2831s",
+      "description": "The self-attention mathematical trick: using lower-triangular matrix multiplication for parallel causal aggregation.",
+      "startSeconds": 2831
+    },
+    {
+      "id": "ai-gpt-10",
+      "courseId": "ai-res-11",
+      "videoIndex": 10,
+      "title": "10. Vectorized Triangular Aggregation V2 (51:54)",
+      "durationTimestamp": "2:48",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=3114s",
+      "description": "Implementing torch.tril normalized matrix multiplication in PyTorch without for-loops.",
+      "startSeconds": 3114
+    },
+    {
+      "id": "ai-gpt-11",
+      "courseId": "ai-res-11",
+      "videoIndex": 11,
+      "title": "11. Softmax Causal Masking V3 (54:42)",
+      "durationTimestamp": "5:36",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=3282s",
+      "description": "Using masked_fill with -inf and F.softmax to dynamically compute attention affinity weights.",
+      "startSeconds": 3282
+    },
+    {
+      "id": "ai-gpt-12",
+      "courseId": "ai-res-11",
+      "videoIndex": 12,
+      "title": "12. Positional Encoding (1:00:18)",
+      "durationTimestamp": "1:42",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=3618s",
+      "description": "Why transformers need spatial awareness: adding positional embedding table (position_embedding_table) to token embeddings.",
+      "startSeconds": 3618
+    },
+    {
+      "id": "ai-gpt-13",
+      "courseId": "ai-res-11",
+      "videoIndex": 13,
+      "title": "13. THE CRUX: Self-Attention Mechanism V4 (1:02:00)",
+      "durationTimestamp": "9:38",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=3720s",
+      "description": "Queries, Keys, and Values: Q @ K.T / sqrt(d_k). How tokens communicate based on content and interest.",
+      "startSeconds": 3720
+    },
+    {
+      "id": "ai-gpt-14",
+      "courseId": "ai-res-11",
+      "videoIndex": 14,
+      "title": "14. 6 Crucial Nuances of Attention (1:11:38)",
+      "durationTimestamp": "7:33",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=4298s",
+      "description": "Communication graphs, set invariance, cross-batch independence, causal masks, encoder vs decoder, and scaled dot-product divisor.",
+      "startSeconds": 4298
+    },
+    {
+      "id": "ai-gpt-15",
+      "courseId": "ai-res-11",
+      "videoIndex": 15,
+      "title": "15. Single-Head Attention PyTorch Module (1:19:11)",
+      "durationTimestamp": "2:48",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=4751s",
+      "description": "Coding the Head module in PyTorch with key, query, value linear projections and causal tril buffer.",
+      "startSeconds": 4751
+    },
+    {
+      "id": "ai-gpt-16",
+      "courseId": "ai-res-11",
+      "videoIndex": 16,
+      "title": "16. Multi-Head Self-Attention (1:21:59)",
+      "durationTimestamp": "2:26",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=4919s",
+      "description": "MultiHeadAttention module running parallel heads and concatenating results with linear projection.",
+      "startSeconds": 4919
+    },
+    {
+      "id": "ai-gpt-17",
+      "courseId": "ai-res-11",
+      "videoIndex": 17,
+      "title": "17. Feed-Forward Layers & Residual Skip Connections (1:24:25)",
+      "durationTimestamp": "8:26",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=5065s",
+      "description": "Position-wise MLP (Linear -> ReLU -> Linear) and residual skip connections (x + f(x)) for deep gradient flow.",
+      "startSeconds": 5065
+    },
+    {
+      "id": "ai-gpt-18",
+      "courseId": "ai-res-11",
+      "videoIndex": 18,
+      "title": "18. Layer Normalization & Dropout (1:32:51)",
+      "durationTimestamp": "4:58",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=5571s",
+      "description": "LayerNorm across feature dimensions, Pre-LN transformer architecture, and dropout regularization.",
+      "startSeconds": 5571
+    },
+    {
+      "id": "ai-gpt-19",
+      "courseId": "ai-res-11",
+      "videoIndex": 19,
+      "title": "19. Scaling to nanoGPT & Shakespeare Generation (1:37:49)",
+      "durationTimestamp": "8:33",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=5869s",
+      "description": "Stacking N Transformer blocks (Block), scaling to 6 layers and 6 heads, training on GPU, and generating Shakespeare.",
+      "startSeconds": 5869
+    },
+    {
+      "id": "ai-gpt-20",
+      "courseId": "ai-res-11",
+      "videoIndex": 20,
+      "title": "20. ChatGPT, GPT-3, Pretraining vs RLHF (1:46:22)",
+      "durationTimestamp": "9:54",
+      "thumbnailUrl": "https://i.ytimg.com/vi/kCc8FmEb1nY/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kCc8FmEb1nY&t=6382s",
+      "description": "How nanoGPT relates to GPT-3 and ChatGPT: unsupervised pre-training, supervised fine-tuning (SFT), and RLHF alignment.",
+      "startSeconds": 6382
+    }
   ]
 };

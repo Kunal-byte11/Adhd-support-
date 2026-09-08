@@ -5,10 +5,9 @@ export type ScreenType =
   | 'recalls'
   | 'breathing'
   | 'sounds'
-  | 'partner-hq'
   | 'neuro';
 
-export type UserRole = 'kunal' | 'partner';
+export type UserRole = 'kunal';
 
 export interface StudyTheaterVideo {
   id: string;
@@ -21,54 +20,7 @@ export interface StudyTheaterVideo {
   duration?: string;
   thumbnailUrl?: string;
   description?: string;
-}
-
-export interface PartnerNudge {
-  id: string;
-  type: 'breathe' | 'water' | 'focus' | 'proud' | 'love';
-  label: string;
-  emoji: string;
-  timestamp: number;
-  fromName: string;
-}
-
-export interface StagedReward {
-  id: string;
-  type: 'photo' | 'voice' | 'coupon' | 'date';
-  title: string;
-  description: string;
-  noteFromPartner?: string;
-  audioDuration?: string;
-  partnerPhotoUrl?: string;
-  isUnlocked: boolean;
-  unlockedAt?: number;
-  createdAt: number;
-}
-
-export interface PartnerReward {
-  id: string;
-  title: string;
-  description: string;
-  category: 'treat' | 'date' | 'massage' | 'food' | 'custom' | 'coupon' | 'kiss';
-  icon: string;
-  requiredPoints?: number;
-  unlockedAt?: number;
-  isRedeemed: boolean;
-  noteFromPartner?: string;
-  grantedBy: string;
-  createdAt: number;
-  audioDataUrl?: string;
-}
-
-export interface PartnerNote {
-  id: string;
-  author: string;
-  message: string;
-  timestamp: number;
-  emoji: string;
-  isRead?: boolean;
-  imageUrl?: string;
-  audioDataUrl?: string;
+  openTranscript?: boolean;
 }
 
 export type TaskImportance = 'MUST_DO' | 'CORE' | 'PRACTICE' | 'BONUS';

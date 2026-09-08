@@ -2,7 +2,6 @@ import React from 'react';
 import { ScreenType, UserRole } from '../types';
 import {
   Map,
-  Heart,
   LucideIcon,
   BookOpen,
   Brain,
@@ -14,7 +13,7 @@ import {
 
 interface SidebarProps {
   currentScreen: ScreenType;
-  userRole: UserRole;
+  userRole?: UserRole;
   onNavigate: (screen: ScreenType) => void;
   onOpenLoginModal: () => void;
 }
@@ -28,14 +27,10 @@ interface NavItem {
 
 export const Sidebar: React.FC<SidebarProps> = ({
   currentScreen,
-  userRole,
   onNavigate,
   onOpenLoginModal,
 }) => {
   const coreNavItems: NavItem[] = [
-    ...(userRole === 'partner'
-      ? [{ id: 'partner-hq' as ScreenType, label: 'Partner HQ 💖', Icon: Heart }]
-      : []),
     { id: 'sem7', label: 'Sem 7 📚', Icon: BookOpen },
     { id: 'roadmap', label: 'Curriculum & Tasks', Icon: Map },
   ];
@@ -101,22 +96,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="px-5 mb-4">
         <div
           onClick={onOpenLoginModal}
-          className={`p-2.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-sm ${
-            userRole === 'partner'
-              ? 'bg-pink-50/80 border-pink-200'
-              : 'bg-white border-[#c2c8c0] hover:border-slate-400'
-          }`}
+          className="p-2.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-sm bg-white border-[#c2c8c0] hover:border-slate-400"
         >
           <div className="flex items-center gap-2.5 min-w-0">
             <span className="text-lg">
-              {userRole === 'partner' ? '💖' : '👨‍💻'}
+              👨‍💻
             </span>
             <div className="min-w-0">
               <p className="text-xs font-bold text-[#181c1e] truncate">
-                {userRole === 'partner' ? 'partner_hq (Partner)' : 'kunal11 (Kunal)'}
+                kunal11 (Kunal)
               </p>
               <p className="text-[10px] text-[#545f72] truncate">
-                Click to switch
+                Study Hub • Google Sync
               </p>
             </div>
           </div>

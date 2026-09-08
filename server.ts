@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import axios from "axios";
+import { YoutubeTranscript } from "youtube-transcript";
 
 interface StoredUrge {
   id: string;
@@ -147,11 +148,126 @@ Return ONLY valid JSON matching this exact structure:
   return null;
 }
 
+async function fetchAndSliceTranscript(
+  videoId: string,
+  startSeconds?: number,
+  endSeconds?: number
+): Promise<{
+  rawText: string;
+  timestampedText: string;
+  lines: Array<{ offset: number; text: string; timestamp: string }>;
+  lineCount: number;
+  isSliced: boolean;
+}> {
+  const cleanId = videoId.replace(/[^a-zA-Z0-9_-]/g, "");
+  if (!cleanId) {
+    throw new Error("Invalid YouTube video ID");
+  }
+
+  let items: any[] = [];
+  try {
+    items = await YoutubeTranscript.fetchTranscript(cleanId);
+  } catch {
+    try {
+      items = await YoutubeTranscript.fetchTranscript(cleanId, { lang: "hi" });
+    } catch {
+      try {
+        items = await YoutubeTranscript.fetchTranscript(cleanId, { lang: "en" });
+      } catch {
+        items = [];
+      }
+    }
+  }
+
+  if (!items || items.length === 0) {
+    throw new Error("No captions or transcript found for this video.");
+  }
+
+  let filtered = items;
+  const start = startSeconds !== undefined && !isNaN(startSeconds) ? Number(startSeconds) : 0;
+  const end = endSeconds !== undefined && !isNaN(endSeconds) ? Number(endSeconds) : 0;
+
+  // youtube-transcript returns offset and duration in milliseconds
+  const startMs = start * 1000;
+  const endMs = end * 1000;
+
+  if (startMs > 0 || endMs > startMs) {
+    filtered = items.filter((item) => {
+      const itemOffset = typeof item.offset === "number" ? item.offset : 0;
+      if (startMs > 0 && itemOffset < startMs) return false;
+      if (endMs > startMs && itemOffset > endMs) return false;
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      filtered = items;
+    }
+  }
+
+  const rawText = filtered.map((item) => item.text).join(" ");
+  const timestampedText = filtered
+    .map((item) => {
+      const totalSecs = Math.floor((item.offset || 0) / 1000);
+      const m = Math.floor(totalSecs / 60);
+      const s = Math.floor(totalSecs % 60)
+        .toString()
+        .padStart(2, "0");
+      return `[${m}:${s}] ${item.text}`;
+    })
+    .join("\n");
+
+  return {
+    rawText,
+    timestampedText,
+    lines: filtered.map((item) => {
+      const totalSecs = Math.floor((item.offset || 0) / 1000);
+      const m = Math.floor(totalSecs / 60);
+      const s = Math.floor(totalSecs % 60)
+        .toString()
+        .padStart(2, "0");
+      return {
+        offset: totalSecs,
+        text: item.text,
+        timestamp: `${m}:${s}`,
+      };
+    }),
+    lineCount: filtered.length,
+    isSliced: filtered.length < items.length,
+  };
+}
+
 async function startServer() {
   const app = express();
   const PORT = 3000;
 
   app.use(express.json({ limit: "20mb" }));
+
+  // API: Video Transcript Fetcher with language fallback and timestamp slicing
+  app.get("/api/video/transcript", async (req, res) => {
+    try {
+      const videoId = String(req.query.videoId || "").trim();
+      const startSeconds = req.query.startSeconds ? Number(req.query.startSeconds) : undefined;
+      const endSeconds = req.query.endSeconds ? Number(req.query.endSeconds) : undefined;
+
+      if (!videoId) {
+        return res.status(400).json({ error: "videoId parameter is required." });
+      }
+
+      const result = await fetchAndSliceTranscript(videoId, startSeconds, endSeconds);
+      return res.json({
+        success: true,
+        videoId,
+        ...result,
+      });
+    } catch (err: any) {
+      console.warn(`Could not fetch transcript for ${req.query.videoId}:`, err.message);
+      return res.status(404).json({
+        success: false,
+        error: "Transcript unavailable",
+        message: err?.message || "No captions found for this video.",
+      });
+    }
+  });
 
   // API 1: NVIDIA AI Deconstruction & Systematic Importance Categorization
   app.post("/api/tasks/chunk", async (req, res) => {
