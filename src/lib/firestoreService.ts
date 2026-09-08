@@ -4,6 +4,7 @@ import {
   CURRICULUM_COLLECTION,
   WOOP_COLLECTION,
   RECALLS_COLLECTION,
+  PHOTO_NOTES_COLLECTION,
   collection,
   doc,
   setDoc,
@@ -16,7 +17,7 @@ import {
   serverTimestamp,
   ensureAnonymousAuth,
 } from './firebase';
-import { TaskItem, IWoopGoal, ISessionRecall } from '../types';
+import { TaskItem, IWoopGoal, ISessionRecall, ILecturePhotoNote } from '../types';
 
 // ======================= TASKS =======================
 
@@ -342,6 +343,126 @@ export function subscribeRecallLogs(onRecallsChanged: (recalls: ISessionRecall[]
     return () => {};
   }
 }
+
+// ======================= LECTURE PHOTO NOTES =======================
+
+const PHOTO_NOTES_LOCAL_KEY = 'focusflow_lecture_photo_notes_cache';
+
+export function getAllStoredPhotoNotes(): ILecturePhotoNote[] {
+  try {
+    const raw = localStorage.getItem(PHOTO_NOTES_LOCAL_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch {}
+  return [];
+}
+
+export function saveStoredPhotoNotesLocally(notes: ILecturePhotoNote[]): void {
+  try {
+    localStorage.setItem(PHOTO_NOTES_LOCAL_KEY, JSON.stringify(notes));
+  } catch (e) {
+    console.warn('Failed to cache photo notes locally (quota):', e);
+  }
+}
+
+export async function saveLecturePhotoNoteToFirestore(note: ILecturePhotoNote): Promise<void> {
+  // Update local cache immediately
+  const existing = getAllStoredPhotoNotes();
+  const index = existing.findIndex((n) => n.id === note.id);
+  let updatedList: ILecturePhotoNote[];
+  if (index >= 0) {
+    updatedList = existing.map((n) => (n.id === note.id ? note : n));
+  } else {
+    updatedList = [note, ...existing];
+  }
+  saveStoredPhotoNotesLocally(updatedList);
+
+  try {
+    await ensureAnonymousAuth();
+    const noteRef = doc(db, PHOTO_NOTES_COLLECTION, note.id);
+    await setDoc(
+      noteRef,
+      {
+        ...note,
+        createdAt: note.createdAt || Date.now(),
+        updatedAt: serverTimestamp(),
+      },
+      { merge: true }
+    );
+  } catch (err) {
+    console.warn('Firestore photo note save note (local copy active):', err);
+  }
+}
+
+export async function deleteLecturePhotoNoteFromFirestore(noteId: string): Promise<void> {
+  // Update local cache immediately
+  const existing = getAllStoredPhotoNotes();
+  const updatedList = existing.filter((n) => n.id !== noteId);
+  saveStoredPhotoNotesLocally(updatedList);
+
+  try {
+    await ensureAnonymousAuth();
+    const noteRef = doc(db, PHOTO_NOTES_COLLECTION, noteId);
+    await deleteDoc(noteRef);
+  } catch (err) {
+    console.warn('Firestore photo note delete exception:', err);
+  }
+}
+
+export function subscribeAllPhotoNotes(
+  onNotesChanged: (notes: ILecturePhotoNote[]) => void
+): () => void {
+  // Immediately dispatch stored notes from local cache
+  const initialLocal = getAllStoredPhotoNotes();
+  onNotesChanged(initialLocal);
+
+  try {
+    const q = query(collection(db, PHOTO_NOTES_COLLECTION), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const localList = getAllStoredPhotoNotes();
+        const localMap = new Map<string, ILecturePhotoNote>(localList.map((n) => [n.id, n]));
+
+        if (!snapshot.empty) {
+          snapshot.docs.forEach((docSnap) => {
+            const data = docSnap.data();
+            const item: ILecturePhotoNote = {
+              id: docSnap.id,
+              videoId: data.videoId || '',
+              imageUrl: data.imageUrl || '',
+              title: data.title || '',
+              notes: data.notes || '',
+              fileSize: data.fileSize || '',
+              createdAt: data.createdAt?.toMillis
+                ? data.createdAt.toMillis()
+                : data.createdAt || Date.now(),
+            };
+            localMap.set(docSnap.id, item);
+          });
+        }
+
+        const merged = Array.from(localMap.values()).sort(
+          (a, b) => (b.createdAt || 0) - (a.createdAt || 0)
+        );
+
+        saveStoredPhotoNotesLocally(merged);
+        onNotesChanged(merged);
+      },
+      (err) => {
+        console.warn('Firestore photo notes subscribe fallback (using local cache):', err);
+        onNotesChanged(getAllStoredPhotoNotes());
+      }
+    );
+    return unsubscribe;
+  } catch (err) {
+    console.warn('Firestore photo notes subscribe exception:', err);
+    return () => {};
+  }
+}
+
 
 
 

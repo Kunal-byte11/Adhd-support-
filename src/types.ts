@@ -20,7 +20,17 @@ export interface StudyTheaterVideo {
   duration?: string;
   thumbnailUrl?: string;
   description?: string;
-  openTranscript?: boolean;
+  openPhotoNotes?: boolean;
+}
+
+export interface ILecturePhotoNote {
+  id: string;
+  videoId: string;
+  imageUrl: string;
+  title?: string;
+  notes?: string;
+  createdAt: number;
+  fileSize?: string;
 }
 
 export type TaskImportance = 'MUST_DO' | 'CORE' | 'PRACTICE' | 'BONUS';
