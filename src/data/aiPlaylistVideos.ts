@@ -7,6 +7,7 @@ export interface AiVideoItem {
   thumbnailUrl: string;
   youtubeUrl: string;
   description: string;
+  startSeconds?: number;
 }
 
 export const AI_PLAYLIST_VIDEOS: Record<string, AiVideoItem[]> = {
@@ -3464,6 +3465,327 @@ export const AI_PLAYLIST_VIDEOS: Record<string, AiVideoItem[]> = {
       "thumbnailUrl": "https://i.ytimg.com/vi/FtsMOzlwxws/maxresdefault.jpg",
       "youtubeUrl": "https://www.youtube.com/watch?v=FtsMOzlwxws",
       "description": "Inference in transformers involves generating predictions from the trained model. During inference, the decoder predicts one token at a time, using previously generated tokens and attending to the encoder's output. The process continues iterativel..."
+    }
+  ],
+  "ai-res-26": [
+    {
+      "id": "ai-stat-1",
+      "courseId": "ai-res-26",
+      "videoIndex": 1,
+      "title": "Introduction & Statistics Overview (0:00:00)",
+      "durationTimestamp": "0:35",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=0s",
+      "description": "Introduction to statistics for data science and machine learning.",
+      "startSeconds": 0
+    },
+    {
+      "id": "ai-stat-2",
+      "courseId": "ai-res-26",
+      "videoIndex": 2,
+      "title": "Descriptive Statistics (0:00:35)",
+      "durationTimestamp": "2:10",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=35s",
+      "description": "Core foundations of descriptive statistics, summarizing and organizing data.",
+      "startSeconds": 35
+    },
+    {
+      "id": "ai-stat-3",
+      "courseId": "ai-res-26",
+      "videoIndex": 3,
+      "title": "Inferential Statistics (0:02:45)",
+      "durationTimestamp": "1:46",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=165s",
+      "description": "Introduction to inferential statistics, hypothesis testing, and sample conclusions.",
+      "startSeconds": 165
+    },
+    {
+      "id": "ai-stat-4",
+      "courseId": "ai-res-26",
+      "videoIndex": 4,
+      "title": "What is Statistics (0:04:31)",
+      "durationTimestamp": "2:23",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=271s",
+      "description": "Formal definition of statistics and its role across science, industry, and AI.",
+      "startSeconds": 271
+    },
+    {
+      "id": "ai-stat-5",
+      "courseId": "ai-res-26",
+      "videoIndex": 5,
+      "title": "Types of Statistics (0:06:54)",
+      "durationTimestamp": "4:28",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=414s",
+      "description": "Comparing descriptive vs inferential statistical paradigms.",
+      "startSeconds": 414
+    },
+    {
+      "id": "ai-stat-6",
+      "courseId": "ai-res-26",
+      "videoIndex": 6,
+      "title": "Population and Sample (0:11:22)",
+      "durationTimestamp": "3:11",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=682s",
+      "description": "Understanding population parameters vs sample statistics.",
+      "startSeconds": 682
+    },
+    {
+      "id": "ai-stat-7",
+      "courseId": "ai-res-26",
+      "videoIndex": 7,
+      "title": "Sampling Techniques (0:14:33)",
+      "durationTimestamp": "10:00",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=873s",
+      "description": "Simple random, stratified, systematic, and cluster sampling strategies.",
+      "startSeconds": 873
+    },
+    {
+      "id": "ai-stat-8",
+      "courseId": "ai-res-26",
+      "videoIndex": 8,
+      "title": "What are Variables? (0:24:33)",
+      "durationTimestamp": "6:21",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=1473s",
+      "description": "Quantitative vs qualitative, discrete vs continuous variables.",
+      "startSeconds": 1473
+    },
+    {
+      "id": "ai-stat-9",
+      "courseId": "ai-res-26",
+      "videoIndex": 9,
+      "title": "Variable Measurement Scales (0:30:54)",
+      "durationTimestamp": "12:01",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=1854s",
+      "description": "Nominal, ordinal, interval, and ratio scales of measurement.",
+      "startSeconds": 1854
+    },
+    {
+      "id": "ai-stat-10",
+      "courseId": "ai-res-26",
+      "videoIndex": 10,
+      "title": "Mean, Median, Mode (0:42:55)",
+      "durationTimestamp": "14:15",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=2575s",
+      "description": "Measures of central tendency, skewed data, and when to use each measure.",
+      "startSeconds": 2575
+    },
+    {
+      "id": "ai-stat-11",
+      "courseId": "ai-res-26",
+      "videoIndex": 11,
+      "title": "Measure of Dispersion (Variance & SD) (0:57:10)",
+      "durationTimestamp": "10:55",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=3430s",
+      "description": "Calculating variance, sample variance with Bessel's correction (n-1), and standard deviation.",
+      "startSeconds": 3430
+    },
+    {
+      "id": "ai-stat-12",
+      "courseId": "ai-res-26",
+      "videoIndex": 12,
+      "title": "Percentiles and Quartiles (1:08:05)",
+      "durationTimestamp": "7:30",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=4085s",
+      "description": "Understanding percentiles, Q1, Q2 (median), Q3, and cumulative relative frequencies.",
+      "startSeconds": 4085
+    },
+    {
+      "id": "ai-stat-13",
+      "courseId": "ai-res-26",
+      "videoIndex": 13,
+      "title": "Five Number Summary and Boxplot (1:15:35)",
+      "durationTimestamp": "13:37",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=4535s",
+      "description": "Min, Q1, Median, Q3, Max, IQR, and visual outlier detection via box plots.",
+      "startSeconds": 4535
+    },
+    {
+      "id": "ai-stat-14",
+      "courseId": "ai-res-26",
+      "videoIndex": 14,
+      "title": "Gaussian and Normal Distribution (1:29:12)",
+      "durationTimestamp": "27:28",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=5352s",
+      "description": "Bell curve, empirical 68-95-99.7 rule, standard normal distribution, and Z-scores.",
+      "startSeconds": 5352
+    },
+    {
+      "id": "ai-stat-15",
+      "courseId": "ai-res-26",
+      "videoIndex": 15,
+      "title": "Statistics Interview Questions (1:56:40)",
+      "durationTimestamp": "20:30",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=7000s",
+      "description": "Real-world data science interview questions on distributions and sampling.",
+      "startSeconds": 7000
+    },
+    {
+      "id": "ai-stat-16",
+      "courseId": "ai-res-26",
+      "videoIndex": 16,
+      "title": "Finding Outliers in Python (2:17:10)",
+      "durationTimestamp": "14:50",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=8230s",
+      "description": "Hands-on Python implementation using IQR and Z-scores to detect and handle anomalies.",
+      "startSeconds": 8230
+    },
+    {
+      "id": "ai-stat-17",
+      "courseId": "ai-res-26",
+      "videoIndex": 17,
+      "title": "Probability (Additive & Multiplicative) (2:32:00)",
+      "durationTimestamp": "19:26",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=9120s",
+      "description": "Independent events, mutually exclusive events, conditional probability, and Bayes rule.",
+      "startSeconds": 9120
+    },
+    {
+      "id": "ai-stat-18",
+      "courseId": "ai-res-26",
+      "videoIndex": 18,
+      "title": "Permutations and Combinations (2:51:26)",
+      "durationTimestamp": "4:56",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=10286s",
+      "description": "Counting principles, factorials, permutations nPr, and combinations nCr.",
+      "startSeconds": 10286
+    },
+    {
+      "id": "ai-stat-19",
+      "courseId": "ai-res-26",
+      "videoIndex": 19,
+      "title": "P-Value Fundamentals (2:56:22)",
+      "durationTimestamp": "2:57",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=10582s",
+      "description": "What p-value represents in hypothesis testing and evidence against null hypothesis.",
+      "startSeconds": 10582
+    },
+    {
+      "id": "ai-stat-20",
+      "courseId": "ai-res-26",
+      "videoIndex": 20,
+      "title": "Hypothesis Testing & Confidence Intervals (2:59:19)",
+      "durationTimestamp": "13:03",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=10759s",
+      "description": "Null vs Alternative hypothesis, alpha significance levels, and two-tailed vs one-tailed tests.",
+      "startSeconds": 10759
+    },
+    {
+      "id": "ai-stat-21",
+      "courseId": "ai-res-26",
+      "videoIndex": 21,
+      "title": "Type 1 and Type 2 Errors (3:12:22)",
+      "durationTimestamp": "13:33",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=11542s",
+      "description": "False positives (alpha), false negatives (beta), statistical power, and risk trade-offs.",
+      "startSeconds": 11542
+    },
+    {
+      "id": "ai-stat-22",
+      "courseId": "ai-res-26",
+      "videoIndex": 22,
+      "title": "Confidence Interval In-Depth (3:25:55)",
+      "durationTimestamp": "20:50",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=12355s",
+      "description": "Point estimates, margin of error, critical values, and constructing confidence intervals.",
+      "startSeconds": 12355
+    },
+    {
+      "id": "ai-stat-23",
+      "courseId": "ai-res-26",
+      "videoIndex": 23,
+      "title": "One-Sample Z-Test (3:46:45)",
+      "durationTimestamp": "12:26",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=13605s",
+      "description": "Conducting one-sample Z-tests when population variance is known.",
+      "startSeconds": 13605
+    },
+    {
+      "id": "ai-stat-24",
+      "courseId": "ai-res-26",
+      "videoIndex": 24,
+      "title": "One-Sample T-Test (3:59:11)",
+      "durationTimestamp": "7:21",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=14351s",
+      "description": "Student's t-distribution, degrees of freedom, and testing with unknown population variance.",
+      "startSeconds": 14351
+    },
+    {
+      "id": "ai-stat-25",
+      "courseId": "ai-res-26",
+      "videoIndex": 25,
+      "title": "Chi-Square Test (4:06:32)",
+      "durationTimestamp": "15:13",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=14792s",
+      "description": "Chi-Square goodness of fit test and test of independence for categorical variables.",
+      "startSeconds": 14792
+    },
+    {
+      "id": "ai-stat-26",
+      "courseId": "ai-res-26",
+      "videoIndex": 26,
+      "title": "Inferential Statistics with Python (4:21:45)",
+      "durationTimestamp": "2:52",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=15705s",
+      "description": "Executing statistical tests using scipy.stats and interpreting results in Python.",
+      "startSeconds": 15705
+    },
+    {
+      "id": "ai-stat-27",
+      "courseId": "ai-res-26",
+      "videoIndex": 27,
+      "title": "Covariance, Pearson & Spearman Correlation (4:24:37)",
+      "durationTimestamp": "30:22",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=15877s",
+      "description": "Direction vs strength of linear and monotonic relationships between variables.",
+      "startSeconds": 15877
+    },
+    {
+      "id": "ai-stat-28",
+      "courseId": "ai-res-26",
+      "videoIndex": 28,
+      "title": "Deriving P-Values & Significance (4:54:59)",
+      "durationTimestamp": "18:42",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=17699s",
+      "description": "Deep dive into calculating and interpreting exact p-values in decision making.",
+      "startSeconds": 17699
+    },
+    {
+      "id": "ai-stat-29",
+      "courseId": "ai-res-26",
+      "videoIndex": 29,
+      "title": "Distributions (Log-Normal, Pareto, Poisson) (5:13:41)",
+      "durationTimestamp": "31:19",
+      "thumbnailUrl": "https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LZzq1zSL1bs&t=18821s",
+      "description": "Log-normal, Pareto (Power Law), Binomial, Bernoulli, and Poisson distributions.",
+      "startSeconds": 18821
     }
   ]
 };

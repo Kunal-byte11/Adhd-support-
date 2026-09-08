@@ -532,6 +532,31 @@ export const AI_DATA_SCIENCE_COURSES: AiCourse[] = [
     tags: ['AWS', 'Amazon Web Services', 'EC2', 'Lambda'],
     youtubeUrl: 'https://youtu.be/GkKNxyLp_V0?si=dLbrKOY-q7WaCb9A',
   },
+  {
+    id: 'ai-res-26',
+    title: '26. Complete Statistics for Data Science (6-Hour Masterclass)',
+    category: 'Python & Math',
+    durationHours: '6 Hours (29 Modules)',
+    type: 'One-Shot Masterclass',
+    instructor: 'Krish Naik',
+    description: 'Complete statistics foundation for data science and machine learning: descriptive vs inferential statistics, normal distributions, Z-scores, hypothesis testing, confidence intervals, ANOVA, covariance, correlation, and Python implementations.',
+    importance: 'CRITICAL_MUST_WATCH',
+    phase: 'Phase 1: Python & Math Foundations',
+    tier: 'Tier 1 — Core',
+    resourceFormat: 'Full Playlist',
+    prerequisites: ['Python Fundamentals'],
+    keyTakeaways: [
+      'Descriptive & Inferential Statistics Foundations',
+      'Normal & Gaussian Distributions (Z-Scores, Empirical Rule)',
+      'Hypothesis Testing, P-Values, Z/T Tests & Chi-Square',
+      'Covariance, Correlation & Outlier Detection in Python',
+    ],
+    recommendedOrder: 2,
+    tags: ['Statistics', 'Math Foundations', 'Data Science', 'Machine Learning', 'Krish Naik'],
+    youtubeUrl: 'https://www.youtube.com/watch?v=LZzq1zSL1bs',
+    thumbnailUrl: 'https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg',
+    videos: AI_PLAYLIST_VIDEOS['ai-res-26'],
+  },
 ];
 
 export interface DsaChapter {
@@ -3313,6 +3338,7 @@ export function getCurriculumVideoById(id: string): StudyTheaterVideo | null {
           duration: vid.durationTimestamp,
           thumbnailUrl: vid.thumbnailUrl,
           description: vid.description,
+          startSeconds: vid.startSeconds || 0,
         };
       }
     }
@@ -3360,7 +3386,7 @@ export function getCurriculumPlaylistContext(videoId: string): PlaylistContext |
           duration: v.durationTimestamp,
           thumbnailUrl: v.thumbnailUrl,
           description: v.description,
-          startSeconds: 0,
+          startSeconds: v.startSeconds || 0,
         }));
         return {
           courseId: course.id,
@@ -3390,7 +3416,7 @@ export function getCurriculumPlaylistContext(videoId: string): PlaylistContext |
         duration: v.durationTimestamp,
         thumbnailUrl: v.thumbnailUrl,
         description: v.description,
-        startSeconds: 0,
+        startSeconds: v.startSeconds || 0,
       }));
       return {
         courseId: course.id,

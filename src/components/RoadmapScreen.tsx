@@ -744,6 +744,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                                       youtubeUrl: targetVid ? targetVid.youtubeUrl : course.youtubeUrl!,
                                       subject: course.category,
                                       difficulty: course.tier,
+                                      startSeconds: targetVid?.startSeconds || 0,
                                     });
                                   } else if (course.youtubeUrl) {
                                     window.open(course.youtubeUrl, '_blank');
@@ -983,6 +984,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                                                 youtubeUrl: vid.youtubeUrl,
                                                 subject: course.category,
                                                 difficulty: course.tier,
+                                                startSeconds: vid.startSeconds || 0,
                                               });
                                             } else {
                                               window.open(vid.youtubeUrl, '_blank');
@@ -1040,6 +1042,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
                                               youtubeUrl: vid.youtubeUrl,
                                               subject: course.category,
                                               difficulty: course.tier,
+                                              startSeconds: vid.startSeconds || 0,
                                             });
                                           } else {
                                             window.open(vid.youtubeUrl, '_blank');
