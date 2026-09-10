@@ -34,6 +34,7 @@ interface RoadmapScreenProps {
   completedIds: Set<string>;
   onToggleComplete: (id: string) => void;
   onWatchVideo?: (video: StudyTheaterVideo) => void;
+  isSidebarCollapsed?: boolean;
 }
 
 const AI_TIER_CONFIG: Record<
@@ -149,12 +150,14 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
   completedIds,
   onToggleComplete,
   onWatchVideo,
+  isSidebarCollapsed = false,
 }) => {
-  const [activeTab, setActiveTab] = useState<'ai' | 'dsa'>('dsa');
+  const [activeTab, setActiveTab] = useState<'krishnaik' | 'ai' | 'dsa'>('krishnaik');
   const [selectedModule, setSelectedModule] = useState<number | 'all'>('all');
   const [dsaTierFilter, setDsaTierFilter] = useState<'all' | 'must_do' | 'optional_later'>('must_do');
   const [aiTierFilter, setAiTierFilter] = useState<'all' | 'tier_1' | 'tier_2' | 'tier_3' | 'optional'>('tier_1');
   const [selectedAiCategory, setSelectedAiCategory] = useState<string>('all');
+  const [selectedKnCategory, setSelectedKnCategory] = useState<string>('all');
   const [selectedPhase, setSelectedPhase] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'pending' | 'completed'>('all');
@@ -172,6 +175,37 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
       return next;
     });
   };
+
+  // Krish Naik Dedicated Courses
+  const krishNaikCourses = useMemo(() => {
+    return AI_DATA_SCIENCE_COURSES.filter(
+      (c) => c.instructor.toLowerCase().includes('krish naik') || c.id.startsWith('ai-kn')
+    );
+  }, []);
+
+  const filteredKrishNaikCourses = useMemo(() => {
+    return krishNaikCourses.filter((item) => {
+      const matchCategory =
+        selectedKnCategory === 'all' ||
+        item.category === selectedKnCategory ||
+        (selectedKnCategory === 'Deep Learning' && (item.category === 'Deep Learning' || item.id === 'ai-kn-nlp'));
+      const q = searchQuery.toLowerCase().trim();
+      const matchSearch =
+        q === '' ||
+        item.title.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
+        item.instructor.toLowerCase().includes(q) ||
+        item.tags.some((t) => t.toLowerCase().includes(q)) ||
+        (item.videos && item.videos.some((v) => v.title.toLowerCase().includes(q) || v.description.toLowerCase().includes(q)));
+      const isDone = completedIds.has(item.id);
+      const matchStatus =
+        statusFilter === 'all' ||
+        (statusFilter === 'completed' && isDone) ||
+        (statusFilter === 'pending' && !isDone);
+
+      return matchCategory && matchSearch && matchStatus;
+    }).sort((a, b) => a.recommendedOrder - b.recommendedOrder);
+  }, [krishNaikCourses, selectedKnCategory, searchQuery, statusFilter, completedIds]);
 
   // Filtered DSA Problems
   const filteredDsaProblems = useMemo(() => {
@@ -257,6 +291,10 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
   }, [filteredAiCourses]);
 
   // Stats calculation
+  const totalKnCount = krishNaikCourses.length;
+  const completedKnCount = krishNaikCourses.filter((c) => completedIds.has(c.id)).length;
+  const knPercent = totalKnCount > 0 ? Math.round((completedKnCount / totalKnCount) * 100) : 0;
+
   const totalDsaCount = DSA_PROBLEMS_DATA.length;
   const completedDsaCount = DSA_PROBLEMS_DATA.filter((p) => completedIds.has(p.id)).length;
   const dsaProgressPercent = Math.round((completedDsaCount / totalDsaCount) * 100);
@@ -276,17 +314,421 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
   const tier1AiPercent = tier1AiCount > 0 ? Math.round((completedTier1Count / tier1AiCount) * 100) : 0;
   const completedAiCount = AI_DATA_SCIENCE_COURSES.filter((c) => completedIds.has(c.id)).length;
 
+  // Reusable Course Card Renderer
+  const renderAiCourseCard = (course: AiCourse) => {
+    const hasVideos = Boolean(course.videos && course.videos.length > 0);
+    const completedVideosInCourse = hasVideos
+      ? course.videos!.filter((v) => completedIds.has(v.id)).length
+      : 0;
+    const isSearchMatchInVideos =
+      searchQuery.trim() !== '' &&
+      Boolean(course.videos?.some((v) => v.title.toLowerCase().includes(searchQuery.toLowerCase())));
+    const isExpanded = expandedCourseIds.has(course.id) || isSearchMatchInVideos;
+    const isDone =
+      completedIds.has(course.id) ||
+      (hasVideos && completedVideosInCourse === course.videos!.length);
+    const tierInfo = AI_TIER_CONFIG[course.tier];
+    const formatInfo = FORMAT_CONFIG[course.resourceFormat];
+    const ytId = course.youtubeUrl
+      ? course.youtubeUrl.match(
+          /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
+        )?.[1]
+      : null;
+
+    const cardThumbnail =
+      course.thumbnailUrl ||
+      (ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : null) ||
+      course.videos?.[0]?.thumbnailUrl ||
+      null;
+
+    return (
+      <div
+        key={course.id}
+        className={`w-full rounded-2xl border transition-all duration-200 overflow-hidden ${
+          isDone
+            ? 'border-[#c4eccb] bg-[#c4eccb]/10'
+            : 'border-slate-200 bg-white hover:border-emerald-500/60 hover:shadow-md'
+        }`}
+      >
+        <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-start justify-between gap-4">
+          <div className="flex items-start gap-3.5 flex-1 min-w-0 font-sans">
+            <button
+              onClick={() => {
+                if (hasVideos) {
+                  const allDone = completedVideosInCourse === course.videos!.length;
+                  course.videos!.forEach((v) => {
+                    const isVDone = completedIds.has(v.id);
+                    if (allDone && isVDone) onToggleComplete(v.id);
+                    else if (!allDone && !isVDone) onToggleComplete(v.id);
+                  });
+                }
+                onToggleComplete(course.id);
+              }}
+              className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
+                isDone
+                  ? 'bg-emerald-600 border-emerald-600 text-white'
+                  : 'border-slate-400 hover:border-emerald-500 hover:bg-emerald-50 bg-white'
+              }`}
+              title={isDone ? 'Mark as pending' : 'Mark as completed'}
+            >
+              {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+            </button>
+
+            {cardThumbnail ? (
+              <button
+                type="button"
+                onClick={() => {
+                  if (onWatchVideo && (ytId || course.videos?.[0])) {
+                    const targetVid = course.videos?.[0];
+                    onWatchVideo({
+                      id: targetVid ? targetVid.id : course.id,
+                      title: targetVid ? targetVid.title : course.title,
+                      youtubeUrl: targetVid ? targetVid.youtubeUrl : course.youtubeUrl!,
+                      subject: course.category,
+                      difficulty: course.tier,
+                      startSeconds: targetVid?.startSeconds || 0,
+                    });
+                  } else if (course.youtubeUrl) {
+                    window.open(course.youtubeUrl, '_blank');
+                  } else if (course.articleUrl) {
+                    window.open(course.articleUrl, '_blank');
+                  }
+                }}
+                className="relative hidden sm:block w-28 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-200/90 shadow-2xs group text-left cursor-pointer mt-0.5 bg-slate-900"
+                title="Watch in Study Theater"
+              >
+                <img
+                  src={cardThumbnail}
+                  alt={course.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  onError={(e) => {
+                    if (ytId) {
+                      e.currentTarget.src = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+                    }
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Youtube className="w-5 h-5 text-white drop-shadow-md" />
+                </div>
+              </button>
+            ) : course.articleUrl ? (
+              <a
+                href={course.articleUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="relative hidden sm:flex w-28 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 border border-purple-400 items-center justify-center shrink-0 group text-left mt-0.5 shadow-2xs"
+                title="Read Article on Medium"
+              >
+                <span className="text-2xl group-hover:scale-110 transition-transform">📰</span>
+              </a>
+            ) : (
+              <a
+                href={course.youtubeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="relative hidden sm:flex w-28 h-16 rounded-lg bg-gradient-to-br from-blue-50 to-sky-100 border border-blue-200 items-center justify-center shrink-0 group text-left mt-0.5"
+                title="Open Playlist on YouTube"
+              >
+                <span className="text-2xl group-hover:scale-110 transition-transform">📚</span>
+              </a>
+            )}
+
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5">
+                <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono">
+                  #{course.recommendedOrder}
+                </span>
+                {tierInfo && (
+                  <span
+                    className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1 font-mono ${tierInfo.bg} ${tierInfo.text} ${tierInfo.border}`}
+                  >
+                    <span>{tierInfo.badge}</span>
+                  </span>
+                )}
+                {formatInfo && (
+                  <span
+                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 font-mono ${formatInfo.bg} ${formatInfo.text} ${formatInfo.border}`}
+                  >
+                    <span>{formatInfo.icon}</span>
+                    <span>{formatInfo.label}</span>
+                  </span>
+                )}
+                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300 px-2 py-0.5 rounded-full font-mono flex items-center gap-1">
+                  <span>👨‍🏫</span>
+                  <span>{course.instructor}</span>
+                </span>
+
+                {hasVideos && (
+                  <button
+                    type="button"
+                    onClick={() => toggleExpandCourse(course.id)}
+                    className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[10px] font-bold transition cursor-pointer border border-emerald-200"
+                  >
+                    <Video className="w-3 h-3 text-emerald-600" />
+                    <span>{course.videos!.length} Lessons</span>
+                    <span className="font-mono bg-emerald-200/70 text-emerald-900 px-1.5 py-0.1 rounded-full">
+                      {completedVideosInCourse}/{course.videos!.length}
+                    </span>
+                    {isExpanded ? <ChevronUp className="w-3 h-3 ml-0.5" /> : <ChevronDown className="w-3 h-3 ml-0.5" />}
+                  </button>
+                )}
+              </div>
+
+              <h3
+                className={`text-[15px] font-bold leading-snug ${
+                  isDone ? 'text-slate-400 line-through' : 'text-[#181c1e]'
+                }`}
+              >
+                {course.title}
+              </h3>
+
+              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                {course.description}
+              </p>
+
+              <div className="flex flex-wrap gap-1.5 mt-2.5">
+                {course.keyTakeaways.map((takeaway, tIdx) => (
+                  <span
+                    key={tIdx}
+                    className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md"
+                  >
+                    ✓ {takeaway}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0 self-end md:self-center mt-2 md:mt-0">
+            {hasVideos && (
+              <button
+                type="button"
+                onClick={() => toggleExpandCourse(course.id)}
+                className={`px-3 py-2 text-xs font-bold rounded-xl flex items-center gap-1.5 transition cursor-pointer border ${
+                  isExpanded
+                    ? 'bg-slate-100 text-slate-700 border-slate-300'
+                    : 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
+                }`}
+              >
+                <Video className="w-3.5 h-3.5 text-emerald-600" />
+                <span>{isExpanded ? 'Hide Lessons' : `View ${course.videos!.length} Lessons`}</span>
+                {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+              </button>
+            )}
+
+            {course.youtubeUrl && (
+              <button
+                onClick={() => {
+                  if (ytId && onWatchVideo) {
+                    onWatchVideo({
+                      id: course.id,
+                      title: course.title,
+                      youtubeUrl: course.youtubeUrl!,
+                      subject: course.category,
+                      difficulty: course.tier,
+                    });
+                  } else {
+                    window.open(course.youtubeUrl, '_blank');
+                  }
+                }}
+                className="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+                title={course.resourceFormat === 'Full Playlist' ? 'Open Playlist' : 'Watch Video'}
+              >
+                <Play className="w-3.5 h-3.5 fill-current" />
+                <span>{course.resourceFormat === 'Full Playlist' ? 'Open' : 'Watch'}</span>
+              </button>
+            )}
+
+            {course.articleUrl && (
+              <a
+                href={course.articleUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Read Article</span>
+              </a>
+            )}
+
+            <button
+              onClick={() => onSendToIntake(course.title)}
+              className="px-3 py-2 bg-[#f1f4f6] hover:bg-[#e5e9eb] text-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition cursor-pointer"
+              title="Break down into actionable study steps"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+            </button>
+          </div>
+        </div>
+
+        {/* Expandable Course Video Lessons */}
+        {hasVideos && isExpanded && (
+          <div className="border-t border-slate-200/80 bg-slate-50/70 p-3.5 sm:p-4 space-y-2.5">
+            <div className="flex items-center justify-between px-1 mb-1">
+              <div className="flex items-center gap-2">
+                <Video className="w-4 h-4 text-emerald-700" />
+                <h4 className="text-xs sm:text-sm font-bold text-slate-800 font-mono">
+                  Course Lessons ({completedVideosInCourse}/{course.videos!.length} Completed)
+                </h4>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-24 sm:w-32 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-emerald-600 rounded-full transition-all"
+                    style={{
+                      width: `${Math.round((completedVideosInCourse / course.videos!.length) * 100)}%`,
+                    }}
+                  />
+                </div>
+                <span className="text-[11px] font-mono font-bold text-slate-600">
+                  {Math.round((completedVideosInCourse / course.videos!.length) * 100)}%
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
+              {course.videos!.map((vid) => {
+                const isVidDone = completedIds.has(vid.id);
+                const vidYtId = vid.youtubeUrl.match(
+                  /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
+                )?.[1];
+
+                return (
+                  <div
+                    key={vid.id}
+                    className={`rounded-xl border p-2.5 sm:p-3 flex items-start sm:items-center justify-between gap-3 transition-all ${
+                      isVidDone
+                        ? 'border-emerald-200 bg-emerald-50/30'
+                        : 'border-slate-200 bg-white hover:border-emerald-500/50 hover:shadow-2xs'
+                    }`}
+                  >
+                    <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
+                      <button
+                        onClick={() => onToggleComplete(vid.id)}
+                        className={`mt-0.5 sm:mt-0 w-4.5 h-4.5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
+                          isVidDone
+                            ? 'bg-emerald-600 border-emerald-600 text-white'
+                            : 'border-slate-300 hover:border-emerald-500 hover:bg-emerald-50 bg-white'
+                        }`}
+                        title={isVidDone ? 'Mark as pending' : 'Mark as completed'}
+                      >
+                        {isVidDone && <Check className="w-3 h-3 stroke-[3]" />}
+                      </button>
+
+                      {vidYtId && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (onWatchVideo) {
+                              onWatchVideo({
+                                id: vid.id,
+                                title: vid.title,
+                                youtubeUrl: vid.youtubeUrl,
+                                subject: course.category,
+                                difficulty: course.tier,
+                                startSeconds: vid.startSeconds || 0,
+                              });
+                            } else {
+                              window.open(vid.youtubeUrl, '_blank');
+                            }
+                          }}
+                          className="relative hidden sm:block w-16 h-10 rounded-md overflow-hidden shrink-0 border border-slate-200 group text-left cursor-pointer"
+                          title="Watch in Study Theater"
+                        >
+                          <img
+                            src={`https://i.ytimg.com/vi/${vidYtId}/hqdefault.jpg`}
+                            alt={vid.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Play className="w-3.5 h-3.5 fill-white text-white" />
+                          </div>
+                        </button>
+                      )}
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className="text-[10px] font-mono font-bold text-slate-500 shrink-0">
+                            #{vid.videoIndex}
+                          </span>
+                          {vid.durationTimestamp && (
+                            <span className="text-[10px] font-mono text-slate-600 bg-slate-100 px-1.5 py-0.2 rounded shrink-0">
+                              ⏱️ {vid.durationTimestamp}
+                            </span>
+                          )}
+                        </div>
+                        <p
+                          className={`text-xs sm:text-[13px] font-bold leading-tight ${
+                            isVidDone ? 'text-slate-400 line-through' : 'text-[#181c1e]'
+                          }`}
+                          title={vid.title}
+                        >
+                          {vid.title}
+                        </p>
+                        {vid.description && (
+                          <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                            {vid.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                      <button
+                        onClick={() => {
+                          if (onWatchVideo) {
+                            onWatchVideo({
+                              id: vid.id,
+                              title: vid.title,
+                              youtubeUrl: vid.youtubeUrl,
+                              subject: course.category,
+                              difficulty: course.tier,
+                              startSeconds: vid.startSeconds || 0,
+                            });
+                          } else {
+                            window.open(vid.youtubeUrl, '_blank');
+                          }
+                        }}
+                        className="px-2.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 shadow-xs transition cursor-pointer"
+                        title="Watch in Study Theater"
+                      >
+                        <Play className="w-3 h-3 fill-current" />
+                        <span className="hidden sm:inline">Watch</span>
+                      </button>
+
+                      <button
+                        onClick={() => onSendToIntake(vid.title)}
+                        className="p-1.5 bg-[#f1f4f6] hover:bg-[#e5e9eb] text-slate-700 rounded-lg transition cursor-pointer"
+                        title="Break down into actionable study steps"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <main
       id="screen-roadmap"
-      className="flex-1 md:ml-64 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full font-sans"
+      className={`flex-1 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full font-sans transition-all duration-300 ${
+        isSidebarCollapsed ? 'md:ml-16 md:pl-4' : 'md:ml-64'
+      }`}
     >
       <header className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#006494] bg-[#5fafe9]/20 px-2.5 py-0.5 rounded-full flex items-center gap-1 font-mono">
-              <BrainCircuit className="w-3.5 h-3.5 text-[#006494]" />
-              Systematic GenAI &amp; DSA Roadmap
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100/70 px-2.5 py-0.5 rounded-full flex items-center gap-1 font-mono">
+              <BrainCircuit className="w-3.5 h-3.5 text-emerald-700" />
+              Krish Naik AI &amp; Systematic Curriculum
             </span>
           </div>
           <h1 className="text-[28px] sm:text-[34px] font-extrabold text-[#181c1e] tracking-tight">
@@ -297,14 +739,30 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         <div className="bg-[#ffffff] border border-[#c2c8c0] rounded-2xl p-3.5 sm:p-4 shadow-xs flex items-center gap-4 self-start md:self-auto">
           <div className="text-center pr-4 border-r border-[#c2c8c0]">
             <p className="text-[11px] font-bold text-emerald-700 uppercase font-mono flex items-center gap-1 justify-center">
-              <span>🏆 Tier 1 AI Core</span>
+              <span>🤖 Krish Naik AI</span>
             </p>
             <p className="text-lg font-bold text-emerald-700 font-mono">
-              {completedTier1Count}/{tier1AiCount}
+              {completedKnCount}/{totalKnCount}
             </p>
             <div className="w-24 h-1.5 bg-[#ebeef0] rounded-full mt-1 overflow-hidden">
               <div
                 className="h-full bg-emerald-600 rounded-full transition-all"
+                style={{
+                  width: `${knPercent}%`,
+                }}
+              />
+            </div>
+          </div>
+          <div className="text-center pr-4 border-r border-[#c2c8c0]">
+            <p className="text-[11px] font-bold text-[#006494] uppercase font-mono flex items-center gap-1 justify-center">
+              <span>🏆 Tier 1 Core</span>
+            </p>
+            <p className="text-lg font-bold text-[#006494] font-mono">
+              {completedTier1Count}/{tier1AiCount}
+            </p>
+            <div className="w-24 h-1.5 bg-[#ebeef0] rounded-full mt-1 overflow-hidden">
+              <div
+                className="h-full bg-[#006494] rounded-full transition-all"
                 style={{
                   width: `${tier1AiPercent}%`,
                 }}
@@ -327,12 +785,12 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
           </div>
           <div className="text-center">
             <p className="text-[11px] font-semibold text-[#545f72] uppercase font-mono">Total</p>
-            <p className="text-lg font-bold text-[#006494] font-mono">
+            <p className="text-lg font-bold text-slate-800 font-mono">
               {completedAiCount + completedDsaCount}/{totalAiCount + totalDsaCount}
             </p>
             <div className="w-20 h-1.5 bg-[#ebeef0] rounded-full mt-1 overflow-hidden">
               <div
-                className="h-full bg-[#006494] rounded-full transition-all"
+                className="h-full bg-slate-700 rounded-full transition-all"
                 style={{
                   width: `${Math.round(
                     ((completedAiCount + completedDsaCount) / (totalAiCount + totalDsaCount)) * 100
@@ -344,20 +802,23 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         </div>
       </header>
 
-      <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6">
+      <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6 gap-1 sm:gap-2">
         <button
           onClick={() => {
-            setActiveTab('dsa');
-            setSelectedModule('all');
+            setActiveTab('krishnaik');
+            setSelectedKnCategory('all');
           }}
-          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
-            activeTab === 'dsa'
-              ? 'border-[#43664c] text-[#43664c] bg-[#8bb192]/10 rounded-t-lg font-extrabold'
+          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+            activeTab === 'krishnaik'
+              ? 'border-emerald-600 text-emerald-800 bg-emerald-50/80 rounded-t-lg font-extrabold shadow-2xs'
               : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
           }`}
         >
-          <Code2 className="w-4 h-4 text-[#43664c]" />
-          <span>Code &amp; Debug DSA</span>
+          <Sparkles className="w-4 h-4 text-emerald-600" />
+          <span>Krish Naik AI Masterclass 🤖</span>
+          <span className="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+            {totalKnCount} Tracks
+          </span>
         </button>
 
         <button
@@ -365,14 +826,29 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
             setActiveTab('ai');
             setSelectedAiCategory('all');
           }}
-          className={`flex items-center gap-2 py-3 px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
             activeTab === 'ai'
-              ? 'border-[#006494] text-[#006494] bg-[#5fafe9]/10 rounded-t-lg font-extrabold'
+              ? 'border-[#006494] text-[#006494] bg-[#5fafe9]/10 rounded-t-lg font-extrabold shadow-2xs'
               : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
           }`}
         >
           <BrainCircuit className="w-4 h-4 text-[#006494]" />
-          <span>AI/ML Roadmap (Divyam Dawar 25)</span>
+          <span>AI/ML Master Roadmap (25) 🧠</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveTab('dsa');
+            setSelectedModule('all');
+          }}
+          className={`flex items-center gap-2 py-3 px-4 sm:px-5 text-sm sm:text-base font-bold border-b-2 transition-all cursor-pointer ${
+            activeTab === 'dsa'
+              ? 'border-[#43664c] text-[#43664c] bg-[#8bb192]/10 rounded-t-lg font-extrabold shadow-2xs'
+              : 'border-transparent text-[#545f72] hover:text-[#181c1e]'
+          }`}
+        >
+          <Code2 className="w-4 h-4 text-[#43664c]" />
+          <span>Code &amp; Debug DSA 💻</span>
         </button>
       </div>
 
@@ -384,12 +860,18 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={
-              activeTab === 'ai'
+              activeTab === 'krishnaik'
+                ? 'Search Krish Naik LangChain, RAG, Ollama, PyTorch, MLOps...'
+                : activeTab === 'ai'
                 ? 'Search LangChain, RAG, Transformers, Docker...'
                 : 'Search problems, algorithms, LeetCode...'
             }
             className={`w-full pl-9 pr-3 py-2 text-sm bg-[#f1f4f6] rounded-xl border border-transparent focus:bg-white focus:outline-none transition-all placeholder-[#727971] ${
-              activeTab === 'dsa' ? 'focus:border-[#43664c]' : 'focus:border-[#006494]'
+              activeTab === 'krishnaik'
+                ? 'focus:border-emerald-600'
+                : activeTab === 'dsa'
+                ? 'focus:border-[#43664c]'
+                : 'focus:border-[#006494]'
             }`}
           />
         </div>
@@ -413,109 +895,89 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
         </div>
       </div>
 
-      {activeTab === 'dsa' && (
-        <div className="mb-6 space-y-3">
-          {/* Trimmed Roadmap Focus Banner */}
-          <div className="p-3.5 sm:p-4 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex items-start sm:items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
-                🎯
+      {/* 🤖 1. Dedicated Krish Naik Masterclass Tab */}
+      {activeTab === 'krishnaik' && (
+        <div className="space-y-6">
+          {/* Krish Naik Master Hero Banner */}
+          <div className="p-4 sm:p-5 bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white rounded-3xl border border-emerald-500/30 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="flex items-start sm:items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 font-black text-xl flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/30">
+                👨‍🏫
               </div>
               <div>
-                <p className="text-xs sm:text-sm font-bold text-emerald-950 flex items-center gap-1.5">
-                  <span>Trimmed Interview-Ready DSA Curriculum</span>
-                  <span className="text-[11px] font-mono font-bold bg-emerald-200/70 text-emerald-900 px-2 py-0.2 rounded-full">
-                    {mustDoDsaCount} Problems
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="text-[10px] font-mono font-black uppercase tracking-wider bg-emerald-400/20 text-emerald-300 border border-emerald-400/40 px-2.5 py-0.5 rounded-full">
+                    Krish Naik Masterclass Track
                   </span>
-                </p>
-                <p className="text-[11px] text-emerald-700 leading-relaxed mt-0.5">
-                  Curated high-yield topics across Ch 1–16. Skips heavy Hard topics (3Sum/4Sum, N-Queens, 15.4–15.6 Shortest Path/MST, DP Strings/Stocks, Tries) for maximum interview velocity.
+                  <span className="text-[10px] font-mono text-slate-300 bg-white/10 px-2 py-0.5 rounded-full">
+                    {filteredKrishNaikCourses.length} Masterclasses
+                  </span>
+                </div>
+                <h2 className="text-base sm:text-lg font-black text-white tracking-tight">
+                  Krish Naik Full AI, GenAI &amp; MLOps Curriculum
+                </h2>
+                <p className="text-xs text-slate-300 leading-relaxed mt-0.5 max-w-2xl">
+                  Comprehensive industry curriculum taught by Krish Naik. Covers GenAI (LangChain, LangGraph, Ollama, CrewAI, RAG), Deep Learning (PyTorch &amp; TF), NLP Transformers, Classical ML, and Enterprise MLOps (Docker &amp; AWS).
                 </p>
               </div>
             </div>
 
-            {/* Quick Tier Filter Toggles */}
-            <div className="flex items-center gap-1 self-start md:self-center bg-white p-1 rounded-xl border border-emerald-200 text-xs shrink-0 shadow-xs">
-              <button
-                onClick={() => setDsaTierFilter('must_do')}
-                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                  dsaTierFilter === 'must_do'
-                    ? 'bg-[#43664c] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <span>🎯 Do Now ({mustDoDsaCount})</span>
-              </button>
-              <button
-                onClick={() => setDsaTierFilter('all')}
-                className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                  dsaTierFilter === 'all'
-                    ? 'bg-[#43664c] text-white shadow-xs font-bold'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <span>All ({totalDsaCount})</span>
-              </button>
-              <button
-                onClick={() => setDsaTierFilter('optional_later')}
-                className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                  dsaTierFilter === 'optional_later'
-                    ? 'bg-[#43664c] text-white shadow-xs font-bold'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <span>⏭️ Skip/Later ({totalDsaCount - mustDoDsaCount})</span>
-              </button>
+            <div className="flex items-center gap-3 self-start md:self-center bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15 shrink-0">
+              <div className="text-center pr-3 border-r border-white/20">
+                <p className="text-[10px] font-mono text-emerald-300 uppercase font-bold">Completed</p>
+                <p className="text-base font-black text-white font-mono">{completedKnCount}/{totalKnCount}</p>
+              </div>
+              <div className="text-center">
+                <p className="text-[10px] font-mono text-teal-300 uppercase font-bold">Progress</p>
+                <p className="text-base font-black text-white font-mono">{knPercent}%</p>
+              </div>
             </div>
           </div>
 
+          {/* Category Filter Pills */}
           <div className="overflow-x-auto pb-1 flex gap-2 no-scrollbar">
-            <button
-              onClick={() => setSelectedModule('all')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
-                selectedModule === 'all'
-                  ? 'bg-[#43664c] text-white shadow-xs'
-                  : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
-              }`}
-            >
-              All Chapters ({dsaTierFilter === 'must_do' ? mustDoDsaCount : dsaTierFilter === 'optional_later' ? totalDsaCount - mustDoDsaCount : totalDsaCount})
-            </button>
-            {DSA_CHAPTERS.map((ch) => {
-              const isSelected = selectedModule === ch.id;
-              const chapterCount = dsaTierFilter === 'must_do' 
-                ? ch.mustDoCount ?? 0 
-                : dsaTierFilter === 'optional_later'
-                ? ch.count - (ch.mustDoCount ?? 0)
-                : ch.count;
-              const isSkippedInTrimmed = ch.mustDoCount === 0;
-
+            {[
+              { id: 'all', label: 'All Tracks', icon: '🌟' },
+              { id: 'Generative AI', label: 'GenAI & LangGraph', icon: '🤖' },
+              { id: 'Machine Learning', label: 'Core ML Masterclass', icon: '📈' },
+              { id: 'Deep Learning', label: 'Deep Learning & NLP', icon: '🧠' },
+              { id: 'MLOps & Deployment', label: 'Production MLOps', icon: '🛠️' },
+              { id: 'Python & Math', label: 'Statistics for DS', icon: '📊' },
+            ].map((cat) => {
+              const isSelected = selectedKnCategory === cat.id;
               return (
                 <button
-                  key={ch.id}
-                  onClick={() => setSelectedModule(ch.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                  key={cat.id}
+                  onClick={() => setSelectedKnCategory(cat.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
-                      ? 'bg-[#43664c] text-white shadow-xs font-bold'
-                      : isSkippedInTrimmed && dsaTierFilter === 'must_do'
-                      ? 'bg-slate-100 border border-slate-200 text-slate-400 opacity-60'
-                      : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
+                      ? 'bg-emerald-700 text-white shadow-md font-extrabold'
+                      : 'bg-white border border-[#c2c8c0] text-[#545f72] hover:border-emerald-600 hover:text-emerald-800'
                   }`}
-                  title={ch.tierDescription}
                 >
-                  <span className="opacity-75 font-mono">Ch {ch.id}:</span>
-                  <span>{ch.title}</span>
-                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-black/5">
-                    {chapterCount}
-                  </span>
+                  <span>{cat.icon}</span>
+                  <span>{cat.label}</span>
                 </button>
               );
             })}
           </div>
+
+          {/* Krish Naik Courses List */}
+          <div className="space-y-4">
+            {filteredKrishNaikCourses.length === 0 ? (
+              <div className="text-center py-12 bg-white rounded-2xl border border-slate-200">
+                <p className="text-sm font-semibold text-slate-500">No courses match your filter criteria.</p>
+              </div>
+            ) : (
+              filteredKrishNaikCourses.map((course) => renderAiCourseCard(course))
+            )}
+          </div>
         </div>
       )}
 
+      {/* 🧠 2. AI/ML Master Roadmap (25 Courses) Tab */}
       {activeTab === 'ai' && (
-        <div className="mb-6 space-y-3">
+        <div className="space-y-6">
           {/* Priority Tier Focus Banner */}
           <div className="p-3.5 sm:p-4 bg-sky-50/70 border border-sky-200/80 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-start sm:items-center gap-3">
@@ -652,433 +1114,30 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
               );
             })}
           </div>
-        </div>
-      )}
 
-      {activeTab === 'ai' && (
-        <div className="space-y-8">
-          {Array.from(coursesByPhase.entries()).map(([phaseTitle, courses]) => {
-            if (courses.length === 0) return null;
-            const phaseCompletedCount = courses.filter((c) => completedIds.has(c.id)).length;
+          <div className="space-y-8">
+            {Array.from(coursesByPhase.entries()).map(([phaseTitle, courses]) => {
+              if (courses.length === 0) return null;
+              const phaseCompletedCount = courses.filter((c) => completedIds.has(c.id)).length;
 
-            return (
-              <div key={phaseTitle} className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-base font-extrabold text-[#006494] tracking-wide border-l-4 border-[#006494] pl-3 py-0.5 flex items-center gap-2">
-                    <span>{phaseTitle}</span>
-                    <span className="text-xs font-semibold text-[#545f72] font-mono">
-                      ({phaseCompletedCount}/{courses.length})
-                    </span>
-                  </h2>
+              return (
+                <div key={phaseTitle} className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-base font-extrabold text-[#006494] tracking-wide border-l-4 border-[#006494] pl-3 py-0.5 flex items-center gap-2">
+                      <span>{phaseTitle}</span>
+                      <span className="text-xs font-semibold text-[#545f72] font-mono">
+                        ({phaseCompletedCount}/{courses.length})
+                      </span>
+                    </h2>
+                  </div>
+
+                  <div className="space-y-3">
+                    {courses.map((course) => renderAiCourseCard(course))}
+                  </div>
                 </div>
-
-                <div className="space-y-3">
-                  {courses.map((course) => {
-                    const hasVideos = Boolean(course.videos && course.videos.length > 0);
-                    const completedVideosInCourse = hasVideos
-                      ? course.videos!.filter((v) => completedIds.has(v.id)).length
-                      : 0;
-                    const isSearchMatchInVideos =
-                      searchQuery.trim() !== '' &&
-                      Boolean(course.videos?.some((v) => v.title.toLowerCase().includes(searchQuery.toLowerCase())));
-                    const isExpanded = expandedCourseIds.has(course.id) || isSearchMatchInVideos;
-                    const isDone =
-                      completedIds.has(course.id) ||
-                      (hasVideos && completedVideosInCourse === course.videos!.length);
-                    const tierInfo = AI_TIER_CONFIG[course.tier];
-                    const formatInfo = FORMAT_CONFIG[course.resourceFormat];
-                    const ytId = course.youtubeUrl
-                      ? course.youtubeUrl.match(
-                          /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
-                        )?.[1]
-                      : null;
-
-                    const cardThumbnail =
-                      course.thumbnailUrl ||
-                      (ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : null) ||
-                      course.videos?.[0]?.thumbnailUrl ||
-                      null;
-
-                    return (
-                      <div
-                        key={course.id}
-                        className={`w-full rounded-2xl border transition-all duration-200 overflow-hidden ${
-                          isDone
-                            ? 'border-[#c4eccb] bg-[#c4eccb]/10'
-                            : 'border-slate-200 bg-white hover:border-[#006494]/60 hover:shadow-xs'
-                        }`}
-                      >
-                        <div className="p-4 sm:p-5 flex flex-col md:flex-row md:items-start justify-between gap-4">
-                          <div className="flex items-start gap-3.5 flex-1 min-w-0 font-sans">
-                            <button
-                              onClick={() => {
-                                if (hasVideos) {
-                                  const allDone = completedVideosInCourse === course.videos!.length;
-                                  course.videos!.forEach((v) => {
-                                    const isVDone = completedIds.has(v.id);
-                                    if (allDone && isVDone) onToggleComplete(v.id);
-                                    else if (!allDone && !isVDone) onToggleComplete(v.id);
-                                  });
-                                }
-                                onToggleComplete(course.id);
-                              }}
-                              className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
-                                isDone
-                                  ? 'bg-[#006494] border-[#006494] text-white'
-                                  : 'border-slate-400 hover:border-[#006494] hover:bg-blue-50 bg-white'
-                              }`}
-                              title={isDone ? 'Mark as pending' : 'Mark as completed'}
-                            >
-                              {isDone && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                            </button>
-
-                            {cardThumbnail ? (
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  if (onWatchVideo && (ytId || course.videos?.[0])) {
-                                    const targetVid = course.videos?.[0];
-                                    onWatchVideo({
-                                      id: targetVid ? targetVid.id : course.id,
-                                      title: targetVid ? targetVid.title : course.title,
-                                      youtubeUrl: targetVid ? targetVid.youtubeUrl : course.youtubeUrl!,
-                                      subject: course.category,
-                                      difficulty: course.tier,
-                                      startSeconds: targetVid?.startSeconds || 0,
-                                    });
-                                  } else if (course.youtubeUrl) {
-                                    window.open(course.youtubeUrl, '_blank');
-                                  } else if (course.articleUrl) {
-                                    window.open(course.articleUrl, '_blank');
-                                  }
-                                }}
-                                className="relative hidden sm:block w-28 h-16 rounded-xl overflow-hidden shrink-0 border border-slate-200/90 shadow-2xs group text-left cursor-pointer mt-0.5 bg-slate-900"
-                                title="Watch in Study Theater"
-                              >
-                                <img
-                                  src={cardThumbnail}
-                                  alt={course.title}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                  loading="lazy"
-                                  onError={(e) => {
-                                    if (ytId) {
-                                      e.currentTarget.src = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
-                                    }
-                                  }}
-                                />
-                                <div className="absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <Youtube className="w-5 h-5 text-white drop-shadow-md" />
-                                </div>
-                              </button>
-                            ) : course.articleUrl ? (
-                              <a
-                                href={course.articleUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="relative hidden sm:flex w-28 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 border border-purple-400 items-center justify-center shrink-0 group text-left mt-0.5 shadow-2xs"
-                                title="Read Article on Medium"
-                              >
-                                <span className="text-2xl group-hover:scale-110 transition-transform">📰</span>
-                              </a>
-                            ) : (
-                              <a
-                                href={course.youtubeUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="relative hidden sm:flex w-28 h-16 rounded-lg bg-gradient-to-br from-blue-50 to-sky-100 border border-blue-200 items-center justify-center shrink-0 group text-left mt-0.5"
-                                title="Open Playlist on YouTube"
-                              >
-                                <span className="text-2xl group-hover:scale-110 transition-transform">📚</span>
-                              </a>
-                            )}
-
-                            <div className="min-w-0 flex-1">
-                              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-1.5">
-                                <span className="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full font-mono">
-                                  #{course.recommendedOrder}
-                                </span>
-                                {tierInfo && (
-                                  <span
-                                    className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1 font-mono ${tierInfo.bg} ${tierInfo.text} ${tierInfo.border}`}
-                                  >
-                                    <span>{tierInfo.badge}</span>
-                                  </span>
-                                )}
-                                {formatInfo && (
-                                  <span
-                                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 font-mono ${formatInfo.bg} ${formatInfo.text} ${formatInfo.border}`}
-                                  >
-                                    <span>{formatInfo.icon}</span>
-                                    <span>{formatInfo.label}</span>
-                                  </span>
-                                )}
-                                <span className="text-[10px] font-semibold text-slate-600 bg-slate-100/90 border border-slate-200 px-2 py-0.5 rounded-full font-mono">
-                                  {course.instructor}
-                                </span>
-
-                                {hasVideos && (
-                                  <button
-                                    type="button"
-                                    onClick={() => toggleExpandCourse(course.id)}
-                                    className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-sky-50 hover:bg-sky-100 text-sky-800 text-[10px] font-bold transition cursor-pointer border border-sky-200"
-                                  >
-                                    <Video className="w-3 h-3 text-sky-600" />
-                                    <span>{course.videos!.length} Lessons</span>
-                                    <span className="font-mono bg-sky-200/70 text-sky-900 px-1.5 py-0.1 rounded-full">
-                                      {completedVideosInCourse}/{course.videos!.length}
-                                    </span>
-                                    {isExpanded ? <ChevronUp className="w-3 h-3 ml-0.5" /> : <ChevronDown className="w-3 h-3 ml-0.5" />}
-                                  </button>
-                                )}
-                              </div>
-
-                              <h3
-                                className={`text-[15px] font-bold leading-snug ${
-                                  isDone ? 'text-slate-400 line-through' : 'text-[#181c1e]'
-                                }`}
-                              >
-                                {course.title}
-                              </h3>
-
-                              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                                {course.description}
-                              </p>
-
-                              <div className="flex flex-wrap gap-1.5 mt-2.5">
-                                {course.keyTakeaways.map((takeaway, tIdx) => (
-                                  <span
-                                    key={tIdx}
-                                    className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md"
-                                  >
-                                    ✓ {takeaway}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center gap-2 shrink-0 self-end md:self-center mt-2 md:mt-0">
-                            {hasVideos && (
-                              <button
-                                type="button"
-                                onClick={() => toggleExpandCourse(course.id)}
-                                className={`px-3 py-2 text-xs font-bold rounded-xl flex items-center gap-1.5 transition cursor-pointer border ${
-                                  isExpanded
-                                    ? 'bg-slate-100 text-slate-700 border-slate-300'
-                                    : 'bg-sky-50 text-sky-800 border-sky-200 hover:bg-sky-100'
-                                }`}
-                              >
-                                <Video className="w-3.5 h-3.5 text-sky-600" />
-                                <span>{isExpanded ? 'Hide Lessons' : `View ${course.videos!.length} Lessons`}</span>
-                                {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                              </button>
-                            )}
-
-                            {course.youtubeUrl && (
-                              <button
-                                onClick={() => {
-                                  if (ytId && onWatchVideo) {
-                                    onWatchVideo({
-                                      id: course.id,
-                                      title: course.title,
-                                      youtubeUrl: course.youtubeUrl!,
-                                      subject: course.category,
-                                      difficulty: course.tier,
-                                    });
-                                  } else {
-                                    window.open(course.youtubeUrl, '_blank');
-                                  }
-                                }}
-                                className="px-3.5 py-2 bg-[#006494] hover:bg-[#004e75] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer"
-                                title={course.resourceFormat === 'Full Playlist' ? 'Open Playlist' : 'Watch Video'}
-                              >
-                                <Play className="w-3.5 h-3.5 fill-current" />
-                                <span>{course.resourceFormat === 'Full Playlist' ? 'Open' : 'Watch'}</span>
-                              </button>
-                            )}
-
-
-                            {course.articleUrl && (
-                              <a
-                                href={course.articleUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer"
-                              >
-                                <ExternalLink className="w-3.5 h-3.5" />
-                                <span>Read Article</span>
-                              </a>
-                            )}
-
-                            <button
-                              onClick={() => onSendToIntake(course.title)}
-                              className="px-3 py-2 bg-[#f1f4f6] hover:bg-[#e5e9eb] text-slate-700 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition cursor-pointer"
-                              title="Break down into actionable study steps"
-                            >
-                              <Sparkles className="w-3.5 h-3.5 text-[#006494]" />
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Expandable Course Video Lessons from CSV */}
-                        {hasVideos && isExpanded && (
-                          <div className="border-t border-slate-200/80 bg-slate-50/70 p-3.5 sm:p-4 space-y-2.5">
-                            <div className="flex items-center justify-between px-1 mb-1">
-                              <div className="flex items-center gap-2">
-                                <Video className="w-4 h-4 text-[#006494]" />
-                                <h4 className="text-xs sm:text-sm font-bold text-slate-800 font-mono">
-                                  Course Lessons ({completedVideosInCourse}/{course.videos!.length} Completed)
-                                </h4>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <div className="w-24 sm:w-32 h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                                  <div
-                                    className="h-full bg-emerald-600 rounded-full transition-all"
-                                    style={{
-                                      width: `${Math.round((completedVideosInCourse / course.videos!.length) * 100)}%`,
-                                    }}
-                                  />
-                                </div>
-                                <span className="text-[11px] font-mono font-bold text-slate-600">
-                                  {Math.round((completedVideosInCourse / course.videos!.length) * 100)}%
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-                              {course.videos!.map((vid) => {
-                                const isVidDone = completedIds.has(vid.id);
-                                const vidYtId = vid.youtubeUrl.match(
-                                  /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/
-                                )?.[1];
-
-                                return (
-                                  <div
-                                    key={vid.id}
-                                    className={`rounded-xl border p-2.5 sm:p-3 flex items-start sm:items-center justify-between gap-3 transition-all ${
-                                      isVidDone
-                                        ? 'border-emerald-200 bg-emerald-50/30'
-                                        : 'border-slate-200 bg-white hover:border-[#006494]/50 hover:shadow-2xs'
-                                    }`}
-                                  >
-                                    <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
-                                      <button
-                                        onClick={() => onToggleComplete(vid.id)}
-                                        className={`mt-0.5 sm:mt-0 w-4.5 h-4.5 rounded flex items-center justify-center border transition-all cursor-pointer shrink-0 ${
-                                          isVidDone
-                                            ? 'bg-[#006494] border-[#006494] text-white'
-                                            : 'border-slate-300 hover:border-[#006494] hover:bg-blue-50 bg-white'
-                                        }`}
-                                        title={isVidDone ? 'Mark as pending' : 'Mark as completed'}
-                                      >
-                                        {isVidDone && <Check className="w-3 h-3 stroke-[3]" />}
-                                      </button>
-
-                                      {vidYtId && (
-                                        <button
-                                          type="button"
-                                          onClick={() => {
-                                            if (onWatchVideo) {
-                                              onWatchVideo({
-                                                id: vid.id,
-                                                title: vid.title,
-                                                youtubeUrl: vid.youtubeUrl,
-                                                subject: course.category,
-                                                difficulty: course.tier,
-                                                startSeconds: vid.startSeconds || 0,
-                                              });
-                                            } else {
-                                              window.open(vid.youtubeUrl, '_blank');
-                                            }
-                                          }}
-                                          className="relative hidden sm:block w-16 h-10 rounded-md overflow-hidden shrink-0 border border-slate-200 group text-left cursor-pointer"
-                                          title="Watch in Study Theater"
-                                        >
-                                          <img
-                                            src={`https://i.ytimg.com/vi/${vidYtId}/hqdefault.jpg`}
-                                            alt={vid.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                                            loading="lazy"
-                                          />
-                                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <Play className="w-3.5 h-3.5 fill-white text-white" />
-                                          </div>
-                                        </button>
-                                      )}
-
-                                      <div className="min-w-0 flex-1">
-                                        <div className="flex items-center gap-1.5 mb-0.5">
-                                          <span className="text-[10px] font-mono font-bold text-slate-500 shrink-0">
-                                            #{vid.videoIndex}
-                                          </span>
-                                          {vid.durationTimestamp && (
-                                            <span className="text-[10px] font-mono text-slate-600 bg-slate-100 px-1.5 py-0.2 rounded shrink-0">
-                                              ⏱️ {vid.durationTimestamp}
-                                            </span>
-                                          )}
-                                        </div>
-                                        <p
-                                          className={`text-xs sm:text-[13px] font-bold leading-tight ${
-                                            isVidDone ? 'text-slate-400 line-through' : 'text-[#181c1e]'
-                                          }`}
-                                          title={vid.title}
-                                        >
-                                          {vid.title}
-                                        </p>
-                                        {vid.description && (
-                                          <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
-                                            {vid.description}
-                                          </p>
-                                        )}
-                                      </div>
-                                    </div>
-
-                                    <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
-                                      <button
-                                        onClick={() => {
-                                          if (onWatchVideo) {
-                                            onWatchVideo({
-                                              id: vid.id,
-                                              title: vid.title,
-                                              youtubeUrl: vid.youtubeUrl,
-                                              subject: course.category,
-                                              difficulty: course.tier,
-                                              startSeconds: vid.startSeconds || 0,
-                                            });
-                                          } else {
-                                            window.open(vid.youtubeUrl, '_blank');
-                                          }
-                                        }}
-                                        className="px-2.5 py-1.5 bg-[#006494] hover:bg-[#004e75] text-white text-[11px] font-bold rounded-lg flex items-center gap-1 shadow-xs transition cursor-pointer"
-                                        title="Watch in Study Theater"
-                                      >
-                                        <Play className="w-3 h-3 fill-current" />
-                                        <span className="hidden sm:inline">Watch</span>
-                                      </button>
-
-
-
-                                      <button
-                                        onClick={() => onSendToIntake(vid.title)}
-                                        className="p-1.5 bg-[#f1f4f6] hover:bg-[#e5e9eb] text-slate-700 rounded-lg transition cursor-pointer"
-                                        title="Break down into actionable study steps"
-                                      >
-                                        <Sparkles className="w-3.5 h-3.5 text-[#006494]" />
-                                      </button>
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
           {/* Phase Pagination Footer (Jump to next phase without leaving view) */}
           {selectedPhase !== 'all' && (
@@ -1143,7 +1202,105 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
       )}
 
       {activeTab === 'dsa' && (
-        <div className="space-y-8">
+        <div className="space-y-6">
+          {/* Trimmed Roadmap Focus Banner */}
+          <div className="p-3.5 sm:p-4 bg-emerald-50/70 border border-emerald-200/80 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div className="flex items-start sm:items-center gap-3">
+              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
+                🎯
+              </div>
+              <div>
+                <p className="text-xs sm:text-sm font-bold text-emerald-950 flex items-center gap-1.5">
+                  <span>Trimmed Interview-Ready DSA Curriculum</span>
+                  <span className="text-[11px] font-mono font-bold bg-emerald-200/70 text-emerald-900 px-2 py-0.2 rounded-full">
+                    {mustDoDsaCount} Problems
+                  </span>
+                </p>
+                <p className="text-[11px] text-emerald-700 leading-relaxed mt-0.5">
+                  Curated high-yield topics across Ch 1–16. Skips heavy Hard topics (3Sum/4Sum, N-Queens, 15.4–15.6 Shortest Path/MST, DP Strings/Stocks, Tries) for maximum interview velocity.
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Tier Filter Toggles */}
+            <div className="flex items-center gap-1 self-start md:self-center bg-white p-1 rounded-xl border border-emerald-200 text-xs shrink-0 shadow-xs">
+              <button
+                onClick={() => setDsaTierFilter('must_do')}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                  dsaTierFilter === 'must_do'
+                    ? 'bg-[#43664c] text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>🎯 Do Now ({mustDoDsaCount})</span>
+              </button>
+              <button
+                onClick={() => setDsaTierFilter('all')}
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
+                  dsaTierFilter === 'all'
+                    ? 'bg-[#43664c] text-white shadow-xs font-bold'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>All ({totalDsaCount})</span>
+              </button>
+              <button
+                onClick={() => setDsaTierFilter('optional_later')}
+                className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
+                  dsaTierFilter === 'optional_later'
+                    ? 'bg-[#43664c] text-white shadow-xs font-bold'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <span>⏭️ Skip/Later ({totalDsaCount - mustDoDsaCount})</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto pb-1 flex gap-2 no-scrollbar">
+            <button
+              onClick={() => setSelectedModule('all')}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                selectedModule === 'all'
+                  ? 'bg-[#43664c] text-white shadow-xs'
+                  : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
+              }`}
+            >
+              All Chapters ({dsaTierFilter === 'must_do' ? mustDoDsaCount : dsaTierFilter === 'optional_later' ? totalDsaCount - mustDoDsaCount : totalDsaCount})
+            </button>
+            {DSA_CHAPTERS.map((ch) => {
+              const isSelected = selectedModule === ch.id;
+              const chapterCount = dsaTierFilter === 'must_do' 
+                ? ch.mustDoCount ?? 0 
+                : dsaTierFilter === 'optional_later'
+                ? ch.count - (ch.mustDoCount ?? 0)
+                : ch.count;
+              const isSkippedInTrimmed = ch.mustDoCount === 0;
+
+              return (
+                <button
+                  key={ch.id}
+                  onClick={() => setSelectedModule(ch.id)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-[#43664c] text-white shadow-xs font-bold'
+                      : isSkippedInTrimmed && dsaTierFilter === 'must_do'
+                      ? 'bg-slate-100 border border-slate-200 text-slate-400 opacity-60'
+                      : 'bg-[#ffffff] border border-[#c2c8c0] text-[#545f72] hover:border-[#43664c]'
+                  }`}
+                  title={ch.tierDescription}
+                >
+                  <span className="opacity-75 font-mono">Ch {ch.id}:</span>
+                  <span>{ch.title}</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded-md bg-black/5">
+                    {chapterCount}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="space-y-8">
           {Array.from(dsaByChapter.entries()).map(([chapterId, chapterData]) => {
             if (chapterData.problems.length === 0) return null;
             const chapterCompletedCount = chapterData.problems.filter((p) => completedIds.has(p.id)).length;
@@ -1359,6 +1516,7 @@ export const RoadmapScreen: React.FC<RoadmapScreenProps> = ({
               </button>
             </div>
           )}
+          </div>
         </div>
       )}
     </main>

@@ -150,3 +150,22 @@
 .mobile-nav-item-animate {
   animation: fadeInMenuItem 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Custom sleek dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e1318;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #253341;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3b4d61;
+}

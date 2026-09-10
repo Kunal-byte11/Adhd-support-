@@ -4009,5 +4009,246 @@ export const AI_PLAYLIST_VIDEOS: Record<string, AiVideoItem[]> = {
       "description": "How nanoGPT relates to GPT-3 and ChatGPT: unsupervised pre-training, supervised fine-tuning (SFT), and RLHF alignment.",
       "startSeconds": 6382
     }
+  ],
+  "ai-kn-genai": [
+    {
+      "id": "kn-genai-1",
+      "courseId": "ai-kn-genai",
+      "videoIndex": 1,
+      "title": "1. Complete Generative AI Roadmap & Curriculum Overview",
+      "durationTimestamp": "24:15",
+      "thumbnailUrl": "https://i.ytimg.com/vi/1_6fG4aQ9gM/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=1_6fG4aQ9gM",
+      "description": "Complete breakdown of the modern Generative AI roadmap: LLMs, LangChain, Vector Databases, Retrieval-Augmented Generation (RAG), Fine-Tuning, and Multi-Agent Orchestration.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-genai-2",
+      "courseId": "ai-kn-genai",
+      "videoIndex": 2,
+      "title": "2. LangChain Complete Masterclass - Components, Chains & Prompts",
+      "durationTimestamp": "1:42:30",
+      "thumbnailUrl": "https://i.ytimg.com/vi/AyauPqmQeR8/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=AyauPqmQeR8",
+      "description": "Comprehensive tutorial on LangChain: PromptTemplates, LLMChain, SequentialChain, OutputParsers, Memory, and streaming responses with OpenAI & open-source models.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-genai-3",
+      "courseId": "ai-kn-genai",
+      "videoIndex": 3,
+      "title": "3. Retrieval-Augmented Generation (RAG) from Scratch with Vector DBs",
+      "durationTimestamp": "58:45",
+      "thumbnailUrl": "https://i.ytimg.com/vi/BrsocJb-qao/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=BrsocJb-qao",
+      "description": "Step-by-step implementation of RAG pipelines using DocumentLoaders, TextSplitters, Vector Embeddings (HuggingFace/OpenAI), ChromaDB, FAISS, and RetrievalQA chains.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-genai-4",
+      "courseId": "ai-kn-genai",
+      "videoIndex": 4,
+      "title": "4. Open-Source LLMs Locally with Ollama, Llama-3 & Mistral",
+      "durationTimestamp": "45:12",
+      "thumbnailUrl": "https://i.ytimg.com/vi/9Qk2hKqYgqM/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=9Qk2hKqYgqM",
+      "description": "How to run, quantize, and integrate open-source LLMs (Llama 3, Mistral, Gemma) locally using Ollama and build offline RAG applications with LangChain.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-genai-5",
+      "courseId": "ai-kn-genai",
+      "videoIndex": 5,
+      "title": "5. LangGraph & Multi-Agent AI Architectures",
+      "durationTimestamp": "1:15:20",
+      "thumbnailUrl": "https://i.ytimg.com/vi/hvAPnpSfSGo/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=hvAPnpSfSGo",
+      "description": "Building cyclic, stateful multi-agent workflows with LangGraph: StateGraph, nodes, edges, conditional routing, human-in-the-loop, and persistent memory.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-genai-6",
+      "courseId": "ai-kn-genai",
+      "videoIndex": 6,
+      "title": "6. CrewAI & Autonomous Multi-Agent Collaboration",
+      "durationTimestamp": "52:18",
+      "thumbnailUrl": "https://i.ytimg.com/vi/sPzc6hMg7So/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=sPzc6hMg7So",
+      "description": "Orchestrating teams of autonomous AI agents using CrewAI: defining specialized Agent roles, Goals, Backstories, Tools, and sequential/hierarchical Task execution.",
+      "startSeconds": 0
+    }
+  ],
+  "ai-kn-ml": [
+    {
+      "id": "kn-ml-1",
+      "courseId": "ai-kn-ml",
+      "videoIndex": 1,
+      "title": "1. Complete Machine Learning Masterclass - Math, Theory & Implementation",
+      "durationTimestamp": "2:15:40",
+      "thumbnailUrl": "https://i.ytimg.com/vi/7eh4d6sabA0/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=7eh4d6sabA0",
+      "description": "Complete foundation of Machine Learning algorithms: Supervised vs Unsupervised learning, Bias-Variance Tradeoff, Cost Functions, and Gradient Descent math.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-ml-2",
+      "courseId": "ai-kn-ml",
+      "videoIndex": 2,
+      "title": "2. Linear & Logistic Regression with Mathematical Proofs",
+      "durationTimestamp": "1:35:10",
+      "thumbnailUrl": "https://i.ytimg.com/vi/L_xwtzJmYxI/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=L_xwtzJmYxI",
+      "description": "Ordinary Least Squares, R-squared, Adjusted R-squared, Sigmoid activation, Log-Loss cost function, and Multiclass Logistic Regression.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-ml-3",
+      "courseId": "ai-kn-ml",
+      "videoIndex": 3,
+      "title": "3. Decision Trees, Random Forest & Ensemble Learning",
+      "durationTimestamp": "1:48:22",
+      "thumbnailUrl": "https://i.ytimg.com/vi/RmajweU8mZQ/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=RmajweU8mZQ",
+      "description": "Entropy, Information Gain, Gini Impurity, Bagging algorithms, Random Forest Hyperparameter Tuning, and Out-of-Bag (OOB) error estimation.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-ml-4",
+      "courseId": "ai-kn-ml",
+      "videoIndex": 4,
+      "title": "4. Boosting Algorithms: AdaBoost, Gradient Boosting & XGBoost",
+      "durationTimestamp": "1:55:30",
+      "thumbnailUrl": "https://i.ytimg.com/vi/gP5P8LqGvEU/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=gP5P8LqGvEU",
+      "description": "In-depth mathematical intuition for sequential learning: Pseudo-residuals, Learning Rate, Tree Pruning, and XGBoost hardware-level optimizations.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-ml-5",
+      "courseId": "ai-kn-ml",
+      "videoIndex": 5,
+      "title": "5. Dimensionality Reduction (PCA) & Unsupervised Clustering",
+      "durationTimestamp": "1:12:05",
+      "thumbnailUrl": "https://i.ytimg.com/vi/rng0433URj8/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=rng0433URj8",
+      "description": "Principal Component Analysis (Eigenvectors, Eigenvalues, Covariance Matrix), K-Means Clustering, Elbow Method, and Silhouette Score analysis.",
+      "startSeconds": 0
+    }
+  ],
+  "ai-kn-dl": [
+    {
+      "id": "kn-dl-1",
+      "courseId": "ai-kn-dl",
+      "videoIndex": 1,
+      "title": "1. Artificial Neural Networks (ANN) & Backpropagation Derivation",
+      "durationTimestamp": "1:50:15",
+      "thumbnailUrl": "https://i.ytimg.com/vi/aircAruvnKk/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=aircAruvnKk",
+      "description": "Perceptrons, Multilayer Perceptrons, Activation Functions (ReLU, Sigmoid, Softmax), Chain Rule derivation of Backpropagation, and Weight Initialization techniques.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-dl-2",
+      "courseId": "ai-kn-dl",
+      "videoIndex": 2,
+      "title": "2. Convolutional Neural Networks (CNN) & Computer Vision Architectures",
+      "durationTimestamp": "1:45:00",
+      "thumbnailUrl": "https://i.ytimg.com/vi/zfiSAzba9IE/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=zfiSAzba9IE",
+      "description": "Kernels, Filters, Stride, Padding, Pooling layers, VGG16, ResNet Residual Connections, and Transfer Learning with PyTorch and Keras.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-dl-3",
+      "courseId": "ai-kn-dl",
+      "videoIndex": 3,
+      "title": "3. Recurrent Neural Networks (RNN), LSTMs & GRUs for Sequential Data",
+      "durationTimestamp": "1:28:40",
+      "thumbnailUrl": "https://i.ytimg.com/vi/8HyCNIVRbSU/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=8HyCNIVRbSU",
+      "description": "Vanishing & Exploding Gradients, Hidden State Propagation, LSTM Forget/Input/Output Gates, GRU Reset/Update Gates, and Time Series/NLP modeling.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-dl-4",
+      "courseId": "ai-kn-dl",
+      "videoIndex": 4,
+      "title": "4. PyTorch Deep Learning Complete Tutorial for Beginners",
+      "durationTimestamp": "2:10:00",
+      "thumbnailUrl": "https://i.ytimg.com/vi/EMXfZB8FVUA/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=EMXfZB8FVUA",
+      "description": "Tensors, Autograd, Dataset & DataLoader pipelines, nn.Module custom neural network classes, training loops, and GPU acceleration on CUDA.",
+      "startSeconds": 0
+    }
+  ],
+  "ai-kn-nlp": [
+    {
+      "id": "kn-nlp-1",
+      "courseId": "ai-kn-nlp",
+      "videoIndex": 1,
+      "title": "1. Natural Language Processing (NLP) Masterclass - From Text to Vectors",
+      "durationTimestamp": "1:30:20",
+      "thumbnailUrl": "https://i.ytimg.com/vi/6wn8hpzLVCw/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=6wn8hpzLVCw",
+      "description": "Text Preprocessing (Tokenization, Lemmatization, Stopwords removal), Bag of Words (BoW), TF-IDF, N-grams, and text classification.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-nlp-2",
+      "courseId": "ai-kn-nlp",
+      "videoIndex": 2,
+      "title": "2. Word Embeddings: Word2Vec, GloVe & FastText",
+      "durationTimestamp": "1:15:45",
+      "thumbnailUrl": "https://i.ytimg.com/vi/4vQYr1_6Pkw/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=4vQYr1_6Pkw",
+      "description": "Continuous Bag of Words (CBOW), Skip-Gram architecture, Negative Sampling, Cosine Similarity, and semantic vector arithmetic.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-nlp-3",
+      "courseId": "ai-kn-nlp",
+      "videoIndex": 3,
+      "title": "3. Transformers Architecture & HuggingFace Models (BERT, GPT)",
+      "durationTimestamp": "1:40:10",
+      "thumbnailUrl": "https://i.ytimg.com/vi/TQQlZhbC5ps/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=TQQlZhbC5ps",
+      "description": "Self-Attention mechanism, Scaled Dot-Product Attention, Multi-Head Attention, Positional Encoding, BERT encoder representations, and HuggingFace pipelines.",
+      "startSeconds": 0
+    }
+  ],
+  "ai-kn-mlops": [
+    {
+      "id": "kn-mlops-1",
+      "courseId": "ai-kn-mlops",
+      "videoIndex": 1,
+      "title": "1. End-to-End Production ML Project Architecture & Modular Coding",
+      "durationTimestamp": "1:55:00",
+      "thumbnailUrl": "https://i.ytimg.com/vi/S_f_24f5j40/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=S_f_24f5j40",
+      "description": "Setting up professional enterprise Python package templates: setup.py, custom exception handling, logging pipelines, Data Ingestion, Data Transformation, and Model Trainer components.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-mlops-2",
+      "courseId": "ai-kn-mlops",
+      "videoIndex": 2,
+      "title": "2. MLflow Experiment Tracking & DVC Data Version Control",
+      "durationTimestamp": "1:20:30",
+      "thumbnailUrl": "https://i.ytimg.com/vi/k0o_aE-E20s/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=k0o_aE-E20s",
+      "description": "Tracking metrics, parameters, and model artifacts with MLflow; versioning large datasets and pipelines using DVC (Data Version Control) with remote storage.",
+      "startSeconds": 0
+    },
+    {
+      "id": "kn-mlops-3",
+      "courseId": "ai-kn-mlops",
+      "videoIndex": 3,
+      "title": "3. Docker Containerization, GitHub Actions CI/CD & Cloud Deployment",
+      "durationTimestamp": "1:38:15",
+      "thumbnailUrl": "https://i.ytimg.com/vi/MJ1mR1B8q9A/hqdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=MJ1mR1B8q9A",
+      "description": "Writing Dockerfiles, multi-stage container builds, automated testing & continuous integration with GitHub Actions, pushing to AWS ECR, and deploying to AWS EC2 / App Runner.",
+      "startSeconds": 0
+    }
   ]
 };

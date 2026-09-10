@@ -11,7 +11,13 @@ import {
 import { BinauralSoundMode } from '../types';
 import { neuroAudio } from '../lib/audioSynthesizer';
 
-export const AudioSynthesizerScreen: React.FC = () => {
+interface AudioSynthesizerScreenProps {
+  isSidebarCollapsed?: boolean;
+}
+
+export const AudioSynthesizerScreen: React.FC<AudioSynthesizerScreenProps> = ({
+  isSidebarCollapsed = false,
+}) => {
   const [soundMode, setSoundMode] = useState<BinauralSoundMode>(() => neuroAudio.getMode());
   const [volume, setVolume] = useState<number>(() => neuroAudio.getVolume());
 
@@ -38,7 +44,9 @@ export const AudioSynthesizerScreen: React.FC = () => {
   };
 
   return (
-    <main className="flex-1 md:ml-64 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-5xl mx-auto w-full font-sans">
+    <main className={`flex-1 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-5xl mx-auto w-full font-sans transition-all duration-300 ${
+      isSidebarCollapsed ? 'md:ml-16 md:pl-4' : 'md:ml-64'
+    }`}>
       {/* Top Header */}
       <header className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
