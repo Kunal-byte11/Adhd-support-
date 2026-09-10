@@ -15,6 +15,7 @@ import { WoopScreen } from './components/WoopScreen';
 import { LectureNotesVaultScreen } from './components/LectureNotesVaultScreen';
 import { PhysiologicalSighScreen } from './components/PhysiologicalSighScreen';
 import { AudioSynthesizerScreen } from './components/AudioSynthesizerScreen';
+import { DmnReprogrammingScreen } from './components/DmnReprogrammingScreen';
 import { StudyTheaterModal } from './components/StudyTheaterModal';
 import { LoginModal } from './components/LoginModal';
 import { WoopBoardModal } from './components/WoopBoardModal';
@@ -199,6 +200,10 @@ export default function App() {
 
         {currentScreen === 'notes' && (
           <LectureNotesVaultScreen onWatchVideo={setActiveTheaterVideo} />
+        )}
+
+        {currentScreen === 'dmn' && (
+          <DmnReprogrammingScreen onOpenStudyTheater={setActiveTheaterVideo} />
         )}
 
         {currentScreen === 'breathing' && (

@@ -77,6 +77,7 @@ export const CURRICULUM_COLLECTION = 'curriculum_progress';
 export const WOOP_COLLECTION = 'woop_goals';
 export const RECALLS_COLLECTION = 'session_recalls';
 export const PHOTO_NOTES_COLLECTION = 'lecture_photo_notes';
+export const DMN_COLLECTION = 'dmn_narratives';
 
 export {
   collection,

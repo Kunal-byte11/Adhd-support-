@@ -36,6 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   const neuroNavItems: NavItem[] = [
+    { id: 'dmn', label: 'DMN Story 🧠', Icon: Brain },
     { id: 'notes', label: 'Lecture Notes 📸', Icon: BookOpen },
     { id: 'woop', label: 'WOOP Anchors 🎯', Icon: Target },
     { id: 'breathing', label: 'Physiological Sigh 🫁', Icon: Wind },

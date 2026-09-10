@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Settings,
   Layers,
+  Brain,
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -102,6 +103,15 @@ export const MobileNav: React.FC<MobileNavProps> = ({
       badge: '🫁',
       accentBg: 'bg-teal-500/10',
       accentText: 'text-teal-700',
+    },
+    {
+      id: 'dmn',
+      label: 'DMN Story Reprogramming',
+      description: 'Daily identity narrative & mental movie',
+      Icon: Brain,
+      badge: '🧠',
+      accentBg: 'bg-emerald-600/10',
+      accentText: 'text-emerald-800',
     },
     {
       id: 'sounds',

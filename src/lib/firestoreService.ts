@@ -5,6 +5,7 @@ import {
   WOOP_COLLECTION,
   RECALLS_COLLECTION,
   PHOTO_NOTES_COLLECTION,
+  DMN_COLLECTION,
   collection,
   doc,
   setDoc,
@@ -17,7 +18,7 @@ import {
   serverTimestamp,
   ensureAnonymousAuth,
 } from './firebase';
-import { TaskItem, IWoopGoal, ISessionRecall, ILecturePhotoNote } from '../types';
+import { TaskItem, IWoopGoal, ISessionRecall, ILecturePhotoNote, IDmnNarrative } from '../types';
 
 // ======================= TASKS =======================
 
@@ -462,6 +463,161 @@ export function subscribeAllPhotoNotes(
     return () => {};
   }
 }
+
+// ======================= DMN REPROGRAMMING NARRATIVES =======================
+
+const LOCAL_DMN_KEY = 'focusflow_dmn_narratives_cache';
+
+export function getAllStoredDmnNarratives(): IDmnNarrative[] {
+  try {
+    const raw = localStorage.getItem(LOCAL_DMN_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveStoredDmnNarrativesLocally(narratives: IDmnNarrative[]): void {
+  try {
+    localStorage.setItem(LOCAL_DMN_KEY, JSON.stringify(narratives));
+  } catch (err) {
+    console.warn('Local storage DMN save error:', err);
+  }
+}
+
+export async function saveDmnNarrativeToFirestore(narrative: IDmnNarrative): Promise<void> {
+  try {
+    await ensureAnonymousAuth();
+    const docRef = doc(db, DMN_COLLECTION, narrative.id);
+    await setDoc(docRef, {
+      ...narrative,
+      updatedAt: serverTimestamp(),
+    }, { merge: true });
+
+    // Update local cache
+    const current = getAllStoredDmnNarratives();
+    const idx = current.findIndex((n) => n.id === narrative.id);
+    if (idx !== -1) {
+      current[idx] = { ...narrative, updatedAt: Date.now() };
+    } else {
+      current.unshift({ ...narrative, updatedAt: Date.now() });
+    }
+    saveStoredDmnNarrativesLocally(current);
+  } catch (err) {
+    console.warn('Firestore save DMN narrative error (using local cache):', err);
+    const current = getAllStoredDmnNarratives();
+    const idx = current.findIndex((n) => n.id === narrative.id);
+    if (idx !== -1) {
+      current[idx] = { ...narrative, updatedAt: Date.now() };
+    } else {
+      current.unshift({ ...narrative, updatedAt: Date.now() });
+    }
+    saveStoredDmnNarrativesLocally(current);
+  }
+}
+
+export async function recordDmnDailyReviewInFirestore(id: string): Promise<void> {
+  try {
+    await ensureAnonymousAuth();
+    const current = getAllStoredDmnNarratives();
+    const found = current.find((n) => n.id === id);
+    const newStreak = (found?.reviewStreakCount || 0) + 1;
+    const now = Date.now();
+
+    const docRef = doc(db, DMN_COLLECTION, id);
+    await updateDoc(docRef, {
+      lastReviewedAt: serverTimestamp(),
+      reviewStreakCount: newStreak,
+      updatedAt: serverTimestamp(),
+    });
+
+    if (found) {
+      found.lastReviewedAt = now;
+      found.reviewStreakCount = newStreak;
+      saveStoredDmnNarrativesLocally(current);
+    }
+  } catch (err) {
+    console.warn('Firestore record DMN review error (local fallback):', err);
+    const current = getAllStoredDmnNarratives();
+    const found = current.find((n) => n.id === id);
+    if (found) {
+      found.lastReviewedAt = Date.now();
+      found.reviewStreakCount = (found.reviewStreakCount || 0) + 1;
+      saveStoredDmnNarrativesLocally(current);
+    }
+  }
+}
+
+export async function deleteDmnNarrativeFromFirestore(id: string): Promise<void> {
+  try {
+    await ensureAnonymousAuth();
+    const docRef = doc(db, DMN_COLLECTION, id);
+    await deleteDoc(docRef);
+
+    const current = getAllStoredDmnNarratives().filter((n) => n.id !== id);
+    saveStoredDmnNarrativesLocally(current);
+  } catch (err) {
+    console.warn('Firestore delete DMN narrative error:', err);
+    const current = getAllStoredDmnNarratives().filter((n) => n.id !== id);
+    saveStoredDmnNarrativesLocally(current);
+  }
+}
+
+export function subscribeDmnNarratives(onNarrativesChanged: (narratives: IDmnNarrative[]) => void): () => void {
+  const localCached = getAllStoredDmnNarratives();
+  if (localCached.length > 0) {
+    onNarrativesChanged(localCached);
+  }
+
+  try {
+    const q = query(collection(db, DMN_COLLECTION), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const localList = getAllStoredDmnNarratives();
+        const localMap = new Map<string, IDmnNarrative>(localList.map((n) => [n.id, n]));
+
+        if (!snapshot.empty) {
+          snapshot.docs.forEach((docSnap) => {
+            const data = docSnap.data();
+            const item: IDmnNarrative = {
+              id: docSnap.id,
+              title: data.title || '',
+              category: data.category || 'focus',
+              identityStatement: data.identityStatement || '',
+              groundedFacts: data.groundedFacts || '',
+              futureEdge: data.futureEdge || '',
+              targetHabitRule: data.targetHabitRule || '',
+              triggerCue: data.triggerCue || '',
+              step1: data.step1 || '',
+              step2: data.step2 || '',
+              step3: data.step3 || '',
+              movieSceneDescription: data.movieSceneDescription || '',
+              lastReviewedAt: data.lastReviewedAt?.toMillis ? data.lastReviewedAt.toMillis() : data.lastReviewedAt,
+              reviewStreakCount: data.reviewStreakCount || 0,
+              createdAt: data.createdAt?.toMillis ? data.createdAt.toMillis() : data.createdAt || Date.now(),
+              updatedAt: data.updatedAt?.toMillis ? data.updatedAt.toMillis() : data.updatedAt || Date.now(),
+            };
+            localMap.set(docSnap.id, item);
+          });
+        }
+
+        const merged = Array.from(localMap.values()).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        saveStoredDmnNarrativesLocally(merged);
+        onNarrativesChanged(merged);
+      },
+      (err) => {
+        console.warn('Firestore DMN subscribe fallback:', err);
+        onNarrativesChanged(getAllStoredDmnNarratives());
+      }
+    );
+    return unsubscribe;
+  } catch (err) {
+    console.warn('Firestore DMN subscribe exception:', err);
+    return () => {};
+  }
+}
+
 
 
 

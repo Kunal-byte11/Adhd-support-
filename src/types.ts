@@ -1,8 +1,9 @@
 export type ScreenType =
   | 'sem7'
   | 'roadmap'
-  | 'woop'
   | 'notes'
+  | 'dmn'
+  | 'woop'
   | 'breathing'
   | 'sounds'
   | 'neuro';
@@ -56,6 +57,33 @@ export interface ChecklistItem {
   label: string;
   icon: string;
   isChecked: boolean;
+}
+
+// ======================= DMN REPROGRAMMING NARRATIVE =======================
+
+export interface IDmnNarrative {
+  id: string;
+  title: string;
+  category: 'focus' | 'sleep' | 'dsa_study' | 'gen_ai' | 'dopamine_retention' | 'nutrition' | 'character' | 'digital_hygiene' | 'career' | 'custom';
+  
+  // Part 1: Identity-Based Beliefs
+  identityStatement: string;  // "I am the type of person who [core value/behavior] because [value statement]."
+  groundedFacts: string;      // "I know the data that [fact/science]."
+  futureEdge: string;         // "Embodying this gives me an edge in [area] because [outcome]."
+  targetHabitRule: string;    // "I make sure that I [specific target habit] every day."
+  
+  // Part 2: Implementation Intentions (Situation-Action Movie Scene)
+  triggerCue: string;         // "When / If [Specific Cue or Situation]"
+  step1: string;              // "First tiny effortless step..."
+  step2: string;              // "Then..."
+  step3: string;              // "Finally..."
+  movieSceneDescription?: string; // Rich sensory description of environment & sequence
+  
+  // Part 3: Daily Routine & Stats
+  lastReviewedAt?: number;
+  reviewStreakCount: number;
+  createdAt: number;
+  updatedAt?: number;
 }
 
 // ======================= NEUROSCIENCE PROTOCOLS =======================
