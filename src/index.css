@@ -169,3 +169,28 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3b4d61;
 }
+
+/* ================== Gritty Rubber "Dead Stamp" Effect ================== */
+@keyframes stampSlam {
+  0% {
+    opacity: 0;
+    transform: rotate(-14deg) scale(2.5);
+  }
+  65% {
+    opacity: 1;
+    transform: rotate(-14deg) scale(0.92);
+  }
+  85% {
+    transform: rotate(-14deg) scale(1.06);
+  }
+  100% {
+    opacity: 0.95;
+    transform: rotate(-14deg) scale(1);
+  }
+}
+
+.dead-stamp {
+  animation: stampSlam 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  text-shadow: 0 0 16px rgba(16, 185, 129, 0.6), 0 0 2px rgba(16, 185, 129, 0.9);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 12px rgba(16, 185, 129, 0.25);
+}

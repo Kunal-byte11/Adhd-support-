@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from "react";
 import krishVideosRaw from "../data/krishNaikVideos.json";
 import { StudyTheaterVideo, ILecturePhotoNote } from "../types";
 import { subscribeAllPhotoNotes } from "../lib/firestoreService";
+import { StationaryNotebookViewer } from "./StationaryNotebookViewer";
+import { MasteryCelebrationModal } from "./MasteryCelebrationModal";
 import {
   Search,
   X,
@@ -18,6 +20,10 @@ import {
   Upload,
   BookOpen,
   FileImage,
+  ImageIcon,
+  Maximize2,
+  ZoomIn,
+  Download,
   Layers,
   Award
 } from "lucide-react";
@@ -201,7 +207,17 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
   const [allNotes, setAllNotes] = useState<ILecturePhotoNote[]>([]);
   const [justToggledId, setJustToggledId] = useState<string | null>(null);
 
-  // Subscribe to photo notes from Firestore to retrieve uploaded notes count
+  // Dedicated In-Screen Notes Viewer Modal
+  const [activeNotesViewer, setActiveNotesViewer] = useState<{ videoId: string; videoTitle: string } | null>(null);
+
+  // Topic Mastery Celebration Modal state
+  const [celebratedTopic, setCelebratedTopic] = useState<{
+    topic: string;
+    category?: string;
+    xpPoints?: number;
+  } | null>(null);
+
+  // Subscribe to photo notes from Firestore
   useEffect(() => {
     const unsub = subscribeAllPhotoNotes((notes) => {
       setAllNotes(notes);
@@ -289,11 +305,24 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
     }
   };
 
-  const handleToggle = (url: string) => {
+  const handleToggle = (v: KrishNaikVideoRaw, step: StepTrack) => {
+    const url = v["Video url"] || "";
+    if (!url) return;
+    const isCurrentlyDone = completedIds.has(url);
+
     if (onToggleComplete) {
       setJustToggledId(url);
       onToggleComplete(url);
       setTimeout(() => setJustToggledId(null), 1000);
+
+      if (!isCurrentlyDone) {
+        // Trigger celebratory animation
+        setCelebratedTopic({
+          topic: v.Title,
+          category: step.title,
+          xpPoints: 500,
+        });
+      }
     }
   };
 
@@ -489,14 +518,6 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                         (isJustToggled ? " ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-950 animate-pulse" : "")
                       }
                     >
-                      {/* Completed Ribbon Badge */}
-                      {isDone && (
-                        <div className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-full text-[10px] font-black font-mono shadow-md animate-in fade-in zoom-in-90 duration-200">
-                          <Check className="w-3 h-3 stroke-[3]" />
-                          <span>COMPLETED</span>
-                        </div>
-                      )}
-
                       {/* Thumbnail Container */}
                       <div className="relative w-full aspect-video bg-slate-950 overflow-hidden">
                         {thumb ? (
@@ -504,7 +525,7 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                             src={thumb}
                             alt={title}
                             loading="lazy"
-                            className={"w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 " + (isDone ? "opacity-95 contrast-105" : "opacity-85 group-hover:opacity-100")}
+                            className={"w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 " + (isDone ? "opacity-50 saturate-50 contrast-125" : "opacity-85 group-hover:opacity-100")}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-slate-900 text-slate-500">
@@ -513,15 +534,41 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                         )}
 
                         {/* Gradient Overlay */}
-                        <div className={"absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent " + (isDone ? "opacity-60" : "opacity-80 group-hover:opacity-30") + " transition-opacity"} />
+                        <div className={"absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent " + (isDone ? "opacity-75" : "opacity-80 group-hover:opacity-30") + " transition-opacity"} />
 
-                        {/* Watch In Theater Badge Button Overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
-                          <div className="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-xl shadow-emerald-500/40">
-                            <Play className="w-4 h-4 fill-current" />
-                            <span>Watch in Study Theater</span>
+                        {/* RUBBER DEAD STAMP OVERLAY */}
+                        {isDone && (
+                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                            <div className="dead-stamp px-4 py-1.5 border-[3.5px] border-emerald-400 text-emerald-400 bg-slate-950/85 backdrop-blur-xs rounded-xl flex items-center gap-2 font-mono font-black text-sm tracking-[0.25em] uppercase select-none border-dashed">
+                              <Check className="w-4 h-4 stroke-[3.5] text-emerald-300" />
+                              <span>COMPLETED</span>
+                            </div>
                           </div>
-                        </div>
+                        )}
+
+                        {/* Watch In Theater Badge Button Overlay (when hovered and not done) */}
+                        {!isDone && (
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
+                            <div className="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-xl shadow-emerald-500/40">
+                              <Play className="w-4 h-4 fill-current" />
+                              <span>Watch in Study Theater</span>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Direct View Notes Button on Thumbnail */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveNotesViewer({ videoId: url, videoTitle: title });
+                          }}
+                          className="absolute top-2 right-2 z-30 px-2.5 py-1 bg-slate-950/90 hover:bg-amber-500 text-amber-300 hover:text-slate-950 rounded-lg border border-amber-500/50 hover:border-amber-400 opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md text-[10px] font-mono font-bold flex items-center gap-1"
+                          title="View Handwritten Photo Notes & Notebook"
+                        >
+                          <BookOpen className="w-3 h-3" />
+                          <span>View Notes ({notesForThisVideo.length})</span>
+                        </button>
 
                         {/* Duration Badge */}
                         {duration && (
@@ -547,35 +594,28 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                           {uploadedAt && <span className="text-slate-500 font-mono">{formatDate(uploadedAt)}</span>}
                         </div>
 
-                        {/* Notes & Upload Bar */}
+                        {/* Notes Toolbar */}
                         <div className="pt-2 flex items-center justify-between gap-2 border-t border-slate-800/80">
-                          {notesForThisVideo.length > 0 ? (
+                          <div className="flex items-center gap-1.5">
+                            {/* View Notes Button */}
                             <button
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                handlePlayVideo(v, step, true);
+                                setActiveNotesViewer({ videoId: url, videoTitle: title });
                               }}
-                              className="px-2 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-[10px] font-bold font-mono flex items-center gap-1 transition cursor-pointer"
-                              title="Open uploaded lecture notes"
+                              className={
+                                "px-2.5 py-1 rounded-lg text-[10px] font-bold font-mono flex items-center gap-1 transition cursor-pointer " +
+                                (notesForThisVideo.length > 0
+                                  ? "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300"
+                                  : "bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-amber-300")
+                              }
+                              title="Open interactive stationary notebook viewer for notes"
                             >
                               <BookOpen className="w-3 h-3 text-amber-400" />
-                              <span>{notesForThisVideo.length} Notes Saved</span>
+                              <span>View Notes ({notesForThisVideo.length})</span>
                             </button>
-                          ) : (
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handlePlayVideo(v, step, true);
-                              }}
-                              className="px-2 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700/90 border border-slate-700/80 text-slate-400 hover:text-amber-300 text-[10px] font-medium font-mono flex items-center gap-1 transition cursor-pointer"
-                              title="Upload handwritten photos or paste screenshots"
-                            >
-                              <Upload className="w-3 h-3" />
-                              <span>+ Upload Notes</span>
-                            </button>
-                          )}
+                          </div>
 
                           <div className="flex items-center gap-2 font-mono text-[10px] text-slate-400">
                             {views !== "" && (
@@ -593,7 +633,7 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleToggle(url);
+                              handleToggle(v, step);
                             }}
                             className={
                               "px-3 py-1.5 rounded-xl text-xs font-black font-mono transition-all duration-200 cursor-pointer flex items-center gap-1.5 shadow-sm " +
@@ -636,6 +676,62 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
           );
         })}
       </main>
+
+      {/* ================= STATIONARY NOTEBOOK / PHOTO NOTES MODAL VIEWER ================= */}
+      {activeNotesViewer && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 select-none"
+          onClick={() => setActiveNotesViewer(null)}
+        >
+          {/* Top Bar */}
+          <div
+            className="w-full max-w-5xl flex items-center justify-between py-2.5 px-4 bg-slate-900/95 border border-slate-800 rounded-2xl mb-3 text-white shadow-2xl shrink-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-2 truncate pr-4">
+              <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="text-xs sm:text-sm font-bold truncate">{activeNotesViewer.videoTitle}</span>
+              <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">
+                Handwritten / Photo Notes
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setActiveNotesViewer(null)}
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer"
+                title="Close notes (Esc)"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Stationary Notebook Viewer */}
+          <div
+            className="max-w-5xl w-full flex-1 min-h-0 rounded-2xl overflow-hidden bg-[#11161a] border border-slate-800 shadow-2xl relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <StationaryNotebookViewer
+              videoId={activeNotesViewer.videoId}
+              videoTitle={activeNotesViewer.videoTitle}
+              className="w-full h-full"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* ================= TOPIC MASTERY CELEBRATION MODAL ================= */}
+      {celebratedTopic && (
+        <MasteryCelebrationModal
+          isOpen={Boolean(celebratedTopic)}
+          topic={celebratedTopic.topic}
+          category={celebratedTopic.category}
+          xpPoints={celebratedTopic.xpPoints || 500}
+          onClose={() => setCelebratedTopic(null)}
+        />
+      )}
     </div>
   );
 };

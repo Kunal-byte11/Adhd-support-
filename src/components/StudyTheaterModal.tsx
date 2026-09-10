@@ -29,6 +29,7 @@ import {
   subscribeAllPhotoNotes,
 } from '../lib/firestoreService';
 import { StationaryNotebookViewer } from './StationaryNotebookViewer';
+import { MasteryCelebrationModal } from './MasteryCelebrationModal';
 
 interface StudyTheaterModalProps {
   video: StudyTheaterVideo | null;
@@ -52,6 +53,10 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   const [allNotes, setAllNotes] = useState<ILecturePhotoNote[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [uploadProgressText, setUploadProgressText] = useState<string>('');
+  const [celebratedTopic, setCelebratedTopic] = useState<{
+    topic: string;
+    category?: string;
+  } | null>(null);
 
   // Iframe ref for YouTube Player API
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
@@ -355,7 +360,14 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
           {onCompleteTopic && (
             <button
               onClick={() => {
+                const wasCompleted = isCompleted;
                 onCompleteTopic(video.id);
+                if (!wasCompleted) {
+                  setCelebratedTopic({
+                    topic: video.title,
+                    category: video.subject || 'Study Theater Masterclass',
+                  });
+                }
                 setJumpToast('🎉 Lecture completed!');
                 setTimeout(() => setJumpToast(null), 3000);
               }}
@@ -534,6 +546,17 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
           </div>
         )}
       </main>
+
+      {/* Mastery Celebration Modal */}
+      {celebratedTopic && (
+        <MasteryCelebrationModal
+          isOpen={Boolean(celebratedTopic)}
+          topic={celebratedTopic.topic}
+          category={celebratedTopic.category}
+          xpPoints={500}
+          onClose={() => setCelebratedTopic(null)}
+        />
+      )}
     </div>
   );
 };
