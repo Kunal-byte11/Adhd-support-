@@ -541,7 +541,7 @@ export const AI_DATA_SCIENCE_COURSES: AiCourse[] = [
   },
   {
     id: 'ai-res-26',
-    title: '26. Complete Statistics for Data Science (6-Hour Masterclass)',
+    title: '26. Krish Naik - Complete Statistics for Data Science (6-Hour Masterclass)',
     category: 'Python & Math',
     durationHours: '6 Hours (29 Modules)',
     type: 'One-Shot Masterclass',
@@ -563,6 +563,130 @@ export const AI_DATA_SCIENCE_COURSES: AiCourse[] = [
     youtubeUrl: 'https://www.youtube.com/watch?v=LZzq1zSL1bs',
     thumbnailUrl: 'https://i.ytimg.com/vi/LZzq1zSL1bs/hqdefault.jpg',
     videos: AI_PLAYLIST_VIDEOS['ai-res-26'],
+  },
+  {
+    id: 'ai-kn-genai',
+    title: '27. Krish Naik - Complete Generative AI, LLMs & LangChain Master Series',
+    category: 'Generative AI',
+    durationHours: 'Full Series (6 Master Modules)',
+    type: 'Full Playlist',
+    instructor: 'Krish Naik',
+    description: 'Master Generative AI, OpenAI & Gemini APIs, LangChain components, Retrieval-Augmented Generation (RAG) with Vector DBs (ChromaDB, FAISS), Local LLMs with Ollama, LangGraph cyclic stateful graphs, and CrewAI Multi-Agent teams.',
+    importance: 'CRITICAL_MUST_WATCH',
+    phase: 'Phase 4: Generative AI, LLMs & RAG',
+    tier: 'Tier 1 — Core',
+    resourceFormat: 'Full Playlist',
+    prerequisites: ['Python Basics', 'Basic ML Concepts'],
+    keyTakeaways: [
+      'LangChain Chains, Prompts, Memory & OutputParsers',
+      'RAG Pipeline Construction with Vector Databases & Embeddings',
+      'Running Open-Source LLMs Locally via Ollama',
+      'LangGraph Stateful Cyclic Agents & CrewAI Multi-Agent Systems',
+    ],
+    recommendedOrder: 3,
+    tags: ['Generative AI', 'LLM', 'LangChain', 'RAG', 'LangGraph', 'CrewAI', 'Krish Naik'],
+    youtubeUrl: 'https://www.youtube.com/playlist?list=PLZoTAELRMXVORE4VV_oU3kbISFTxe9UOP',
+    thumbnailUrl: 'https://i.ytimg.com/vi/1_6fG4aQ9gM/hqdefault.jpg',
+    videos: AI_PLAYLIST_VIDEOS['ai-kn-genai'],
+  },
+  {
+    id: 'ai-kn-ml',
+    title: '28. Krish Naik - Complete Machine Learning Masterclass (Math + Practical)',
+    category: 'Machine Learning',
+    durationHours: 'Full Series (5 Core Modules)',
+    type: 'Full Playlist',
+    instructor: 'Krish Naik',
+    description: 'Complete end-to-end Machine Learning masterclass covering Linear Regression, Logistic Regression, Decision Trees, Random Forest, AdaBoost, Gradient Boosting, XGBoost, PCA, and K-Means with deep mathematical intuition.',
+    importance: 'CRITICAL_MUST_WATCH',
+    phase: 'Phase 2: Core ML & Feature Engineering',
+    tier: 'Tier 1 — Core',
+    resourceFormat: 'Full Playlist',
+    prerequisites: ['Python & Statistics Basics'],
+    keyTakeaways: [
+      'Mathematical Derivations of Cost Functions & Gradient Descent',
+      'Tree-based Bagging & Boosting Ensembles (XGBoost, LightGBM)',
+      'Dimensionality Reduction with PCA & Unsupervised Clustering',
+      'Cross-Validation & Hyperparameter Tuning Best Practices',
+    ],
+    recommendedOrder: 4,
+    tags: ['Machine Learning', 'Supervised Learning', 'XGBoost', 'PCA', 'Krish Naik'],
+    youtubeUrl: 'https://www.youtube.com/playlist?list=PLZoTAELRMXVPBTrWtJkn3wWQxZkmTXGwe',
+    thumbnailUrl: 'https://i.ytimg.com/vi/7eh4d6sabA0/hqdefault.jpg',
+    videos: AI_PLAYLIST_VIDEOS['ai-kn-ml'],
+  },
+  {
+    id: 'ai-kn-dl',
+    title: '29. Krish Naik - Complete Deep Learning with PyTorch & TensorFlow',
+    category: 'Deep Learning',
+    durationHours: 'Full Series (4 Core Modules)',
+    type: 'Full Playlist',
+    instructor: 'Krish Naik',
+    description: 'Deep dive into Artificial Neural Networks (ANN), Backpropagation Chain Rule, Convolutional Neural Networks (CNN), Computer Vision Transfer Learning (ResNet, VGG), Recurrent Neural Networks (RNN/LSTM), and PyTorch development.',
+    importance: 'CRITICAL_MUST_WATCH',
+    phase: 'Phase 3: Deep Learning & Transformers',
+    tier: 'Tier 1 — Core',
+    resourceFormat: 'Full Playlist',
+    prerequisites: ['Machine Learning Basics', 'Linear Algebra & Calculus'],
+    keyTakeaways: [
+      'ANN Architecture & Backpropagation Mathematical Derivations',
+      'CNNs for Image Classification & Transfer Learning',
+      'RNNs, LSTMs & GRUs for Sequential & Time-Series Data',
+      'End-to-End Deep Learning Pipelines in PyTorch',
+    ],
+    recommendedOrder: 5,
+    tags: ['Deep Learning', 'Neural Networks', 'CNN', 'RNN', 'LSTM', 'PyTorch', 'Krish Naik'],
+    youtubeUrl: 'https://www.youtube.com/playlist?list=PLZoTAELRMXVPGU705xYRiueoiA573fodx',
+    thumbnailUrl: 'https://i.ytimg.com/vi/aircAruvnKk/hqdefault.jpg',
+    videos: AI_PLAYLIST_VIDEOS['ai-kn-dl'],
+  },
+  {
+    id: 'ai-kn-nlp',
+    title: '30. Krish Naik - Natural Language Processing (NLP) to Transformers',
+    category: 'Deep Learning',
+    durationHours: 'Full Series (3 Master Modules)',
+    type: 'Full Playlist',
+    instructor: 'Krish Naik',
+    description: 'Comprehensive NLP curriculum from basic tokenization, TF-IDF, and Word2Vec embeddings to Multi-Head Self-Attention Transformers and HuggingFace BERT/GPT pipelines.',
+    importance: 'HIGH_CORE',
+    phase: 'Phase 3: Deep Learning & Transformers',
+    tier: 'Tier 2 — Differentiators',
+    resourceFormat: 'Full Playlist',
+    prerequisites: ['Deep Learning Basics', 'Python'],
+    keyTakeaways: [
+      'Text Preprocessing, Tokenization & TF-IDF Vectorization',
+      'Word Embeddings: Word2Vec, GloVe & FastText',
+      'Transformer Self-Attention & HuggingFace Models',
+    ],
+    recommendedOrder: 6,
+    tags: ['NLP', 'Transformers', 'Word2Vec', 'BERT', 'HuggingFace', 'Krish Naik'],
+    youtubeUrl: 'https://www.youtube.com/playlist?list=PLZoTAELRMXVMdJ5sqbCK2LiM0HhQGNON4',
+    thumbnailUrl: 'https://i.ytimg.com/vi/6wn8hpzLVCw/hqdefault.jpg',
+    videos: AI_PLAYLIST_VIDEOS['ai-kn-nlp'],
+  },
+  {
+    id: 'ai-kn-mlops',
+    title: '31. Krish Naik - Production MLOps, CI/CD & Industry Projects',
+    category: 'MLOps & Deployment',
+    durationHours: 'Full Series (3 Production Modules)',
+    type: 'Full Playlist',
+    instructor: 'Krish Naik',
+    description: 'Learn how to package, track, containerize, and deploy production-grade ML and AI pipelines: Modular Python Coding, MLflow tracking, DVC data versioning, Docker, GitHub Actions CI/CD, and AWS cloud deployment.',
+    importance: 'HIGH_CORE',
+    phase: 'Phase 6: Enterprise MLOps & Cloud Deployment',
+    tier: 'Tier 3 — Production / Ops',
+    resourceFormat: 'Full Playlist',
+    prerequisites: ['Python & ML Basics', 'Git Basics'],
+    keyTakeaways: [
+      'Production Modular Code Structure & Custom Exception Logging',
+      'DVC Data Versioning & MLflow Experiment Tracking',
+      'Docker Containerization & GitHub Actions Automated CI/CD Pipelines',
+      'Cloud Deployment to AWS EC2 & Cloud Services',
+    ],
+    recommendedOrder: 7,
+    tags: ['MLOps', 'Docker', 'CI/CD', 'GitHub Actions', 'MLflow', 'DVC', 'AWS', 'Krish Naik'],
+    youtubeUrl: 'https://www.youtube.com/playlist?list=PLZoTAELRMXVNuT6qT4e7WodvI_O0i75iX',
+    thumbnailUrl: 'https://i.ytimg.com/vi/S_f_24f5j40/hqdefault.jpg',
+    videos: AI_PLAYLIST_VIDEOS['ai-kn-mlops'],
   },
 ];
 
@@ -3398,7 +3522,8 @@ export function getCurriculumPlaylistContext(videoId: string): PlaylistContext |
   const cleanId = videoId.startsWith('video_note_') ? videoId.replace('video_note_', '') : videoId;
 
   // 1. Check AI_DATA_SCIENCE_COURSES (individual lessons)
-  for (const course of AI_DATA_SCIENCE_COURSES) {
+  for (let cIdx = 0; cIdx < AI_DATA_SCIENCE_COURSES.length; cIdx++) {
+    const course = AI_DATA_SCIENCE_COURSES[cIdx];
     if (course.videos && course.videos.length > 0) {
       const idx = course.videos.findIndex((v) => v.id === cleanId);
       if (idx !== -1) {
@@ -3414,13 +3539,55 @@ export function getCurriculumPlaylistContext(videoId: string): PlaylistContext |
           description: v.description,
           startSeconds: v.startSeconds || 0,
         }));
+
+        let prevVid: StudyTheaterVideo | null = idx > 0 ? mappedVideos[idx - 1] : null;
+        let nextVid: StudyTheaterVideo | null = idx < mappedVideos.length - 1 ? mappedVideos[idx + 1] : null;
+
+        // Cross-course chaining
+        if (!prevVid && cIdx > 0) {
+          const prevCourse = AI_DATA_SCIENCE_COURSES[cIdx - 1];
+          if (prevCourse.videos && prevCourse.videos.length > 0) {
+            const lastV = prevCourse.videos[prevCourse.videos.length - 1];
+            prevVid = {
+              id: lastV.id,
+              title: lastV.title,
+              youtubeUrl: lastV.youtubeUrl,
+              subject: prevCourse.category || prevCourse.title,
+              category: 'genai',
+              difficulty: prevCourse.tier,
+              duration: lastV.durationTimestamp,
+              thumbnailUrl: lastV.thumbnailUrl,
+              description: lastV.description,
+              startSeconds: lastV.startSeconds || 0,
+            };
+          }
+        }
+        if (!nextVid && cIdx < AI_DATA_SCIENCE_COURSES.length - 1) {
+          const nextCourse = AI_DATA_SCIENCE_COURSES[cIdx + 1];
+          if (nextCourse.videos && nextCourse.videos.length > 0) {
+            const firstV = nextCourse.videos[0];
+            nextVid = {
+              id: firstV.id,
+              title: firstV.title,
+              youtubeUrl: firstV.youtubeUrl,
+              subject: nextCourse.category || nextCourse.title,
+              category: 'genai',
+              difficulty: nextCourse.tier,
+              duration: firstV.durationTimestamp,
+              thumbnailUrl: firstV.thumbnailUrl,
+              description: firstV.description,
+              startSeconds: firstV.startSeconds || 0,
+            };
+          }
+        }
+
         return {
           courseId: course.id,
           courseTitle: course.title,
           currentIndex: idx,
           totalCount: mappedVideos.length,
-          prevVideo: idx > 0 ? mappedVideos[idx - 1] : null,
-          nextVideo: idx < mappedVideos.length - 1 ? mappedVideos[idx + 1] : null,
+          prevVideo: prevVid,
+          nextVideo: nextVid,
           videos: mappedVideos,
         };
       }
@@ -3474,13 +3641,55 @@ export function getCurriculumPlaylistContext(videoId: string): PlaylistContext |
         difficulty: p.difficulty,
         startSeconds: 0,
       }));
+
+      let prevVid: StudyTheaterVideo | null = chapterIdx > 0 ? mappedVideos[chapterIdx - 1] : null;
+      let nextVid: StudyTheaterVideo | null =
+        chapterIdx < mappedVideos.length - 1 ? mappedVideos[chapterIdx + 1] : null;
+
+      // If at start of chapter, allow previous chapter's last video
+      if (!prevVid) {
+        const prevProbs = DSA_PROBLEMS_DATA.filter(
+          (p) => p.moduleIndex < currentProb.moduleIndex && p.youtubeUrl
+        );
+        if (prevProbs.length > 0) {
+          const p = prevProbs[prevProbs.length - 1];
+          prevVid = {
+            id: p.id,
+            title: p.title,
+            youtubeUrl: p.youtubeUrl!,
+            subject: `Ch ${p.moduleIndex}: ${p.moduleName}`,
+            category: 'dsa',
+            difficulty: p.difficulty,
+            startSeconds: 0,
+          };
+        }
+      }
+
+      // If at end of chapter, allow next chapter's first video
+      if (!nextVid) {
+        const nextProb = DSA_PROBLEMS_DATA.find(
+          (p) => p.moduleIndex > currentProb.moduleIndex && p.youtubeUrl
+        );
+        if (nextProb) {
+          nextVid = {
+            id: nextProb.id,
+            title: nextProb.title,
+            youtubeUrl: nextProb.youtubeUrl!,
+            subject: `Ch ${nextProb.moduleIndex}: ${nextProb.moduleName}`,
+            category: 'dsa',
+            difficulty: nextProb.difficulty,
+            startSeconds: 0,
+          };
+        }
+      }
+
       return {
         courseId: `dsa-ch-${currentProb.moduleIndex}`,
         courseTitle: `Ch ${currentProb.moduleIndex}: ${currentProb.moduleName}`,
         currentIndex: chapterIdx,
         totalCount: mappedVideos.length,
-        prevVideo: chapterIdx > 0 ? mappedVideos[chapterIdx - 1] : null,
-        nextVideo: chapterIdx < mappedVideos.length - 1 ? mappedVideos[chapterIdx + 1] : null,
+        prevVideo: prevVid,
+        nextVideo: nextVid,
         videos: mappedVideos,
       };
     }

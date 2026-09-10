@@ -823,12 +823,14 @@ interface Sem7ScreenProps {
   onStartFocusFromQuestion?: (title: string) => void;
   woopGoals?: IWoopGoal[];
   onOpenWoopModal?: () => void;
+  isSidebarCollapsed?: boolean;
 }
 
 export const Sem7Screen: React.FC<Sem7ScreenProps> = ({
   onStartFocusFromQuestion,
   woopGoals = [],
   onOpenWoopModal,
+  isSidebarCollapsed = false,
 }) => {
   const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda' | 'bct' | 'mis'>('deep-learning');
   const [selectedUnit, setSelectedUnit] = useState<number | 'all'>('all');
@@ -1813,7 +1815,9 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({
   };
 
   return (
-    <main className="flex-1 md:ml-64 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full">
+    <main className={`flex-1 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full transition-all duration-300 ${
+      isSidebarCollapsed ? 'md:ml-16 md:pl-4' : 'md:ml-64'
+    }`}>
       {/* Page Header */}
       <header className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   StudyTheaterVideo,
   BinauralSoundMode,
+  ILecturePhotoNote,
 } from '../types';
 import {
   getCurriculumPlaylistContext,
@@ -15,8 +16,19 @@ import {
   ChevronRight,
   ChevronLeft,
   ListVideo,
+  Upload,
+  Camera,
+  BookOpen,
+  Loader2,
+  Plus,
 } from 'lucide-react';
 import { neuroAudio } from '../lib/audioSynthesizer';
+import { processAndUploadPhotoNote } from '../lib/imageUploadService';
+import {
+  saveLecturePhotoNoteToFirestore,
+  subscribeAllPhotoNotes,
+} from '../lib/firestoreService';
+import { StationaryNotebookViewer } from './StationaryNotebookViewer';
 
 interface StudyTheaterModalProps {
   video: StudyTheaterVideo | null;
@@ -36,14 +48,35 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
   completedIds,
 }) => {
   const [isPlaylistDrawerOpen, setIsPlaylistDrawerOpen] = useState<boolean>(false);
+  const [isNotesDrawerOpen, setIsNotesDrawerOpen] = useState<boolean>(false);
+  const [allNotes, setAllNotes] = useState<ILecturePhotoNote[]>([]);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadProgressText, setUploadProgressText] = useState<string>('');
 
   // Iframe ref for YouTube Player API
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+
   const [currentStartSeconds, setCurrentStartSeconds] = useState<number>(video?.startSeconds || 0);
   const [jumpToast, setJumpToast] = useState<string | null>(null);
 
   // Audio Mode
   const [soundMode, setSoundMode] = useState<BinauralSoundMode>('off');
+
+  // Subscribe to photo notes from Firestore
+  useEffect(() => {
+    const unsub = subscribeAllPhotoNotes((notes) => {
+      setAllNotes(notes);
+    });
+    return () => unsub();
+  }, []);
+
+  // Filter notes for this video
+  const currentLectureNotes = useMemo(() => {
+    if (!video) return [];
+    return allNotes.filter((n) => n.videoId === video.id);
+  }, [allNotes, video?.id]);
 
   // Playlist context
   const playlistContext: PlaylistContext | null = useMemo(() => {
@@ -57,6 +90,87 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
       setCurrentStartSeconds(video.startSeconds || 0);
     }
   }, [video?.id, video?.startSeconds]);
+
+  // Handle uploading files
+  const handleUploadFiles = async (files: FileList | File[]) => {
+    if (!files || files.length === 0 || !video) return;
+
+    setIsUploading(true);
+    const fileList = Array.from(files);
+
+    try {
+      for (let i = 0; i < fileList.length; i++) {
+        const file = fileList[i];
+        setUploadProgressText(
+          `Uploading note (${i + 1}/${fileList.length})...`
+        );
+
+        const pageTitle = `Page ${currentLectureNotes.length + i + 1}`;
+        const newNote = await processAndUploadPhotoNote(file, video.id, pageTitle);
+        await saveLecturePhotoNoteToFirestore(newNote);
+      }
+      setJumpToast('📸 Note uploaded successfully!');
+      setTimeout(() => setJumpToast(null), 3500);
+    } catch (err: any) {
+      console.error('Photo note upload error:', err);
+      setJumpToast('⚠️ Upload error: ' + (err?.message || 'Failed to upload'));
+      setTimeout(() => setJumpToast(null), 4000);
+    } finally {
+      setIsUploading(false);
+      setUploadProgressText('');
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      if (cameraInputRef.current) cameraInputRef.current.value = '';
+    }
+  };
+
+  // Clipboard Paste (Ctrl+V) listener for quick screenshot pasting
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      if (!video) return;
+      // Don't intercept if user is typing in an input
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+
+      const items = e.clipboardData?.items;
+      if (!items) return;
+
+      const imageFiles: File[] = [];
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const file = items[i].getAsFile();
+          if (file) imageFiles.push(file);
+        }
+      }
+
+      if (imageFiles.length > 0) {
+        handleUploadFiles(imageFiles);
+      }
+    };
+
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
+  }, [video?.id, currentLectureNotes.length]);
+
+  // Keyboard navigation for Next (N) and Prev (P)
+  useEffect(() => {
+    const handleKeyNav = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+      if (e.key === 'n' || e.key === 'N' || (e.shiftKey && e.key === 'ArrowRight')) {
+        if (playlistContext?.nextVideo) {
+          handleSwitchVideo(playlistContext.nextVideo);
+          setJumpToast(`▶ Jumping to: ${playlistContext.nextVideo.title}`);
+          setTimeout(() => setJumpToast(null), 2500);
+        }
+      } else if (e.key === 'p' || e.key === 'P' || (e.shiftKey && e.key === 'ArrowLeft')) {
+        if (playlistContext?.prevVideo) {
+          handleSwitchVideo(playlistContext.prevVideo);
+          setJumpToast(`◀ Jumping to: ${playlistContext.prevVideo.title}`);
+          setTimeout(() => setJumpToast(null), 2500);
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyNav);
+    return () => window.removeEventListener('keydown', handleKeyNav);
+  }, [playlistContext?.nextVideo, playlistContext?.prevVideo]);
 
   const getYouTubeId = (url: string) => {
     if (!url) return '';
@@ -88,6 +202,24 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-[#0a0d0f] flex flex-col w-screen h-screen overflow-hidden font-sans select-none animate-in fade-in duration-150">
+      {/* Hidden File Inputs */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={(e) => e.target.files && handleUploadFiles(e.target.files)}
+      />
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={(e) => e.target.files && handleUploadFiles(e.target.files)}
+      />
+
       {/* 🎬 Clean YouTube Theater Workspace Header */}
       <header className="bg-[#11161a] text-white px-3 sm:px-5 py-2 flex items-center justify-between border-b border-slate-800 shrink-0 z-30 gap-2">
         {/* Left: Lecture & Course Title */}
@@ -117,33 +249,40 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
           </div>
         </div>
 
-        {/* Center: Previous / Next Lecture Navigator */}
-        {playlistContext && playlistContext.totalCount > 1 && (
-          <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 px-2 py-1 rounded-xl shrink-0">
+        {/* Center: Previous / Next Chapter & Lesson Navigator */}
+        {playlistContext && (
+          <div className="flex items-center gap-1.5 bg-slate-950 border border-slate-700/80 px-2 py-1 rounded-xl shrink-0 shadow-xs">
+            {/* Previous Lesson Button */}
             <button
               disabled={!playlistContext.prevVideo}
               onClick={() => playlistContext.prevVideo && handleSwitchVideo(playlistContext.prevVideo)}
-              className="p-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 rounded transition cursor-pointer"
-              title="Previous lesson"
+              className="px-2 py-1 text-xs font-mono text-slate-300 hover:text-white hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-slate-500 rounded-lg transition cursor-pointer flex items-center gap-1"
+              title={playlistContext.prevVideo ? `Previous: ${playlistContext.prevVideo.title} (Key: P)` : 'No previous lesson'}
             >
               <ChevronLeft className="w-3.5 h-3.5" />
+              <span className="hidden md:inline text-[11px] font-bold">Prev</span>
             </button>
+
+            {/* Current Lesson Badge & Drawer Trigger */}
             <button
               onClick={() => setIsPlaylistDrawerOpen(!isPlaylistDrawerOpen)}
-              className="px-1.5 py-0.5 text-xs font-mono font-bold text-emerald-400 hover:text-emerald-300 transition cursor-pointer flex items-center gap-1"
-              title="Open all lessons in course"
+              className="px-2 py-0.5 text-xs font-mono font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-500/30 rounded-lg transition cursor-pointer flex items-center gap-1.5"
+              title="Click to view all chapters & lessons"
             >
-              <ListVideo className="w-3.5 h-3.5" />
+              <ListVideo className="w-3.5 h-3.5 text-emerald-400" />
               <span>
-                {playlistContext.currentIndex + 1}/{playlistContext.totalCount}
+                {playlistContext.currentIndex + 1} / {playlistContext.totalCount}
               </span>
             </button>
+
+            {/* Next Chapter / Lesson Button */}
             <button
               disabled={!playlistContext.nextVideo}
               onClick={() => playlistContext.nextVideo && handleSwitchVideo(playlistContext.nextVideo)}
-              className="p-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 rounded transition cursor-pointer"
-              title="Next lesson"
+              className="px-2.5 py-1 text-xs font-mono font-bold bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-30 disabled:bg-slate-800 disabled:text-slate-500 rounded-lg transition cursor-pointer flex items-center gap-1 shadow-xs"
+              title={playlistContext.nextVideo ? `Next: ${playlistContext.nextVideo.title} (Key: N)` : 'No more lessons'}
             >
+              <span className="hidden sm:inline text-[11px]">Next</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -151,6 +290,54 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
 
         {/* Right: Controls & Actions */}
         <div className="flex items-center gap-1.5 shrink-0">
+          {/* Direct Upload Notes Button */}
+          <button
+            disabled={isUploading}
+            onClick={() => fileInputRef.current?.click()}
+            className="px-2.5 py-1.5 rounded-xl text-xs font-bold font-mono bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black shadow-xs flex items-center gap-1.5 transition cursor-pointer disabled:opacity-50"
+            title="Upload handwritten photos or paste (Ctrl+V) screenshots for this lecture"
+          >
+            {isUploading ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-black" />
+                <span className="hidden sm:inline">Uploading...</span>
+              </>
+            ) : (
+              <>
+                <Upload className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Upload Notes</span>
+              </>
+            )}
+          </button>
+
+          {/* Quick Camera Snapshot (Mobile/Tablet) */}
+          <button
+            disabled={isUploading}
+            onClick={() => cameraInputRef.current?.click()}
+            className="p-1.5 rounded-xl text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition cursor-pointer disabled:opacity-50"
+            title="Take photo with camera"
+          >
+            <Camera className="w-3.5 h-3.5" />
+          </button>
+
+          {/* View Uploaded Notes Drawer Toggle */}
+          {currentLectureNotes.length > 0 && (
+            <button
+              onClick={() => setIsNotesDrawerOpen(!isNotesDrawerOpen)}
+              className={`px-2.5 py-1.5 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition cursor-pointer border ${
+                isNotesDrawerOpen
+                  ? 'bg-amber-400/20 text-amber-300 border-amber-500/50 shadow-xs'
+                  : 'bg-slate-800/80 hover:bg-slate-700 text-slate-300 border-slate-700'
+              }`}
+              title="View uploaded notes for this lecture"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+              <span>
+                Notes ({currentLectureNotes.length})
+              </span>
+            </button>
+          )}
+
           {/* 40Hz Focus Audio */}
           <button
             onClick={() => handleSoundToggle('binaural-40hz')}
@@ -207,10 +394,79 @@ export const StudyTheaterModal: React.FC<StudyTheaterModalProps> = ({
           allowFullScreen
         />
 
-        {/* Floating Jump Toast */}
-        {jumpToast && (
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-emerald-500/50 text-white text-xs font-mono font-bold shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150 flex items-center gap-2 pointer-events-none">
-            <span>{jumpToast}</span>
+        {/* Floating Upload Progress / Jump Toast */}
+        {(uploadProgressText || jumpToast) && (
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-xl bg-slate-900/95 border border-amber-500/60 text-white text-xs font-mono font-bold shadow-2xl backdrop-blur-md animate-in fade-in zoom-in-95 duration-150 flex items-center gap-2 pointer-events-none">
+            {isUploading && <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />}
+            <span>{uploadProgressText || jumpToast}</span>
+          </div>
+        )}
+
+        {/* Up Next Quick Advance Pill */}
+        {playlistContext?.nextVideo && (
+          <div className="absolute bottom-5 right-5 z-20 hidden md:flex items-center gap-2.5 bg-slate-900/90 hover:bg-slate-900 border border-slate-700/80 hover:border-emerald-500/60 p-2 pl-3.5 rounded-2xl shadow-2xl backdrop-blur-md transition-all">
+            <div className="text-left max-w-[240px] truncate">
+              <span className="text-[9px] font-mono font-bold text-emerald-400 block uppercase tracking-wider">
+                Up Next (Press N)
+              </span>
+              <p className="text-xs text-white font-medium truncate" title={playlistContext.nextVideo.title}>
+                {playlistContext.nextVideo.title}
+              </p>
+            </div>
+            <button
+              onClick={() => playlistContext.nextVideo && handleSwitchVideo(playlistContext.nextVideo)}
+              className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold text-xs flex items-center gap-1 cursor-pointer transition shadow-md shrink-0"
+              title={`Jump to next: ${playlistContext.nextVideo.title}`}
+            >
+              <span>Next</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {/* Slide-out Notes Viewer Drawer */}
+        {isNotesDrawerOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs flex justify-end"
+            onClick={() => setIsNotesDrawerOpen(false)}
+          >
+            <div
+              className="w-full sm:w-[500px] md:w-[580px] bg-[#11161a] border-l border-slate-800 h-full flex flex-col text-white shadow-2xl animate-in slide-in-from-right duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-slate-900 shrink-0">
+                <div className="flex items-center gap-2 min-w-0">
+                  <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
+                  <h3 className="text-sm font-bold truncate">Lecture Notes</h3>
+                  <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-md font-bold shrink-0">
+                    {currentLectureNotes.length} {currentLectureNotes.length === 1 ? 'Page' : 'Pages'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="px-2.5 py-1 rounded-lg text-xs font-bold font-mono bg-amber-500 hover:bg-amber-400 text-black flex items-center gap-1 cursor-pointer transition"
+                  >
+                    <Plus className="w-3 h-3" />
+                    <span>Add Page</span>
+                  </button>
+                  <button
+                    onClick={() => setIsNotesDrawerOpen(false)}
+                    className="p-1 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white cursor-pointer"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex-1 min-h-0 w-full h-full">
+                <StationaryNotebookViewer
+                  videoId={video.id}
+                  videoTitle={video.title}
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
           </div>
         )}
 

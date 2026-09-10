@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ScreenType, UserRole } from '../types';
 import {
-  Map,
   LucideIcon,
   BookOpen,
   Headphones,
@@ -14,6 +13,9 @@ import {
   Settings,
   Layers,
   Brain,
+  Code2,
+  BrainCircuit,
+  Cpu,
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -46,9 +48,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
 
   // Primary Quick Items (Visible directly in dock)
   const quickItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
+    { id: 'learning', label: 'Learning', Icon: Code2 },
+    { id: 'roadmap', label: 'Krish AI', Icon: BrainCircuit },
     { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
-    { id: 'notes', label: 'Notes 📸', Icon: Camera },
-    { id: 'roadmap', label: 'Tasks', Icon: Map },
+    { id: 'woop', label: 'WOOP', Icon: Target },
   ];
 
   // Expanded Menu Items
@@ -62,29 +65,30 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     accentText: string;
   }[] = [
     {
-      id: 'sem7',
-      label: 'Sem 7 Hub',
-      description: 'Study syllabus, exams & lectures',
-      Icon: BookOpen,
+      id: 'learning',
+      label: 'Learning & Code Visualizer',
+      description: 'Step-by-step algorithm animation & solver',
+      Icon: Code2,
+      badge: '💻',
       accentBg: 'bg-emerald-500/10',
       accentText: 'text-emerald-700',
     },
     {
-      id: 'notes',
-      label: 'Lecture Notes Vault',
-      description: 'Handwritten notes with stationary reader',
-      Icon: Camera,
-      badge: '📸',
-      accentBg: 'bg-amber-500/10',
-      accentText: 'text-amber-700',
+      id: 'roadmap',
+      label: 'Krish Naik AI Curriculum',
+      description: 'Generative AI, LangChain, Agents, ML & MLOps',
+      Icon: BrainCircuit,
+      badge: '🤖',
+      accentBg: 'bg-emerald-600/10',
+      accentText: 'text-emerald-800',
     },
     {
-      id: 'roadmap',
-      label: 'Tasks & Roadmap',
-      description: 'Bite-sized structured execution steps',
-      Icon: Map,
-      accentBg: 'bg-sky-500/10',
-      accentText: 'text-sky-700',
+      id: 'sem7',
+      label: 'Sem 7 Hub',
+      description: 'Study syllabus, exams & lectures',
+      Icon: BookOpen,
+      accentBg: 'bg-indigo-500/10',
+      accentText: 'text-indigo-700',
     },
     {
       id: 'woop',

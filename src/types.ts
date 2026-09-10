@@ -1,4 +1,5 @@
 export type ScreenType =
+  | 'learning'
   | 'sem7'
   | 'roadmap'
   | 'notes'

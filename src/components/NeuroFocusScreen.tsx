@@ -43,12 +43,14 @@ interface NeuroFocusScreenProps {
   woopGoals: IWoopGoal[];
   onOpenWoopModal?: () => void;
   onWatchVideo?: (video: StudyTheaterVideo) => void;
+  isSidebarCollapsed?: boolean;
 }
 
 export const NeuroFocusScreen: React.FC<NeuroFocusScreenProps> = ({
   woopGoals,
   onOpenWoopModal,
   onWatchVideo,
+  isSidebarCollapsed = false,
 }) => {
   // Mode: 'all' (Modular Independent Dashboard) or specific focused tabs
   const [activeTab, setActiveTab] = useState<'all' | 'sounds' | 'breathing' | 'woop' | 'recalls'>('all');
@@ -155,7 +157,9 @@ export const NeuroFocusScreen: React.FC<NeuroFocusScreenProps> = ({
   });
 
   return (
-    <main className="flex-1 md:ml-64 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full font-sans">
+    <main className={`flex-1 flex flex-col px-4 sm:px-8 md:px-12 py-8 min-h-screen bg-[#f7fafc] pb-28 md:pb-12 max-w-6xl mx-auto w-full font-sans transition-all duration-300 ${
+      isSidebarCollapsed ? 'md:ml-16 md:pl-4' : 'md:ml-64'
+    }`}>
       {/* Top Header */}
       <header className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>

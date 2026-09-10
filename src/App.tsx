@@ -8,11 +8,12 @@ import {
 } from './types';
 import { Sidebar } from './components/Sidebar';
 import { MobileNav } from './components/MobileNav';
+import { LearningVisualizerScreen } from './components/LearningVisualizerScreen';
 import { RoadmapScreen } from './components/RoadmapScreen';
+import { KrishNaikOneShotsScreen } from './components/KrishNaikOneShotsScreen';
 import { Sem7Screen } from './components/Sem7Screen';
 import { NeuroFocusScreen } from './components/NeuroFocusScreen';
 import { WoopScreen } from './components/WoopScreen';
-import { LectureNotesVaultScreen } from './components/LectureNotesVaultScreen';
 import { PhysiologicalSighScreen } from './components/PhysiologicalSighScreen';
 import { AudioSynthesizerScreen } from './components/AudioSynthesizerScreen';
 import { DmnReprogrammingScreen } from './components/DmnReprogrammingScreen';
@@ -34,7 +35,26 @@ export default function App() {
   const [userRole, setUserRole] = useState<UserRole>('kunal');
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<ScreenType>('sem7');
+  const [currentScreen, setCurrentScreen] = useState<ScreenType>('learning');
+
+  // Sidebar collapsed / full website mode state (persisted)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('focusflow_sidebar_collapsed') === 'true';
+    } catch (e) {
+      return false;
+    }
+  });
+
+  const handleToggleSidebarCollapse = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('focusflow_sidebar_collapsed', String(next));
+      } catch (e) {}
+      return next;
+    });
+  };
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -143,7 +163,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f7fafc] text-[#181c1e] flex flex-col selection:bg-[#c4eccb] selection:text-[#00210d]">
+    <div className={`flex flex-col ${
+      currentScreen === 'learning' || currentScreen === 'roadmap'
+        ? 'min-h-screen bg-[#0b0f14] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-200'
+        : 'min-h-screen bg-[#f7fafc] text-[#181c1e] selection:bg-[#c4eccb] selection:text-[#00210d]'
+    }`}>
       {/* Toast feedback notification */}
       {toastMessage && (
         <div
@@ -155,30 +179,36 @@ export default function App() {
       )}
 
       {/* Responsive Shell Layout */}
-      <div className="flex flex-1 flex-col md:flex-row">
+      <div className={`flex flex-1 flex-col md:flex-row ${
+        currentScreen === 'learning' ? 'h-full max-h-screen overflow-hidden' : ''
+      }`}>
         {/* Desktop Left Sidebar */}
         <Sidebar
           currentScreen={currentScreen}
           userRole={userRole}
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={handleToggleSidebarCollapse}
           onNavigate={(screen) => setCurrentScreen(screen)}
           onOpenLoginModal={() => setIsLoginModalOpen(true)}
         />
 
         {/* Dynamic Main Workspace View */}
+        {currentScreen === 'learning' && (
+          <LearningVisualizerScreen isSidebarCollapsed={isSidebarCollapsed} />
+        )}
+
         {currentScreen === 'roadmap' && (
-          <RoadmapScreen
-            onStartFocusFromItem={(title) => {
-              showToast(`🎯 Goal set: "${title}"`);
-            }}
-            onSendToIntake={() => {}}
+          <KrishNaikOneShotsScreen
+            isSidebarCollapsed={isSidebarCollapsed}
+            onWatchVideo={setActiveTheaterVideo}
             completedIds={completedCurriculumIds}
             onToggleComplete={handleToggleCurriculumComplete}
-            onWatchVideo={setActiveTheaterVideo}
           />
         )}
 
         {currentScreen === 'sem7' && (
           <Sem7Screen
+            isSidebarCollapsed={isSidebarCollapsed}
             woopGoals={woopGoals}
             onOpenWoopModal={() => setIsWoopModalOpen(true)}
             onStartFocusFromQuestion={(title) => {
@@ -189,29 +219,32 @@ export default function App() {
 
         {currentScreen === 'neuro' && (
           <NeuroFocusScreen
+            isSidebarCollapsed={isSidebarCollapsed}
             woopGoals={woopGoals}
             onWatchVideo={setActiveTheaterVideo}
           />
         )}
 
         {currentScreen === 'woop' && (
-          <WoopScreen woopGoals={woopGoals} />
-        )}
-
-        {currentScreen === 'notes' && (
-          <LectureNotesVaultScreen onWatchVideo={setActiveTheaterVideo} />
+          <WoopScreen
+            isSidebarCollapsed={isSidebarCollapsed}
+            woopGoals={woopGoals}
+          />
         )}
 
         {currentScreen === 'dmn' && (
-          <DmnReprogrammingScreen onOpenStudyTheater={setActiveTheaterVideo} />
+          <DmnReprogrammingScreen
+            isSidebarCollapsed={isSidebarCollapsed}
+            onOpenStudyTheater={setActiveTheaterVideo}
+          />
         )}
 
         {currentScreen === 'breathing' && (
-          <PhysiologicalSighScreen />
+          <PhysiologicalSighScreen isSidebarCollapsed={isSidebarCollapsed} />
         )}
 
         {currentScreen === 'sounds' && (
-          <AudioSynthesizerScreen />
+          <AudioSynthesizerScreen isSidebarCollapsed={isSidebarCollapsed} />
         )}
       </div>
 

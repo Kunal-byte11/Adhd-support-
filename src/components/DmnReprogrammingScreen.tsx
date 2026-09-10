@@ -30,6 +30,7 @@ import {
 
 interface DmnReprogrammingScreenProps {
   onOpenStudyTheater?: (video: any) => void;
+  isSidebarCollapsed?: boolean;
 }
 
 const PRESET_TEMPLATES: Omit<IDmnNarrative, 'id' | 'createdAt' | 'reviewStreakCount'>[] = [
@@ -126,7 +127,10 @@ const PRESET_TEMPLATES: Omit<IDmnNarrative, 'id' | 'createdAt' | 'reviewStreakCo
   },
 ];
 
-export const DmnReprogrammingScreen: React.FC<DmnReprogrammingScreenProps> = () => {
+export const DmnReprogrammingScreen: React.FC<DmnReprogrammingScreenProps> = ({
+  onOpenStudyTheater,
+  isSidebarCollapsed = false,
+}) => {
   const [narratives, setNarratives] = useState<IDmnNarrative[]>([]);
   const [activeStoryIndex, setActiveStoryIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -255,7 +259,9 @@ export const DmnReprogrammingScreen: React.FC<DmnReprogrammingScreenProps> = () 
   const isActualSaved = narratives.length > 0 && narratives[activeStoryIndex];
 
   return (
-    <div className="flex-1 min-h-screen bg-[#f8faf9] text-[#191c1b] pb-24 md:pb-12 md:pl-64">
+    <div className={`flex-1 min-h-screen bg-[#f8faf9] text-[#191c1b] pb-24 md:pb-12 transition-all duration-300 ${
+      isSidebarCollapsed ? 'md:pl-16' : 'md:pl-64'
+    }`}>
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-[#1b382b] via-[#244b3a] to-[#2d5946] text-white px-5 py-8 md:px-10 md:py-10 shadow-md">
         <div className="max-w-5xl mx-auto">
