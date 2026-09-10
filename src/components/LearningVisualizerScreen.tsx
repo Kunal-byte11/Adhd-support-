@@ -33,7 +33,9 @@ import {
   StepForward,
   Keyboard,
   X,
+  Trophy,
 } from 'lucide-react';
+import { MasteryCelebrationModal } from './MasteryCelebrationModal';
 
 export interface VisualizerStep {
   lineNumber: number;
@@ -418,6 +420,9 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
   const [customQuestionText, setCustomQuestionText] = useState<string>('');
   const [showCustomModal, setShowCustomModal] = useState<boolean>(false);
 
+  // Problem Mastery celebration modal
+  const [celebratedProblem, setCelebratedProblem] = useState<{ topic: string; category?: string } | null>(null);
+
   return (
     <div className={`flex-1 h-full max-h-screen bg-[#0b0f14] text-slate-100 p-2.5 sm:p-3 flex flex-col gap-2 select-none font-sans overflow-hidden transition-all duration-300 ${
       isSidebarCollapsed ? 'md:pl-20' : 'md:pl-68'
@@ -512,11 +517,26 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
           {/* Ask Custom Question Button */}
           <button
             onClick={() => setShowCustomModal(true)}
-            className="px-3.5 py-1.5 rounded-xl text-xs font-black font-mono bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 flex items-center gap-1.5 cursor-pointer shadow-lg shadow-emerald-500/25 transition-all hover:scale-102"
+            className="px-3.5 py-1.5 rounded-xl text-xs font-black font-mono bg-[#161f28] hover:bg-slate-800 text-slate-300 hover:text-white flex items-center gap-1.5 cursor-pointer border border-slate-700 transition-all"
             title="Ask or input custom algorithm problem"
           >
-            <Sparkles className="w-3.5 h-3.5 fill-current" />
+            <Sparkles className="w-3.5 h-3.5 text-teal-400" />
             <span className="hidden lg:inline">Custom</span>
+          </button>
+
+          {/* Master Problem Celebration Button */}
+          <button
+            onClick={() =>
+              setCelebratedProblem({
+                topic: `${currentProblem.title} (${currentProblem.subtitle || 'LeetCode 242'})`,
+                category: `${currentProblem.category} • ${currentProblem.difficulty}`,
+              })
+            }
+            className="px-3.5 py-1.5 rounded-xl text-xs font-black font-mono bg-gradient-to-r from-amber-500 via-emerald-400 to-teal-400 hover:from-amber-400 hover:to-emerald-300 text-slate-950 flex items-center gap-1.5 cursor-pointer shadow-lg shadow-emerald-500/25 transition-all hover:scale-102"
+            title="Celebrate mastering this problem!"
+          >
+            <Trophy className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>Mastered 🎉</span>
           </button>
         </div>
       </div>
@@ -1258,6 +1278,17 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
             </div>
           </div>
         </div>
+      )}
+
+      {/* Problem Mastery Celebration Modal */}
+      {celebratedProblem && (
+        <MasteryCelebrationModal
+          isOpen={Boolean(celebratedProblem)}
+          topic={celebratedProblem.topic}
+          category={celebratedProblem.category || 'Algorithm Mastery'}
+          xpPoints={600}
+          onClose={() => setCelebratedProblem(null)}
+        />
       )}
     </div>
   );

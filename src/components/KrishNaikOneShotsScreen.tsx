@@ -3,6 +3,7 @@ import krishVideosRaw from "../data/krishNaikVideos.json";
 import { StudyTheaterVideo, ILecturePhotoNote } from "../types";
 import { subscribeAllPhotoNotes } from "../lib/firestoreService";
 import { StationaryNotebookViewer } from "./StationaryNotebookViewer";
+import { MasteryCelebrationModal } from "./MasteryCelebrationModal";
 import {
   Search,
   X,
@@ -209,6 +210,13 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
   // Dedicated In-Screen Notes Viewer Modal
   const [activeNotesViewer, setActiveNotesViewer] = useState<{ videoId: string; videoTitle: string } | null>(null);
 
+  // Topic Mastery Celebration Modal state
+  const [celebratedTopic, setCelebratedTopic] = useState<{
+    topic: string;
+    category?: string;
+    xpPoints?: number;
+  } | null>(null);
+
   // Subscribe to photo notes from Firestore
   useEffect(() => {
     const unsub = subscribeAllPhotoNotes((notes) => {
@@ -297,11 +305,24 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
     }
   };
 
-  const handleToggle = (url: string) => {
+  const handleToggle = (v: KrishNaikVideoRaw, step: StepTrack) => {
+    const url = v["Video url"] || "";
+    if (!url) return;
+    const isCurrentlyDone = completedIds.has(url);
+
     if (onToggleComplete) {
       setJustToggledId(url);
       onToggleComplete(url);
       setTimeout(() => setJustToggledId(null), 1000);
+
+      if (!isCurrentlyDone) {
+        // Trigger celebratory animation
+        setCelebratedTopic({
+          topic: v.Title,
+          category: step.title,
+          xpPoints: 500,
+        });
+      }
     }
   };
 
@@ -608,7 +629,7 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleToggle(url);
+                              handleToggle(v, step);
                             }}
                             className={
                               "px-3 py-1.5 rounded-xl text-xs font-black font-mono transition-all duration-200 cursor-pointer flex items-center gap-1.5 shadow-sm " +
@@ -695,6 +716,17 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
             />
           </div>
         </div>
+      )}
+
+      {/* ================= TOPIC MASTERY CELEBRATION MODAL ================= */}
+      {celebratedTopic && (
+        <MasteryCelebrationModal
+          isOpen={Boolean(celebratedTopic)}
+          topic={celebratedTopic.topic}
+          category={celebratedTopic.category}
+          xpPoints={celebratedTopic.xpPoints || 500}
+          onClose={() => setCelebratedTopic(null)}
+        />
       )}
     </div>
   );
