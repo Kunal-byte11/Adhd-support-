@@ -523,21 +523,6 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
             <Sparkles className="w-3.5 h-3.5 text-teal-400" />
             <span className="hidden lg:inline">Custom</span>
           </button>
-
-          {/* Master Problem Celebration Button */}
-          <button
-            onClick={() =>
-              setCelebratedProblem({
-                topic: `${currentProblem.title} (${currentProblem.subtitle || 'LeetCode 242'})`,
-                category: `${currentProblem.category} • ${currentProblem.difficulty}`,
-              })
-            }
-            className="px-3.5 py-1.5 rounded-xl text-xs font-black font-mono bg-gradient-to-r from-amber-500 via-emerald-400 to-teal-400 hover:from-amber-400 hover:to-emerald-300 text-slate-950 flex items-center gap-1.5 cursor-pointer shadow-lg shadow-emerald-500/25 transition-all hover:scale-102"
-            title="Celebrate mastering this problem!"
-          >
-            <Trophy className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Mastered 🎉</span>
-          </button>
         </div>
       </div>
 

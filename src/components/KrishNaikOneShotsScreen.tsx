@@ -518,14 +518,6 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                         (isJustToggled ? " ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-950 animate-pulse" : "")
                       }
                     >
-                      {/* Completed Ribbon Badge */}
-                      {isDone && (
-                        <div className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-emerald-500 text-slate-950 px-2 py-0.5 rounded-full text-[10px] font-black font-mono shadow-md animate-in fade-in zoom-in-90 duration-200">
-                          <Check className="w-3 h-3 stroke-[3]" />
-                          <span>COMPLETED</span>
-                        </div>
-                      )}
-
                       {/* Thumbnail Container */}
                       <div className="relative w-full aspect-video bg-slate-950 overflow-hidden">
                         {thumb ? (
@@ -533,7 +525,7 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                             src={thumb}
                             alt={title}
                             loading="lazy"
-                            className={"w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 " + (isDone ? "opacity-95 contrast-105" : "opacity-85 group-hover:opacity-100")}
+                            className={"w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 " + (isDone ? "opacity-50 saturate-50 contrast-125" : "opacity-85 group-hover:opacity-100")}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-slate-900 text-slate-500">
@@ -542,15 +534,27 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                         )}
 
                         {/* Gradient Overlay */}
-                        <div className={"absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent " + (isDone ? "opacity-60" : "opacity-80 group-hover:opacity-30") + " transition-opacity"} />
+                        <div className={"absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent " + (isDone ? "opacity-75" : "opacity-80 group-hover:opacity-30") + " transition-opacity"} />
 
-                        {/* Watch In Theater Badge Button Overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
-                          <div className="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-xl shadow-emerald-500/40">
-                            <Play className="w-4 h-4 fill-current" />
-                            <span>Watch in Study Theater</span>
+                        {/* RUBBER DEAD STAMP OVERLAY */}
+                        {isDone && (
+                          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                            <div className="dead-stamp px-4 py-1.5 border-[3.5px] border-emerald-400 text-emerald-400 bg-slate-950/85 backdrop-blur-xs rounded-xl flex items-center gap-2 font-mono font-black text-sm tracking-[0.25em] uppercase select-none border-dashed">
+                              <Check className="w-4 h-4 stroke-[3.5] text-emerald-300" />
+                              <span>COMPLETED</span>
+                            </div>
                           </div>
-                        </div>
+                        )}
+
+                        {/* Watch In Theater Badge Button Overlay (when hovered and not done) */}
+                        {!isDone && (
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
+                            <div className="px-4 py-2 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-xl shadow-emerald-500/40">
+                              <Play className="w-4 h-4 fill-current" />
+                              <span>Watch in Study Theater</span>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Direct View Notes Button on Thumbnail */}
                         <button
