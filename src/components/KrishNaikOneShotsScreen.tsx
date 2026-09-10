@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import krishVideosRaw from "../data/krishNaikVideos.json";
 import { StudyTheaterVideo, ILecturePhotoNote } from "../types";
 import { subscribeAllPhotoNotes } from "../lib/firestoreService";
+import { StationaryNotebookViewer } from "./StationaryNotebookViewer";
 import {
   Search,
   X,
@@ -205,10 +206,10 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
   const [allNotes, setAllNotes] = useState<ILecturePhotoNote[]>([]);
   const [justToggledId, setJustToggledId] = useState<string | null>(null);
 
-  // Modal for Viewing HD Full-Screen Thumbnail / Image
-  const [viewingImage, setViewingImage] = useState<{ url: string; title: string } | null>(null);
+  // Dedicated In-Screen Notes Viewer Modal
+  const [activeNotesViewer, setActiveNotesViewer] = useState<{ videoId: string; videoTitle: string } | null>(null);
 
-  // Subscribe to photo notes from Firestore to retrieve uploaded notes count
+  // Subscribe to photo notes from Firestore
   useEffect(() => {
     const unsub = subscribeAllPhotoNotes((notes) => {
       setAllNotes(notes);
@@ -530,20 +531,19 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                           </div>
                         </div>
 
-                        {/* View Image HD Button */}
-                        {thumb && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setViewingImage({ url: thumb, title: title });
-                            }}
-                            className="absolute top-2 right-2 z-30 p-1.5 bg-slate-950/80 hover:bg-emerald-500 text-slate-300 hover:text-slate-950 rounded-lg border border-slate-700/80 hover:border-emerald-400 opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
-                            title="View Full Resolution Image / Cover"
-                          >
-                            <Maximize2 className="w-3.5 h-3.5" />
-                          </button>
-                        )}
+                        {/* Direct View Notes Button on Thumbnail */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveNotesViewer({ videoId: url, videoTitle: title });
+                          }}
+                          className="absolute top-2 right-2 z-30 px-2.5 py-1 bg-slate-950/90 hover:bg-amber-500 text-amber-300 hover:text-slate-950 rounded-lg border border-amber-500/50 hover:border-amber-400 opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md text-[10px] font-mono font-bold flex items-center gap-1"
+                          title="View Handwritten Photo Notes & Notebook"
+                        >
+                          <BookOpen className="w-3 h-3" />
+                          <span>View Notes ({notesForThisVideo.length})</span>
+                        </button>
 
                         {/* Duration Badge */}
                         {duration && (
@@ -569,52 +569,27 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                           {uploadedAt && <span className="text-slate-500 font-mono">{formatDate(uploadedAt)}</span>}
                         </div>
 
-                        {/* Notes & View Image Tool Bar */}
+                        {/* Notes Toolbar */}
                         <div className="pt-2 flex items-center justify-between gap-2 border-t border-slate-800/80">
                           <div className="flex items-center gap-1.5">
-                            {notesForThisVideo.length > 0 ? (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handlePlayVideo(v, step, true);
-                                }}
-                                className="px-2 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-[10px] font-bold font-mono flex items-center gap-1 transition cursor-pointer"
-                                title="Open uploaded lecture notes"
-                              >
-                                <BookOpen className="w-3 h-3 text-amber-400" />
-                                <span>{notesForThisVideo.length} Notes Saved</span>
-                              </button>
-                            ) : (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handlePlayVideo(v, step, true);
-                                }}
-                                className="px-2 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700/90 border border-slate-700/80 text-slate-400 hover:text-amber-300 text-[10px] font-medium font-mono flex items-center gap-1 transition cursor-pointer"
-                                title="Upload handwritten photos or paste screenshots"
-                              >
-                                <Upload className="w-3 h-3" />
-                                <span>+ Upload Notes</span>
-                              </button>
-                            )}
-
-                            {/* View Cover Image Button */}
-                            {thumb && (
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setViewingImage({ url: thumb, title: title });
-                                }}
-                                className="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700/80 text-slate-300 hover:text-white text-[10px] font-medium font-mono flex items-center gap-1 transition cursor-pointer"
-                                title="Inspect Cover / Diagram in Full Resolution"
-                              >
-                                <ImageIcon className="w-3 h-3 text-teal-400" />
-                                <span>View Image</span>
-                              </button>
-                            )}
+                            {/* View Notes Button */}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveNotesViewer({ videoId: url, videoTitle: title });
+                              }}
+                              className={
+                                "px-2.5 py-1 rounded-lg text-[10px] font-bold font-mono flex items-center gap-1 transition cursor-pointer " +
+                                (notesForThisVideo.length > 0
+                                  ? "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300"
+                                  : "bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-amber-300")
+                              }
+                              title="Open interactive stationary notebook viewer for notes"
+                            >
+                              <BookOpen className="w-3 h-3 text-amber-400" />
+                              <span>View Notes ({notesForThisVideo.length})</span>
+                            </button>
                           </div>
 
                           <div className="flex items-center gap-2 font-mono text-[10px] text-slate-400">
@@ -677,54 +652,46 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
         })}
       </main>
 
-      {/* ================= FULL-SCREEN IMAGE INSPECTOR MODAL ================= */}
-      {viewingImage && (
+      {/* ================= STATIONARY NOTEBOOK / PHOTO NOTES MODAL VIEWER ================= */}
+      {activeNotesViewer && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8 animate-in fade-in duration-200 select-none"
-          onClick={() => setViewingImage(null)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200 select-none"
+          onClick={() => setActiveNotesViewer(null)}
         >
           {/* Top Bar */}
           <div
-            className="w-full max-w-5xl flex items-center justify-between py-3 px-4 bg-slate-900/90 border border-slate-800 rounded-2xl mb-4 text-white shadow-2xl"
+            className="w-full max-w-5xl flex items-center justify-between py-2.5 px-4 bg-slate-900/95 border border-slate-800 rounded-2xl mb-3 text-white shadow-2xl shrink-0"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-2 truncate pr-4">
-              <ImageIcon className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="text-xs sm:text-sm font-bold truncate">{viewingImage.title}</span>
+              <BookOpen className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="text-xs sm:text-sm font-bold truncate">{activeNotesViewer.videoTitle}</span>
+              <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">
+                Handwritten / Photo Notes
+              </span>
             </div>
 
             <div className="flex items-center gap-2">
-              <a
-                href={viewingImage.url}
-                target="_blank"
-                rel="noreferrer"
-                className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs font-mono font-bold text-slate-200 hover:text-white rounded-xl border border-slate-700 transition flex items-center gap-1.5"
-                title="Open image URL"
-              >
-                <ExternalLink className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Open URL</span>
-              </a>
-
               <button
                 type="button"
-                onClick={() => setViewingImage(null)}
+                onClick={() => setActiveNotesViewer(null)}
                 className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer"
-                title="Close (Esc)"
+                title="Close notes (Esc)"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
           </div>
 
-          {/* Full Resolution Image Container */}
+          {/* Stationary Notebook Viewer */}
           <div
-            className="max-w-5xl max-h-[80vh] w-full flex items-center justify-center rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-2xl relative"
+            className="max-w-5xl w-full flex-1 min-h-0 rounded-2xl overflow-hidden bg-[#11161a] border border-slate-800 shadow-2xl relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={viewingImage.url}
-              alt={viewingImage.title}
-              className="max-w-full max-h-[80vh] object-contain rounded-xl"
+            <StationaryNotebookViewer
+              videoId={activeNotesViewer.videoId}
+              videoTitle={activeNotesViewer.videoTitle}
+              className="w-full h-full"
             />
           </div>
         </div>
