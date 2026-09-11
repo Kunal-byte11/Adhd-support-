@@ -70,6 +70,12 @@ export interface VisualizerStep {
   charFingerprint?: string;
   buckets?: Record<string, string[]>;
   activeBucketKey?: string;
+  // For Top K Elements (Frequency Shelves)
+  countMap?: Record<string | number, number>;
+  freqShelves?: (number | string)[][];
+  activeShelfIndex?: number;
+  collectedResults?: (number | string)[];
+  kTarget?: number;
 }
 
 export interface ProblemDefinition {
@@ -783,6 +789,241 @@ public:
       });
 
       return { steps, result: finalResult };
+    },
+  },
+  {
+    id: 'top-k-frequent-elements',
+    title: 'Top K Frequent Elements',
+    subtitle: 'LeetCode 347 • NeetCode 150 #5',
+    category: 'Stack & Hashing',
+    difficulty: 'Medium',
+    description: 'Given an integer array nums and an integer k, return the k most frequent elements in any order.',
+    timeComplexity: 'O(n) — Linear time using Frequency Bucket Sort',
+    spaceComplexity: 'O(n) — Hash map for counts and frequency shelves',
+    mentalTrigger: 'Top K elements by frequency in O(n) time -> BUCKET SORT BY FREQUENCY (freq = [[] ...] + reversed()).',
+    interviewFlex: '"A standard approach is to use a Min-Heap of size k, which takes O(n log k) time. However, by using Bucket Sort where the bucket index represents element frequency, we optimize the time complexity to strictly O(n) linear time."',
+    edgeCases: [
+      'All elements identical nums = [7, 7, 7], k = 1 -> Returns [7]',
+      'k equals number of unique elements -> Returns all unique elements',
+      'Negative numbers -> Handled seamlessly by dictionary keys',
+    ],
+    visualModelDescription: 'The Frequency Shelves Model: 1. Count frequencies on the whiteboard (count = {}). 2. Create empty shelves where shelf index = frequency count (0 to len(nums)). 3. Place numbers onto their matching shelf. 4. Walk shelves in reverse from highest shelf down to collect k numbers.',
+    defaultInput: { nums: '1, 2, 2, 3, 3, 3', k: 2 },
+    inputSchema: [
+      { key: 'nums', label: 'Array nums (comma-separated)', type: 'string', placeholder: '1, 2, 2, 3, 3, 3' },
+      { key: 'k', label: 'k (top count)', type: 'number', placeholder: '2' },
+    ],
+    codeSnippets: {
+      python: `class Solution:
+    def topKFrequent(self, nums: list[int], k: int) -> list[int]:
+        count = {}  # 1. Whiteboard: count frequencies of each number
+        for n in nums:
+            count[n] = count.get(n, 0) + 1
+
+        freq = [[] for _ in range(len(nums) + 1)]  # 2. Empty frequency shelves
+        for n, c in count.items():
+            freq[c].append(n)  # 3. Place number 'n' on shelf 'c'
+
+        res = []  # 4. Result list to collect winners
+        for shelf in reversed(freq):  # 5. Walk shelves in reverse order
+            for n in shelf:
+                res.append(n)  # 6. Grab number from shelf
+                if len(res) == k:
+                    return res  # 7. Collected k numbers -> return result`,
+      cpp: `class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> count;  // 1. Whiteboard frequency count
+        for (int n : nums) {
+            count[n]++;
+        }
+
+        vector<vector<int>> freq(nums.size() + 1);  // 2. Frequency shelves
+        for (auto& pair : count) {
+            freq[pair.second].push_back(pair.first);  // 3. Place on shelf
+        }
+
+        vector<int> res;  // 4. Result list
+        for (int i = freq.size() - 1; i > 0; i--) {  // 5. Walk backwards
+            for (int n : freq[i]) {
+                res.push_back(n);  // 6. Grab from shelf
+                if (res.size() == k) return res;  // 7. Found k elements!
+            }
+        }
+        return res;
+    }
+};`,
+      javascript: `var topKFrequent = function(nums, k) {
+    const count = {};  // 1. Whiteboard frequency count
+    for (const n of nums) {
+        count[n] = (count[n] || 0) + 1;
+    }
+
+    const freq = Array.from({ length: nums.length + 1 }, () => []);  // 2. Shelves
+    for (const [n, c] of Object.entries(count)) {
+        freq[c].push(Number(n));  // 3. Place on shelf
+    }
+
+    const res = [];  // 4. Result list
+    for (let i = freq.length - 1; i > 0; i--) {  // 5. Walk backwards
+        for (const n of freq[i]) {
+            res.push(n);  // 6. Grab from shelf
+            if (res.length === k) return res;  // 7. Found k elements!
+        }
+    }
+    return res;
+};`,
+      java: `class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> count = new HashMap<>();  // 1. Whiteboard
+        for (int n : nums) {
+            count.put(n, count.getOrDefault(n, 0) + 1);
+        }
+
+        List<Integer>[] freq = new List[nums.length + 1];  // 2. Shelves
+        for (int i = 0; i < freq.length; i++) freq[i] = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> entry : count.entrySet()) {
+            freq[entry.getValue()].add(entry.getKey());  // 3. Place on shelf
+        }
+
+        int[] res = new int[k];  // 4. Result array
+        int idx = 0;
+        for (int i = freq.length - 1; i > 0; i--) {  // 5. Walk backwards
+            for (int n : freq[i]) {
+                res[idx++] = n;  // 6. Grab from shelf
+                if (idx == k) return res;  // 7. Found k elements!
+            }
+        }
+        return res;
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawNums = String(inputs.nums ?? '1, 2, 2, 3, 3, 3')
+        .split(',')
+        .map((x) => parseInt(x.trim(), 10))
+        .filter((n) => !isNaN(n));
+      const nums = rawNums.length > 0 ? rawNums : [1, 2, 2, 3, 3, 3];
+      const k = parseInt(String(inputs.k ?? 2), 10);
+      const steps: VisualizerStep[] = [];
+
+      // Step 1: Init & Whiteboard
+      const count: Record<number, number> = {};
+      steps.push({
+        lineNumber: 3,
+        explanation: `Start topKFrequent with nums = [${nums.join(', ')}] and k = ${k}. Initialize empty whiteboard count = {}.`,
+        variables: { nums: `[${nums.join(', ')}]`, k, count: '{}' },
+        phase: 'init',
+        countMap: {},
+        freqShelves: Array.from({ length: nums.length + 1 }, () => []),
+        collectedResults: [],
+        kTarget: k,
+      });
+
+      // Phase 1: Count
+      for (let i = 0; i < nums.length; i++) {
+        const n = nums[i];
+        count[n] = (count[n] || 0) + 1;
+        steps.push({
+          lineNumber: 5,
+          explanation: `[Tally ${i + 1}/${nums.length}] Saw number ${n}. Tally count for ${n} is now ${count[n]}.`,
+          variables: { n, count: JSON.stringify(count) },
+          phase: 'deposit',
+          countMap: { ...count },
+          freqShelves: Array.from({ length: nums.length + 1 }, () => []),
+          collectedResults: [],
+          kTarget: k,
+        });
+      }
+
+      // Phase 2: Create shelves and populate
+      const freq: number[][] = Array.from({ length: nums.length + 1 }, () => []);
+      steps.push({
+        lineNumber: 7,
+        explanation: `Initialize ${nums.length + 1} empty Frequency Shelves (indexed 0 to ${nums.length}).`,
+        variables: { totalShelves: nums.length + 1 },
+        phase: 'init',
+        countMap: { ...count },
+        freqShelves: freq.map((arr) => [...arr]),
+        collectedResults: [],
+        kTarget: k,
+      });
+
+      for (const [nStr, c] of Object.entries(count)) {
+        const n = parseInt(nStr, 10);
+        freq[c].push(n);
+        steps.push({
+          lineNumber: 9,
+          explanation: `Number ${n} appeared ${c} time${c > 1 ? 's' : ''}. Place ${n} onto Shelf ${c}!`,
+          variables: { number: n, frequency: c, shelf: `Shelf ${c}` },
+          phase: 'insert',
+          countMap: { ...count },
+          freqShelves: freq.map((arr) => [...arr]),
+          activeShelfIndex: c,
+          collectedResults: [],
+          kTarget: k,
+        });
+      }
+
+      // Phase 3: Walk shelves in reverse
+      const res: number[] = [];
+      steps.push({
+        lineNumber: 11,
+        explanation: `Ready to collect top k = ${k} winners. Start walking shelves in reverse order from Shelf ${nums.length} down to 1.`,
+        variables: { res: '[]', k },
+        phase: 'inspect',
+        countMap: { ...count },
+        freqShelves: freq.map((arr) => [...arr]),
+        collectedResults: [],
+        kTarget: k,
+      });
+
+      for (let i = freq.length - 1; i > 0; i--) {
+        const shelf = freq[i];
+        steps.push({
+          lineNumber: 12,
+          explanation: `Inspecting Shelf ${i} (Numbers with frequency ${i}): ${shelf.length > 0 ? `[${shelf.join(', ')}]` : '(Empty)'}.`,
+          variables: { shelfIndex: i, shelfContents: JSON.stringify(shelf), res: JSON.stringify(res) },
+          phase: 'inspect',
+          countMap: { ...count },
+          freqShelves: freq.map((arr) => [...arr]),
+          activeShelfIndex: i,
+          collectedResults: [...res],
+          kTarget: k,
+        });
+
+        for (const n of shelf) {
+          res.push(n);
+          steps.push({
+            lineNumber: 14,
+            explanation: `🎯 Grabbed ${n} from Shelf ${i}! Total collected: [${res.join(', ')}] (${res.length}/${k}).`,
+            variables: { grabbedNumber: n, res: JSON.stringify(res), countCollected: res.length, k },
+            phase: 'match',
+            countMap: { ...count },
+            freqShelves: freq.map((arr) => [...arr]),
+            activeShelfIndex: i,
+            collectedResults: [...res],
+            kTarget: k,
+          });
+
+          if (res.length === k) {
+            steps.push({
+              lineNumber: 16,
+              explanation: `🎉 Collected exactly k = ${k} most frequent numbers: [${res.join(', ')}]! Return result!`,
+              variables: { result: JSON.stringify(res) },
+              phase: 'finish',
+              countMap: { ...count },
+              freqShelves: freq.map((arr) => [...arr]),
+              activeShelfIndex: i,
+              collectedResults: [...res],
+              kTarget: k,
+            });
+            return { steps, result: res };
+          }
+        }
+      }
+
+      return { steps, result: res };
     },
   },
 ];
@@ -1932,6 +2173,150 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                                     "{it}"
                                   </span>
                                 ))}
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ================= TOP K FREQUENT: THE FREQUENCY SHELVES VISUAL MODEL ================= */}
+              {selectedProblemId === 'top-k-frequent-elements' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
+                  {/* Top Header Card: Target K & Collected Winners */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-bold text-slate-400 uppercase">Target K:</span>
+                      <span className="px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-black text-sm sm:text-base">
+                        Top {problemInputs.k ?? 2} Elements
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
+                      <span className="text-slate-400">Winners Collected:</span>
+                      <span className="text-emerald-300 font-black bg-emerald-950/60 px-2.5 py-0.5 rounded border border-emerald-500/40">
+                        {currentStep?.collectedResults && currentStep.collectedResults.length > 0
+                          ? `[${currentStep.collectedResults.join(', ')}]`
+                          : '[]'}
+                      </span>
+                      <span className="text-[10px] text-slate-500">
+                        ({currentStep?.collectedResults?.length || 0}/{problemInputs.k ?? 2})
+                      </span>
+                    </div>
+
+                    {currentStep?.phase === 'finish' && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-mono font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>TOP {problemInputs.k ?? 2} FOUND!</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Whiteboard Tally (Number -> Frequency Count) */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-cyan-400" />
+                        The Whiteboard Tally (count: number → frequency)
+                      </span>
+                      <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-md text-slate-400 font-mono">
+                        Phase 1: O(n) Count
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-wrap justify-center py-2">
+                      {(() => {
+                        const countMap = currentStep?.countMap || {};
+                        const keys = Object.keys(countMap);
+                        if (keys.length === 0) {
+                          return <span className="text-xs text-slate-500 font-mono py-2 font-bold">(Whiteboard Empty)</span>;
+                        }
+                        return keys.map((numStr) => {
+                          const freqVal = countMap[numStr];
+                          return (
+                            <div
+                              key={numStr}
+                              className="px-3.5 py-2 rounded-xl bg-[#141c26] border-2 border-slate-700 flex items-center gap-2.5 font-mono text-sm shadow-md"
+                            >
+                              <span className="text-white font-black text-base">Num {numStr}</span>
+                              <span className="text-slate-500">→</span>
+                              <span className="px-2 py-0.5 rounded-md bg-cyan-950/70 text-cyan-300 font-bold border border-cyan-500/40 text-xs">
+                                {freqVal}×
+                              </span>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* The Frequency Shelves (Buckets) */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-700/80 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2 text-sm">
+                        <Layers className="w-4 h-4 text-amber-400" />
+                        The Frequency Shelves (freq: index = count → [numbers])
+                      </span>
+                      <span className="text-amber-300 font-bold text-xs bg-amber-950/60 px-2.5 py-0.5 rounded-lg border border-amber-500/40">
+                        reversed(freq)
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 max-h-48 overflow-y-auto p-1">
+                      {(() => {
+                        const shelves = currentStep?.freqShelves || [];
+                        const activeIdx = currentStep?.activeShelfIndex;
+                        const winners = currentStep?.collectedResults || [];
+
+                        return shelves.map((items, idx) => {
+                          if (idx === 0) return null; // Shelf 0 is always empty
+                          const isActive = activeIdx === idx;
+                          const hasItems = items && items.length > 0;
+
+                          return (
+                            <div
+                              key={idx}
+                              className={`p-2.5 rounded-xl border-2 flex flex-col gap-1.5 font-mono transition-all duration-200 shadow-md ${
+                                isActive
+                                  ? 'bg-gradient-to-b from-amber-950/80 to-[#101720] border-amber-400 ring-4 ring-amber-400/30 scale-105 shadow-amber-500/20'
+                                  : hasItems
+                                  ? 'bg-[#0e141c] border-slate-600/90 text-white'
+                                  : 'bg-[#090d12] border-slate-800 text-slate-600 opacity-60'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between border-b border-slate-700/60 pb-1">
+                                <span className={`text-[11px] font-black ${isActive ? 'text-amber-300' : 'text-slate-400'}`}>
+                                  Shelf {idx} ({idx}×)
+                                </span>
+                                {isActive && (
+                                  <span className="text-[9px] bg-amber-400 text-slate-950 px-1.5 py-0.2 rounded font-black animate-pulse">
+                                    SCAN
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex flex-wrap gap-1 min-h-[22px] items-center">
+                                {hasItems ? (
+                                  items.map((nVal, nIdx) => {
+                                    const isWinner = winners.includes(nVal);
+                                    return (
+                                      <span
+                                        key={nIdx}
+                                        className={`px-2 py-0.5 rounded-lg text-xs font-black font-mono shadow-xs ${
+                                          isWinner
+                                            ? 'bg-emerald-500 text-slate-950 ring-2 ring-emerald-300 border border-emerald-200 animate-pulse'
+                                            : 'bg-cyan-950/80 text-cyan-200 border border-cyan-500/40'
+                                        }`}
+                                      >
+                                        {nVal}
+                                      </span>
+                                    );
+                                  })
+                                ) : (
+                                  <span className="text-[10px] text-slate-600 italic font-mono">(empty)</span>
+                                )}
                               </div>
                             </div>
                           );
