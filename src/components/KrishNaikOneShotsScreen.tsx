@@ -25,7 +25,16 @@ import {
   ZoomIn,
   Download,
   Layers,
-  Award
+  Award,
+  HelpCircle,
+  RotateCcw,
+  XCircle,
+  Lock,
+  Smartphone,
+  CreditCard,
+  Code2,
+  CheckCheck,
+  Copy
 } from "lucide-react";
 
 export interface KrishNaikVideoRaw {
@@ -188,6 +197,583 @@ export const STEP_BY_STEP_TRACKS: StepTrack[] = [
     ]
   }
 ];
+
+interface FlashcardItem {
+  id: number;
+  title: string;
+  category: string;
+  front: string;
+  back: string;
+  example: string;
+  analogy: string;
+}
+
+interface QuizItem {
+  id: number;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+const OOP_FLASHCARDS: FlashcardItem[] = [
+  {
+    id: 1,
+    title: "Class vs. Object",
+    category: "Foundation",
+    front: "What is the difference between a Class and an Object (Instance)?",
+    back: "A Class is the blueprint/design on paper (defines attributes & methods). An Object is the real physical instance created in memory that holds concrete data.",
+    example: "class SbiAccount: ... (Class) vs. kunal_acc = SbiAccount('Kunal', 50000) (Object)",
+    analogy: "Blank SBI Account Opening Form vs. Kunal's Real Active Bank Account"
+  },
+  {
+    id: 2,
+    title: "__init__ Constructor",
+    category: "Foundation",
+    front: "What is __init__ in Python and when does it execute?",
+    back: "__init__ is the constructor method in Python. It executes automatically the exact moment a new object is instantiated to set up initial state.",
+    example: "def __init__(self, name, balance): self.name = name; self.balance = balance",
+    analogy: "The Bank Clerk registering your name and initial cash at the counter upon joining."
+  },
+  {
+    id: 3,
+    title: "The 'self' Parameter",
+    category: "Foundation",
+    front: "What does 'self' represent in Python methods?",
+    back: "'self' is an explicit reference to THIS specific instance in memory. It tells Python which object's attributes are being read or modified.",
+    example: "def deposit(self, amount): self.balance += amount",
+    analogy: "Kunal's personal passbook — ensures ₹5,000 is added to Kunal's balance, not Rahul's."
+  },
+  {
+    id: 4,
+    title: "Class vs. Instance Attribute",
+    category: "Core Concept",
+    front: "Class Attribute vs. Instance Attribute: What is the crucial difference?",
+    back: "Class Attribute is defined outside methods and SHARED by all instances. Instance Attribute is defined inside __init__ with self. and is UNIQUE to each individual object.",
+    example: "bank_name = 'State Bank of India' (Class) vs. self.balance = 50000 (Instance)",
+    analogy: "RBI Central Interest Rate (changes for all accounts) vs. Kunal's Private Balance."
+  },
+  {
+    id: 5,
+    title: "Encapsulation & Private Variables",
+    category: "Pillar 1",
+    front: "What is Encapsulation and how do you make private variables in Python?",
+    back: "Encapsulation binds data and methods together while restricting direct access. In Python, prefixing variables with double underscores (__) makes them private.",
+    example: "self.__pin = 1234; self.__balance = 50000 (Cannot be accessed directly as obj.__pin)",
+    analogy: "Your secret ATM PIN and the Bank Vault — you must use the official ATM screen to withdraw."
+  },
+  {
+    id: 6,
+    title: "Inheritance & super()",
+    category: "Pillar 2",
+    front: "What is Inheritance and what does super() do?",
+    back: "Inheritance allows a Child Class to derive all attributes and methods from a Parent Class for code reuse. super() calls the parent class constructor/methods directly.",
+    example: "class SbiSalaryAccount(SbiAccount): has_credit_card = True",
+    analogy: "SBI Salary Account inheriting all standard deposit/withdrawal features from standard SBI Account."
+  },
+  {
+    id: 7,
+    title: "Polymorphism (Many Forms)",
+    category: "Pillar 3",
+    front: "What is Polymorphism in Object-Oriented Programming?",
+    back: "Polymorphism allows different classes to implement methods with the EXACT same name, each performing its own unique behavior (Method Overriding / Duck Typing).",
+    example: "gpay.pay(100) vs phonepe.pay(100) — both share pay() method signature",
+    analogy: "A single BharatPe UPI QR Code scanned by Google Pay vs. PhonePe vs. Paytm."
+  },
+  {
+    id: 8,
+    title: "Abstraction",
+    category: "Pillar 4",
+    front: "What is Abstraction and how is it implemented in Python?",
+    back: "Abstraction hides complex internal implementation details and exposes only a clean, essential interface. Implemented via Python's 'abc' module with @abstractmethod.",
+    example: "from abc import ABC, abstractmethod; class Notification(ABC): @abstractmethod def send(self): pass",
+    analogy: "Pressing a Car's Accelerator pedal or Swiggy 'Pay' button without needing to know engine mechanics."
+  }
+];
+
+const OOP_QUIZ: QuizItem[] = [
+  {
+    id: 1,
+    question: "In Python, which special method is invoked automatically whenever a brand-new object is created?",
+    options: ["__start__()", "__init__()", "__create__()", "__main__()"],
+    correctIndex: 1,
+    explanation: "__init__() is Python's built-in constructor method that runs immediately upon class instantiation to initialize instance attributes."
+  },
+  {
+    id: 2,
+    question: "If SBI Bank updates its central interest rate affecting all customers simultaneously, what type of attribute is being modified?",
+    options: ["Instance Attribute", "Class Attribute (Static Variable)", "Local Method Variable", "Dynamic Property"],
+    correctIndex: 1,
+    explanation: "Class attributes (static variables) are defined directly in the class scope and shared by every single instance of that class."
+  },
+  {
+    id: 3,
+    question: "How do you enforce Encapsulation in Python to make a variable private from direct external modification?",
+    options: ["private self.pin = 1234", "self.__pin = 1234 (double underscore prefix)", "self._lock(pin) = 1234", "const self.pin = 1234"],
+    correctIndex: 1,
+    explanation: "Prefixing an attribute with double underscores (e.g. self.__pin) invokes Python's name mangling, keeping the variable private from external access."
+  },
+  {
+    id: 4,
+    question: "Both GPay and PhonePe providing a .pay(amount) method with different internal payment logic is a classic demonstration of:",
+    options: ["Polymorphism", "Encapsulation", "Recursion", "Garbage Collection"],
+    correctIndex: 0,
+    explanation: "Polymorphism (many forms) allows different classes to share the exact same method signature while executing their own distinct implementations."
+  },
+  {
+    id: 5,
+    question: "Why does class SbiSalaryAccount(SbiAccount) automatically have access to deposit() without re-declaring it?",
+    options: ["Because of Encapsulation", "Because of Inheritance", "Because of Method Overloading", "Because of Python Global Scope"],
+    correctIndex: 1,
+    explanation: "Inheritance enables the child class (SbiSalaryAccount) to inherit all behaviors and methods from its parent class (SbiAccount) for maximum code reuse."
+  }
+];
+
+export const OopsMasterCard: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<"story" | "flashcards" | "quiz" | "checklist">("story");
+  const [currentCardIdx, setCurrentCardIdx] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [copiedCode, setCopiedCode] = useState(false);
+
+  // Quiz state
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
+
+  const activeCard = OOP_FLASHCARDS[currentCardIdx];
+
+  const handleCopyCode = () => {
+    const code = `# 1. The Parent Class (Blueprint)
+class SbiAccount:
+    bank_name = "State Bank of India"  # Class Attribute (Shared by all)
+
+    def __init__(self, name, balance, pin=1234):
+        self.name = name              # Instance Attribute (Unique to owner)
+        self.balance = balance
+        self.__pin = pin              # Encapsulation: Private variable (__)
+
+    def deposit(self, amount):       # Method (Action)
+        self.balance += amount
+        print(f"₹{amount} deposited. Balance: ₹{self.balance}")
+
+
+# 2. Inheritance (Child Class)
+class SbiSalaryAccount(SbiAccount):
+    has_credit_card = True            # Extra perk for salary account
+
+
+# 3. Instantiation & Testing
+kunal = SbiAccount("Kunal", 50000)
+kunal.deposit(5000)                   # Output: ₹5000 deposited. Balance: ₹55000
+
+amit = SbiSalaryAccount("Amit", 100000)
+print(amit.bank_name)                 # Output: State Bank of India (Inherited!)`;
+    navigator.clipboard.writeText(code);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
+
+  const handleSelectQuizOption = (qIdx: number, optIdx: number) => {
+    setSelectedAnswers((prev) => ({ ...prev, [qIdx]: optIdx }));
+  };
+
+  const scoreCount = useMemo(() => {
+    return OOP_QUIZ.filter((q, idx) => selectedAnswers[idx] === q.correctIndex).length;
+  }, [selectedAnswers]);
+
+  return (
+    <div className="w-full mb-8 bg-gradient-to-br from-[#0e141c] via-[#121924] to-[#0a0f16] border-2 border-emerald-500/40 rounded-3xl p-5 sm:p-7 shadow-2xl shadow-emerald-950/30 overflow-hidden relative">
+      {/* Glow highlight */}
+      <div className="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Header Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800/80 relative z-10">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center font-black text-2xl shadow-lg shadow-emerald-500/30 shrink-0">
+            🐍
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-base sm:text-lg font-black text-white tracking-tight">
+                OOPs in Python Master Guide
+              </h3>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                100% Interview Ready
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 font-medium mt-0.5">
+              Zero Jargon • Everyday Real-World Indian Analogies (SBI Bank &amp; BharatPe UPI)
+            </p>
+          </div>
+        </div>
+
+        {/* Tab Switcher */}
+        <div className="flex items-center bg-[#080d13] p-1 rounded-2xl border border-slate-800 text-xs font-mono">
+          <button
+            onClick={() => setActiveTab("story")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === "story"
+                ? "bg-emerald-500 text-slate-950 shadow-md font-black"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>SBI Story</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("flashcards")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === "flashcards"
+                ? "bg-emerald-500 text-slate-950 shadow-md font-black"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span>8 Flashcards</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("quiz")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === "quiz"
+                ? "bg-emerald-500 text-slate-950 shadow-md font-black"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>Quiz (5Q)</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("checklist")}
+            className={`px-3 py-1.5 rounded-xl font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeTab === "checklist"
+                ? "bg-emerald-500 text-slate-950 shadow-md font-black"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            <span>Checklist</span>
+          </button>
+        </div>
+      </div>
+
+      {/* TAB 1: THE REAL-WORLD STORY & 12-LINE MASTER CODE */}
+      {activeTab === "story" && (
+        <div className="mt-6 space-y-6 relative z-10 animate-in fade-in duration-200">
+          {/* Visual Concept Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-[#121922] border border-slate-700/80 rounded-2xl p-4 shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-emerald-400 font-bold mb-1">
+                  <span>1. CLASS &amp; OBJECT</span>
+                  <span>📄 ➔ 💳</span>
+                </div>
+                <h4 className="text-sm font-black text-white">The SBI Blank Form</h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  The <b className="text-emerald-300">Class</b> is the blank paper form. The <b className="text-emerald-300">Object</b> is Kunal's real active bank account in memory.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-2 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                kunal = SbiAccount("Kunal", 50000)
+              </span>
+            </div>
+
+            <div className="bg-[#121922] border border-slate-700/80 rounded-2xl p-4 shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-cyan-400 font-bold mb-1">
+                  <span>2. CLASS VS INSTANCE</span>
+                  <span>🏛️ ➔ 💰</span>
+                </div>
+                <h4 className="text-sm font-black text-white">RBI Rate vs. Balance</h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  <b className="text-cyan-300">Class Attribute:</b> Bank name/RBI rate shared by all accounts. <b className="text-cyan-300">Instance Attribute:</b> Kunal's private ₹50k balance.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-2 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                bank_name (all) vs self.balance (you)
+              </span>
+            </div>
+
+            <div className="bg-[#121922] border border-slate-700/80 rounded-2xl p-4 shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-purple-400 font-bold mb-1">
+                  <span>3. ENCAPSULATION</span>
+                  <span>🔒 ATM PIN</span>
+                </div>
+                <h4 className="text-sm font-black text-white">Private Safe (__pin)</h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Hiding critical variables with <b className="text-purple-300">double underscore __</b> so strangers cannot directly modify your balance or PIN.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-2 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                self.__pin = 1234
+              </span>
+            </div>
+
+            <div className="bg-[#121922] border border-slate-700/80 rounded-2xl p-4 shadow-md flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between text-xs font-mono text-amber-400 font-bold mb-1">
+                  <span>4. POLYMORPHISM</span>
+                  <span>📱 UPI QR</span>
+                </div>
+                <h4 className="text-sm font-black text-white">BharatPe QR Code</h4>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  One single <b className="text-amber-300">pay()</b> action. GPay and PhonePe both scan the same QR, each running their own internal method.
+                </p>
+              </div>
+              <span className="text-[10px] font-mono text-slate-400 mt-2 bg-slate-900 px-2 py-1 rounded border border-slate-800">
+                gpay.pay() vs phonepe.pay()
+              </span>
+            </div>
+          </div>
+
+          {/* Master 12-Line Code Block */}
+          <div className="bg-[#090d13] border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-xs font-mono">
+              <div className="flex items-center gap-2 text-slate-300 font-bold">
+                <Code2 className="w-4 h-4 text-emerald-400" />
+                <span>The 12-Line Master Code (Ready for Interview Whiteboard)</span>
+              </div>
+              <button
+                onClick={handleCopyCode}
+                className="px-3 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold flex items-center gap-1.5 transition cursor-pointer"
+              >
+                {copiedCode ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCode ? "Copied!" : "Copy Code"}</span>
+              </button>
+            </div>
+
+            <pre className="mt-3 text-xs sm:text-sm font-mono text-emerald-300/90 leading-relaxed overflow-x-auto select-text p-2 bg-[#05080c] rounded-xl border border-slate-900">
+{`# 1. Parent Class (Blueprint)
+class SbiAccount:
+    bank_name = "State Bank of India"  # Class Attribute (Shared by all)
+
+    def __init__(self, name, balance, pin=1234):
+        self.name = name              # Instance Attribute (Unique to owner)
+        self.balance = balance
+        self.__pin = pin              # Encapsulation: Private variable (__)
+
+    def deposit(self, amount):       # Method (Action)
+        self.balance += amount
+        print(f"₹{amount} deposited. Balance: ₹{self.balance}")
+
+# 2. Inheritance (Child Class)
+class SbiSalaryAccount(SbiAccount):
+    has_credit_card = True            # Extra perk for salary account
+
+# 3. Instantiation & Testing
+kunal = SbiAccount("Kunal", 50000)
+kunal.deposit(5000)                   # Output: ₹5000 deposited. Balance: ₹55000
+amit = SbiSalaryAccount("Amit", 100000)
+print(amit.bank_name)                 # Output: State Bank of India (Inherited!)`}
+            </pre>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 2: INTERACTIVE 8 FLASHCARDS */}
+      {activeTab === "flashcards" && (
+        <div className="mt-6 flex flex-col items-center space-y-5 relative z-10 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between w-full max-w-xl text-xs font-mono text-slate-400">
+            <span className="font-bold text-emerald-400">Card {currentCardIdx + 1} of {OOP_FLASHCARDS.length}</span>
+            <span className="bg-slate-800 px-2.5 py-0.5 rounded-full text-slate-300 font-bold">
+              {activeCard.category}
+            </span>
+          </div>
+
+          {/* Flashcard Box */}
+          <div
+            onClick={() => setIsFlipped((prev) => !prev)}
+            className="w-full max-w-xl min-h-[260px] bg-gradient-to-br from-[#121922] to-[#0c1118] border-2 border-emerald-500/50 hover:border-emerald-400 rounded-3xl p-6 sm:p-8 flex flex-col justify-between cursor-pointer shadow-2xl transition-all duration-300 transform hover:scale-[1.01] select-none text-center relative group"
+          >
+            <div className="flex items-center justify-between text-[11px] font-mono text-slate-500">
+              <span>🏷️ {activeCard.title}</span>
+              <span className="text-emerald-400 font-bold group-hover:underline flex items-center gap-1">
+                <RotateCcw className="w-3 h-3" /> Click to {isFlipped ? "see Question" : "Flip Answer"}
+              </span>
+            </div>
+
+            <div className="my-auto py-4">
+              {!isFlipped ? (
+                <div className="space-y-3">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-black block">QUESTION</span>
+                  <h4 className="text-lg sm:text-xl font-black text-white leading-snug">
+                    {activeCard.front}
+                  </h4>
+                </div>
+              ) : (
+                <div className="space-y-3 text-left">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-black block">ANSWER &amp; MENTAL MODEL</span>
+                  <p className="text-xs sm:text-sm font-medium text-slate-200 leading-relaxed">
+                    {activeCard.back}
+                  </p>
+                  <div className="p-2.5 rounded-xl bg-[#080d13] border border-slate-800 text-[11px] font-mono text-emerald-300">
+                    <span className="text-slate-400 block text-[10px]">Real Analogy:</span>
+                    💡 {activeCard.analogy}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="text-[10px] font-mono text-slate-500 text-center">
+              {isFlipped ? "💡 Press Next or Flip back" : "Tap anywhere on card to flip"}
+            </div>
+          </div>
+
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => {
+                setIsFlipped(false);
+                setCurrentCardIdx((prev) => (prev > 0 ? prev - 1 : OOP_FLASHCARDS.length - 1));
+              }}
+              className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold font-mono transition flex items-center gap-1 cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" /> Prev
+            </button>
+            <div className="flex items-center gap-1.5">
+              {OOP_FLASHCARDS.map((_, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    setIsFlipped(false);
+                    setCurrentCardIdx(idx);
+                  }}
+                  className={`w-2 h-2 rounded-full cursor-pointer transition-all ${
+                    currentCardIdx === idx ? "bg-emerald-400 w-5" : "bg-slate-700 hover:bg-slate-500"
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              onClick={() => {
+                setIsFlipped(false);
+                setCurrentCardIdx((prev) => (prev < OOP_FLASHCARDS.length - 1 ? prev + 1 : 0));
+              }}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-950 text-xs font-black font-mono transition flex items-center gap-1 cursor-pointer shadow-md"
+            >
+              Next <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 3: INTERACTIVE 5-QUESTION INTERVIEW QUIZ */}
+      {activeTab === "quiz" && (
+        <div className="mt-6 space-y-6 relative z-10 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-800 text-xs font-mono">
+            <div className="flex items-center gap-2">
+              <span className="text-white font-black text-sm">OOPs Interactive Interview Quiz</span>
+              <span className="text-slate-400">({OOP_QUIZ.length} Questions)</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-500/40">
+                Score: {scoreCount} / {OOP_QUIZ.length}
+              </span>
+              <button
+                onClick={() => {
+                  setSelectedAnswers({});
+                  setQuizSubmitted(false);
+                }}
+                className="text-xs text-slate-400 hover:text-white flex items-center gap-1 cursor-pointer"
+              >
+                <RotateCcw className="w-3.5 h-3.5" /> Reset
+              </button>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {OOP_QUIZ.map((q, qIdx) => {
+              const selectedOpt = selectedAnswers[qIdx];
+              const isAnswered = selectedOpt !== undefined;
+              const isCorrect = selectedOpt === q.correctIndex;
+
+              return (
+                <div
+                  key={q.id}
+                  className="bg-[#101720] border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-md space-y-3"
+                >
+                  <div className="flex items-start gap-2.5">
+                    <span className="w-6 h-6 rounded-lg bg-slate-800 text-emerald-400 flex items-center justify-center text-xs font-mono font-black shrink-0">
+                      Q{qIdx + 1}
+                    </span>
+                    <h4 className="text-sm font-bold text-white leading-relaxed">
+                      {q.question}
+                    </h4>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                    {q.options.map((opt, optIdx) => {
+                      const isThisSelected = selectedOpt === optIdx;
+                      const isThisCorrect = q.correctIndex === optIdx;
+
+                      let btnStyle = "bg-[#141d27] border-slate-700 text-slate-300 hover:border-emerald-500/60 hover:text-white";
+                      if (isAnswered) {
+                        if (isThisCorrect) {
+                          btnStyle = "bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold ring-2 ring-emerald-500/30";
+                        } else if (isThisSelected && !isCorrect) {
+                          btnStyle = "bg-red-950/80 border-red-500 text-red-200 font-bold";
+                        } else {
+                          btnStyle = "bg-[#0c1218] border-slate-800 text-slate-500 opacity-60";
+                        }
+                      }
+
+                      return (
+                        <button
+                          key={optIdx}
+                          onClick={() => handleSelectQuizOption(qIdx, optIdx)}
+                          className={`p-3 rounded-xl border text-left text-xs font-mono transition-all cursor-pointer flex items-center justify-between ${btnStyle}`}
+                        >
+                          <span>{opt}</span>
+                          {isAnswered && isThisCorrect && <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />}
+                          {isAnswered && isThisSelected && !isCorrect && <XCircle className="w-4 h-4 text-red-400 shrink-0" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {isAnswered && (
+                    <div className="p-3 rounded-xl bg-[#080d13] border border-slate-800 text-xs text-slate-300 font-mono space-y-1">
+                      <span className="text-[10px] font-black uppercase text-emerald-400 block">Explanation:</span>
+                      <p>{q.explanation}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* TAB 4: 10-POINT INTERVIEW CHECKLIST */}
+      {activeTab === "checklist" && (
+        <div className="mt-6 space-y-3 relative z-10 animate-in fade-in duration-200">
+          <div className="pb-2 border-b border-slate-800 text-xs font-mono text-slate-400">
+            Top 10 Questions Interviewers Ask &amp; The Exact 1-Sentence Answers to Recite:
+          </div>
+
+          <div className="grid grid-cols-1 gap-2.5">
+            {[
+              { q: "1. Difference between Class & Object?", a: "Class is the blueprint on paper (blank SBI form); Object is the real active instance in memory (Kunal's bank account)." },
+              { q: "2. What is __init__ in Python?", a: "The constructor method that executes automatically the instant a new object is created to initialize its state." },
+              { q: "3. What is 'self'?", a: "A reference to this specific instance in memory so Python knows which object's attributes to read or modify." },
+              { q: "4. Class Attribute vs Instance Attribute?", a: "Class Attribute is shared across all objects (like RBI central rate); Instance Attribute is unique to each individual object (like your personal balance)." },
+              { q: "5. What are the 4 Pillars of OOP?", a: "Encapsulation (protecting data), Abstraction (hiding complexity), Inheritance (reusing code), and Polymorphism (many forms of a method)." },
+              { q: "6. How is Encapsulation done in Python?", a: "By binding data with methods and prefixing private variables with double underscores (e.g. self.__pin, self.__balance)." },
+              { q: "7. What is Abstraction?", a: "Hiding internal complexity and showing only the essential interface (like a Car accelerator pedal), using Python's abc and @abstractmethod." },
+              { q: "8. What is Inheritance & super()?", a: "A child class deriving features from a parent class for code reuse; super() calls the parent constructor without rewriting code." },
+              { q: "9. What is Polymorphism?", a: "Multiple classes providing the exact same method signature (e.g. GPay and PhonePe both having a .pay() method that acts differently)." },
+              { q: "10. What is __str__ dunder method?", a: "A special magic method that defines how an object is represented in readable human text when printed with print(obj)." },
+            ].map((item, idx) => (
+              <div key={idx} className="p-3.5 rounded-xl bg-[#101720] border border-slate-800 space-y-1 font-mono text-xs">
+                <span className="text-emerald-400 font-bold block text-xs">{item.q}</span>
+                <p className="text-slate-300 text-xs">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 interface KrishNaikOneShotsScreenProps {
   isSidebarCollapsed?: boolean;
@@ -489,6 +1075,13 @@ export const KrishNaikOneShotsScreen: React.FC<KrishNaikOneShotsScreenProps> = (
                   ))}
                 </div>
               </div>
+
+              {/* Special Interactive OOPs in Python Master Card for Step 1 */}
+              {step.id === "step-1-python-oops" && (
+                <div className="mt-6">
+                  <OopsMasterCard />
+                </div>
+              )}
 
               {/* Video Cards Grid */}
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

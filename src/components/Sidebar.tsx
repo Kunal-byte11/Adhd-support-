@@ -40,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const coreNavItems: NavItem[] = [
     { id: 'learning', label: 'Learning & Code 💻', Icon: Code2 },
-    { id: 'roadmap', label: 'AI / ML 8-Step Roadmap 🚀', Icon: BrainCircuit },
+    { id: 'roadmap', label: 'Road to Gen AI 🤖', Icon: BrainCircuit },
     { id: 'sem7', label: 'Sem 7 📚', Icon: BookOpen },
   ];
 

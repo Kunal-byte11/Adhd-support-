@@ -49,7 +49,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
   // Primary Quick Items (Visible directly in dock)
   const quickItems: { id: ScreenType; label: string; Icon: LucideIcon }[] = [
     { id: 'learning', label: 'Learning', Icon: Code2 },
-    { id: 'roadmap', label: 'Krish AI', Icon: BrainCircuit },
+    { id: 'roadmap', label: 'Gen AI 🤖', Icon: BrainCircuit },
     { id: 'sem7', label: 'Sem 7', Icon: BookOpen },
     { id: 'woop', label: 'WOOP', Icon: Target },
   ];
@@ -75,7 +75,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({
     },
     {
       id: 'roadmap',
-      label: 'Krish Naik AI Curriculum',
+      label: 'Road to Gen AI 🤖',
       description: 'Generative AI, LangChain, Agents, ML & MLOps',
       Icon: BrainCircuit,
       badge: '🤖',
