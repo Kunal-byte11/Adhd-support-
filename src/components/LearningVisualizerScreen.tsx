@@ -497,179 +497,6 @@ public:
       return { steps, result: [] };
     },
   },
-  {
-    id: 'group-anagrams',
-    title: 'Group Anagrams',
-    subtitle: 'LeetCode 49 • NeetCode 150 #4',
-    category: 'Stack & Hashing',
-    difficulty: 'Medium',
-    description: "Given an array of strings 'strs', group all the anagrams together into sorting buckets.",
-    timeComplexity: 'O(N * K) — N strings of max length K using 26-char frequency tuples',
-    spaceComplexity: 'O(N * K) — Hash map storing all strings partitioned into buckets',
-    mentalTrigger: 'Grouping items by common properties / patterns -> USE A HASH MAP with a CANONICAL KEY (Bucket Array).',
-    interviewFlex: '"I used a 26-element character frequency tuple as the hash map key to achieve optimal O(N * K) linear time. The simpler alternative is sorting each word (tuple(sorted(s))), which takes O(N * K log K) time. The count array approach avoids sorting entirely, making it strictly faster when strings are long!"',
-    edgeCases: [
-      'Empty string: strs = [""] -> Returns [[""]].',
-      'Single letter strings: strs = ["a"] -> Returns [["a"]].',
-      'Identical character counts with different orders: "eat", "tea", "ate" -> Same bucket (1a, 1e, 1t).',
-    ],
-    visualModelDescription: "The Sorting Buckets Model: Set up distinct labeled Bucket Bins. For each word, compute its 26-character frequency signature (DNA Fingerprint). Drop the word into its designated Bucket. Return all bucket contents.",
-    defaultInput: { strs: 'eat, tea, tan, ate, nat, bat' },
-    inputSchema: [
-      { key: 'strs', label: 'Strings (comma-separated)', type: 'string', placeholder: 'eat, tea, tan, ate, nat, bat' },
-    ],
-    codeSnippets: {
-      python: `from collections import defaultdict
-
-class Solution:
-    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
-        res = defaultdict(list)  # Key: char count tuple -> list of anagrams
-        for s in strs:
-            count = [0] * 26
-            for char in s:
-                count[ord(char) - ord('a')] += 1
-            res[tuple(count)].append(s)
-        return list(res.values())`,
-      cpp: `class Solution {
-public:
-    vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        unordered_map<string, vector<string>> res;
-        for (const string& s : strs) {
-            vector<int> count(26, 0);
-            for (char c : s) count[c - 'a']++;
-            string key = "";
-            for (int i = 0; i < 26; i++) {
-                if (count[i] > 0) key += to_string(count[i]) + (char)('a' + i);
-            }
-            res[key].push_back(s);
-        }
-        vector<vector<string>> result;
-        for (auto& pair : res) result.push_back(pair.second);
-        return result;
-    }
-};`,
-      javascript: `var groupAnagrams = function(strs) {
-    const res = {};
-    for (const s of strs) {
-        const count = new Array(26).fill(0);
-        for (const char of s) {
-            count[char.charCodeAt(0) - 97]++;
-        }
-        const key = count.join('#');
-        if (!res[key]) res[key] = [];
-        res[key].push(s);
-    }
-    return Object.values(res);
-};`,
-      java: `class Solution {
-    public List<List<String>> groupAnagrams(String[] strs) {
-        Map<String, List<String>> res = new HashMap<>();
-        for (String s : strs) {
-            int[] count = new int[26];
-            for (char c : s.toCharArray()) count[c - 'a']++;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 26; i++) {
-                if (count[i] > 0) sb.append((char)('a' + i)).append(count[i]);
-            }
-            String key = sb.toString();
-            res.putIfAbsent(key, new ArrayList<>());
-            res.get(key).add(s);
-        }
-        return new ArrayList<>(res.values());
-    }
-}`,
-    },
-    generateSteps: (inputs) => {
-      const rawStrs = String(inputs.strs ?? 'eat, tea, tan, ate, nat, bat')
-        .split(',')
-        .map((s) => s.trim().toLowerCase())
-        .filter((s) => s.length > 0);
-      const strs = rawStrs.length > 0 ? rawStrs : ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'];
-      const steps: VisualizerStep[] = [];
-      const buckets: Record<string, string[]> = {};
-
-      // Step 1: Entry & init
-      steps.push({
-        lineNumber: 5,
-        explanation: `Initialize empty hash map buckets res = defaultdict(list) for ${strs.length} words.`,
-        variables: { strs: JSON.stringify(strs), buckets: '{}' },
-        phase: 'init',
-        buckets: {},
-      });
-
-      for (let i = 0; i < strs.length; i++) {
-        const word = strs[i];
-        const count = new Array(26).fill(0);
-        for (let c = 0; c < word.length; c++) {
-          const code = word.charCodeAt(c) - 97;
-          if (code >= 0 && code < 26) count[code]++;
-        }
-
-        const activeCharsList = count
-          .map((cnt, idx) => (cnt > 0 ? `${cnt}${String.fromCharCode(97 + idx)}` : ''))
-          .filter(Boolean)
-          .join('-');
-        const fingerprintKey = activeCharsList || 'empty';
-
-        // Step 2: Inspect word
-        steps.push({
-          lineNumber: 6,
-          explanation: `[Word ${i + 1}/${strs.length}] Inspecting word "${word}". Computing 26-char frequency array...`,
-          variables: { word: `"${word}"`, index: i },
-          phase: 'inspect',
-          currentWord: word,
-          currentWordIndex: i,
-          currentCharCounts: [...count],
-          charFingerprint: fingerprintKey,
-          buckets: JSON.parse(JSON.stringify(buckets)),
-        });
-
-        // Step 3: Fingerprint computed
-        steps.push({
-          lineNumber: 9,
-          explanation: `Character frequency for "${word}": (${activeCharsList.replace(/-/g, ', ')}). Canonical Bucket Key = [${fingerprintKey}].`,
-          variables: { word: `"${word}"`, fingerprintKey },
-          phase: 'inspect',
-          currentWord: word,
-          currentWordIndex: i,
-          currentCharCounts: [...count],
-          charFingerprint: fingerprintKey,
-          activeBucketKey: fingerprintKey,
-          buckets: JSON.parse(JSON.stringify(buckets)),
-        });
-
-        // Step 4: Drop into bucket
-        if (!buckets[fingerprintKey]) {
-          buckets[fingerprintKey] = [];
-        }
-        buckets[fingerprintKey].push(word);
-
-        steps.push({
-          lineNumber: 10,
-          explanation: `📥 Dropping "${word}" into Bucket [${fingerprintKey}]. Bucket now contains: [${buckets[fingerprintKey].join(', ')}].`,
-          variables: { activeBucket: fingerprintKey, bucketItems: JSON.stringify(buckets[fingerprintKey]) },
-          phase: 'bucket',
-          currentWord: word,
-          currentWordIndex: i,
-          currentCharCounts: [...count],
-          charFingerprint: fingerprintKey,
-          activeBucketKey: fingerprintKey,
-          buckets: JSON.parse(JSON.stringify(buckets)),
-        });
-      }
-
-      // Step Final: Return all buckets
-      steps.push({
-        lineNumber: 11,
-        explanation: `All ${strs.length} words sorted into ${Object.keys(buckets).length} distinct anagram buckets! Return list(res.values()). 🎉`,
-        variables: { result: JSON.stringify(Object.values(buckets)) },
-        phase: 'finish',
-        buckets: JSON.parse(JSON.stringify(buckets)),
-      });
-
-      return { steps, result: Object.values(buckets) };
-    },
-  },
 ];
 
 interface LearningVisualizerScreenProps {
@@ -1018,6 +845,50 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
         <div className="flex-1 min-h-0 grid grid-cols-12 gap-2.5 animate-in fade-in duration-150">
           {/* LEFT PANE: Visualizer Graphic Canvas & Current Action Pill (7 Cols) */}
           <div className="col-span-12 lg:col-span-7 h-full flex flex-col gap-2 min-h-0">
+            {/* ================= TEST YOUR OWN EXAMPLE LIVE INPUT BAR ================= */}
+            <div className="shrink-0 bg-[#0e1319]/95 border border-slate-800/90 rounded-xl px-3 py-1.5 flex flex-wrap items-center justify-between gap-2.5 shadow-md">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-extrabold text-amber-400 shrink-0">
+                <Sliders className="w-3.5 h-3.5 text-amber-400" />
+                <span className="hidden sm:inline">Try Your Own Example:</span>
+                <span className="sm:hidden">Inputs:</span>
+              </div>
+
+              {/* Dynamic Input Fields for the Current Problem */}
+              <div className="flex items-center gap-2.5 flex-wrap flex-1 min-w-0">
+                {currentProblem.inputSchema.map((field) => (
+                  <div key={field.key} className="flex items-center gap-1.5 text-xs font-mono min-w-0 flex-1 sm:flex-initial">
+                    <label className="text-slate-400 font-bold text-[11px] whitespace-nowrap">{field.label}:</label>
+                    <input
+                      type={field.type === 'number' ? 'number' : 'text'}
+                      value={problemInputs[field.key] ?? ''}
+                      onChange={(e) => {
+                        const val = field.type === 'number' ? (parseFloat(e.target.value) || 0) : e.target.value;
+                        setProblemInputs((prev) => ({ ...prev, [field.key]: val }));
+                        setCurrentStepIndex(0);
+                        setIsPlaying(false);
+                      }}
+                      placeholder={field.placeholder}
+                      className="bg-[#141c26] border border-slate-700/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 rounded-lg px-2.5 py-0.5 text-xs text-white font-mono font-bold focus:outline-hidden shadow-inner w-full sm:w-auto sm:min-w-[120px]"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Reset to Default Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  setProblemInputs(currentProblem.defaultInput);
+                  setCurrentStepIndex(0);
+                  setIsPlaying(false);
+                }}
+                className="px-2.5 py-0.5 rounded-lg text-[10px] font-mono font-bold text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 transition cursor-pointer shrink-0"
+                title="Reset to default example"
+              >
+                Reset Default
+              </button>
+            </div>
+
             {/* Action Explanation Capsule */}
             <div className="shrink-0 bg-[#0e1319]/90 border border-slate-800 rounded-xl px-3.5 py-1.5 flex items-center justify-between gap-2 shadow-md">
               <div className="flex items-center gap-2 min-w-0">
@@ -1420,145 +1291,6 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                               <span className="text-xs font-black px-2 py-0.5 rounded-md bg-slate-800 text-emerald-300 border border-slate-700">
                                 idx {idxVal}
                               </span>
-                            </div>
-                          );
-                        });
-                      })()}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* ================= GROUP ANAGRAMS: THE SORTING BUCKETS VISUAL MODEL ================= */}
-              {selectedProblemId === 'group-anagrams' && (
-                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3 overflow-y-auto">
-                  {/* Words Conveyor Belt */}
-                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-3.5 space-y-2 shadow-lg">
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-1.5">
-                      <span className="font-extrabold text-white flex items-center gap-1.5">
-                        <Sparkles className="w-4 h-4 text-emerald-400" />
-                        Input Words Stream (strs)
-                      </span>
-                      {currentStep?.currentWord && (
-                        <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
-                          Processing: "{currentStep.currentWord}"
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2 flex-wrap justify-center py-1">
-                      {(() => {
-                        const raw = String(problemInputs.strs || 'eat, tea, tan, ate, nat, bat').split(',').map((s) => s.trim().toLowerCase()).filter((s) => s.length > 0);
-                        const strs = raw.length > 0 ? raw : ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'];
-                        const activeIdx = currentStep?.currentWordIndex;
-
-                        return strs.map((w, idx) => {
-                          const isCurrent = activeIdx === idx;
-                          const isProcessed = activeIdx !== undefined && idx < activeIdx;
-
-                          return (
-                            <div
-                              key={idx}
-                              className={`px-3 py-1.5 rounded-xl font-mono text-xs sm:text-sm font-black transition-all duration-200 shadow-md ${
-                                isCurrent
-                                  ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 scale-110 ring-4 ring-emerald-400/40 shadow-lg shadow-emerald-500/30'
-                                  : isProcessed
-                                  ? 'bg-[#141c26] text-slate-400 border border-slate-800'
-                                  : 'bg-[#141c26] text-white border border-slate-700'
-                              }`}
-                            >
-                              {w}
-                            </div>
-                          );
-                        });
-                      })()}
-                    </div>
-                  </div>
-
-                  {/* Character Frequency DNA Fingerprint Decoder */}
-                  {currentStep?.charFingerprint && (
-                    <div className="w-full max-w-2xl bg-[#141c26] border-2 border-emerald-500/40 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 shadow-md">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-mono font-bold text-slate-400">Current Word:</span>
-                        <span className="font-mono font-black text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-lg border border-emerald-500/30 text-sm">
-                          "{currentStep.currentWord}"
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-2 font-mono text-xs">
-                        <span className="text-slate-400">DNA Fingerprint:</span>
-                        <span className="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded-lg font-black tracking-wider">
-                          [{currentStep.charFingerprint}]
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* THE SORTING BUCKETS (BINS) */}
-                  <div className="w-full max-w-2xl bg-[#11161f] border-2 border-slate-700/80 rounded-2xl p-4 space-y-3 shadow-xl">
-                    <div className="flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-700/80 pb-2">
-                      <span className="font-extrabold text-white flex items-center gap-2 text-sm">
-                        <Layers className="w-4 h-4 text-amber-400" />
-                        The Anagram Buckets (res[tuple(count)])
-                      </span>
-                      <span className="text-slate-400 font-bold text-xs bg-[#0b0f14] px-2.5 py-0.5 rounded-lg border border-slate-800">
-                        {Object.keys(currentStep?.buckets || {}).length} Buckets Active
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 min-h-[120px]">
-                      {(() => {
-                        const buckets = currentStep?.buckets || {};
-                        const bucketKeys = Object.keys(buckets);
-                        if (bucketKeys.length === 0) {
-                          return (
-                            <div className="col-span-full flex items-center justify-center text-xs text-slate-500 font-mono py-8 font-bold">
-                              (Buckets are empty — words will drop in as character signatures match)
-                            </div>
-                          );
-                        }
-
-                        const BUCKET_COLORS = [
-                          { border: 'border-emerald-500/70', bg: 'bg-emerald-950/20', text: 'text-emerald-300', badge: 'bg-emerald-500 text-slate-950' },
-                          { border: 'border-cyan-500/70', bg: 'bg-cyan-950/20', text: 'text-cyan-300', badge: 'bg-cyan-500 text-slate-950' },
-                          { border: 'border-amber-500/70', bg: 'bg-amber-950/20', text: 'text-amber-300', badge: 'bg-amber-500 text-slate-950' },
-                          { border: 'border-purple-500/70', bg: 'bg-purple-950/20', text: 'text-purple-300', badge: 'bg-purple-500 text-slate-950' },
-                          { border: 'border-rose-500/70', bg: 'bg-rose-950/20', text: 'text-rose-300', badge: 'bg-rose-500 text-slate-950' },
-                        ];
-
-                        return bucketKeys.map((key, bIdx) => {
-                          const items = buckets[key];
-                          const color = BUCKET_COLORS[bIdx % BUCKET_COLORS.length];
-                          const isActiveBucket = currentStep?.activeBucketKey === key;
-
-                          return (
-                            <div
-                              key={key}
-                              className={`p-3 rounded-2xl border-2 flex flex-col justify-between transition-all duration-200 shadow-md ${color.bg} ${color.border} ${
-                                isActiveBucket ? 'ring-4 ring-emerald-400/40 scale-103 shadow-lg shadow-emerald-500/20 animate-pulse' : ''
-                              }`}
-                            >
-                              {/* Bucket Header / Label */}
-                              <div className="flex items-center justify-between border-b border-slate-700/60 pb-1.5 mb-2 font-mono text-[11px]">
-                                <span className={`font-black truncate ${color.text}`} title={key}>
-                                  📦 Bucket [{key}]
-                                </span>
-                                <span className={`text-[10px] font-black px-2 py-0.2 rounded-full ${color.badge}`}>
-                                  {items.length}
-                                </span>
-                              </div>
-
-                              {/* Words dropped inside bucket */}
-                              <div className="flex items-center gap-1.5 flex-wrap min-h-[36px] bg-[#0b0f14]/80 p-2 rounded-xl border border-slate-800">
-                                {items.map((w, wIdx) => (
-                                  <span
-                                    key={wIdx}
-                                    className="px-2.5 py-0.5 rounded-lg bg-slate-800 text-white font-mono font-bold text-xs border border-slate-700 shadow-xs"
-                                  >
-                                    {w}
-                                  </span>
-                                ))}
-                              </div>
                             </div>
                           );
                         });
