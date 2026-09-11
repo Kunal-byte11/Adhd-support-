@@ -41,7 +41,7 @@ export interface VisualizerStep {
   lineNumber: number;
   explanation: string;
   variables: Record<string, any>;
-  phase?: 'init' | 'deposit' | 'withdraw' | 'finish' | 'compare' | 'swap' | 'sorted';
+  phase?: 'init' | 'deposit' | 'withdraw' | 'finish' | 'compare' | 'swap' | 'sorted' | 'inspect' | 'match' | 'insert' | 'bucket';
   activeChar?: string;
   activeString?: 's' | 't';
   activeCharIndex?: number;
@@ -53,6 +53,19 @@ export interface VisualizerStep {
   comparingIndices?: number[];
   swappedIndices?: number[];
   sortedIndices?: number[];
+  // For Two Sum
+  currentIndex?: number;
+  currentNum?: number;
+  diff?: number;
+  prevMap?: Record<string | number, number>;
+  matchedIndices?: [number, number];
+  // For Group Anagrams (Buckets)
+  currentWord?: string;
+  currentWordIndex?: number;
+  currentCharCounts?: number[];
+  charFingerprint?: string;
+  buckets?: Record<string, string[]>;
+  activeBucketKey?: string;
 }
 
 export interface ProblemDefinition {
@@ -323,7 +336,340 @@ public:
 
       return { steps, result: true };
     },
-  }
+  },
+  {
+    id: 'two-sum',
+    title: 'Two Sum',
+    subtitle: 'LeetCode 1 • NeetCode 150 #3',
+    category: 'Arrays & Pointers',
+    difficulty: 'Easy',
+    description: "Given an array 'nums' and an integer 'target', find the INDICES of the two numbers that add up to 'target'. (Assume exactly one valid answer exists).",
+    timeComplexity: 'O(N) — Single pass through array with O(1) instant hash map lookup',
+    spaceComplexity: 'O(N) — prevMap hash map stores up to N seen numbers',
+    mentalTrigger: 'Finding a pair that sums to target / needing index lookup -> USE A HASH MAP (dict).',
+    interviewFlex: '"I used a One-Pass Hash Map to achieve O(N) linear time by trading space. The Brute Force approach checks all pairs using two nested loops, which takes O(1) space but is slow at O(N^2) time. Note: We cannot just sort the array first because sorting scrambles the original indices that we are required to return!"',
+    edgeCases: [
+      'Target with identical numbers (e.g. nums=[3, 3], target=6) -> First 3 stored at index 0, second 3 at index 1 finds 3 in map -> returns [0, 1].',
+      'Negative numbers in array -> Subtraction diff = target - n works seamlessly.',
+      'Target is zero or negative -> Fully handled by algebraic diff.',
+    ],
+    visualModelDescription: "The Wanted Poster / Lock & Key Model: For each card 'n' at index 'i', calculate wanted partner diff = target - n. Check notepad (prevMap): 'Did I see diff earlier?' If YES -> Return [prevMap[diff], i] (BINGO!). If NO -> Write down (n : i) on notepad and move to next card.",
+    defaultInput: { nums: '2, 7, 11, 15', target: 9 },
+    inputSchema: [
+      { key: 'nums', label: 'Array nums (comma-separated)', type: 'string', placeholder: '2, 7, 11, 15' },
+      { key: 'target', label: 'Target Sum', type: 'number', placeholder: '9' },
+    ],
+    codeSnippets: {
+      python: `class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        prevMap = {}  # Map: value -> index
+        for i, n in enumerate(nums):
+            diff = target - n
+            if diff in prevMap:
+                return [prevMap[diff], i]
+            prevMap[n] = i`,
+      cpp: `class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> prevMap;
+        for (int i = 0; i < nums.size(); i++) {
+            int diff = target - nums[i];
+            if (prevMap.find(diff) != prevMap.end()) {
+                return {prevMap[diff], i};
+            }
+            prevMap[nums[i]] = i;
+        }
+        return {};
+    }
+};`,
+      javascript: `var twoSum = function(nums, target) {
+    const prevMap = {};
+    for (let i = 0; i < nums.length; i++) {
+        const n = nums[i];
+        const diff = target - n;
+        if (diff in prevMap) {
+            return [prevMap[diff], i];
+        }
+        prevMap[n] = i;
+    }
+    return [];
+};`,
+      java: `class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> prevMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int diff = target - nums[i];
+            if (prevMap.containsKey(diff)) {
+                return new int[] { prevMap.get(diff), i };
+            }
+            prevMap.put(nums[i], i);
+        }
+        return new int[] {};
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawNums = String(inputs.nums ?? '2, 7, 11, 15')
+        .split(',')
+        .map((x) => parseInt(x.trim(), 10))
+        .filter((n) => !isNaN(n));
+      const nums = rawNums.length > 0 ? rawNums : [2, 7, 11, 15];
+      const target = parseInt(String(inputs.target ?? 9), 10);
+      const steps: VisualizerStep[] = [];
+      const prevMap: Record<string, number> = {};
+
+      // Step 1: Function entry
+      steps.push({
+        lineNumber: 2,
+        explanation: `Start twoSum with nums = [${nums.join(', ')}] and target = ${target}. Initialize empty notepad prevMap = {}.`,
+        variables: { nums: `[${nums.join(', ')}]`, target, prevMap: '{}' },
+        phase: 'init',
+        prevMap: { ...prevMap },
+      });
+
+      for (let i = 0; i < nums.length; i++) {
+        const n = nums[i];
+        const diff = target - n;
+
+        // Step 2: Loop iteration & diff calculation
+        steps.push({
+          lineNumber: 4,
+          explanation: `[Card ${i}] Looking at nums[${i}] = ${n}. Wanted partner: diff = target (${target}) - n (${n}) = ${diff}.`,
+          variables: { i, n, diff, prevMap: JSON.stringify(prevMap) },
+          phase: 'inspect',
+          currentIndex: i,
+          currentNum: n,
+          diff,
+          prevMap: { ...prevMap },
+        });
+
+        // Step 3: Hash Map Lookup
+        steps.push({
+          lineNumber: 5,
+          explanation: `Check Notepad: Did we already see partner ${diff} in prevMap?`,
+          variables: { diff, inPrevMap: diff in prevMap, prevMap: JSON.stringify(prevMap) },
+          phase: 'inspect',
+          currentIndex: i,
+          currentNum: n,
+          diff,
+          prevMap: { ...prevMap },
+        });
+
+        if (diff in prevMap) {
+          const partnerIdx = prevMap[diff];
+          // Step 4: Found Match!
+          steps.push({
+            lineNumber: 6,
+            explanation: `🎯 BINGO! Partner ${diff} was found in prevMap at index ${partnerIdx}! (${diff} + ${n} = ${target}). Return [${partnerIdx}, ${i}]!`,
+            variables: { result: `[${partnerIdx}, ${i}]`, sum: `${diff} + ${n} = ${target}` },
+            phase: 'match',
+            currentIndex: i,
+            currentNum: n,
+            diff,
+            matchedIndices: [partnerIdx, i],
+            prevMap: { ...prevMap },
+          });
+          return { steps, result: [partnerIdx, i] };
+        }
+
+        // Step 5: Insert into prevMap
+        prevMap[n] = i;
+        steps.push({
+          lineNumber: 8,
+          explanation: `Partner ${diff} not in prevMap yet. Write down (${n} : index ${i}) on notepad. Move to next card.`,
+          variables: { prevMap: JSON.stringify(prevMap) },
+          phase: 'insert',
+          currentIndex: i,
+          currentNum: n,
+          diff,
+          prevMap: { ...prevMap },
+        });
+      }
+
+      steps.push({
+        lineNumber: 8,
+        explanation: `No pair found that sums to ${target}. Return [].`,
+        variables: { result: '[]' },
+        phase: 'finish',
+        prevMap: { ...prevMap },
+      });
+
+      return { steps, result: [] };
+    },
+  },
+  {
+    id: 'group-anagrams',
+    title: 'Group Anagrams',
+    subtitle: 'LeetCode 49 • NeetCode 150 #4',
+    category: 'Stack & Hashing',
+    difficulty: 'Medium',
+    description: "Given an array of strings 'strs', group all the anagrams together into sorting buckets.",
+    timeComplexity: 'O(N * K) — N strings of max length K using 26-char frequency tuples',
+    spaceComplexity: 'O(N * K) — Hash map storing all strings partitioned into buckets',
+    mentalTrigger: 'Grouping items by common properties / patterns -> USE A HASH MAP with a CANONICAL KEY (Bucket Array).',
+    interviewFlex: '"I used a 26-element character frequency tuple as the hash map key to achieve optimal O(N * K) linear time. The simpler alternative is sorting each word (tuple(sorted(s))), which takes O(N * K log K) time. The count array approach avoids sorting entirely, making it strictly faster when strings are long!"',
+    edgeCases: [
+      'Empty string: strs = [""] -> Returns [[""]].',
+      'Single letter strings: strs = ["a"] -> Returns [["a"]].',
+      'Identical character counts with different orders: "eat", "tea", "ate" -> Same bucket (1a, 1e, 1t).',
+    ],
+    visualModelDescription: "The Sorting Buckets Model: Set up distinct labeled Bucket Bins. For each word, compute its 26-character frequency signature (DNA Fingerprint). Drop the word into its designated Bucket. Return all bucket contents.",
+    defaultInput: { strs: 'eat, tea, tan, ate, nat, bat' },
+    inputSchema: [
+      { key: 'strs', label: 'Strings (comma-separated)', type: 'string', placeholder: 'eat, tea, tan, ate, nat, bat' },
+    ],
+    codeSnippets: {
+      python: `from collections import defaultdict
+
+class Solution:
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+        res = defaultdict(list)  # Key: char count tuple -> list of anagrams
+        for s in strs:
+            count = [0] * 26
+            for char in s:
+                count[ord(char) - ord('a')] += 1
+            res[tuple(count)].append(s)
+        return list(res.values())`,
+      cpp: `class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> res;
+        for (const string& s : strs) {
+            vector<int> count(26, 0);
+            for (char c : s) count[c - 'a']++;
+            string key = "";
+            for (int i = 0; i < 26; i++) {
+                if (count[i] > 0) key += to_string(count[i]) + (char)('a' + i);
+            }
+            res[key].push_back(s);
+        }
+        vector<vector<string>> result;
+        for (auto& pair : res) result.push_back(pair.second);
+        return result;
+    }
+};`,
+      javascript: `var groupAnagrams = function(strs) {
+    const res = {};
+    for (const s of strs) {
+        const count = new Array(26).fill(0);
+        for (const char of s) {
+            count[char.charCodeAt(0) - 97]++;
+        }
+        const key = count.join('#');
+        if (!res[key]) res[key] = [];
+        res[key].push(s);
+    }
+    return Object.values(res);
+};`,
+      java: `class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> res = new HashMap<>();
+        for (String s : strs) {
+            int[] count = new int[26];
+            for (char c : s.toCharArray()) count[c - 'a']++;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 26; i++) {
+                if (count[i] > 0) sb.append((char)('a' + i)).append(count[i]);
+            }
+            String key = sb.toString();
+            res.putIfAbsent(key, new ArrayList<>());
+            res.get(key).add(s);
+        }
+        return new ArrayList<>(res.values());
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawStrs = String(inputs.strs ?? 'eat, tea, tan, ate, nat, bat')
+        .split(',')
+        .map((s) => s.trim().toLowerCase())
+        .filter((s) => s.length > 0);
+      const strs = rawStrs.length > 0 ? rawStrs : ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'];
+      const steps: VisualizerStep[] = [];
+      const buckets: Record<string, string[]> = {};
+
+      // Step 1: Entry & init
+      steps.push({
+        lineNumber: 5,
+        explanation: `Initialize empty hash map buckets res = defaultdict(list) for ${strs.length} words.`,
+        variables: { strs: JSON.stringify(strs), buckets: '{}' },
+        phase: 'init',
+        buckets: {},
+      });
+
+      for (let i = 0; i < strs.length; i++) {
+        const word = strs[i];
+        const count = new Array(26).fill(0);
+        for (let c = 0; c < word.length; c++) {
+          const code = word.charCodeAt(c) - 97;
+          if (code >= 0 && code < 26) count[code]++;
+        }
+
+        const activeCharsList = count
+          .map((cnt, idx) => (cnt > 0 ? `${cnt}${String.fromCharCode(97 + idx)}` : ''))
+          .filter(Boolean)
+          .join('-');
+        const fingerprintKey = activeCharsList || 'empty';
+
+        // Step 2: Inspect word
+        steps.push({
+          lineNumber: 6,
+          explanation: `[Word ${i + 1}/${strs.length}] Inspecting word "${word}". Computing 26-char frequency array...`,
+          variables: { word: `"${word}"`, index: i },
+          phase: 'inspect',
+          currentWord: word,
+          currentWordIndex: i,
+          currentCharCounts: [...count],
+          charFingerprint: fingerprintKey,
+          buckets: JSON.parse(JSON.stringify(buckets)),
+        });
+
+        // Step 3: Fingerprint computed
+        steps.push({
+          lineNumber: 9,
+          explanation: `Character frequency for "${word}": (${activeCharsList.replace(/-/g, ', ')}). Canonical Bucket Key = [${fingerprintKey}].`,
+          variables: { word: `"${word}"`, fingerprintKey },
+          phase: 'inspect',
+          currentWord: word,
+          currentWordIndex: i,
+          currentCharCounts: [...count],
+          charFingerprint: fingerprintKey,
+          activeBucketKey: fingerprintKey,
+          buckets: JSON.parse(JSON.stringify(buckets)),
+        });
+
+        // Step 4: Drop into bucket
+        if (!buckets[fingerprintKey]) {
+          buckets[fingerprintKey] = [];
+        }
+        buckets[fingerprintKey].push(word);
+
+        steps.push({
+          lineNumber: 10,
+          explanation: `📥 Dropping "${word}" into Bucket [${fingerprintKey}]. Bucket now contains: [${buckets[fingerprintKey].join(', ')}].`,
+          variables: { activeBucket: fingerprintKey, bucketItems: JSON.stringify(buckets[fingerprintKey]) },
+          phase: 'bucket',
+          currentWord: word,
+          currentWordIndex: i,
+          currentCharCounts: [...count],
+          charFingerprint: fingerprintKey,
+          activeBucketKey: fingerprintKey,
+          buckets: JSON.parse(JSON.stringify(buckets)),
+        });
+      }
+
+      // Step Final: Return all buckets
+      steps.push({
+        lineNumber: 11,
+        explanation: `All ${strs.length} words sorted into ${Object.keys(buckets).length} distinct anagram buckets! Return list(res.values()). 🎉`,
+        variables: { result: JSON.stringify(Object.values(buckets)) },
+        phase: 'finish',
+        buckets: JSON.parse(JSON.stringify(buckets)),
+      });
+
+      return { steps, result: Object.values(buckets) };
+    },
+  },
 ];
 
 interface LearningVisualizerScreenProps {
@@ -943,56 +1289,281 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                 </div>
               )}
 
-              {/* ================= ARRAY & POINTER VISUALIZERS ================= */}
-              {(selectedProblemId === 'two-sum' || selectedProblemId === 'binary-search' || selectedProblemId === 'reverse-array') && (
-                <div className="flex flex-col items-center justify-center w-full h-full space-y-5">
-                  <div className="flex items-center gap-3 flex-wrap justify-center max-w-full overflow-x-auto p-2">
-                    {(() => {
-                      let rawArr: number[] = [];
-                      if (selectedProblemId === 'two-sum') {
-                        rawArr = (problemInputs.nums || '2, 7, 11, 15').split(',').map((s: string) => parseInt(s.trim(), 10)).filter((n: number) => !isNaN(n));
-                      } else if (selectedProblemId === 'binary-search') {
-                        rawArr = (problemInputs.nums || '1, 3, 5, 7, 9, 11, 13, 15').split(',').map((s: string) => parseInt(s.trim(), 10)).filter((n: number) => !isNaN(n)).sort((a: number, b: number) => a - b);
-                      } else {
-                        const stepArrStr = currentStep?.variables?.arr;
-                        if (stepArrStr && typeof stepArrStr === 'string' && stepArrStr.startsWith('[')) {
-                          rawArr = stepArrStr.replace(/[\[\]]/g, '').split(',').map((s) => parseInt(s.trim(), 10)).filter((n) => !isNaN(n));
-                        } else {
-                          rawArr = (problemInputs.arr || '10, 20, 30, 40, 50, 60').split(',').map((s: string) => parseInt(s.trim(), 10)).filter((n) => !isNaN(n));
-                        }
-                      }
+              {/* ================= TWO SUM: THE WANTED POSTER / LOCK & KEY VISUAL MODEL ================= */}
+              {selectedProblemId === 'two-sum' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
+                  {/* Target & Active Math Equation Card */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-bold text-slate-400 uppercase">Target Sum:</span>
+                      <span className="px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-black text-sm sm:text-base">
+                        {problemInputs.target ?? 9}
+                      </span>
+                    </div>
 
-                      return rawArr.map((val, idx) => {
-                        const isHighlighted = currentStep?.highlightIndices?.includes(idx);
-                        const isMid = currentStep?.pointers?.mid === idx;
-                        const isLeft = currentStep?.pointers?.left === idx || currentStep?.pointers?.low === idx;
-                        const isRight = currentStep?.pointers?.right === idx || currentStep?.pointers?.high === idx;
-                        const isI = currentStep?.pointers?.i === idx;
+                    {currentStep?.currentNum !== undefined && (
+                      <div className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
+                        <span className="text-slate-400">Card [{currentStep.currentIndex}]:</span>
+                        <span className="text-white font-black">{currentStep.currentNum}</span>
+                        <span className="text-emerald-400 font-bold">→ Wanted diff:</span>
+                        <span className="text-emerald-300 font-black bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/40">
+                          {currentStep.diff}
+                        </span>
+                      </div>
+                    )}
 
-                        return (
-                          <div key={idx} className="flex flex-col items-center gap-1.5">
-                            <div className="h-5 flex items-center justify-center gap-1 text-[10px] font-mono font-bold">
-                              {isMid && <span className="text-amber-300 bg-amber-950/90 px-1.5 py-0.5 rounded border border-amber-500/50 font-black">mid</span>}
-                              {isLeft && <span className="text-sky-300 bg-sky-950/90 px-1.5 py-0.5 rounded border border-sky-500/50 font-black">L</span>}
-                              {isRight && <span className="text-rose-300 bg-rose-950/90 px-1.5 py-0.5 rounded border border-rose-500/50 font-black">R</span>}
-                              {isI && <span className="text-emerald-300 bg-emerald-950/90 px-1.5 py-0.5 rounded border border-emerald-500/50 font-black">i</span>}
+                    {currentStep?.matchedIndices && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-mono font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>MATCH FOUND!</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Array nums Cards with Pointer */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-emerald-400" />
+                        Array nums Cards
+                      </span>
+                      <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-md text-slate-400 font-mono">
+                        Pick one by one
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-wrap justify-center py-2">
+                      {(() => {
+                        const raw = String(problemInputs.nums || '2, 7, 11, 15').split(',').map((s) => parseInt(s.trim(), 10)).filter((n) => !isNaN(n));
+                        const nums = raw.length > 0 ? raw : [2, 7, 11, 15];
+                        const activeIdx = currentStep?.currentIndex;
+                        const matched = currentStep?.matchedIndices;
+
+                        return nums.map((val, idx) => {
+                          const isCurrent = activeIdx === idx;
+                          const isMatched = matched?.includes(idx);
+
+                          return (
+                            <div key={idx} className="flex flex-col items-center gap-1.5">
+                              {/* Pointer indicator */}
+                              <div className="h-5 flex items-center justify-center">
+                                {isCurrent && (
+                                  <span className="text-amber-300 bg-amber-950/90 text-[10px] font-mono font-black px-1.5 py-0.5 rounded border border-amber-500/50 animate-bounce">
+                                    ↓ current
+                                  </span>
+                                )}
+                                {isMatched && !isCurrent && (
+                                  <span className="text-emerald-300 bg-emerald-950/90 text-[10px] font-mono font-black px-1.5 py-0.5 rounded border border-emerald-500/50">
+                                    ✓ partner
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Card Tile */}
+                              <div
+                                className={`w-13 h-13 sm:w-16 sm:h-16 rounded-2xl flex flex-col items-center justify-center font-mono font-black text-base sm:text-xl transition-all duration-200 shadow-md ${
+                                  isMatched
+                                    ? 'bg-gradient-to-br from-emerald-400 to-emerald-600 text-slate-950 scale-110 ring-4 ring-emerald-400/40 shadow-xl shadow-emerald-500/40 border-2 border-emerald-200 animate-pulse'
+                                    : isCurrent
+                                    ? 'bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 scale-110 ring-4 ring-amber-400/40 shadow-xl shadow-amber-500/40 border-2 border-amber-200'
+                                    : 'bg-[#141c26] border-2 border-slate-700 text-white'
+                                }`}
+                              >
+                                <span>{val}</span>
+                              </div>
+
+                              <span className="text-[10px] font-mono text-slate-400 font-bold">[{idx}]</span>
                             </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
 
+                  {/* The Notepad / Hash Map (prevMap) */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-700/80 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2 text-sm">
+                        <BookOpen className="w-4 h-4 text-amber-400" />
+                        The Notepad (prevMap: val → index)
+                      </span>
+                      <span className="text-slate-400 font-bold text-xs bg-[#0b0f14] px-2.5 py-0.5 rounded-lg border border-slate-800">
+                        O(1) Instant Lookup
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 flex-wrap min-h-[48px]">
+                      {(() => {
+                        const prevMap = currentStep?.prevMap || {};
+                        const keys = Object.keys(prevMap);
+                        if (keys.length === 0) {
+                          return <span className="text-xs text-slate-500 font-mono my-auto font-bold">(Notepad Empty — no numbers recorded yet)</span>;
+                        }
+                        return keys.map((numStr) => {
+                          const idxVal = prevMap[numStr];
+                          const isTargetDiff = currentStep?.diff !== undefined && String(currentStep.diff) === numStr;
+                          const isMatchedKey = currentStep?.matchedIndices && String(currentStep.diff) === numStr;
+
+                          return (
                             <div
-                              className={`w-13 h-13 sm:w-15 sm:h-15 rounded-2xl flex items-center justify-center font-mono font-black text-sm sm:text-lg transition-all duration-150 shadow-lg ${
-                                isHighlighted
-                                  ? 'bg-gradient-to-br from-emerald-400 to-emerald-500 text-slate-950 scale-110 ring-4 ring-emerald-300/50 font-black'
-                                  : 'bg-[#141c26] border-2 border-slate-700 text-slate-100'
+                              key={numStr}
+                              className={`px-3.5 py-2 rounded-xl border-2 flex items-center gap-2 font-mono text-sm sm:text-base font-bold transition-all shadow-md ${
+                                isMatchedKey
+                                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 ring-4 ring-emerald-400/40 scale-108 font-black shadow-lg shadow-emerald-500/30'
+                                  : isTargetDiff
+                                  ? 'bg-amber-500/25 border-amber-400 text-amber-300 ring-4 ring-amber-400/30 scale-108 font-black'
+                                  : 'bg-[#0b0f14] border-slate-700 text-slate-200'
                               }`}
                             >
-                              {val}
+                              <span className="font-black text-white text-base">{numStr}</span>
+                              <span className="text-slate-400 text-xs">→</span>
+                              <span className="text-xs font-black px-2 py-0.5 rounded-md bg-slate-800 text-emerald-300 border border-slate-700">
+                                idx {idxVal}
+                              </span>
                             </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              )}
 
-                            <span className="text-[10px] font-mono text-slate-500 font-bold">[{idx}]</span>
-                          </div>
-                        );
-                      });
-                    })()}
+              {/* ================= GROUP ANAGRAMS: THE SORTING BUCKETS VISUAL MODEL ================= */}
+              {selectedProblemId === 'group-anagrams' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3 overflow-y-auto">
+                  {/* Words Conveyor Belt */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-3.5 space-y-2 shadow-lg">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-1.5">
+                      <span className="font-extrabold text-white flex items-center gap-1.5">
+                        <Sparkles className="w-4 h-4 text-emerald-400" />
+                        Input Words Stream (strs)
+                      </span>
+                      {currentStep?.currentWord && (
+                        <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
+                          Processing: "{currentStep.currentWord}"
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-wrap justify-center py-1">
+                      {(() => {
+                        const raw = String(problemInputs.strs || 'eat, tea, tan, ate, nat, bat').split(',').map((s) => s.trim().toLowerCase()).filter((s) => s.length > 0);
+                        const strs = raw.length > 0 ? raw : ['eat', 'tea', 'tan', 'ate', 'nat', 'bat'];
+                        const activeIdx = currentStep?.currentWordIndex;
+
+                        return strs.map((w, idx) => {
+                          const isCurrent = activeIdx === idx;
+                          const isProcessed = activeIdx !== undefined && idx < activeIdx;
+
+                          return (
+                            <div
+                              key={idx}
+                              className={`px-3 py-1.5 rounded-xl font-mono text-xs sm:text-sm font-black transition-all duration-200 shadow-md ${
+                                isCurrent
+                                  ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 scale-110 ring-4 ring-emerald-400/40 shadow-lg shadow-emerald-500/30'
+                                  : isProcessed
+                                  ? 'bg-[#141c26] text-slate-400 border border-slate-800'
+                                  : 'bg-[#141c26] text-white border border-slate-700'
+                              }`}
+                            >
+                              {w}
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Character Frequency DNA Fingerprint Decoder */}
+                  {currentStep?.charFingerprint && (
+                    <div className="w-full max-w-2xl bg-[#141c26] border-2 border-emerald-500/40 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-2 shadow-md">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-mono font-bold text-slate-400">Current Word:</span>
+                        <span className="font-mono font-black text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-lg border border-emerald-500/30 text-sm">
+                          "{currentStep.currentWord}"
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 font-mono text-xs">
+                        <span className="text-slate-400">DNA Fingerprint:</span>
+                        <span className="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded-lg font-black tracking-wider">
+                          [{currentStep.charFingerprint}]
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* THE SORTING BUCKETS (BINS) */}
+                  <div className="w-full max-w-2xl bg-[#11161f] border-2 border-slate-700/80 rounded-2xl p-4 space-y-3 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-700/80 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2 text-sm">
+                        <Layers className="w-4 h-4 text-amber-400" />
+                        The Anagram Buckets (res[tuple(count)])
+                      </span>
+                      <span className="text-slate-400 font-bold text-xs bg-[#0b0f14] px-2.5 py-0.5 rounded-lg border border-slate-800">
+                        {Object.keys(currentStep?.buckets || {}).length} Buckets Active
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 min-h-[120px]">
+                      {(() => {
+                        const buckets = currentStep?.buckets || {};
+                        const bucketKeys = Object.keys(buckets);
+                        if (bucketKeys.length === 0) {
+                          return (
+                            <div className="col-span-full flex items-center justify-center text-xs text-slate-500 font-mono py-8 font-bold">
+                              (Buckets are empty — words will drop in as character signatures match)
+                            </div>
+                          );
+                        }
+
+                        const BUCKET_COLORS = [
+                          { border: 'border-emerald-500/70', bg: 'bg-emerald-950/20', text: 'text-emerald-300', badge: 'bg-emerald-500 text-slate-950' },
+                          { border: 'border-cyan-500/70', bg: 'bg-cyan-950/20', text: 'text-cyan-300', badge: 'bg-cyan-500 text-slate-950' },
+                          { border: 'border-amber-500/70', bg: 'bg-amber-950/20', text: 'text-amber-300', badge: 'bg-amber-500 text-slate-950' },
+                          { border: 'border-purple-500/70', bg: 'bg-purple-950/20', text: 'text-purple-300', badge: 'bg-purple-500 text-slate-950' },
+                          { border: 'border-rose-500/70', bg: 'bg-rose-950/20', text: 'text-rose-300', badge: 'bg-rose-500 text-slate-950' },
+                        ];
+
+                        return bucketKeys.map((key, bIdx) => {
+                          const items = buckets[key];
+                          const color = BUCKET_COLORS[bIdx % BUCKET_COLORS.length];
+                          const isActiveBucket = currentStep?.activeBucketKey === key;
+
+                          return (
+                            <div
+                              key={key}
+                              className={`p-3 rounded-2xl border-2 flex flex-col justify-between transition-all duration-200 shadow-md ${color.bg} ${color.border} ${
+                                isActiveBucket ? 'ring-4 ring-emerald-400/40 scale-103 shadow-lg shadow-emerald-500/20 animate-pulse' : ''
+                              }`}
+                            >
+                              {/* Bucket Header / Label */}
+                              <div className="flex items-center justify-between border-b border-slate-700/60 pb-1.5 mb-2 font-mono text-[11px]">
+                                <span className={`font-black truncate ${color.text}`} title={key}>
+                                  📦 Bucket [{key}]
+                                </span>
+                                <span className={`text-[10px] font-black px-2 py-0.2 rounded-full ${color.badge}`}>
+                                  {items.length}
+                                </span>
+                              </div>
+
+                              {/* Words dropped inside bucket */}
+                              <div className="flex items-center gap-1.5 flex-wrap min-h-[36px] bg-[#0b0f14]/80 p-2 rounded-xl border border-slate-800">
+                                {items.map((w, wIdx) => (
+                                  <span
+                                    key={wIdx}
+                                    className="px-2.5 py-0.5 rounded-lg bg-slate-800 text-white font-mono font-bold text-xs border border-slate-700 shadow-xs"
+                                  >
+                                    {w}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1240,18 +1811,12 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                 onClick={() => {
                   if (customQuestionText.trim()) {
                     const lower = customQuestionText.toLowerCase();
-                    if (lower.includes('anagram')) {
-                      setSelectedProblemId('valid-anagram');
-                    } else if (lower.includes('bubble') || lower.includes('sort')) {
-                      setSelectedProblemId('bubble-sort');
-                    } else if (lower.includes('factor')) {
-                      setSelectedProblemId('factorial');
-                    } else if (lower.includes('two sum') || lower.includes('pair')) {
+                    if (lower.includes('group') || lower.includes('bucket')) {
+                      setSelectedProblemId('group-anagrams');
+                    } else if (lower.includes('two sum') || lower.includes('pair') || lower.includes('target')) {
                       setSelectedProblemId('two-sum');
-                    } else if (lower.includes('binary') || lower.includes('search')) {
-                      setSelectedProblemId('binary-search');
-                    } else if (lower.includes('revers')) {
-                      setSelectedProblemId('reverse-array');
+                    } else if (lower.includes('anagram') || lower.includes('bank')) {
+                      setSelectedProblemId('valid-anagram');
                     }
                     setShowCustomModal(false);
                   }
