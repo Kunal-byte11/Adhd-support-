@@ -121,53 +121,53 @@ export const PROBLEMS_DATA: ProblemDefinition[] = [
     codeSnippets: {
       python: `class Solution:
     def hasDuplicate(self, nums: list[int]) -> bool:
-        seen = set()
+        seen = set()  # 1. Blank notepad to record seen numbers
 
-        for num in nums:
-            if num in seen:
-                return True
-            seen.add(num)
+        for num in nums:  # 2. Flip cards one by one
+            if num in seen:  # 3. Check if card was seen on notepad
+                return True  # 4. Duplicate found! Return True
+            seen.add(num)  # 5. Not seen yet -> write down on notepad
 
-        return False`,
+        return False  # 6. All cards unique -> return False`,
       cpp: `class Solution {
 public:
     bool hasDuplicate(vector<int>& nums) {
-        unordered_set<int> seen;
+        unordered_set<int> seen;  // 1. Blank notepad for seen numbers
 
-        for (int num : nums) {
-            if (seen.find(num) != seen.end()) {
-                return true;
+        for (int num : nums) {  // 2. Inspect each number
+            if (seen.find(num) != seen.end()) {  // 3. Check if already recorded
+                return true;  // 4. Duplicate found! Return true
             }
-            seen.insert(num);
+            seen.insert(num);  // 5. Record on notepad
         }
 
-        return false;
+        return false;  // 6. All numbers distinct
     }
 };`,
       javascript: `var hasDuplicate = function(nums) {
-    const seen = new Set();
+    const seen = new Set();  // 1. Blank notepad for seen numbers
 
-    for (const num of nums) {
-        if (seen.has(num)) {
-            return true;
+    for (const num of nums) {  // 2. Inspect each number
+        if (seen.has(num)) {  // 3. Check if already recorded
+            return true;  // 4. Duplicate found! Return true
         }
-        seen.add(num);
+        seen.add(num);  // 5. Record on notepad
     }
 
-    return false;
+    return false;  // 6. All numbers distinct
 };`,
       java: `class Solution {
     public boolean hasDuplicate(int[] nums) {
-        Set<Integer> seen = new HashSet<>();
+        Set<Integer> seen = new HashSet<>();  // 1. Blank notepad
 
-        for (int num : nums) {
-            if (seen.contains(num)) {
-                return true;
+        for (int num : nums) {  // 2. Inspect each number
+            if (seen.contains(num)) {  // 3. Check if already recorded
+                return true;  // 4. Duplicate found! Return true
             }
-            seen.add(num);
+            seen.add(num);  // 5. Record on notepad
         }
 
-        return false;
+        return false;  // 6. All numbers distinct
     }
 }`,
     },
@@ -182,7 +182,7 @@ public:
 
       // Step 1: Function entry / initialization
       steps.push({
-        lineNumber: 2,
+        lineNumber: 3,
         explanation: `Start hasDuplicate with nums = [${nums.join(', ')}]. Initialize blank notepad seen = set().`,
         variables: { nums: `[${nums.join(', ')}]`, seen: 'set()' },
         phase: 'init',
@@ -194,7 +194,7 @@ public:
 
         // Step 2: Looking at card
         steps.push({
-          lineNumber: 4,
+          lineNumber: 5,
           explanation: `[Card ${i}] Flipped over card nums[${i}] = ${num}.`,
           variables: { i, num, seen: `{${seenArr.join(', ')}}` },
           phase: 'inspect',
@@ -206,7 +206,7 @@ public:
         // Step 3: Check Notepad
         const alreadySeen = seenArr.includes(num);
         steps.push({
-          lineNumber: 5,
+          lineNumber: 6,
           explanation: `Check Notepad: Is ${num} already written on seen notepad?`,
           variables: { num, 'num in seen': alreadySeen, seen: `{${seenArr.join(', ')}}` },
           phase: 'inspect',
@@ -218,7 +218,7 @@ public:
         if (alreadySeen) {
           // Step 4: Duplicate Found!
           steps.push({
-            lineNumber: 6,
+            lineNumber: 7,
             explanation: `🎯 BINGO! Duplicate found! ${num} is already recorded on the notepad! Return True.`,
             variables: { num, result: true },
             phase: 'match',
@@ -234,7 +234,7 @@ public:
         // Step 5: Add to seen
         seenArr.push(num);
         steps.push({
-          lineNumber: 7,
+          lineNumber: 8,
           explanation: `${num} is not on the notepad yet. Write ${num} down on notepad (seen.add(${num})). Move to next card.`,
           variables: { num, seen: `{${seenArr.join(', ')}}` },
           phase: 'insert',
@@ -246,9 +246,9 @@ public:
 
       // Step Final: Complete without duplicates
       steps.push({
-        lineNumber: 9,
+        lineNumber: 10,
         explanation: `All ${nums.length} cards checked. No duplicates found on notepad! Return False.`,
-        variables: { result: false, finalSeen: `{${seenArr.join(', ')}}` },
+        variables: { result: false },
         phase: 'finish',
         seenSet: [...seenArr],
       });
@@ -281,108 +281,91 @@ public:
     codeSnippets: {
       python: `class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        # Edge Case: Length check
-        if len(s) != len(t):
-            return False
+        if len(s) != len(t):  # 1. Filter: check equal lengths
+            return False  # 2. Length mismatch -> impossible
 
-        count = {}
+        count = {}  # 3. Whiteboard to track letter balances
 
-        # Phase 1: Deposits from string s
-        for char in s:
+        for char in s:  # 4. Deposit Phase: +1 for each letter in s
             count[char] = count.get(char, 0) + 1
 
-        # Phase 2: Withdrawals from string t
-        for char in t:
+        for char in t:  # 5. Withdraw Phase: -1 for each letter in t
             if char not in count or count[char] == 0:
-                return False
-            count[char] -= 1
+                return False  # 6. Overdrawn / letter not in s
+            count[char] -= 1  # 7. Decrement balance
 
-        return True`,
+        return True  # 8. All balances hit zero -> valid anagram!`,
       cpp: `class Solution {
 public:
     bool isAnagram(string s, string t) {
-        if (s.length() != t.length()) return false;
+        if (s.length() != t.length()) return false;  # 1. Length check
 
-        unordered_map<char, int> count;
+        unordered_map<char, int> count;  # 2. Whiteboard balances
 
-        // Phase 1: Deposits from string s
-        for (char c : s) {
+        for (char c : s) {  # 3. Deposit Phase (+1)
             count[c]++;
         }
 
-        // Phase 2: Withdrawals from string t
-        for (char c : t) {
+        for (char c : t) {  # 4. Withdraw Phase (-1)
             if (count.find(c) == count.end() || count[c] == 0) {
-                return false;
+                return false;  # 5. Overdraft check
             }
             count[c]--;
         }
 
-        return true;
+        return true;  # 6. All balances balanced!
     }
 };`,
       javascript: `var isAnagram = function(s, t) {
-    if (s.length !== t.length) return false;
+    if (s.length !== t.length) return false;  # 1. Length check
 
-    const count = {};
+    const count = {};  # 2. Whiteboard balances
 
-    // Phase 1: Deposits from string s
-    for (let char of s) {
+    for (let char of s) {  # 3. Deposit Phase (+1)
         count[char] = (count[char] || 0) + 1;
     }
 
-    // Phase 2: Withdrawals from string t
-    for (let char of t) {
+    for (let char of t) {  # 4. Withdraw Phase (-1)
         if (!count[char]) {
-            return false;
+            return false;  # 5. Overdraft check
         }
         count[char]--;
     }
 
-    return true;
+    return true;  # 6. Valid anagram!
 };`,
       java: `class Solution {
     public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) return false;
+        if (s.length() != t.length()) return false;  # 1. Length check
 
-        Map<Character, Integer> count = new HashMap<>();
+        Map<Character, Integer> count = new HashMap<>();  # 2. Whiteboard
 
-        // Phase 1: Deposits from string s
-        for char c : s.toCharArray()) {
+        for (char c : s.toCharArray()) {  # 3. Deposit Phase (+1)
             count.put(c, count.getOrDefault(c, 0) + 1);
         }
 
-        // Phase 2: Withdrawals from string t
-        for (char c : t.toCharArray()) {
+        for (char c : t.toCharArray()) {  # 4. Withdraw Phase (-1)
             if (!count.containsKey(c) || count.get(c) == 0) {
-                return false;
+                return false;  # 5. Overdraft check
             }
             count.put(c, count.get(c) - 1);
         }
 
-        return true;
+        return true;  # 6. Valid anagram!
     }
 }`,
     },
     generateSteps: (inputs) => {
-      const s = String(inputs.s ?? 'anagram').trim().toLowerCase();
-      const t = String(inputs.t ?? 'nagaram').trim().toLowerCase();
+      const s = String(inputs.s ?? 'anagram').trim() || 'anagram';
+      const t = String(inputs.t ?? 'nagaram').trim() || 'nagaram';
       const steps: VisualizerStep[] = [];
+      const bankBalances: Record<string, number> = {};
 
-      // Step 1: Function entry
-      steps.push({
-        lineNumber: 2,
-        explanation: `Start isAnagram with s = "${s}" and t = "${t}".`,
-        variables: { s: `"${s}"`, t: `"${t}"`, 'len(s)': s.length, 'len(t)': t.length },
-        phase: 'init',
-        bankBalances: {},
-      });
-
-      // Step 2: Length check
+      // Step 1: Init & length check
       steps.push({
         lineNumber: 3,
-        explanation: `Check edge case: len(s) [${s.length}] != len(t) [${t.length}].`,
-        variables: { 'len(s)': s.length, 'len(t)': t.length, match: s.length === t.length },
+        explanation: `Start isAnagram: Comparing "${s}" (len ${s.length}) vs "${t}" (len ${t.length}).`,
+        variables: { s, t, lenS: s.length, lenT: t.length },
         phase: 'init',
         bankBalances: {},
       });
@@ -390,112 +373,90 @@ public:
       if (s.length !== t.length) {
         steps.push({
           lineNumber: 4,
-          explanation: `Length mismatch (${s.length} != ${t.length})! Impossible to be an anagram. Return False immediately. ❌`,
-          variables: { result: false },
+          explanation: `Lengths do not match (${s.length} != ${t.length})! Impossible to be an anagram. Return False immediately.`,
+          variables: { s, t, result: false },
           phase: 'finish',
           bankBalances: {},
         });
         return { steps, result: false };
       }
 
-      // Step 3: Initialize hash map
-      const count: Record<string, number> = {};
+      // Step 2: Initialize count map
       steps.push({
         lineNumber: 6,
-        explanation: `Initialize empty hash map count = {} (Opening the Bank Account / Whiteboard Tally).`,
+        explanation: `Initialize blank whiteboard count = {} for letter bank balances.`,
         variables: { count: '{}' },
         phase: 'init',
         bankBalances: {},
       });
 
-      // Phase 1: Deposits from s
+      // Phase 1: Deposits
       for (let i = 0; i < s.length; i++) {
         const char = s[i];
+        bankBalances[char] = (bankBalances[char] || 0) + 1;
+
         steps.push({
           lineNumber: 9,
-          explanation: `[Phase 1 Deposit] Iterating string s at index ${i}: char = '${char}'.`,
-          variables: { char: `'${char}'`, index: i, count: JSON.stringify(count) },
+          explanation: `[Deposit ${i + 1}/${s.length}] Pull tile '${char}' from string s ("${s}"). Add +1 to bank balance for '${char}'. Balance is now ${bankBalances[char]}.`,
+          variables: { activeChar: char, string: 's', count: JSON.stringify(bankBalances) },
           phase: 'deposit',
-          activeString: 's',
           activeChar: char,
-          activeCharIndex: i,
-          bankBalances: { ...count },
-        });
-
-        const prevCount = count[char] || 0;
-        count[char] = prevCount + 1;
-
-        steps.push({
-          lineNumber: 10,
-          explanation: `[Deposit +1] Deposited 1 for '${char}'. Balance for '${char}' is now ${count[char]}.`,
-          variables: { char: `'${char}'`, count: JSON.stringify(count) },
-          phase: 'deposit',
           activeString: 's',
-          activeChar: char,
           activeCharIndex: i,
-          bankBalances: { ...count },
+          bankBalances: { ...bankBalances },
         });
       }
 
-      // Phase 2: Withdrawals from t
-      for (let j = 0; j < t.length; j++) {
-        const char = t[j];
-        steps.push({
-          lineNumber: 13,
-          explanation: `[Phase 2 Withdrawal] Iterating string t at index ${j}: char = '${char}'.`,
-          variables: { char: `'${char}'`, index: j, count: JSON.stringify(count) },
-          phase: 'withdraw',
-          activeString: 't',
-          activeChar: char,
-          activeCharIndex: j,
-          bankBalances: { ...count },
-        });
+      // Phase 2: Withdrawals
+      for (let i = 0; i < t.length; i++) {
+        const char = t[i];
+        const currentBalance = bankBalances[char] || 0;
 
         steps.push({
-          lineNumber: 14,
-          explanation: `Check if '${char}' is in bank account with balance > 0 (Current balance: ${count[char] || 0}).`,
-          variables: { char: `'${char}'`, currentBalance: count[char] || 0 },
-          phase: 'withdraw',
-          activeString: 't',
+          lineNumber: 12,
+          explanation: `[Withdraw ${i + 1}/${t.length}] Inspect tile '${char}' from string t ("${t}"). Check balance on whiteboard.`,
+          variables: { activeChar: char, string: 't', currentBalance, count: JSON.stringify(bankBalances) },
+          phase: 'inspect',
           activeChar: char,
-          activeCharIndex: j,
-          bankBalances: { ...count },
+          activeString: 't',
+          activeCharIndex: i,
+          bankBalances: { ...bankBalances },
         });
 
-        if (!count[char] || count[char] === 0) {
+        if (!bankBalances[char] || bankBalances[char] <= 0) {
           steps.push({
-            lineNumber: 15,
-            explanation: `Overdraft error! Character '${char}' has 0 balance or is missing from bank. String t is NOT an anagram. Return False. ❌`,
-            variables: { char: `'${char}'`, error: 'Overdraft / Missing char', result: false },
-            phase: 'finish',
-            activeString: 't',
+            lineNumber: 13,
+            explanation: `❌ OVERDRAFT! Tile '${char}' from string t has a balance of ${currentBalance}. String t contains characters not supplied by s! Return False.`,
+            variables: { activeChar: char, currentBalance, result: false },
+            phase: 'withdraw',
             activeChar: char,
-            activeCharIndex: j,
-            bankBalances: { ...count },
+            activeString: 't',
+            activeCharIndex: i,
+            bankBalances: { ...bankBalances },
           });
           return { steps, result: false };
         }
 
-        count[char] -= 1;
+        bankBalances[char] -= 1;
         steps.push({
-          lineNumber: 16,
-          explanation: `[Withdraw -1] Successfully withdrew 1 for '${char}'. Remaining balance for '${char}': ${count[char]}.`,
-          variables: { char: `'${char}'`, remainingBalance: count[char], count: JSON.stringify(count) },
+          lineNumber: 14,
+          explanation: `Tile '${char}' found in bank! Deduct -1 from balance for '${char}'. Balance is now ${bankBalances[char]}.`,
+          variables: { activeChar: char, string: 't', newBalance: bankBalances[char], count: JSON.stringify(bankBalances) },
           phase: 'withdraw',
-          activeString: 't',
           activeChar: char,
-          activeCharIndex: j,
-          bankBalances: { ...count },
+          activeString: 't',
+          activeCharIndex: i,
+          bankBalances: { ...bankBalances },
         });
       }
 
-      // Step Final: Complete
+      // Step 3: All balances zero
       steps.push({
-        lineNumber: 18,
-        explanation: `All withdrawals matched perfectly with zero balance remaining! Return True (Valid Anagram 🎉).`,
-        variables: { result: true, finalLedger: JSON.stringify(count) },
+        lineNumber: 16,
+        explanation: `🎉 All tiles from string t matched and withdrew from string s perfectly! Every balance reached zero. Return True!`,
+        variables: { result: true },
         phase: 'finish',
-        bankBalances: { ...count },
+        bankBalances: { ...bankBalances },
       });
 
       return { steps, result: true };
@@ -526,62 +487,64 @@ public:
     codeSnippets: {
       python: `class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
-        prevMap = {}  # Maps: value -> index
+        prevMap = {}  # 1. Notepad mapping: value -> index
 
-        for i, n in enumerate(nums):
-            diff = target - n
+        for i, n in enumerate(nums):  # 2. Inspect card 'n' at index 'i'
+            diff = target - n  # 3. Calculate wanted partner complement
 
-            if diff in prevMap:
-                return [prevMap[diff], i]
+            if diff in prevMap:  # 4. Check if wanted partner is on notepad
+                return [prevMap[diff], i]  # 5. BINGO! Return pair of indices
 
-            prevMap[n] = i`,
+            prevMap[n] = i  # 6. Not found -> record (n : i) on notepad
+
+        return []  # 7. No pair found`,
       cpp: `class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> prevMap;
+        unordered_map<int, int> prevMap;  // 1. Notepad: value -> index
 
-        for (int i = 0; i < nums.size(); i++) {
-            int diff = target - nums[i];
-            if (prevMap.find(diff) != prevMap.end()) {
-                return {prevMap[diff], i};
+        for (int i = 0; i < nums.size(); i++) {  // 2. Inspect each card
+            int diff = target - nums[i];  // 3. Compute complement
+            if (prevMap.find(diff) != prevMap.end()) {  // 4. Partner found?
+                return {prevMap[diff], i};  // 5. Match found!
             }
-            prevMap[nums[i]] = i;
+            prevMap[nums[i]] = i;  // 6. Record (val : index)
         }
 
-        return {};
+        return {};  // 7. No pair found
     }
 };`,
       javascript: `var twoSum = function(nums, target) {
-    const prevMap = {};
+    const prevMap = {};  // 1. Notepad: value -> index
 
-    for (let i = 0; i < nums.length; i++) {
+    for (let i = 0; i < nums.length; i++) {  // 2. Inspect each card
         const n = nums[i];
-        const diff = target - n;
+        const diff = target - n;  // 3. Compute complement
 
-        if (diff in prevMap) {
-            return [prevMap[diff], i];
+        if (diff in prevMap) {  // 4. Partner found?
+            return [prevMap[diff], i];  // 5. Match found!
         }
 
-        prevMap[n] = i;
+        prevMap[n] = i;  // 6. Record (val : index)
     }
 
-    return [];
+    return [];  // 7. No pair found
 };`,
       java: `class Solution {
     public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> prevMap = new HashMap<>();
+        Map<Integer, Integer> prevMap = new HashMap<>();  // 1. Notepad
 
-        for (int i = 0; i < nums.length; i++) {
-            int diff = target - nums[i];
+        for (int i = 0; i < nums.length; i++) {  // 2. Inspect each card
+            int diff = target - nums[i];  // 3. Compute complement
 
-            if (prevMap.containsKey(diff)) {
-                return new int[] { prevMap.get(diff), i };
+            if (prevMap.containsKey(diff)) {  // 4. Partner found?
+                return new int[] { prevMap.get(diff), i };  // 5. Match found!
             }
 
-            prevMap.put(nums[i], i);
+            prevMap.put(nums[i], i);  // 6. Record (val : index)
         }
 
-        return new int[] {};
+        return new int[] {};  // 7. No pair found
     }
 }`,
     },
@@ -597,7 +560,7 @@ public:
 
       // Step 1: Function entry
       steps.push({
-        lineNumber: 2,
+        lineNumber: 3,
         explanation: `Start twoSum with nums = [${nums.join(', ')}] and target = ${target}. Initialize empty notepad prevMap = {}.`,
         variables: { nums: `[${nums.join(', ')}]`, target, prevMap: '{}' },
         phase: 'init',
@@ -610,7 +573,7 @@ public:
 
         // Step 2: Loop iteration & diff calculation
         steps.push({
-          lineNumber: 4,
+          lineNumber: 5,
           explanation: `[Card ${i}] Looking at nums[${i}] = ${n}. Wanted partner: diff = target (${target}) - n (${n}) = ${diff}.`,
           variables: { i, n, diff, prevMap: JSON.stringify(prevMap) },
           phase: 'inspect',
@@ -622,7 +585,7 @@ public:
 
         // Step 3: Hash Map Lookup
         steps.push({
-          lineNumber: 6,
+          lineNumber: 8,
           explanation: `Check Notepad: Did we already see partner ${diff} in prevMap?`,
           variables: { diff, inPrevMap: diff in prevMap, prevMap: JSON.stringify(prevMap) },
           phase: 'inspect',
@@ -636,7 +599,7 @@ public:
           const partnerIdx = prevMap[diff];
           // Step 4: Found Match!
           steps.push({
-            lineNumber: 7,
+            lineNumber: 9,
             explanation: `🎯 BINGO! Partner ${diff} was found in prevMap at index ${partnerIdx}! (${diff} + ${n} = ${target}). Return [${partnerIdx}, ${i}]!`,
             variables: { result: `[${partnerIdx}, ${i}]`, sum: `${diff} + ${n} = ${target}` },
             phase: 'match',
@@ -652,7 +615,7 @@ public:
         // Step 5: Insert into prevMap
         prevMap[n] = i;
         steps.push({
-          lineNumber: 9,
+          lineNumber: 11,
           explanation: `Partner ${diff} not in prevMap yet. Write down (${n} : index ${i}) on notepad. Move to next card.`,
           variables: { prevMap: JSON.stringify(prevMap) },
           phase: 'insert',
@@ -664,7 +627,7 @@ public:
       }
 
       steps.push({
-        lineNumber: 9,
+        lineNumber: 13,
         explanation: `No pair found that sums to ${target}. Return [].`,
         variables: { result: '[]' },
         phase: 'finish',
@@ -672,6 +635,154 @@ public:
       });
 
       return { steps, result: [] };
+    },
+  },
+  {
+    id: 'group-anagrams',
+    title: 'Group Anagrams',
+    subtitle: 'LeetCode 49 • NeetCode 150 #4',
+    category: 'Stack & Hashing',
+    difficulty: 'Medium',
+    description: 'Given an array of strings strs, group all the anagrams together into separate sub-lists.',
+    timeComplexity: 'O(M * K log K) — For M strings of max length K, sorting each string takes O(K log K)',
+    spaceComplexity: 'O(M * K) — Hash map stores all strings and bucket labels',
+    mentalTrigger: 'Grouping items by a common property / pattern -> HASH MAP OF LISTS (defaultdict(list)).',
+    interviewFlex: '"Instead of sorting each string in O(K log K), we could count character frequencies using a 26-element array count = [0] * 26 as the hash map key (converted to a tuple). This optimizes the time complexity down to O(M * K)."',
+    edgeCases: [
+      'Array with single empty string [""] -> Returns [[""]]',
+      'Single string ["a"] -> Returns [["a"]]',
+      'All words distinct ["a", "b", "c"] -> Returns [["a"], ["b"], ["c"]]',
+    ],
+    visualModelDescription: 'The Labeled Buckets Model: 1. We need a unique "Fingerprint / Label" for every bucket so that words with the same letters fall into the same bucket. 2. For any word (e.g. "act" and "cat"), sorting its characters gives the exact same label -> "act". 3. Toss each original word into the bucket matching its sorted label. 4. Collect all bucket contents at the end: return list(res.values()).',
+    defaultInput: { strs: 'act, pots, tops, cat, stop, hat' },
+    inputSchema: [
+      { key: 'strs', label: 'Strings (comma-separated)', type: 'string', placeholder: 'act, pots, tops, cat, stop, hat' },
+    ],
+    codeSnippets: {
+      python: `from collections import defaultdict
+
+class Solution:
+    def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
+        res = defaultdict(list)  # 1. Labeled buckets: sorted_label -> [words]
+
+        for s in strs:  # 2. Inspect each word one by one
+            sorted_word = "".join(sorted(s))  # 3. Sort chars to get bucket label
+            res[sorted_word].append(s)  # 4. Toss word into matching bucket
+
+        return list(res.values())  # 5. Return all collected word buckets`,
+      cpp: `class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> res;  # 1. Labeled buckets
+
+        for (string s : strs) {  # 2. Inspect each word
+            string sorted_word = s;
+            sort(sorted_word.begin(), sorted_word.end());  # 3. Sort to get label
+            res[sorted_word].push_back(s);  # 4. Toss into bucket
+        }
+
+        vector<vector<string>> ans;
+        for (auto pair : res) {
+            ans.push_back(pair.second);  # 5. Collect buckets
+        }
+        return ans;
+    }
+};`,
+      javascript: `var groupAnagrams = function(strs) {
+    const res = {};  # 1. Labeled buckets: sorted_label -> [words]
+
+    for (const s of strs) {  # 2. Inspect each word
+        const sorted_word = s.split('').sort().join('');  # 3. Sort chars for label
+        if (!res[sorted_word]) {
+            res[sorted_word] = [];  # 4. Create bucket if first time
+        }
+        res[sorted_word].push(s);  # 5. Toss word into bucket
+    }
+
+    return Object.values(res);  # 6. Return all collected buckets
+};`,
+      java: `class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> res = new HashMap<>();  # 1. Labeled buckets
+
+        for (String s : strs) {  # 2. Inspect each word
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);  # 3. Sort chars for bucket label
+            String sorted_word = new String(chars);
+
+            res.putIfAbsent(sorted_word, new ArrayList<>());  # 4. Init bucket
+            res.get(sorted_word).add(s);  # 5. Toss word into bucket
+        }
+
+        return new ArrayList<>(res.values());  # 6. Return buckets
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawStrs = String(inputs.strs ?? 'act, pots, tops, cat, stop, hat')
+        .split(',')
+        .map((x) => x.trim())
+        .filter((x) => x.length > 0);
+      const strs = rawStrs.length > 0 ? rawStrs : ['act', 'pots', 'tops', 'cat', 'stop', 'hat'];
+      const steps: VisualizerStep[] = [];
+      const buckets: Record<string, string[]> = {};
+
+      // Step 1: Init
+      steps.push({
+        lineNumber: 5,
+        explanation: `Initialize empty hash map res = defaultdict(list) with ${strs.length} words to group.`,
+        variables: { strs: JSON.stringify(strs), res: '{}' },
+        phase: 'init',
+        buckets: {},
+      });
+
+      for (let i = 0; i < strs.length; i++) {
+        const word = strs[i];
+        const sortedWord = word.split('').sort().join('');
+
+        // Step 2: Inspect & Sort
+        steps.push({
+          lineNumber: 8,
+          explanation: `[Word ${i + 1}/${strs.length}] Pick word "${word}". Sort characters: "${word}" → Fingerprint Label "${sortedWord}".`,
+          variables: { currentWord: word, sorted_word: sortedWord, wordIndex: i },
+          phase: 'inspect',
+          currentWord: word,
+          currentWordIndex: i,
+          charFingerprint: sortedWord,
+          activeBucketKey: sortedWord,
+          buckets: JSON.parse(JSON.stringify(buckets)),
+        });
+
+        // Step 3: Add to bucket
+        if (!buckets[sortedWord]) {
+          buckets[sortedWord] = [];
+        }
+        buckets[sortedWord].push(word);
+
+        steps.push({
+          lineNumber: 9,
+          explanation: `Toss "${word}" into Bucket 🏷️ "${sortedWord}". Current bucket contents: [${buckets[sortedWord].map((w) => `"${w}"`).join(', ')}].`,
+          variables: { bucket: sortedWord, contents: JSON.stringify(buckets[sortedWord]) },
+          phase: 'bucket',
+          currentWord: word,
+          currentWordIndex: i,
+          charFingerprint: sortedWord,
+          activeBucketKey: sortedWord,
+          buckets: JSON.parse(JSON.stringify(buckets)),
+        });
+      }
+
+      // Step 4: Finish
+      const finalResult = Object.values(buckets);
+      steps.push({
+        lineNumber: 11,
+        explanation: `All ${strs.length} words grouped into ${finalResult.length} unique buckets! Return list(res.values()).`,
+        variables: { result: JSON.stringify(finalResult) },
+        phase: 'finish',
+        buckets: JSON.parse(JSON.stringify(buckets)),
+      });
+
+      return { steps, result: finalResult };
     },
   },
 ];
@@ -1685,6 +1796,143 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                               <span className="text-xs font-black px-2 py-0.5 rounded-md bg-slate-800 text-emerald-300 border border-slate-700">
                                 idx {idxVal}
                               </span>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ================= GROUP ANAGRAMS: THE LABELED BUCKETS VISUAL MODEL ================= */}
+              {selectedProblemId === 'group-anagrams' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
+                  {/* Word Inspection & Fingerprint Card */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-bold text-slate-400 uppercase">Current Word:</span>
+                      <span className="px-3 py-1 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono font-black text-sm sm:text-base">
+                        {currentStep?.currentWord ? `"${currentStep.currentWord}"` : '—'}
+                      </span>
+                    </div>
+
+                    {currentStep?.charFingerprint && (
+                      <div className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
+                        <span className="text-slate-400">Sorted Label:</span>
+                        <span className="text-amber-300 font-black bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/40">
+                          🏷️ "{currentStep.charFingerprint}"
+                        </span>
+                      </div>
+                    )}
+
+                    {currentStep?.phase === 'finish' && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-mono font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>ALL GROUPED!</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Input Words List */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-purple-400" />
+                        Original Input Words (strs)
+                      </span>
+                      <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-md text-slate-400 font-mono">
+                        Inspect &amp; Sort
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 flex-wrap justify-center py-2">
+                      {(() => {
+                        const raw = String(problemInputs.strs || 'act, pots, tops, cat, stop, hat').split(',').map((s) => s.trim()).filter((s) => s.length > 0);
+                        const words = raw.length > 0 ? raw : ['act', 'pots', 'tops', 'cat', 'stop', 'hat'];
+                        const activeIdx = currentStep?.currentWordIndex;
+
+                        return words.map((w, idx) => {
+                          const isCurrent = activeIdx === idx;
+                          const isProcessed = activeIdx !== undefined && idx < activeIdx;
+
+                          return (
+                            <div key={idx} className="flex flex-col items-center gap-1">
+                              <div className="h-4 flex items-center justify-center">
+                                {isCurrent && (
+                                  <span className="text-purple-300 text-[10px] font-mono font-black animate-bounce">
+                                    ↓ sorting
+                                  </span>
+                                )}
+                              </div>
+                              <div
+                                className={`px-3 py-1.5 rounded-xl font-mono text-xs sm:text-sm font-black transition-all shadow-md ${
+                                  isCurrent
+                                    ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white scale-110 ring-4 ring-purple-400/40 shadow-purple-500/40 border-2 border-purple-200'
+                                    : isProcessed
+                                    ? 'bg-[#141c26] text-slate-400 border border-slate-700/50 opacity-60'
+                                    : 'bg-[#141c26] border-2 border-slate-700 text-white'
+                                }`}
+                              >
+                                "{w}"
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* The Buckets Grid */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-700/80 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2 text-sm">
+                        <BookOpen className="w-4 h-4 text-emerald-400" />
+                        The Labeled Buckets (res: sorted_str → [words])
+                      </span>
+                      <span className="text-slate-400 font-bold text-xs bg-[#0b0f14] px-2.5 py-0.5 rounded-lg border border-slate-800">
+                        defaultdict(list)
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 min-h-[64px]">
+                      {(() => {
+                        const buckets = currentStep?.buckets || {};
+                        const keys = Object.keys(buckets);
+                        if (keys.length === 0) {
+                          return <span className="col-span-full text-xs text-slate-500 font-mono my-auto font-bold text-center py-3">(Buckets Empty — no words sorted into buckets yet)</span>;
+                        }
+                        return keys.map((bucketKey) => {
+                          const items = buckets[bucketKey] || [];
+                          const isActiveBucket = currentStep?.activeBucketKey === bucketKey;
+
+                          return (
+                            <div
+                              key={bucketKey}
+                              className={`p-3 rounded-xl border-2 flex flex-col gap-2 font-mono transition-all shadow-md ${
+                                isActiveBucket
+                                  ? 'bg-gradient-to-b from-purple-950/60 to-[#101720] border-purple-400 ring-2 ring-purple-400/30 scale-102'
+                                  : 'bg-[#0b0f14] border-slate-700 text-slate-200'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between border-b border-slate-700/60 pb-1">
+                                <span className="text-xs font-black text-amber-300 flex items-center gap-1">
+                                  🏷️ "{bucketKey}"
+                                </span>
+                                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-slate-800 text-purple-300">
+                                  {items.length} {items.length === 1 ? 'word' : 'words'}
+                                </span>
+                              </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {items.map((it, iIdx) => (
+                                  <span
+                                    key={iIdx}
+                                    className="px-2 py-0.5 rounded-lg bg-purple-500/20 text-purple-200 border border-purple-500/30 text-xs font-bold font-mono"
+                                  >
+                                    "{it}"
+                                  </span>
+                                ))}
+                              </div>
                             </div>
                           );
                         });
