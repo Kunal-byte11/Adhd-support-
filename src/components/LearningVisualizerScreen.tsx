@@ -53,6 +53,10 @@ export interface VisualizerStep {
   comparingIndices?: number[];
   swappedIndices?: number[];
   sortedIndices?: number[];
+  // For Contains Duplicate
+  seenSet?: (number | string)[];
+  foundDuplicate?: boolean;
+  duplicateVal?: number | string;
   // For Two Sum
   currentIndex?: number;
   currentNum?: number;
@@ -94,22 +98,181 @@ export interface ProblemDefinition {
 
 export const PROBLEMS_DATA: ProblemDefinition[] = [
   {
+    id: 'contains-duplicate',
+    title: 'Contains Duplicate',
+    subtitle: 'LeetCode 217 • NeetCode 150 #1',
+    category: 'Stack & Hashing',
+    difficulty: 'Easy',
+    description: 'Given an integer array nums, return True if any value appears at least twice, and False if all elements are distinct.',
+    timeComplexity: 'O(n) — Single linear pass with O(1) set lookups and additions',
+    spaceComplexity: 'O(n) — Hash set stores up to n seen numbers in worst-case',
+    mentalTrigger: 'Checking for existence / finding duplicates -> USE A HASH SET (set()).',
+    interviewFlex: '"I used a Hash Set to prioritize O(n) linear speed. If strictly constrained to O(1) space, we can sort the array in-place first (O(n log n) time) and check adjacent neighbors nums[i] == nums[i - 1], trading speed to eliminate auxiliary memory."',
+    edgeCases: [
+      'Empty array [] -> Returns False',
+      'Single element [1] -> Returns False',
+      'Negative numbers [-1, 2, -1] -> Handled automatically by set().',
+    ],
+    visualModelDescription: 'The Blank Notepad Model: 1. Hold a blank notepad in your hand (seen = set()). 2. Flip over cards one by one (for num in nums:). 3. Look at the notepad: If the number is already written -> BINGO! Return True. If not written -> Write the number down on the notepad (seen.add(num)). 4. If all cards are flipped with no matches -> Return False.',
+    defaultInput: { nums: '1, 2, 3, 1' },
+    inputSchema: [
+      { key: 'nums', label: 'Array nums (comma-separated)', type: 'string', placeholder: '1, 2, 3, 1' },
+    ],
+    codeSnippets: {
+      python: `class Solution:
+    def hasDuplicate(self, nums: list[int]) -> bool:
+        seen = set()
+
+        for num in nums:
+            if num in seen:
+                return True
+            seen.add(num)
+
+        return False`,
+      cpp: `class Solution {
+public:
+    bool hasDuplicate(vector<int>& nums) {
+        unordered_set<int> seen;
+
+        for (int num : nums) {
+            if (seen.find(num) != seen.end()) {
+                return true;
+            }
+            seen.insert(num);
+        }
+
+        return false;
+    }
+};`,
+      javascript: `var hasDuplicate = function(nums) {
+    const seen = new Set();
+
+    for (const num of nums) {
+        if (seen.has(num)) {
+            return true;
+        }
+        seen.add(num);
+    }
+
+    return false;
+};`,
+      java: `class Solution {
+    public boolean hasDuplicate(int[] nums) {
+        Set<Integer> seen = new HashSet<>();
+
+        for (int num : nums) {
+            if (seen.contains(num)) {
+                return true;
+            }
+            seen.add(num);
+        }
+
+        return false;
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawNums = String(inputs.nums ?? '1, 2, 3, 1')
+        .split(',')
+        .map((x) => parseInt(x.trim(), 10))
+        .filter((n) => !isNaN(n));
+      const nums = rawNums.length > 0 ? rawNums : [1, 2, 3, 1];
+      const steps: VisualizerStep[] = [];
+      const seenArr: number[] = [];
+
+      // Step 1: Function entry / initialization
+      steps.push({
+        lineNumber: 2,
+        explanation: `Start hasDuplicate with nums = [${nums.join(', ')}]. Initialize blank notepad seen = set().`,
+        variables: { nums: `[${nums.join(', ')}]`, seen: 'set()' },
+        phase: 'init',
+        seenSet: [],
+      });
+
+      for (let i = 0; i < nums.length; i++) {
+        const num = nums[i];
+
+        // Step 2: Looking at card
+        steps.push({
+          lineNumber: 4,
+          explanation: `[Card ${i}] Flipped over card nums[${i}] = ${num}.`,
+          variables: { i, num, seen: `{${seenArr.join(', ')}}` },
+          phase: 'inspect',
+          currentIndex: i,
+          currentNum: num,
+          seenSet: [...seenArr],
+        });
+
+        // Step 3: Check Notepad
+        const alreadySeen = seenArr.includes(num);
+        steps.push({
+          lineNumber: 5,
+          explanation: `Check Notepad: Is ${num} already written on seen notepad?`,
+          variables: { num, 'num in seen': alreadySeen, seen: `{${seenArr.join(', ')}}` },
+          phase: 'inspect',
+          currentIndex: i,
+          currentNum: num,
+          seenSet: [...seenArr],
+        });
+
+        if (alreadySeen) {
+          // Step 4: Duplicate Found!
+          steps.push({
+            lineNumber: 6,
+            explanation: `🎯 BINGO! Duplicate found! ${num} is already recorded on the notepad! Return True.`,
+            variables: { num, result: true },
+            phase: 'match',
+            currentIndex: i,
+            currentNum: num,
+            foundDuplicate: true,
+            duplicateVal: num,
+            seenSet: [...seenArr],
+          });
+          return { steps, result: true };
+        }
+
+        // Step 5: Add to seen
+        seenArr.push(num);
+        steps.push({
+          lineNumber: 7,
+          explanation: `${num} is not on the notepad yet. Write ${num} down on notepad (seen.add(${num})). Move to next card.`,
+          variables: { num, seen: `{${seenArr.join(', ')}}` },
+          phase: 'insert',
+          currentIndex: i,
+          currentNum: num,
+          seenSet: [...seenArr],
+        });
+      }
+
+      // Step Final: Complete without duplicates
+      steps.push({
+        lineNumber: 9,
+        explanation: `All ${nums.length} cards checked. No duplicates found on notepad! Return False.`,
+        variables: { result: false, finalSeen: `{${seenArr.join(', ')}}` },
+        phase: 'finish',
+        seenSet: [...seenArr],
+      });
+
+      return { steps, result: false };
+    },
+  },
+  {
     id: 'valid-anagram',
     title: 'Valid Anagram',
     subtitle: 'LeetCode 242 • NeetCode 150 #2',
     category: 'Stack & Hashing',
     difficulty: 'Easy',
-    description: "Determine if string 't' is an exact rearrangement of string 's' (exact same characters in the exact same frequencies).",
-    timeComplexity: 'O(N) — Single pass through strings of length N',
-    spaceComplexity: 'O(1) — Dictionary never exceeds 26 lowercase English letters',
+    description: 'Given two strings s and t, return True if t is an exact rearrangement of s (same characters with identical frequencies), and False otherwise.',
+    timeComplexity: 'O(n) — Two separate linear passes through strings of length n',
+    spaceComplexity: 'O(1) — Dictionary bounded by 26 lowercase English letters',
     mentalTrigger: 'Comparing character frequencies / counting occurrences -> USE A HASH MAP (dict).',
-    interviewFlex: '"I used a Hash Map for O(N) linear time. If the interviewer asks for a one-liner or zero extra hash map structures, we could sort both strings and compare (return sorted(s) == sorted(t)), but that trades speed, slowing time to O(N log N)."',
+    interviewFlex: '"I used a single Hash Map for O(n) time and O(1) alphabet-bounded space. If we want a clean one-liner, we could compare sorted strings (return sorted(s) == sorted(t)), which runs in O(n log n) time."',
     edgeCases: [
       'len(s) != len(t) -> Impossible! Return False immediately.',
-      'Single letter strings: "a" & "a" -> Returns True.',
+      'Single-character identical strings: "a" & "a" -> Returns True.',
       'Overdraft: String t tries to withdraw a letter with 0 balance (or not in dict) -> Return False.',
     ],
-    visualModelDescription: "The Bank Account Model: String 's' DEPOSITS letters (+1 to count). String 't' WITHDRAWS letters (-1 from count). If all letters balance out to 0 -> True. If any withdrawal overdrafts -> False.",
+    visualModelDescription: "The Bank Account / Whiteboard Model: 1. Instant Filter: If len(s) != len(t), return False immediately. 2. String s DEPOSITS letters (+1 to count). 3. String t WITHDRAWS letters (-1 from count). 4. If t tries to withdraw a letter with 0 balance -> Return False. 5. If all characters balance out to 0 -> Return True.",
     defaultInput: { s: 'anagram', t: 'nagaram' },
     inputSchema: [
       { key: 's', label: 'String s (Deposits)', type: 'string', placeholder: 'anagram' },
@@ -118,16 +281,17 @@ export const PROBLEMS_DATA: ProblemDefinition[] = [
     codeSnippets: {
       python: `class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        # Edge Case: Length check
         if len(s) != len(t):
             return False
 
         count = {}
 
-        # Phase 1: Deposits from s
+        # Phase 1: Deposits from string s
         for char in s:
             count[char] = count.get(char, 0) + 1
 
-        # Phase 2: Withdrawals from t
+        # Phase 2: Withdrawals from string t
         for char in t:
             if char not in count or count[char] == 0:
                 return False
@@ -141,12 +305,12 @@ public:
 
         unordered_map<char, int> count;
 
-        // Phase 1: Deposits from s
+        // Phase 1: Deposits from string s
         for (char c : s) {
             count[c]++;
         }
 
-        // Phase 2: Withdrawals from t
+        // Phase 2: Withdrawals from string t
         for (char c : t) {
             if (count.find(c) == count.end() || count[c] == 0) {
                 return false;
@@ -162,12 +326,12 @@ public:
 
     const count = {};
 
-    // Phase 1: Deposits from s
+    // Phase 1: Deposits from string s
     for (let char of s) {
         count[char] = (count[char] || 0) + 1;
     }
 
-    // Phase 2: Withdrawals from t
+    // Phase 2: Withdrawals from string t
     for (let char of t) {
         if (!count[char]) {
             return false;
@@ -183,12 +347,12 @@ public:
 
         Map<Character, Integer> count = new HashMap<>();
 
-        // Phase 1: Deposits from s
-        for (char c : s.toCharArray()) {
+        // Phase 1: Deposits from string s
+        for char c : s.toCharArray()) {
             count.put(c, count.getOrDefault(c, 0) + 1);
         }
 
-        // Phase 2: Withdrawals from t
+        // Phase 2: Withdrawals from string t
         for (char c : t.toCharArray()) {
             if (!count.containsKey(c) || count.get(c) == 0) {
                 return false;
@@ -238,7 +402,7 @@ public:
       const count: Record<string, number> = {};
       steps.push({
         lineNumber: 6,
-        explanation: `Initialize empty hash map count = {} (Opening the Bank Account).`,
+        explanation: `Initialize empty hash map count = {} (Opening the Bank Account / Whiteboard Tally).`,
         variables: { count: '{}' },
         phase: 'init',
         bankBalances: {},
@@ -343,17 +507,17 @@ public:
     subtitle: 'LeetCode 1 • NeetCode 150 #3',
     category: 'Arrays & Pointers',
     difficulty: 'Easy',
-    description: "Given an array 'nums' and an integer 'target', find the INDICES of the two numbers that add up to 'target'. (Assume exactly one valid answer exists).",
-    timeComplexity: 'O(N) — Single pass through array with O(1) instant hash map lookup',
-    spaceComplexity: 'O(N) — prevMap hash map stores up to N seen numbers',
-    mentalTrigger: 'Finding a pair that sums to target / needing index lookup -> USE A HASH MAP (dict).',
-    interviewFlex: '"I used a One-Pass Hash Map to achieve O(N) linear time by trading space. The Brute Force approach checks all pairs using two nested loops, which takes O(1) space but is slow at O(N^2) time. Note: We cannot just sort the array first because sorting scrambles the original indices that we are required to return!"',
+    description: "Given an array 'nums' and an integer 'target', return the INDICES of the two numbers such that they add up to 'target'.",
+    timeComplexity: 'O(n) — Single pass through array with O(1) instant hash map lookup',
+    spaceComplexity: 'O(n) — prevMap hash map stores up to n seen numbers',
+    mentalTrigger: 'Finding a pair that sums to a target + needing indices -> ONE-PASS HASH MAP ({value: index}).',
+    interviewFlex: '"I used a One-Pass Hash Map to achieve optimal O(n) time. The brute force method checks all pairs in O(n^2) time. Notice we cannot sort the array first here because sorting scrambles the original index positions required by the problem."',
     edgeCases: [
-      'Target with identical numbers (e.g. nums=[3, 3], target=6) -> First 3 stored at index 0, second 3 at index 1 finds 3 in map -> returns [0, 1].',
+      'Duplicate numbers adding to target (nums=[3, 3], target=6): Index 0 stores {3: 0}, index 1 searches 6 - 3 = 3, finds index 0, returns [0, 1].',
       'Negative numbers in array -> Subtraction diff = target - n works seamlessly.',
       'Target is zero or negative -> Fully handled by algebraic diff.',
     ],
-    visualModelDescription: "The Wanted Poster / Lock & Key Model: For each card 'n' at index 'i', calculate wanted partner diff = target - n. Check notepad (prevMap): 'Did I see diff earlier?' If YES -> Return [prevMap[diff], i] (BINGO!). If NO -> Write down (n : i) on notepad and move to next card.",
+    visualModelDescription: "The Lock & Key / Wanted Poster Model: 1. Hold a card n at index i. 2. Compute wanted partner: diff = target - n. 3. Look at your notepad (prevMap = {value: index}): 'Did I already see diff earlier?' If YES -> Return [prevMap[diff], i] (BINGO!). If NO -> Write prevMap[n] = i on notepad and move to next card.",
     defaultInput: { nums: '2, 7, 11, 15', target: 9 },
     inputSchema: [
       { key: 'nums', label: 'Array nums (comma-separated)', type: 'string', placeholder: '2, 7, 11, 15' },
@@ -362,16 +526,20 @@ public:
     codeSnippets: {
       python: `class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
-        prevMap = {}  # Map: value -> index
+        prevMap = {}  # Maps: value -> index
+
         for i, n in enumerate(nums):
             diff = target - n
+
             if diff in prevMap:
                 return [prevMap[diff], i]
+
             prevMap[n] = i`,
       cpp: `class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         unordered_map<int, int> prevMap;
+
         for (int i = 0; i < nums.size(); i++) {
             int diff = target - nums[i];
             if (prevMap.find(diff) != prevMap.end()) {
@@ -379,31 +547,40 @@ public:
             }
             prevMap[nums[i]] = i;
         }
+
         return {};
     }
 };`,
       javascript: `var twoSum = function(nums, target) {
     const prevMap = {};
+
     for (let i = 0; i < nums.length; i++) {
         const n = nums[i];
         const diff = target - n;
+
         if (diff in prevMap) {
             return [prevMap[diff], i];
         }
+
         prevMap[n] = i;
     }
+
     return [];
 };`,
       java: `class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> prevMap = new HashMap<>();
+
         for (int i = 0; i < nums.length; i++) {
             int diff = target - nums[i];
+
             if (prevMap.containsKey(diff)) {
                 return new int[] { prevMap.get(diff), i };
             }
+
             prevMap.put(nums[i], i);
         }
+
         return new int[] {};
     }
 }`,
@@ -445,7 +622,7 @@ public:
 
         // Step 3: Hash Map Lookup
         steps.push({
-          lineNumber: 5,
+          lineNumber: 6,
           explanation: `Check Notepad: Did we already see partner ${diff} in prevMap?`,
           variables: { diff, inPrevMap: diff in prevMap, prevMap: JSON.stringify(prevMap) },
           phase: 'inspect',
@@ -459,7 +636,7 @@ public:
           const partnerIdx = prevMap[diff];
           // Step 4: Found Match!
           steps.push({
-            lineNumber: 6,
+            lineNumber: 7,
             explanation: `🎯 BINGO! Partner ${diff} was found in prevMap at index ${partnerIdx}! (${diff} + ${n} = ${target}). Return [${partnerIdx}, ${i}]!`,
             variables: { result: `[${partnerIdx}, ${i}]`, sum: `${diff} + ${n} = ${target}` },
             phase: 'match',
@@ -475,7 +652,7 @@ public:
         // Step 5: Insert into prevMap
         prevMap[n] = i;
         steps.push({
-          lineNumber: 8,
+          lineNumber: 9,
           explanation: `Partner ${diff} not in prevMap yet. Write down (${n} : index ${i}) on notepad. Move to next card.`,
           variables: { prevMap: JSON.stringify(prevMap) },
           phase: 'insert',
@@ -487,7 +664,7 @@ public:
       }
 
       steps.push({
-        lineNumber: 8,
+        lineNumber: 9,
         explanation: `No pair found that sums to ${target}. Return [].`,
         variables: { result: '[]' },
         phase: 'finish',
@@ -506,9 +683,9 @@ interface LearningVisualizerScreenProps {
 export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> = ({
   isSidebarCollapsed = false,
 }) => {
-  const [selectedProblemId, setSelectedProblemId] = useState<string>('valid-anagram');
+  const [selectedProblemId, setSelectedProblemId] = useState<string>('contains-duplicate');
   const [activeLanguage, setActiveLanguage] = useState<'python' | 'cpp' | 'javascript' | 'java'>('python');
-  const [activeTab, setActiveTab] = useState<'visualizer' | 'blueprint'>('visualizer');
+  const [activeTab, setActiveTab] = useState<'visualizer' | 'blueprint' | 'cheatsheet'>('visualizer');
 
   const currentProblem = useMemo(() => {
     return PROBLEMS_DATA.find((p) => p.id === selectedProblemId) || PROBLEMS_DATA[0];
@@ -641,7 +818,7 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
             </select>
           </div>
 
-          {/* Segmented View Toggle (Visualizer vs Blueprint) */}
+          {/* Segmented View Toggle (Visualizer vs Blueprint vs Cheat Sheet) */}
           <div className="hidden sm:flex items-center bg-[#090d12] p-1 rounded-xl border border-slate-800/90 shadow-inner">
             <button
               onClick={() => setActiveTab('visualizer')}
@@ -664,6 +841,17 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
             >
               <BookOpen className="w-3.5 h-3.5" />
               <span>Blueprint</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('cheatsheet')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeTab === 'cheatsheet'
+                  ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-md shadow-purple-500/20 font-black'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Cheat Sheet</span>
             </button>
           </div>
         </div>
@@ -840,6 +1028,210 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
         </div>
       )}
 
+      {/* ================= MASTER DSA REVISION NOTEBOOK CHEAT SHEET VIEW ================= */}
+      {activeTab === 'cheatsheet' && (
+        <div className="flex-1 min-h-0 overflow-y-auto p-2 space-y-3.5 animate-in fade-in duration-200">
+          {/* Framework Banner */}
+          <div className="bg-gradient-to-r from-purple-950/60 via-indigo-950/40 to-slate-900 border-2 border-purple-500/40 rounded-2xl p-4 sm:p-5 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xl sm:text-2xl">🧠</span>
+                <h2 className="text-base sm:text-lg font-black text-white font-mono tracking-tight">
+                  Master DSA Revision Notebook (NeetCode 150)
+                </h2>
+              </div>
+              <p className="text-xs sm:text-sm text-purple-200/90 font-medium leading-relaxed">
+                <strong className="text-purple-300">Framework Rule:</strong> Never memorize syntax; memorize the physical pattern. Always draw the physical logic on paper before typing a single line of code.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-[10px] font-mono bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full border border-purple-500/40 font-bold">
+                NeetCode 150 Core
+              </span>
+            </div>
+          </div>
+
+          {/* Mental Trigger Cheat Sheet Table */}
+          <div className="bg-[#121820] border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+              <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
+                <Lightbulb className="w-4 h-4 text-amber-400" />
+                📑 Mental Trigger Cheat Sheet (Master Reference)
+              </span>
+              <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-500/40 font-bold">
+                5 Core Patterns
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-mono border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-800 text-slate-400">
+                    <th className="py-2.5 px-3 font-extrabold uppercase">Goal / Requirement</th>
+                    <th className="py-2.5 px-3 font-extrabold uppercase">Data Structure / Technique</th>
+                    <th className="py-2.5 px-3 font-extrabold uppercase">Physical Analogy</th>
+                    <th className="py-2.5 px-3 font-extrabold uppercase text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60">
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Check if an element was seen before (existence / duplicates)
+                    </td>
+                    <td className="py-3 px-3 text-emerald-400 font-bold">
+                      <code className="bg-[#0b0f14] px-2 py-0.5 rounded border border-emerald-500/30">set()</code> (Hash Set)
+                    </td>
+                    <td className="py-3 px-3 text-amber-300 font-semibold">
+                      📝 The Blank Notepad
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedProblemId('contains-duplicate');
+                          setActiveTab('visualizer');
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
+                      >
+                        Launch
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Track character frequencies / counts
+                    </td>
+                    <td className="py-3 px-3 text-emerald-400 font-bold">
+                      <code className="bg-[#0b0f14] px-2 py-0.5 rounded border border-emerald-500/30">dict()</code> (Hash Map)
+                    </td>
+                    <td className="py-3 px-3 text-amber-300 font-semibold">
+                      📊 The Whiteboard Tally / Bank Account
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedProblemId('valid-anagram');
+                          setActiveTab('visualizer');
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
+                      >
+                        Launch
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Find pair matching target sum + need indices
+                    </td>
+                    <td className="py-3 px-3 text-emerald-400 font-bold">
+                      <code className="bg-[#0b0f14] px-2 py-0.5 rounded border border-emerald-500/30">dict()</code> (Hash Map: val → idx)
+                    </td>
+                    <td className="py-3 px-3 text-amber-300 font-semibold">
+                      🔑 The "Wanted Partner" Lock &amp; Key
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedProblemId('two-sum');
+                          setActiveTab('visualizer');
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
+                      >
+                        Launch
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Reverse list / In-place element swapping
+                    </td>
+                    <td className="py-3 px-3 text-indigo-400 font-bold">
+                      Two Pointers (<code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-indigo-500/30">start</code>, <code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-indigo-500/30">end</code>)
+                    </td>
+                    <td className="py-3 px-3 text-slate-300 font-semibold">
+                      👉👈 Pointers moving inward
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <span className="text-[10px] text-slate-500 font-bold">Coming next</span>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Save space to O(1) without extra data structures
+                    </td>
+                    <td className="py-3 px-3 text-indigo-400 font-bold">
+                      Sorting (<code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-indigo-500/30">nums.sort()</code>)
+                    </td>
+                    <td className="py-3 px-3 text-slate-300 font-semibold">
+                      🃏 Arranging deck in numerical order
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <span className="text-[10px] text-slate-500 font-bold">Coming next</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* 3 Interactive Revision Spread Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            {PROBLEMS_DATA.map((prob, idx) => (
+              <div
+                key={prob.id}
+                className="bg-[#121820] border border-slate-800 hover:border-slate-700 rounded-2xl p-4 flex flex-col justify-between space-y-3 shadow-lg transition-all hover:shadow-emerald-500/5"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                      Problem {idx + 1}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 font-bold">
+                      {prob.subtitle}
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm font-black text-white font-mono">{prob.title}</h3>
+                  <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                    {prob.description}
+                  </p>
+
+                  <div className="bg-[#0e1319] p-2.5 rounded-xl border border-slate-800 text-[11px] font-mono text-indigo-300 font-bold">
+                    🎯 {prob.mentalTrigger}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-1 border-t border-slate-800/80">
+                  <button
+                    onClick={() => {
+                      setSelectedProblemId(prob.id);
+                      setActiveTab('visualizer');
+                    }}
+                    className="flex-1 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold text-xs flex items-center justify-center gap-1 cursor-pointer transition shadow-md"
+                  >
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>Visualize</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedProblemId(prob.id);
+                      setActiveTab('blueprint');
+                    }}
+                    className="flex-1 py-1.5 rounded-xl bg-[#161f28] hover:bg-slate-800 text-slate-200 hover:text-white font-mono font-bold text-xs flex items-center justify-center gap-1 border border-slate-700 cursor-pointer transition"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Blueprint</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ================= INTERACTIVE CODE & VISUALIZER (Zero-Scroll 14-Inch Viewport) ================= */}
       {activeTab === 'visualizer' && (
         <div className="flex-1 min-h-0 grid grid-cols-12 gap-2.5 animate-in fade-in duration-150">
@@ -911,82 +1303,125 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
 
             {/* Graphic Visual Canvas */}
             <div className="flex-1 min-h-0 bg-[#121820] border border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center relative overflow-hidden shadow-xl">
-              {/* ================= BUBBLE SORT & BAR CHART VISUAL MODEL ================= */}
-              {selectedProblemId === 'bubble-sort' && (
-                <div className="w-full h-full flex flex-col justify-between items-center">
-                  {/* Stats Bar */}
-                  <div className="w-full flex items-center justify-between px-2 text-xs font-mono text-slate-400 shrink-0">
-                    <span className="font-bold text-slate-300">
-                      Bubble Sort &bull; {currentStep?.chartBars?.length || 20} Elements
-                    </span>
-                    <span>
-                      Max Value: {Math.max(...(currentStep?.chartBars || [20]))}
-                    </span>
+              {/* ================= CONTAINS DUPLICATE: THE BLANK NOTEPAD (HASH SET) VISUAL MODEL ================= */}
+              {selectedProblemId === 'contains-duplicate' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
+                  {/* Header Status Bar / Bingo Indicator */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3.5 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-mono font-bold text-slate-400 uppercase">Current Card:</span>
+                      {currentStep?.currentNum !== undefined ? (
+                        <span className="px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-black text-sm sm:text-base">
+                          Card [{currentStep.currentIndex}]: {currentStep.currentNum}
+                        </span>
+                      ) : (
+                        <span className="text-xs text-slate-500 font-mono font-bold">(None)</span>
+                      )}
+                    </div>
+
+                    {currentStep?.foundDuplicate && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-mono font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>BINGO! DUPLICATE FOUND: {currentStep.duplicateVal}</span>
+                      </div>
+                    )}
+
+                    {currentStep?.phase === 'finish' && !currentStep.foundDuplicate && (
+                      <div className="px-3 py-1 rounded-xl bg-slate-800 text-slate-300 font-mono font-bold text-xs flex items-center gap-1.5 border border-slate-700">
+                        <span>All Distinct (No Duplicates)</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Dynamic Bar Chart Visualizer with Heights */}
-                  <div className="w-full flex-1 flex items-end justify-center gap-1.5 sm:gap-2 px-2 py-2 min-h-0">
-                    {(() => {
-                      const bars = currentStep?.chartBars || [4, 10, 8, 12, 7, 17, 6, 9, 5, 3, 2, 1, 11, 18, 13, 16, 15, 14, 19, 20];
-                      const maxVal = Math.max(...bars, 1);
-                      const comparing = currentStep?.comparingIndices || [];
-                      const swapped = currentStep?.swappedIndices || [];
-                      const sorted = currentStep?.sortedIndices || [];
+                  {/* Array nums Cards with Pointer */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-emerald-400" />
+                        Array nums Cards (Flip one by one)
+                      </span>
+                      <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-md text-slate-400 font-mono">
+                        for num in nums:
+                      </span>
+                    </div>
 
-                      return bars.map((val, idx) => {
-                        const isComparing = comparing.includes(idx);
-                        const isSwapped = swapped.includes(idx);
-                        const isSorted = sorted.includes(idx);
-                        const heightPercent = Math.max(10, (val / maxVal) * 100);
+                    <div className="flex items-center gap-3 flex-wrap justify-center py-2">
+                      {(() => {
+                        const raw = String(problemInputs.nums || '1, 2, 3, 1').split(',').map((s) => parseInt(s.trim(), 10)).filter((n) => !isNaN(n));
+                        const nums = raw.length > 0 ? raw : [1, 2, 3, 1];
+                        const activeIdx = currentStep?.currentIndex;
+                        const isMatch = currentStep?.foundDuplicate;
 
-                        let barColor = 'bg-[#8c9ba5] text-slate-900'; // Default Neutral Grey
-                        if (isSorted) {
-                          barColor = 'bg-[#22c55e] text-slate-950 shadow-lg shadow-emerald-500/25'; // Green = Sorted
-                        } else if (isSwapped || isComparing) {
-                          barColor = 'bg-[#f43f5e] text-white shadow-lg shadow-rose-500/40 scale-105'; // Red = Swapping/Comparing
+                        return nums.map((val, idx) => {
+                          const isCurrent = activeIdx === idx;
+                          const isDuplicateMatch = isCurrent && isMatch;
+
+                          return (
+                            <div key={idx} className="flex flex-col items-center gap-1.5">
+                              {/* Pointer indicator */}
+                              <div className="h-5 flex items-center justify-center">
+                                {isCurrent && (
+                                  <span className="text-amber-300 bg-amber-950/90 text-[10px] font-mono font-black px-1.5 py-0.5 rounded border border-amber-500/50 animate-bounce">
+                                    ↓ current
+                                  </span>
+                                )}
+                              </div>
+
+                              {/* Card Tile */}
+                              <div
+                                className={`w-13 h-13 sm:w-16 sm:h-16 rounded-2xl flex flex-col items-center justify-center font-mono font-black text-base sm:text-xl transition-all duration-200 shadow-md ${
+                                  isDuplicateMatch
+                                    ? 'bg-gradient-to-br from-emerald-400 to-emerald-600 text-slate-950 scale-110 ring-4 ring-emerald-400/40 shadow-xl shadow-emerald-500/40 border-2 border-emerald-200 animate-pulse'
+                                    : isCurrent
+                                    ? 'bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 scale-110 ring-4 ring-amber-400/40 shadow-xl shadow-amber-500/40 border-2 border-amber-200'
+                                    : 'bg-[#141c26] border-2 border-slate-700 text-white'
+                                }`}
+                              >
+                                <span>{val}</span>
+                              </div>
+
+                              <span className="text-[10px] font-mono text-slate-400 font-bold">[{idx}]</span>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* The Blank Notepad / Hash Set (seen = set()) */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-4 space-y-2.5 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-300 border-b border-slate-700/80 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2 text-sm">
+                        <BookOpen className="w-4 h-4 text-emerald-400" />
+                        The Blank Notepad (seen = set())
+                      </span>
+                      <span className="text-slate-400 font-bold text-xs bg-[#0b0f14] px-2.5 py-0.5 rounded-lg border border-slate-800">
+                        O(1) Set Lookup &amp; Insertion
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 flex-wrap min-h-[48px]">
+                      {(() => {
+                        const seenArr = (currentStep?.seenSet || []) as (number | string)[];
+                        if (seenArr.length === 0) {
+                          return <span className="text-xs text-slate-500 font-mono my-auto font-bold">(Notepad Blank — no numbers recorded yet)</span>;
                         }
-
-                        return (
-                          <div
-                            key={idx}
-                            className="flex-1 flex flex-col items-center justify-end h-full max-w-[38px] transition-all duration-150 relative"
-                          >
-                            {/* Number on top of bar */}
-                            <span className={`text-[11px] sm:text-xs font-mono font-black mb-1 transition-colors select-none ${
-                              isSwapped || isComparing ? 'text-rose-300 scale-125 font-black' : isSorted ? 'text-emerald-400 font-bold' : 'text-slate-300'
-                            }`}>
-                              {val}
-                            </span>
-
-                            {/* Vertical Bar */}
+                        return seenArr.map((item, sIdx) => {
+                          const isMatch = currentStep?.foundDuplicate && String(currentStep.duplicateVal) === String(item);
+                          return (
                             <div
-                              style={{ height: `${heightPercent}%` }}
-                              className={`w-full rounded-t-lg transition-all duration-150 flex items-center justify-center font-mono text-[10px] font-black ${barColor}`}
-                            />
-
-                            {/* Index Label below bar */}
-                            <span className="text-[9px] sm:text-[10px] font-mono text-slate-500 mt-1 select-none font-semibold">
-                              {idx}
-                            </span>
-                          </div>
-                        );
-                      });
-                    })()}
-                  </div>
-
-                  {/* Visualizer Legend */}
-                  <div className="flex items-center gap-5 text-[11px] font-mono text-slate-400 shrink-0 pt-1">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#8c9ba5]" />
-                      <span>Unsorted</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#f43f5e]" />
-                      <span>Comparing / Swap</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#22c55e]" />
-                      <span>Sorted</span>
+                              key={sIdx}
+                              className={`px-4 py-2 rounded-xl border-2 flex items-center gap-2 font-mono text-sm sm:text-base font-bold transition-all shadow-md ${
+                                isMatch
+                                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 ring-4 ring-emerald-400/40 scale-108 font-black shadow-lg shadow-emerald-500/30'
+                                  : 'bg-[#0b0f14] border-slate-700 text-slate-200'
+                              }`}
+                            >
+                              <span className="font-black text-white text-base">{item}</span>
+                            </div>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -1115,47 +1550,6 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                         });
                       })()}
                     </div>
-                  </div>
-                </div>
-              )}
-
-              {/* ================= FACTORIAL VISUAL GAUGE ================= */}
-              {selectedProblemId === 'factorial' && (
-                <div className="flex flex-col items-center justify-center w-full h-full space-y-5">
-                  <div className="text-center">
-                    <span className="text-xs font-mono text-slate-400 block mb-1 font-bold uppercase tracking-wider">
-                      Running Product Result
-                    </span>
-                    <div className="text-5xl sm:text-6xl font-black font-mono text-emerald-400 tracking-tight animate-in zoom-in-95 duration-150">
-                      {currentStep?.variables?.fact ?? 1}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 flex-wrap justify-center max-w-lg">
-                    {Array.from({ length: Math.min(Math.max(1, parseInt(problemInputs.n, 10) || 1), 12) }, (_, i) => i + 1).map((num) => {
-                      const currentI = typeof currentStep?.variables?.i === 'number' ? currentStep.variables.i : -1;
-                      const isPast = num <= currentI;
-                      const isCurrent = num === currentI;
-
-                      return (
-                        <div key={num} className="flex items-center gap-2">
-                          <div
-                            className={`w-11 h-11 sm:w-13 sm:h-13 rounded-2xl flex flex-col items-center justify-center font-mono font-black text-sm sm:text-base transition-all duration-150 shadow-md ${
-                              isCurrent
-                                ? 'bg-amber-500 text-black shadow-lg scale-115 ring-4 ring-amber-300/50 animate-pulse'
-                                : isPast
-                                ? 'bg-emerald-950/60 border-2 border-emerald-500/60 text-emerald-300'
-                                : 'bg-[#161f28] border-2 border-slate-700 text-slate-500'
-                            }`}
-                          >
-                            <span>{num}</span>
-                          </div>
-                          {num < (parseInt(problemInputs.n, 10) || 1) && (
-                            <span className="text-slate-500 font-bold font-mono text-sm">×</span>
-                          )}
-                        </div>
-                      );
-                    })}
                   </div>
                 </div>
               )}
