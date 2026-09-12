@@ -83,6 +83,12 @@ export interface VisualizerStep {
   extractedLength?: number;
   extractedWord?: string;
   decodedArray?: string[];
+  // For Product of Array Except Self (Prefix & Suffix Balance Scales)
+  prefixProduct?: number;
+  postfixProduct?: number;
+  sweepDirection?: 'left-to-right' | 'right-to-left';
+  currentArrayState?: number[];
+  activeProductIndex?: number;
 }
 
 export interface ProblemDefinition {
@@ -1279,6 +1285,220 @@ public:
       return { steps, result: decodedRes };
     },
   },
+  {
+    id: 'product-of-array-except-self',
+    title: 'Product of Array Except Self',
+    subtitle: 'LeetCode 238 • NeetCode 150 #7',
+    category: 'Arrays & Pointers',
+    difficulty: 'Medium',
+    description: 'Given an integer array nums, return an array res such that res[i] is equal to the product of all the elements of nums except nums[i], strictly without using the division operator.',
+    timeComplexity: 'O(n) — Two linear passes (Pass 1: Left prefix product, Pass 2: Right postfix product)',
+    spaceComplexity: 'O(1) auxiliary space — Output array res does not count towards extra memory',
+    mentalTrigger: 'Total product without self & without division -> TWO-PASS PREFIX & POSTFIX SWEEP (res[i] = Left Products * Right Products).',
+    interviewFlex: '"Instead of allocating two separate arrays for prefixes and suffixes taking O(n) memory, we directly write the prefix products into the output array res, and accumulate the postfix product in a single scalar variable during the reverse pass, achieving strictly O(1) auxiliary space."',
+    edgeCases: [
+      'Array with one zero nums = [1, 2, 0, 4] -> Every element is 0 except the zero position which gets 8',
+      'Array with multiple zeroes nums = [0, 1, 0] -> Every single output element is 0',
+      'Negative numbers nums = [-1, 1, -2, 2] -> Signs multiply correctly',
+      'Constraint: No division operator (/) allowed under any circumstances',
+    ],
+    visualModelDescription: 'The 4 Friends Line Model: For any student in line, their answer is (Everyone to their LEFT) * (Everyone to their RIGHT). 1. Walk 1 (Left to Right): The teacher writes the running left-product onto each student\'s paper (res = [1, 1, 2, 6]). 2. Walk 2 (Right to Left): The teacher walks backwards carrying a running right-product, multiplying it into each student\'s paper. Final res = [24, 12, 8, 6].',
+    defaultInput: { nums: '1, 2, 3, 4' },
+    inputSchema: [
+      { key: 'nums', label: 'Array nums (comma-separated)', type: 'string', placeholder: '1, 2, 3, 4' },
+    ],
+    codeSnippets: {
+      python: `class Solution:
+    def productExceptSelf(self, nums: list[int]) -> list[int]:
+        res = [1] * len(nums)  # 1. Initialize result array with 1s
+
+        # PASS 1: Calculate Left Products (walking left to right)
+        prefix = 1
+        for i in range(len(nums)):
+            res[i] = prefix  # 2. Store product of everything to the left
+            prefix *= nums[i]  # 3. Roll the snowball forward
+
+        # PASS 2: Multiply by Right Products (walking right to left)
+        postfix = 1
+        for i in range(len(nums) - 1, -1, -1):
+            res[i] *= postfix  # 4. Multiply left product by right product
+            postfix *= nums[i]  # 5. Roll the snowball backward
+
+        return res  # 6. Final O(n) result with O(1) extra space!`,
+      cpp: `class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> res(n, 1);
+
+        // Pass 1: Left products
+        int prefix = 1;
+        for (int i = 0; i < n; i++) {
+            res[i] = prefix;
+            prefix *= nums[i];
+        }
+
+        // Pass 2: Right products
+        int postfix = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] *= postfix;
+            postfix *= nums[i];
+        }
+
+        return res;
+    }
+};`,
+      javascript: `class Solution {
+    productExceptSelf(nums) {
+        const n = nums.length;
+        const res = new Array(n).fill(1);
+
+        // Pass 1: Left products
+        let prefix = 1;
+        for (let i = 0; i < n; i++) {
+            res[i] = prefix;
+            prefix *= nums[i];
+        }
+
+        // Pass 2: Right products
+        let postfix = 1;
+        for (let i = n - 1; i >= 0; i--) {
+            res[i] *= postfix;
+            postfix *= nums[i];
+        }
+
+        return res;
+    }
+}`,
+      java: `class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+
+        // Pass 1: Left products
+        int prefix = 1;
+        for (int i = 0; i < n; i++) {
+            res[i] = prefix;
+            prefix *= nums[i];
+        }
+
+        // Pass 2: Right products
+        int postfix = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] *= postfix;
+            postfix *= nums[i];
+        }
+
+        return res;
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawNums = String(inputs.nums ?? '1, 2, 3, 4')
+        .split(',')
+        .map((x) => parseInt(x.trim(), 10))
+        .filter((n) => !isNaN(n));
+      const nums = rawNums.length > 0 ? rawNums : [1, 2, 3, 4];
+      const n = nums.length;
+      const steps: VisualizerStep[] = [];
+      const res = new Array(n).fill(1);
+
+      // Step 0: Initial state
+      steps.push({
+        lineNumber: 3,
+        explanation: `Initialize result array with 1s: res = [${res.join(', ')}]. Input nums = [${nums.join(', ')}].`,
+        variables: { nums: JSON.stringify(nums), res: JSON.stringify(res) },
+        phase: 'init',
+        currentArrayState: [...res],
+        sweepDirection: 'left-to-right',
+        prefixProduct: 1,
+        postfixProduct: 1,
+      });
+
+      // Pass 1: Left-to-right prefix products
+      let prefix = 1;
+      for (let i = 0; i < n; i++) {
+        res[i] = prefix;
+        steps.push({
+          lineNumber: 8,
+          explanation: `[Pass 1 • Left-to-Right] Index ${i} (num=${nums[i]}): Product of all elements to its left is prefix = ${prefix}. Set res[${i}] = ${prefix}.`,
+          variables: { i, num: nums[i], prefix, res: JSON.stringify(res) },
+          phase: 'insert',
+          currentArrayState: [...res],
+          activeProductIndex: i,
+          sweepDirection: 'left-to-right',
+          prefixProduct: prefix,
+          postfixProduct: 1,
+        });
+
+        prefix *= nums[i];
+        steps.push({
+          lineNumber: 9,
+          explanation: `[Pass 1 • Snowball Updated] prefix = prefix * nums[${i}] (${prefix / nums[i]} * ${nums[i]}) = ${prefix}. Ready for next index.`,
+          variables: { nextPrefix: prefix },
+          phase: 'inspect',
+          currentArrayState: [...res],
+          activeProductIndex: i,
+          sweepDirection: 'left-to-right',
+          prefixProduct: prefix,
+          postfixProduct: 1,
+        });
+      }
+
+      steps.push({
+        lineNumber: 11,
+        explanation: `✅ PASS 1 COMPLETE! All Left-side products stored in res = [${res.join(', ')}]. Now starting Pass 2 (Right-to-Left).`,
+        variables: { res: JSON.stringify(res) },
+        phase: 'inspect',
+        currentArrayState: [...res],
+        sweepDirection: 'right-to-left',
+        prefixProduct: prefix,
+        postfixProduct: 1,
+      });
+
+      // Pass 2: Right-to-left postfix products
+      let postfix = 1;
+      for (let i = n - 1; i >= 0; i--) {
+        const leftVal = res[i];
+        res[i] *= postfix;
+        steps.push({
+          lineNumber: 14,
+          explanation: `[Pass 2 • Right-to-Left] Index ${i} (num=${nums[i]}): Multiply left-product (${leftVal}) by right-product postfix (${postfix}) -> res[${i}] = ${res[i]}!`,
+          variables: { i, num: nums[i], leftProduct: leftVal, postfix, newResVal: res[i], res: JSON.stringify(res) },
+          phase: 'match',
+          currentArrayState: [...res],
+          activeProductIndex: i,
+          sweepDirection: 'right-to-left',
+          postfixProduct: postfix,
+        });
+
+        postfix *= nums[i];
+        steps.push({
+          lineNumber: 15,
+          explanation: `[Pass 2 • Snowball Updated] postfix = postfix * nums[${i}] (${postfix / nums[i]} * ${nums[i]}) = ${postfix}.`,
+          variables: { nextPostfix: postfix },
+          phase: 'inspect',
+          currentArrayState: [...res],
+          activeProductIndex: i,
+          sweepDirection: 'right-to-left',
+          postfixProduct: postfix,
+        });
+      }
+
+      // Final Step
+      steps.push({
+        lineNumber: 17,
+        explanation: `🎉 FINAL RESULT COMPLETE: res = [${res.join(', ')}]! Every element holds (Left Product * Right Product) in O(n) time with O(1) auxiliary space.`,
+        variables: { finalResult: JSON.stringify(res) },
+        phase: 'finish',
+        currentArrayState: [...res],
+        sweepDirection: 'right-to-left',
+        postfixProduct: postfix,
+      });
+
+      return { steps, result: res };
+    },
+  },
 ];
 
 interface LearningVisualizerScreenProps {
@@ -1792,6 +2012,29 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                       <button
                         onClick={() => {
                           setSelectedProblemId('string-encode-and-decode');
+                          setActiveTab('visualizer');
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
+                      >
+                        Launch
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Total product without self &amp; without division
+                    </td>
+                    <td className="py-3 px-3 text-emerald-400 font-bold">
+                      Two-Pass Sweep (<code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-emerald-500/30">prefix</code> × <code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-emerald-500/30">postfix</code>)
+                    </td>
+                    <td className="py-3 px-3 text-amber-300 font-semibold">
+                      ⚖️ The 4 Friends Line / Balance Scales
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedProblemId('product-of-array-except-self');
                           setActiveTab('visualizer');
                         }}
                         className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
@@ -2723,6 +2966,135 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                   <div className="w-full max-w-2xl bg-amber-950/30 border border-amber-500/30 rounded-xl p-2.5 flex items-center gap-2 text-xs font-mono text-amber-200">
                     <span className="font-bold text-amber-400">💡 Golden Rule:</span>
                     <span>Always initialize <code className="bg-amber-900/40 px-1 rounded text-amber-300 font-bold">j = i</code> (NOT <code className="text-red-400 font-bold line-through">j = 1</code>) to avoid backward slicing crashes!</span>
+                  </div>
+                </div>
+              )}
+
+              {/* PROBLEM 7: Product of Array Except Self Visualizer */}
+              {selectedProblemId === 'product-of-array-except-self' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
+                  {/* Top Stats Banner: Direction & Running Snowball */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg font-mono text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="text-slate-400 font-bold uppercase">Sweep Phase:</span>
+                      <span
+                        className={`px-2.5 py-0.5 rounded-lg border font-bold flex items-center gap-1 ${
+                          currentStep?.sweepDirection === 'left-to-right'
+                            ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+                            : 'bg-purple-500/20 text-purple-300 border-purple-500/40'
+                        }`}
+                      >
+                        {currentStep?.sweepDirection === 'left-to-right' ? '👉 Pass 1: Left-to-Right' : '👈 Pass 2: Right-to-Left'}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
+                      <span className="text-slate-400">
+                        {currentStep?.sweepDirection === 'left-to-right' ? 'Running Prefix:' : 'Running Postfix:'}
+                      </span>
+                      <span className="text-amber-300 font-black">
+                        {currentStep?.sweepDirection === 'left-to-right'
+                          ? currentStep?.prefixProduct ?? 1
+                          : currentStep?.postfixProduct ?? 1}
+                      </span>
+                    </div>
+
+                    {currentStep?.phase === 'finish' && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>O(n) COMPLETE!</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Input Array (The 4 Friends Line) */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-4 space-y-3 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-cyan-400" />
+                        Original Input Numbers (nums)
+                      </span>
+                      <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-md text-slate-400 font-mono">
+                        Division Banned (No /)
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 py-2 flex-wrap">
+                      {(() => {
+                        const rawNums = String(problemInputs.nums ?? '1, 2, 3, 4')
+                          .split(',')
+                          .map((x) => parseInt(x.trim(), 10))
+                          .filter((n) => !isNaN(n));
+                        const activeIdx = currentStep?.activeProductIndex;
+
+                        return rawNums.map((val, idx) => {
+                          const isActive = activeIdx === idx;
+                          return (
+                            <div key={idx} className="flex flex-col items-center">
+                              <span className="text-[10px] font-mono text-slate-500 mb-1">Index {idx}</span>
+                              <div
+                                className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center font-mono text-base font-black transition-all duration-200 shadow-md ${
+                                  isActive
+                                    ? 'bg-cyan-500 text-slate-950 border-cyan-300 ring-4 ring-cyan-500/40 scale-110 shadow-cyan-500/30'
+                                    : 'bg-[#141c26] border-slate-700 text-slate-200'
+                                }`}
+                              >
+                                {val}
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Output Array res[i] Live State */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-4 space-y-3 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <BookOpen className="w-4 h-4 text-emerald-400" />
+                        Answer Array (res = Left Products × Right Products)
+                      </span>
+                      <span className="text-[10px] text-emerald-300 font-mono font-bold bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/40">
+                        O(1) Auxiliary Space
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-center gap-3 py-2 flex-wrap">
+                      {(() => {
+                        const resArr = currentStep?.currentArrayState || [];
+                        const activeIdx = currentStep?.activeProductIndex;
+
+                        return resArr.map((val, idx) => {
+                          const isActive = activeIdx === idx;
+                          return (
+                            <div key={idx} className="flex flex-col items-center">
+                              <span className="text-[10px] font-mono text-slate-500 mb-1">res[{idx}]</span>
+                              <div
+                                className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center font-mono text-base font-black transition-all duration-200 shadow-md ${
+                                  isActive
+                                    ? 'bg-emerald-500 text-slate-950 border-emerald-300 ring-4 ring-emerald-500/40 scale-110 shadow-emerald-500/30'
+                                    : 'bg-[#0b0f14] border-slate-700 text-emerald-300'
+                                }`}
+                              >
+                                {val}
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* The Mental Formula Card */}
+                  <div className="w-full max-w-2xl bg-slate-900/90 border border-slate-700 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <span className="text-amber-400 font-bold">🎯 Core Formula:</span>
+                      <span>res[i] = (Left Product) × (Right Product)</span>
+                    </div>
+                    <div className="text-emerald-400 font-bold">
+                      No Division • 2 Linear Passes • 100% Optimal
+                    </div>
                   </div>
                 </div>
               )}

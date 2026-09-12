@@ -26,8 +26,8 @@
 | **4** | **Group Anagrams** (LC 49) | ✅ COMPLETED | **The Labeled Buckets** | `defaultdict(list)` with sorted word key |
 | **5** | **Top K Frequent Elements** (LC 347) | ✅ COMPLETED | **The Frequency Shelves (Bucket Sort)** | `freq = [[] for _ in range(n+1)]` + `reversed(freq)` |
 | **6** | **String Encode & Decode** (LC 271) | ✅ COMPLETED | **The Cargo Container Measurement Stamp** | `len#word` framing + Two Pointers (`j = i`) |
-| **7** | **Product of Array Except Self** (LC 238) | ⏳ **NEXT UP** | **Prefix & Suffix Balance Scales** | Prefix product pass $\times$ Suffix product pass |
-| **8** | **Valid Sudoku** (LC 36) | 📋 Queued | **Rows, Columns, and 3x3 Block Grids** | Hash sets per row, col, and 3x3 square |
+| **7** | **Product of Array Except Self** (LC 238) | ✅ COMPLETED | **The 4 Friends Line (Prefix & Postfix)** | `res[i] = prefix * postfix` (two-pass sweep) |
+| **8** | **Valid Sudoku** (LC 36) | ⏳ **NEXT UP** | **Rows, Columns, and 3x3 Block Grids** | Hash sets per row, col, and 3x3 square |
 | **9** | **Longest Consecutive Sequence** (LC 128) | 📋 Queued | **Sequence Start Finder** | `if (num - 1) not in set:` find streak |
 
 ---
@@ -51,9 +51,25 @@
 
 ---
 
+## 📌 Problem 7 Execution Summary & Mental Trigger
+
+* **Date Completed:** September 12, 2026
+* **Problem:** LeetCode 238 / NeetCode 150 #7 — Products of Array Except Self
+* **Core Mental Formula:** 
+  $$\text{res}[i] = (\text{Total product of elements to LEFT}) \times (\text{Total product of elements to RIGHT})$$
+* **The Two-Pass Technique:**
+  1. **Pass 1 (Left-to-Right):** `res[i] = prefix; prefix *= nums[i]`
+  2. **Pass 2 (Right-to-Left):** `res[i] *= postfix; postfix *= nums[i]`
+* **Big-O Stats:**
+  - Time: $\mathcal{O}(n)$ — Exactly two linear passes.
+  - Space: $\mathcal{O}(1)$ auxiliary — Output array `res` does not count towards extra memory; only 2 scalar variables (`prefix`, `postfix`) used.
+  - Constraint Verified: **Strictly zero division operations (`/` banned).**
+
+---
+
 ## 💻 Active Development & Port Registry
 
 * **Main App (FocusFlow):** `/home/kunal-laptop/Desktop/Adhd-support-/`
   - **Dev Server:** `npm run dev` running live at **`http://localhost:3000`**
   - **Interactive Visualizer:** Accessible via the **Learning Visualizer** screen in FocusFlow.
-  - **Contains:** All 6 NeetCode problems with interactive steppers, code in 4 languages, and the Mental Trigger Cheat Sheet.
+  - **Contains:** All 7 NeetCode problems with interactive steppers, code in 4 languages, and the Mental Trigger Cheat Sheet.
