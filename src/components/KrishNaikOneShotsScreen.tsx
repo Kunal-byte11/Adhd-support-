@@ -23,6 +23,8 @@ import {
   ImageIcon,
   Maximize2,
   ZoomIn,
+  ChevronLeft,
+  ChevronRight,
   Download,
   Layers,
   Award,

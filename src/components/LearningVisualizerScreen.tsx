@@ -76,6 +76,13 @@ export interface VisualizerStep {
   activeShelfIndex?: number;
   collectedResults?: (number | string)[];
   kTarget?: number;
+  // For String Encode and Decode (Cargo Measurement Stamp)
+  encodedTape?: string;
+  pointerI?: number;
+  pointerJ?: number;
+  extractedLength?: number;
+  extractedWord?: string;
+  decodedArray?: string[];
 }
 
 export interface ProblemDefinition {
@@ -1026,6 +1033,252 @@ public:
       return { steps, result: res };
     },
   },
+  {
+    id: 'string-encode-and-decode',
+    title: 'Encode & Decode Strings',
+    subtitle: 'LeetCode 271 • NeetCode 150 #6',
+    category: 'Stack & Hashing',
+    difficulty: 'Medium',
+    description: 'Design an algorithm to encode a list of strings to a single string, send it over the network, and decode it back to the original list of strings without delimiter collisions.',
+    timeComplexity: 'O(N) — Linear time where N is total characters across all strings',
+    spaceComplexity: 'O(1) auxiliary space (excluding returned decoded array)',
+    mentalTrigger: 'Packing/unpacking arbitrary data without delimiter collision -> LENGTH-PREFIXED FRAMING (len#word) + TWO POINTERS (j = i).',
+    interviewFlex: '"This pattern is the exact foundational mechanism behind Network Packet Framing (e.g. HTTP/2 Content-Length and TCP packet headers). By using length-prefixed framing, we guarantee delimiter-agnostic serialization in strictly linear O(N) time and O(1) auxiliary space."',
+    edgeCases: [
+      'Empty list [] -> Encodes to "", decodes to []',
+      'Empty string inside list [""] -> Encodes to "0#", decodes to [""]',
+      'Delimiters inside payload ["#", "##"] -> Encoded as "1##2###", internal # is treated as pure data',
+      'The j = 1 Bug: Initializing j = 1 instead of j = i causes backward-slicing crash ValueError on 2nd word! Always initialize j = i.',
+    ],
+    visualModelDescription: 'The Cargo Container Measurement Stamp: 1. Stamp length + "#" + word onto each parcel (len#word). 2. Scanner uses pointer i (length start) and pointer j = i (seeks "#"). 3. Slice length = int(s[i:j]). 4. Grab word s[j+1 : j+1+length]. 5. Jump pointer i past the word.',
+    defaultInput: { strs: 'neet, code, love, you' },
+    inputSchema: [
+      { key: 'strs', label: 'Strings to encode (comma-separated)', type: 'string', placeholder: 'neet, code, love, you' },
+    ],
+    codeSnippets: {
+      python: `class Solution:
+    def encode(self, strs: list[str]) -> str:
+        res = ""  # 1. Initialize single encoded tape
+        for s in strs:
+            res += str(len(s)) + "#" + s  # 2. Stamp: length + '#' + word
+        return res  # 3. Transmit encoded tape
+
+    def decode(self, s: str) -> list[str]:
+        res = []  # 4. Result list of unpacked words
+        i = 0  # 5. Finger i scans tape
+
+        while i < len(s):  # 6. Process each word
+            j = i  # 7. CRITICAL: j starts at i (NOT 1!)
+            while s[j] != "#":  # 8. Advance j until separator '#'
+                j += 1
+
+            length = int(s[i:j])  # 9. Read length number
+            res.append(s[j + 1 : j + 1 + length])  # 10. Extract payload
+            i = j + 1 + length  # 11. Jump finger i past word
+
+        return res`,
+      cpp: `class Solution {
+public:
+    string encode(vector<string>& strs) {
+        string res = "";
+        for (const string& s : strs) {
+            res += to_string(s.size()) + "#" + s;
+        }
+        return res;
+    }
+
+    vector<string> decode(string s) {
+        vector<string> res;
+        int i = 0;
+        while (i < s.size()) {
+            int j = i;
+            while (s[j] != '#') j++;
+            int len = stoi(s.substr(i, j - i));
+            res.push_back(s.substr(j + 1, len));
+            i = j + 1 + len;
+        }
+        return res;
+    }
+};`,
+      javascript: `class Solution {
+    encode(strs) {
+        let res = "";
+        for (let s of strs) {
+            res += s.length + "#" + s;
+        }
+        return res;
+    }
+
+    decode(s) {
+        let res = [];
+        let i = 0;
+        while (i < s.length) {
+            let j = i;
+            while (s[j] !== "#") j++;
+            let len = parseInt(s.substring(i, j), 10);
+            res.push(s.substring(j + 1, j + 1 + len));
+            i = j + 1 + len;
+        }
+        return res;
+    }
+}`,
+      java: `class Solution {
+    public String encode(List<String> strs) {
+        StringBuilder res = new StringBuilder();
+        for (String s : strs) {
+            res.append(s.length()).append("#").append(s);
+        }
+        return res.toString();
+    }
+
+    public List<String> decode(String s) {
+        List<String> res = new ArrayList<>();
+        int i = 0;
+        while (i < s.length()) {
+            int j = i;
+            while (s.charAt(j) != '#') j++;
+            int len = Integer.parseInt(s.substring(i, j));
+            res.add(s.substring(j + 1, j + 1 + len));
+            i = j + 1 + len;
+        }
+        return res;
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const rawInput = String(inputs.strs ?? 'neet, code, love, you');
+      const inputStrs = rawInput.split(',').map((s) => s.trim());
+      const steps: VisualizerStep[] = [];
+
+      // Phase 1: Encode
+      let encodedTape = '';
+      for (const str of inputStrs) {
+        encodedTape += `${str.length}#${str}`;
+      }
+
+      steps.push({
+        lineNumber: 2,
+        explanation: `ENCODER: Received list [${inputStrs.map((w) => `"${w}"`).join(', ')}]. Applying Cargo Measurement Stamp 'len#word'.`,
+        variables: { inputStrs: JSON.stringify(inputStrs), encodedTape },
+        phase: 'init',
+        encodedTape,
+        pointerI: 0,
+        pointerJ: 0,
+        decodedArray: [],
+      });
+
+      steps.push({
+        lineNumber: 5,
+        explanation: `ENCODER COMPLETE: Transmitting single encoded tape: "${encodedTape}" across network.`,
+        variables: { encodedTape },
+        phase: 'finish',
+        encodedTape,
+        pointerI: 0,
+        pointerJ: 0,
+        decodedArray: [],
+      });
+
+      // Phase 2: Decode with Pointers
+      let i = 0;
+      const decodedRes: string[] = [];
+
+      steps.push({
+        lineNumber: 8,
+        explanation: `DECODER START: Finger i initialized at index 0 on tape.`,
+        variables: { i, tapeLength: encodedTape.length, decodedRes: '[]' },
+        phase: 'init',
+        encodedTape,
+        pointerI: 0,
+        pointerJ: 0,
+        decodedArray: [],
+      });
+
+      while (i < encodedTape.length) {
+        let j = i;
+        steps.push({
+          lineNumber: 12,
+          explanation: `[Word ${decodedRes.length + 1}] Pointer j initialized to index i = ${i} (character '${encodedTape[i]}'). Scanner seeks separator '#'.`,
+          variables: { i, j, charAtJ: encodedTape[j], decodedRes: JSON.stringify(decodedRes) },
+          phase: 'inspect',
+          encodedTape,
+          pointerI: i,
+          pointerJ: j,
+          decodedArray: [...decodedRes],
+        });
+
+        while (j < encodedTape.length && encodedTape[j] !== '#') {
+          j++;
+        }
+
+        const lenStr = encodedTape.substring(i, j);
+        const wordLen = parseInt(lenStr, 10);
+
+        steps.push({
+          lineNumber: 16,
+          explanation: `🎯 Found '#' separator at index ${j}! Slice s[${i}:${j}] extracted length number = ${wordLen}.`,
+          variables: { i, j, lengthSlice: `s[${i}:${j}] = "${lenStr}"`, wordLen },
+          phase: 'match',
+          encodedTape,
+          pointerI: i,
+          pointerJ: j,
+          extractedLength: wordLen,
+          decodedArray: [...decodedRes],
+        });
+
+        const word = encodedTape.substring(j + 1, j + 1 + wordLen);
+        decodedRes.push(word);
+
+        steps.push({
+          lineNumber: 17,
+          explanation: `📦 Extracted word: s[${j + 1}:${j + 1 + wordLen}] = "${word}". Appended to decoded result array!`,
+          variables: {
+            word,
+            sliceRange: `s[${j + 1}:${j + 1 + wordLen}]`,
+            decodedArray: JSON.stringify(decodedRes),
+          },
+          phase: 'insert',
+          encodedTape,
+          pointerI: i,
+          pointerJ: j,
+          extractedLength: wordLen,
+          extractedWord: word,
+          decodedArray: [...decodedRes],
+        });
+
+        i = j + 1 + wordLen;
+
+        steps.push({
+          lineNumber: 18,
+          explanation: `👉 Jumped finger i past payload to index ${i} (i = j + 1 + length). ${
+            i < encodedTape.length ? 'Ready to process next word.' : 'Reached end of tape!'
+          }`,
+          variables: { nextI: i, tapeLength: encodedTape.length },
+          phase: 'inspect',
+          encodedTape,
+          pointerI: i,
+          pointerJ: j,
+          extractedLength: wordLen,
+          extractedWord: word,
+          decodedArray: [...decodedRes],
+        });
+      }
+
+      steps.push({
+        lineNumber: 20,
+        explanation: `🎉 DECODER COMPLETE! Successfully unpacked all strings: [${decodedRes
+          .map((w) => `"${w}"`)
+          .join(', ')}].`,
+        variables: { finalResult: JSON.stringify(decodedRes) },
+        phase: 'finish',
+        encodedTape,
+        pointerI: i,
+        pointerJ: i,
+        decodedArray: [...decodedRes],
+      });
+
+      return { steps, result: decodedRes };
+    },
+  },
 ];
 
 interface LearningVisualizerScreenProps {
@@ -1522,6 +1775,29 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                     </td>
                     <td className="py-3 px-3 text-right">
                       <span className="text-[10px] text-slate-500 font-bold">Coming next</span>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Pack / unpack arbitrary strings without delimiter collision
+                    </td>
+                    <td className="py-3 px-3 text-emerald-400 font-bold">
+                      Length Framing (<code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-emerald-500/30">len#word</code>) + Two Pointers
+                    </td>
+                    <td className="py-3 px-3 text-amber-300 font-semibold">
+                      📦 The Cargo Measurement Stamp
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedProblemId('string-encode-and-decode');
+                          setActiveTab('visualizer');
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
+                      >
+                        Launch
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -2323,6 +2599,130 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                         });
                       })()}
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* PROBLEM 6: String Encode & Decode Visualizer */}
+              {selectedProblemId === 'string-encode-and-decode' && (
+                <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
+                  {/* Top Stats Banner */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg font-mono text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="text-slate-400 font-bold uppercase">Scanner:</span>
+                      <span className="px-2.5 py-0.5 rounded-lg bg-blue-500/20 text-blue-300 border border-blue-500/40 font-bold">
+                        i = {currentStep?.pointerI ?? 0}
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-lg bg-pink-500/20 text-pink-300 border border-pink-500/40 font-bold">
+                        j = {currentStep?.pointerJ ?? 0}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
+                      <span className="text-slate-400">Decoded Words:</span>
+                      <span className="text-emerald-300 font-black">
+                        {currentStep?.decodedArray && currentStep.decodedArray.length > 0
+                          ? `[${currentStep.decodedArray.map((w) => `"${w}"`).join(', ')}]`
+                          : '[]'}
+                      </span>
+                    </div>
+
+                    {currentStep?.phase === 'finish' && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>UNPACKED!</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* The Encoded Tape (Visual Character Boxes) */}
+                  <div className="w-full max-w-2xl bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-4 space-y-3 shadow-xl">
+                    <div className="flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2">
+                      <span className="font-extrabold text-white flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-emerald-400" />
+                        The Encoded Network Tape (Length + # + Payload)
+                      </span>
+                      <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded-md text-slate-400 font-mono">
+                        Tape Length: {currentStep?.encodedTape?.length || 0}
+                      </span>
+                    </div>
+
+                    {/* Character boxes with pointer badges */}
+                    <div className="flex items-center gap-1.5 overflow-x-auto py-3 px-1">
+                      {(() => {
+                        const tape = currentStep?.encodedTape || '';
+                        const pI = currentStep?.pointerI;
+                        const pJ = currentStep?.pointerJ;
+                        const wordLen = currentStep?.extractedLength;
+
+                        return tape.split('').map((char, idx) => {
+                          const isI = pI === idx;
+                          const isJ = pJ === idx;
+                          const isHash = char === '#';
+                          const isWordChar =
+                            pJ !== undefined &&
+                            wordLen !== undefined &&
+                            idx > pJ &&
+                            idx <= pJ + wordLen;
+
+                          return (
+                            <div key={idx} className="flex flex-col items-center shrink-0">
+                              <span className="text-[9px] font-mono text-slate-500 mb-1">{idx}</span>
+                              <div
+                                className={`w-8 h-9 rounded-lg border-2 flex items-center justify-center font-mono text-xs font-black relative transition-all duration-200 ${
+                                  isWordChar
+                                    ? 'bg-emerald-950/80 border-emerald-400 text-emerald-200 ring-2 ring-emerald-500/30 scale-105'
+                                    : isHash
+                                    ? 'bg-amber-950/60 border-amber-500 text-amber-300'
+                                    : 'bg-[#141c26] border-slate-700 text-slate-200'
+                                }`}
+                              >
+                                {char}
+                                {isI && (
+                                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-[8px] font-black px-1 rounded shadow-xs">
+                                    i
+                                  </span>
+                                )}
+                                {isJ && (
+                                  <span className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 bg-pink-500 text-white text-[8px] font-black px-1 rounded shadow-xs">
+                                    j
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+
+                  {/* Pointer Math & Slice Breakdown */}
+                  <div className="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3.5 space-y-1.5 font-mono text-xs">
+                      <div className="text-slate-400 font-bold uppercase text-[10px]">Length Slice (s[i:j]):</div>
+                      <div className="text-sm font-black text-cyan-300 flex items-center gap-2">
+                        <span>s[{currentStep?.pointerI ?? 0}:{currentStep?.pointerJ ?? 0}]</span>
+                        <span className="text-slate-500">=</span>
+                        <span className="bg-cyan-950/70 border border-cyan-500/40 px-2 py-0.5 rounded text-cyan-200">
+                          {currentStep?.extractedLength !== undefined ? currentStep.extractedLength : 'Scanning...'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3.5 space-y-1.5 font-mono text-xs">
+                      <div className="text-slate-400 font-bold uppercase text-[10px]">Extracted Word Payload:</div>
+                      <div className="text-sm font-black text-emerald-300 flex items-center gap-2">
+                        <span className="bg-emerald-950/70 border border-emerald-500/40 px-2 py-0.5 rounded text-emerald-200">
+                          {currentStep?.extractedWord ? `"${currentStep.extractedWord}"` : 'Pending...'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* The Golden Rule Reminder */}
+                  <div className="w-full max-w-2xl bg-amber-950/30 border border-amber-500/30 rounded-xl p-2.5 flex items-center gap-2 text-xs font-mono text-amber-200">
+                    <span className="font-bold text-amber-400">💡 Golden Rule:</span>
+                    <span>Always initialize <code className="bg-amber-900/40 px-1 rounded text-amber-300 font-bold">j = i</code> (NOT <code className="text-red-400 font-bold line-through">j = 1</code>) to avoid backward slicing crashes!</span>
                   </div>
                 </div>
               )}
