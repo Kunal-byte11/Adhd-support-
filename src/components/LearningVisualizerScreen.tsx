@@ -89,6 +89,22 @@ export interface VisualizerStep {
   sweepDirection?: 'left-to-right' | 'right-to-left';
   currentArrayState?: number[];
   activeProductIndex?: number;
+  // For Valid Sudoku (9x9 Office Floor)
+  sudokuBoard?: string[][];
+  activeSudokuCell?: [number, number];
+  activeSudokuVal?: string;
+  activeSudokuBox?: [number, number];
+  sudokuRows?: Record<number, string[]>;
+  sudokuCols?: Record<number, string[]>;
+  sudokuBoxes?: Record<string, string[]>;
+  sudokuConflict?: {
+    type: 'row' | 'col' | 'box';
+    r: number;
+    c: number;
+    val: string;
+    conflictingWith?: [number, number];
+  } | null;
+  sudokuCheckedCount?: number;
 }
 
 export interface ProblemDefinition {
@@ -1499,6 +1515,309 @@ public:
       return { steps, result: res };
     },
   },
+  {
+    id: 'valid-sudoku',
+    title: 'Valid Sudoku',
+    subtitle: 'LeetCode 36 • NeetCode 150 #8',
+    category: 'Stack & Hashing',
+    difficulty: 'Medium',
+    description: 'Determine if a 9x9 Sudoku board is valid. Only the filled cells need to be validated according to 3 rules: 1) Each row must contain digits 1-9 without repetition. 2) Each column must contain digits 1-9 without repetition. 3) Each of the nine 3x3 sub-boxes must contain digits 1-9 without repetition.',
+    timeComplexity: 'O(9²) = O(81) = O(1) — Fixed 9x9 board with single pass lookup',
+    spaceComplexity: 'O(9²) = O(81) = O(1) — At most 81 numbers stored across row, col, and box sets',
+    mentalTrigger: 'Validate 9x9 grid with row, column & 3x3 pod constraints -> 3 HASH SETS with (r // 3, c // 3) subgrid mapping.',
+    interviewFlex: '"Instead of 3 separate passes for rows, columns, and 3x3 subgrids, we traverse the 9x9 board in a single pass. We index the nine subgrids cleanly using integer division (r // 3, c // 3). If any digit is already present in rows[r], cols[c], or squares[(r//3, c//3)], we return False in O(1) time."',
+    edgeCases: [
+      'Empty cells (\'.\') -> Ignore and skip without validation',
+      'Row duplicate -> Two identical digits in the same horizontal row',
+      'Column duplicate -> Two identical digits in the same vertical column',
+      '3x3 Sub-box duplicate -> Two identical digits in the same 3x3 box even if in different rows/cols',
+    ],
+    visualModelDescription: 'The 81-Desk Office Floor Model: Imagine an office with 81 desks in a 9x9 grid. Workers have ID badges 1-9. Rule 1: No duplicate badge in the same hallway row. Rule 2: No duplicate badge in the same vertical corridor. Rule 3: No duplicate badge in the same 3x3 glass team pod (r // 3, c // 3). If anyone tries to enter with a duplicate badge, the security alarm rings (False)!',
+    defaultInput: { boardPreset: 'valid' },
+    inputSchema: [
+      { key: 'boardPreset', label: 'Sudoku Board Preset (valid | duplicate-row | duplicate-col | duplicate-box)', type: 'string', placeholder: 'valid' },
+    ],
+    codeSnippets: {
+      python: `class Solution:
+    def isValidSudoku(self, board: list[list[str]]) -> bool:
+        cols = collections.defaultdict(set)  # 1. Seen digits per column
+        rows = collections.defaultdict(set)  # 2. Seen digits per row
+        squares = collections.defaultdict(set)  # 3. Seen digits per 3x3 pod (r//3, c//3)
+
+        for r in range(9):  # 4. Traverse all 9 rows
+            for c in range(9):  # 5. Traverse all 9 columns
+                val = board[r][c]
+                if val == ".":  # 6. Skip empty desk
+                    continue
+
+                # 7. Check if badge already exists in row, col, or 3x3 pod
+                if (val in rows[r] or 
+                    val in cols[c] or 
+                    val in squares[(r // 3, c // 3)]):
+                    return False  # 8. Alarm! Duplicate badge found
+
+                # 9. Register badge in all 3 sets
+                rows[r].add(val)
+                cols[c].add(val)
+                squares[(r // 3, c // 3)].add(val)
+
+        return True  # 10. All 81 desks checked with zero conflicts!`,
+      cpp: `class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        unordered_set<char> rows[9];
+        unordered_set<char> cols[9];
+        unordered_set<char> squares[3][3];
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                char val = board[r][c];
+                if (val == '.') continue;
+
+                if (rows[r].count(val) || 
+                    cols[c].count(val) || 
+                    squares[r / 3][c / 3].count(val)) {
+                    return false;
+                }
+
+                rows[r].insert(val);
+                cols[c].insert(val);
+                squares[r / 3][c / 3].insert(val);
+            }
+        }
+        return true;
+    }
+};`,
+      javascript: `var isValidSudoku = function(board) {
+    const rows = Array.from({ length: 9 }, () => new Set());
+    const cols = Array.from({ length: 9 }, () => new Set());
+    const squares = Array.from({ length: 9 }, () => new Set());
+
+    for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+            const val = board[r][c];
+            if (val === '.') continue;
+
+            const boxIdx = Math.floor(r / 3) * 3 + Math.floor(c / 3);
+            if (rows[r].has(val) || cols[c].has(val) || squares[boxIdx].has(val)) {
+                return false;
+            }
+
+            rows[r].add(val);
+            cols[c].add(val);
+            squares[boxIdx].add(val);
+        }
+    }
+    return true;
+};`,
+      java: `class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        Set<Character>[] rows = new HashSet[9];
+        Set<Character>[] cols = new HashSet[9];
+        Set<Character>[][] squares = new HashSet[3][3];
+
+        for (int i = 0; i < 9; i++) {
+            rows[i] = new HashSet<>();
+            cols[i] = new HashSet<>();
+        }
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                squares[r][c] = new HashSet<>();
+            }
+        }
+
+        for (int r = 0; r < 9; r++) {
+            for (int c = 0; c < 9; c++) {
+                char val = board[r][c];
+                if (val == '.') continue;
+
+                if (rows[r].contains(val) ||
+                    cols[c].contains(val) ||
+                    squares[r / 3][c / 3].contains(val)) {
+                    return false;
+                }
+
+                rows[r].add(val);
+                cols[c].add(val);
+                squares[r / 3][c / 3].add(val);
+            }
+        }
+        return true;
+    }
+}`,
+    },
+    generateSteps: (inputs) => {
+      const PRESETS: Record<string, string[][]> = {
+        'valid': [
+          ["5","3",".",".","7",".",".",".","."],
+          ["6",".",".","1","9","5",".",".","."],
+          [".","9","8",".",".",".",".","6","."],
+          ["8",".",".",".","6",".",".",".","3"],
+          ["4",".",".","8",".","3",".",".","1"],
+          ["7",".",".",".","2",".",".",".","6"],
+          [".","6",".",".",".",".","2","8","."],
+          [".",".",".","4","1","9",".",".","5"],
+          [".",".",".",".","8",".",".","7","9"]
+        ],
+        'duplicate-row': [
+          ["8","3",".",".","7",".",".","8","."],
+          ["6",".",".","1","9","5",".",".","."],
+          [".","9",".",".",".",".",".","6","."],
+          ["4",".",".",".","6",".",".",".","3"],
+          [".",".",".","8",".","3",".",".","1"],
+          ["7",".",".",".","2",".",".",".","6"],
+          [".","6",".",".",".",".","2",".","."],
+          [".",".",".","4","1","9",".",".","5"],
+          [".",".",".",".",".",".",".","7","9"]
+        ],
+        'duplicate-col': [
+          ["7","3",".",".",".",".",".",".","."],
+          ["6",".",".","1","9","5",".",".","."],
+          [".","9","8",".",".",".",".","6","."],
+          ["8",".",".",".","6",".",".",".","3"],
+          ["4",".",".","8",".","3",".",".","1"],
+          ["7",".",".",".","2",".",".",".","6"],
+          [".","6",".",".",".",".","2","8","."],
+          [".",".",".","4","1","9",".",".","5"],
+          [".",".",".",".","8",".",".",".","9"]
+        ],
+        'duplicate-box': [
+          ["5","3",".",".","7",".",".",".","."],
+          ["6",".",".","1","9","5",".",".","."],
+          [".","3","8",".",".",".",".","6","."],
+          ["8",".",".",".","6",".",".",".","."],
+          ["4",".",".","8",".",".",".",".","1"],
+          ["7",".",".",".","2",".",".",".","6"],
+          [".","6",".",".",".",".","2","8","."],
+          [".",".",".","4","1","9",".",".","5"],
+          [".",".",".",".","8",".",".","7","9"]
+        ]
+      };
+
+      const presetKey = String(inputs.boardPreset || 'valid').toLowerCase().trim();
+      const board = PRESETS[presetKey] || PRESETS['valid'];
+
+      const steps: VisualizerStep[] = [];
+      const rows: Record<number, string[]> = {};
+      const cols: Record<number, string[]> = {};
+      const squares: Record<string, string[]> = {};
+
+      for (let i = 0; i < 9; i++) {
+        rows[i] = [];
+        cols[i] = [];
+      }
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+          squares[`${r},${c}`] = [];
+        }
+      }
+
+      // Step 0: Init
+      steps.push({
+        lineNumber: 3,
+        explanation: `Initialize 3 hash set collections: rows[0..8], cols[0..8], and squares[(0..2, 0..2)] to record seen ID badges.`,
+        variables: { rows: 'defaultdict(set)', cols: 'defaultdict(set)', squares: 'defaultdict(set)' },
+        phase: 'init',
+        sudokuBoard: board,
+        sudokuRows: JSON.parse(JSON.stringify(rows)),
+        sudokuCols: JSON.parse(JSON.stringify(cols)),
+        sudokuBoxes: JSON.parse(JSON.stringify(squares)),
+        sudokuCheckedCount: 0,
+      });
+
+      let checkedCount = 0;
+      for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+          const val = board[r][c];
+          const boxR = Math.floor(r / 3);
+          const boxC = Math.floor(c / 3);
+          const boxKey = `${boxR},${boxC}`;
+
+          if (val === '.') {
+            continue;
+          }
+
+          checkedCount++;
+
+          const inRow = rows[r].includes(val);
+          const inCol = cols[c].includes(val);
+          const inSquare = squares[boxKey].includes(val);
+
+          // Step 1: Inspect cell & show coordinate math
+          steps.push({
+            lineNumber: 14,
+            explanation: `Inspecting cell (${r}, ${c}) = "${val}". Coordinate translation: r//3 = ${boxR}, c//3 = ${boxC} ➔ 3x3 Pod (${boxR}, ${boxC}). Checking rows[${r}], cols[${c}], squares[(${boxR}, ${boxC})]...`,
+            variables: { r, c, val, 'boxKey': `(${boxR}, ${boxC})`, inRow, inCol, inSquare },
+            phase: 'inspect',
+            activeSudokuCell: [r, c],
+            activeSudokuVal: val,
+            activeSudokuBox: [boxR, boxC],
+            sudokuBoard: board,
+            sudokuRows: JSON.parse(JSON.stringify(rows)),
+            sudokuCols: JSON.parse(JSON.stringify(cols)),
+            sudokuBoxes: JSON.parse(JSON.stringify(squares)),
+            sudokuCheckedCount: checkedCount,
+          });
+
+          // Duplicate found
+          if (inRow || inCol || inSquare) {
+            const conflictType = inRow ? 'row' : (inCol ? 'col' : 'box');
+            steps.push({
+              lineNumber: 17,
+              explanation: `🚨 DUPLICATE DETECTED! Digit "${val}" is already present in ${conflictType === 'row' ? `Row ${r}` : (conflictType === 'col' ? `Column ${c}` : `3x3 Pod (${boxR}, ${boxC})`)}! Returning False.`,
+              variables: { val, r, c, conflict: conflictType, result: false },
+              phase: 'compare',
+              activeSudokuCell: [r, c],
+              activeSudokuVal: val,
+              activeSudokuBox: [boxR, boxC],
+              sudokuConflict: { type: conflictType, r, c, val },
+              sudokuBoard: board,
+              sudokuRows: JSON.parse(JSON.stringify(rows)),
+              sudokuCols: JSON.parse(JSON.stringify(cols)),
+              sudokuBoxes: JSON.parse(JSON.stringify(squares)),
+              sudokuCheckedCount: checkedCount,
+            });
+            return { steps, result: false };
+          }
+
+          // Register in sets
+          rows[r].push(val);
+          cols[c].push(val);
+          squares[boxKey].push(val);
+
+          steps.push({
+            lineNumber: 20,
+            explanation: `✅ Unique badge! Registered "${val}" into rows[${r}], cols[${c}], and squares[(${boxR}, ${boxC})].`,
+            variables: { val, 'rows[r]': `[${rows[r].join(', ')}]`, 'cols[c]': `[${cols[c].join(', ')}]`, 'squares[box]': `[${squares[boxKey].join(', ')}]` },
+            phase: 'insert',
+            activeSudokuCell: [r, c],
+            activeSudokuVal: val,
+            activeSudokuBox: [boxR, boxC],
+            sudokuBoard: board,
+            sudokuRows: JSON.parse(JSON.stringify(rows)),
+            sudokuCols: JSON.parse(JSON.stringify(cols)),
+            sudokuBoxes: JSON.parse(JSON.stringify(squares)),
+            sudokuCheckedCount: checkedCount,
+          });
+        }
+      }
+
+      // Finish Step
+      steps.push({
+        lineNumber: 24,
+        explanation: `🎉 VALID SUDOKU! Inspected all cells across 9 rows, 9 columns, and 9 sub-boxes with zero conflicts. Returning True!`,
+        variables: { result: true, totalFilledInspected: checkedCount },
+        phase: 'finish',
+        sudokuBoard: board,
+        sudokuRows: JSON.parse(JSON.stringify(rows)),
+        sudokuCols: JSON.parse(JSON.stringify(cols)),
+        sudokuBoxes: JSON.parse(JSON.stringify(squares)),
+        sudokuCheckedCount: checkedCount,
+      });
+
+      return { steps, result: true };
+    },
+  },
 ];
 
 interface LearningVisualizerScreenProps {
@@ -2035,6 +2354,29 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                       <button
                         onClick={() => {
                           setSelectedProblemId('product-of-array-except-self');
+                          setActiveTab('visualizer');
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
+                      >
+                        Launch
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr className="hover:bg-slate-800/30 transition">
+                    <td className="py-3 px-3 font-bold text-white">
+                      Validate 9x9 grid with row, column &amp; 3x3 pod constraints
+                    </td>
+                    <td className="py-3 px-3 text-emerald-400 font-bold">
+                      3 Hash Sets with <code className="bg-[#0b0f14] px-1.5 py-0.5 rounded border border-emerald-500/30">(r // 3, c // 3)</code>
+                    </td>
+                    <td className="py-3 px-3 text-amber-300 font-semibold">
+                      🏢 The 81-Desk Office Floor &amp; Glass Pods
+                    </td>
+                    <td className="py-3 px-3 text-right">
+                      <button
+                        onClick={() => {
+                          setSelectedProblemId('valid-sudoku');
                           setActiveTab('visualizer');
                         }}
                         className="px-2.5 py-1 rounded-lg bg-emerald-600/80 hover:bg-emerald-500 text-white font-mono text-[10px] font-bold transition cursor-pointer shadow-xs"
@@ -3094,6 +3436,313 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                     </div>
                     <div className="text-emerald-400 font-bold">
                       No Division • 2 Linear Passes • 100% Optimal
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* PROBLEM 8: Valid Sudoku Visualizer */}
+              {selectedProblemId === 'valid-sudoku' && (
+                <div className="w-full h-full flex flex-col items-center p-2 space-y-4">
+                  {/* Preset Selector Chips */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border border-slate-700/80 rounded-2xl p-2.5 flex flex-wrap items-center justify-between gap-2 shadow-lg">
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-slate-300">
+                      <Sliders className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="font-bold">Test Presets:</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {[
+                        { id: 'valid', label: '✨ Valid Board (LC #1)' },
+                        { id: 'duplicate-row', label: '⚠️ Row Duplicate (Row 0)' },
+                        { id: 'duplicate-col', label: '⚠️ Col Duplicate (Col 0)' },
+                        { id: 'duplicate-box', label: '⚠️ 3×3 Box Duplicate' },
+                      ].map((preset) => {
+                        const isCurrent = (problemInputs.boardPreset || 'valid') === preset.id;
+                        return (
+                          <button
+                            key={preset.id}
+                            onClick={() => {
+                              setProblemInputs({ boardPreset: preset.id });
+                              setCurrentStepIndex(0);
+                              setIsPlaying(false);
+                            }}
+                            className={`px-2.5 py-1 rounded-xl text-[11px] font-mono font-bold transition-all cursor-pointer border ${
+                              isCurrent
+                                ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm shadow-emerald-500/30'
+                                : 'bg-[#0e141c] hover:bg-slate-800 text-slate-300 border-slate-700'
+                            }`}
+                          >
+                            {preset.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Top Live Inspection HUD */}
+                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg font-mono text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="text-slate-400 font-bold uppercase">Desk (r, c):</span>
+                      <span className="px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-black">
+                        {currentStep?.activeSudokuCell
+                          ? `Row ${currentStep.activeSudokuCell[0]}, Col ${currentStep.activeSudokuCell[1]}`
+                          : 'Waiting...'}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
+                      <span className="text-slate-400">Badge Val:</span>
+                      <span className="text-amber-300 font-black text-sm">
+                        {currentStep?.activeSudokuVal ?? '-'}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="text-slate-400 font-bold uppercase">3×3 Pod Key:</span>
+                      <span className="px-2.5 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 font-black">
+                        {currentStep?.activeSudokuBox
+                          ? `(${currentStep.activeSudokuBox[0]}, ${currentStep.activeSudokuBox[1]})`
+                          : '-'}
+                      </span>
+                    </div>
+
+                    {currentStep?.phase === 'finish' && (
+                      <div className="px-3 py-1 rounded-xl bg-emerald-500 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>VALID SUDOKU!</span>
+                      </div>
+                    )}
+                    {currentStep?.sudokuConflict && (
+                      <div className="px-3 py-1 rounded-xl bg-red-500 text-white font-black text-xs flex items-center gap-1.5 shadow-md animate-bounce">
+                        <XCircle className="w-3.5 h-3.5 stroke-[3]" />
+                        <span>CONFLICT: {currentStep.sudokuConflict.type.toUpperCase()}!</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Main Display: 9x9 Board + 3 Sets Inspector */}
+                  <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+                    {/* Left: 9x9 Sudoku Board */}
+                    <div className="md:col-span-7 bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-col items-center shadow-xl">
+                      <div className="w-full flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2 mb-2">
+                        <span className="font-extrabold text-white flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-cyan-400" />
+                          9×9 Office Floor (81 Desks)
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-mono">
+                          Thick lines = 3×3 Glass Pods
+                        </span>
+                      </div>
+
+                      {/* Col coordinate headers */}
+                      <div className="grid grid-cols-9 gap-0.5 w-[270px] mb-1 font-mono text-[10px] text-slate-500 text-center select-none">
+                        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((c) => (
+                          <div
+                            key={c}
+                            className={`font-bold ${
+                              currentStep?.activeSudokuCell?.[1] === c ? 'text-purple-400' : ''
+                            }`}
+                          >
+                            c{c}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* 9x9 Board Grid */}
+                      <div className="border-2 border-slate-600 rounded-xl overflow-hidden bg-[#0a0d13] shadow-inner">
+                        {(() => {
+                          const board = currentStep?.sudokuBoard || [
+                            ["5","3",".",".","7",".",".",".","."],
+                            ["6",".",".","1","9","5",".",".","."],
+                            [".","9","8",".",".",".",".","6","."],
+                            ["8",".",".",".","6",".",".",".","3"],
+                            ["4",".",".","8",".","3",".",".","1"],
+                            ["7",".",".",".","2",".",".",".","6"],
+                            [".","6",".",".",".",".","2","8","."],
+                            [".",".",".","4","1","9",".",".","5"],
+                            [".",".",".",".","8",".",".","7","9"]
+                          ];
+                          const activeR = currentStep?.activeSudokuCell?.[0];
+                          const activeC = currentStep?.activeSudokuCell?.[1];
+                          const boxR = currentStep?.activeSudokuBox?.[0];
+                          const boxC = currentStep?.activeSudokuBox?.[1];
+                          const conflict = currentStep?.sudokuConflict;
+
+                          return board.map((row, r) => (
+                            <div key={r} className="flex">
+                              {row.map((val, c) => {
+                                const isActive = activeR === r && activeC === c;
+                                const isConflict = conflict && conflict.r === r && conflict.c === c;
+                                const inSameRow = activeR === r;
+                                const inSameCol = activeC === c;
+                                const inSameBox =
+                                  boxR !== undefined &&
+                                  boxC !== undefined &&
+                                  Math.floor(r / 3) === boxR &&
+                                  Math.floor(c / 3) === boxC;
+
+                                // Subgrid border styling
+                                const borderRight =
+                                  c === 2 || c === 5
+                                    ? 'border-r-2 border-r-slate-500'
+                                    : c === 8
+                                    ? ''
+                                    : 'border-r border-r-slate-800/80';
+                                const borderBottom =
+                                  r === 2 || r === 5
+                                    ? 'border-b-2 border-b-slate-500'
+                                    : r === 8
+                                    ? ''
+                                    : 'border-b border-b-slate-800/80';
+
+                                let cellBg = 'bg-[#121822] text-slate-300';
+                                if (isConflict) {
+                                  cellBg = 'bg-red-500 text-white font-black animate-bounce ring-2 ring-red-300 z-30 shadow-lg shadow-red-500/50';
+                                } else if (isActive) {
+                                  cellBg = 'bg-amber-400 text-slate-950 font-black ring-4 ring-amber-400/60 scale-110 z-20 shadow-lg shadow-amber-500/50';
+                                } else if (inSameBox && (inSameRow || inSameCol)) {
+                                  cellBg = 'bg-cyan-500/25 text-cyan-200 font-bold';
+                                } else if (inSameBox) {
+                                  cellBg = 'bg-emerald-500/15 text-emerald-200';
+                                } else if (inSameRow) {
+                                  cellBg = 'bg-blue-500/15 text-blue-200';
+                                } else if (inSameCol) {
+                                  cellBg = 'bg-purple-500/15 text-purple-200';
+                                }
+
+                                return (
+                                  <div
+                                    key={c}
+                                    className={`w-[29px] h-[29px] flex items-center justify-center font-mono text-xs font-bold transition-all duration-150 ${borderRight} ${borderBottom} ${cellBg}`}
+                                    title={`Row ${r}, Col ${c} | Box (${Math.floor(r/3)}, ${Math.floor(c/3)})`}
+                                  >
+                                    {val === '.' ? (
+                                      <span className="text-slate-600/70 text-[10px] select-none">·</span>
+                                    ) : (
+                                      val
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ));
+                        })()}
+                      </div>
+                    </div>
+
+                    {/* Right: The 3 Live Hash Sets Inspector */}
+                    <div className="md:col-span-5 flex flex-col space-y-2.5">
+                      {/* Set 1: rows[r] */}
+                      <div className="bg-[#141c26] border border-slate-700/90 rounded-xl p-3 shadow-md">
+                        <div className="flex items-center justify-between text-xs font-mono mb-2">
+                          <span className="text-blue-400 font-extrabold flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                            rows[{currentStep?.activeSudokuCell?.[0] ?? 'r'}]
+                          </span>
+                          <span className="text-[10px] text-slate-400">Row Tracker</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1 min-h-[26px] bg-[#0c1017] p-1.5 rounded-lg border border-slate-800">
+                          {(() => {
+                            const r = currentStep?.activeSudokuCell?.[0] ?? 0;
+                            const seen = currentStep?.sudokuRows?.[r] || [];
+                            if (seen.length === 0) {
+                              return <span className="text-[10px] text-slate-500 italic font-mono">Empty set()</span>;
+                            }
+                            return seen.map((num, i) => (
+                              <span
+                                key={i}
+                                className="px-1.5 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-500/40 rounded text-[11px] font-mono font-bold"
+                              >
+                                {num}
+                              </span>
+                            ));
+                          })()}
+                        </div>
+                      </div>
+
+                      {/* Set 2: cols[c] */}
+                      <div className="bg-[#141c26] border border-slate-700/90 rounded-xl p-3 shadow-md">
+                        <div className="flex items-center justify-between text-xs font-mono mb-2">
+                          <span className="text-purple-400 font-extrabold flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                            cols[{currentStep?.activeSudokuCell?.[1] ?? 'c'}]
+                          </span>
+                          <span className="text-[10px] text-slate-400">Col Tracker</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1 min-h-[26px] bg-[#0c1017] p-1.5 rounded-lg border border-slate-800">
+                          {(() => {
+                            const c = currentStep?.activeSudokuCell?.[1] ?? 0;
+                            const seen = currentStep?.sudokuCols?.[c] || [];
+                            if (seen.length === 0) {
+                              return <span className="text-[10px] text-slate-500 italic font-mono">Empty set()</span>;
+                            }
+                            return seen.map((num, i) => (
+                              <span
+                                key={i}
+                                className="px-1.5 py-0.5 bg-purple-500/20 text-purple-300 border border-purple-500/40 rounded text-[11px] font-mono font-bold"
+                              >
+                                {num}
+                              </span>
+                            ));
+                          })()}
+                        </div>
+                      </div>
+
+                      {/* Set 3: squares[(r//3, c//3)] */}
+                      <div className="bg-[#141c26] border border-slate-700/90 rounded-xl p-3 shadow-md">
+                        <div className="flex items-center justify-between text-xs font-mono mb-2">
+                          <span className="text-emerald-400 font-extrabold flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            squares[({currentStep?.activeSudokuBox?.[0] ?? 'r//3'}, {currentStep?.activeSudokuBox?.[1] ?? 'c//3'})]
+                          </span>
+                          <span className="text-[10px] text-slate-400">3×3 Pod Tracker</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1 min-h-[26px] bg-[#0c1017] p-1.5 rounded-lg border border-slate-800">
+                          {(() => {
+                            const boxR = currentStep?.activeSudokuBox?.[0] ?? 0;
+                            const boxC = currentStep?.activeSudokuBox?.[1] ?? 0;
+                            const key = `${boxR},${boxC}`;
+                            const seen = currentStep?.sudokuBoxes?.[key] || [];
+                            if (seen.length === 0) {
+                              return <span className="text-[10px] text-slate-500 italic font-mono">Empty set()</span>;
+                            }
+                            return seen.map((num, i) => (
+                              <span
+                                key={i}
+                                className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded text-[11px] font-mono font-bold"
+                              >
+                                {num}
+                              </span>
+                            ));
+                          })()}
+                        </div>
+                      </div>
+
+                      {/* Conflict Alert Box */}
+                      {currentStep?.sudokuConflict && (
+                        <div className="bg-red-950/80 border-2 border-red-500 rounded-xl p-3 text-xs font-mono space-y-1.5 text-red-200 shadow-xl animate-pulse">
+                          <div className="flex items-center gap-1.5 font-black text-red-300">
+                            <AlertTriangle className="w-4 h-4 text-red-400" />
+                            <span>INVALID SUDOKU RULE BROKEN!</span>
+                          </div>
+                          <p className="text-[11px] text-slate-300 leading-snug">
+                            Duplicate <strong className="text-amber-300 text-sm">"{currentStep.sudokuConflict.val}"</strong> found in{' '}
+                            <strong className="text-white uppercase">{currentStep.sudokuConflict.type}</strong>.
+                            The algorithm immediately aborts and returns <code className="text-red-400 font-black">False</code>.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Mental Formula Card */}
+                  <div className="w-full max-w-2xl bg-slate-900/90 border border-slate-700 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
+                    <div className="flex items-center gap-2 text-slate-300">
+                      <span className="text-amber-400 font-bold">🎯 Pod Translation Formula:</span>
+                      <span>key = (r // 3, c // 3)</span>
+                    </div>
+                    <div className="text-emerald-400 font-bold">
+                      O(81) Single Linear Pass • O(1) Time &amp; Space
                     </div>
                   </div>
                 </div>

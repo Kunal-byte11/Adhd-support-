@@ -27,8 +27,8 @@
 | **5** | **Top K Frequent Elements** (LC 347) | ✅ COMPLETED | **The Frequency Shelves (Bucket Sort)** | `freq = [[] for _ in range(n+1)]` + `reversed(freq)` |
 | **6** | **String Encode & Decode** (LC 271) | ✅ COMPLETED | **The Cargo Container Measurement Stamp** | `len#word` framing + Two Pointers (`j = i`) |
 | **7** | **Product of Array Except Self** (LC 238) | ✅ COMPLETED | **The 4 Friends Line (Prefix & Postfix)** | `res[i] = prefix * postfix` (two-pass sweep) |
-| **8** | **Valid Sudoku** (LC 36) | ⏳ **NEXT UP** | **Rows, Columns, and 3x3 Block Grids** | Hash sets per row, col, and 3x3 square |
-| **9** | **Longest Consecutive Sequence** (LC 128) | 📋 Queued | **Sequence Start Finder** | `if (num - 1) not in set:` find streak |
+| **8** | **Valid Sudoku** (LC 36) | ✅ COMPLETED | **The 81-Desk Office Floor & 3x3 Glass Pods** | 3 Hash sets (`rows[r]`, `cols[c]`, `squares[(r//3, c//3)]`) |
+| **9** | **Longest Consecutive Sequence** (LC 128) | ⏳ **NEXT UP** | **Sequence Start Finder** | `if (num - 1) not in set:` find streak |
 
 ---
 
@@ -67,9 +67,30 @@
 
 ---
 
+## 📌 Problem 8 Execution Summary & Mental Trigger
+
+* **Date Completed:** September 13, 2026
+* **Problem:** LeetCode 36 / NeetCode 150 #8 — Valid Sudoku
+* **Core Mental Model:** 
+  **The 81-Desk Office Floor & 3x3 Glass Pods**
+  - Desk at row `r` and column `c` has ID badge `val`.
+  - Ignored empty desks `'.'`.
+  - 3 sets of seen badges:
+    1. `rows[r]` (seen in this hallway row)
+    2. `cols[c]` (seen in this vertical corridor)
+    3. `squares[(r // 3, c // 3)]` (seen in this 3x3 glass meeting pod)
+* **The Coordinate Math Insight:**
+  $$\text{pod\_key} = (r // 3, \, c // 3)$$
+  Integer division maps any row 0..8 into pod row 0..2, and any col 0..8 into pod col 0..2.
+* **Big-O Stats:**
+  - Time: $\mathcal{O}(9^2) = \mathcal{O}(81) = \mathcal{O}(1)$ — Single pass over 81 desks.
+  - Space: $\mathcal{O}(9^2) = \mathcal{O}(81) = \mathcal{O}(1)$ — Max 81 values stored across sets.
+
+---
+
 ## 💻 Active Development & Port Registry
 
 * **Main App (FocusFlow):** `/home/kunal-laptop/Desktop/Adhd-support-/`
   - **Dev Server:** `npm run dev` running live at **`http://localhost:3000`**
   - **Interactive Visualizer:** Accessible via the **Learning Visualizer** screen in FocusFlow.
-  - **Contains:** All 7 NeetCode problems with interactive steppers, code in 4 languages, and the Mental Trigger Cheat Sheet.
+  - **Contains:** All 8 NeetCode problems with interactive steppers, authentic 9x9 Sudoku board with real-time 3-set inspectors, code in 4 languages, and the Mental Trigger Cheat Sheet.
