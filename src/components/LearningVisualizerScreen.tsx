@@ -1827,12 +1827,13 @@ interface LearningVisualizerScreenProps {
 export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> = ({
   isSidebarCollapsed = false,
 }) => {
-  const [selectedProblemId, setSelectedProblemId] = useState<string>('contains-duplicate');
+  // Default to newest problem first (Stack / LIFO order)
+  const [selectedProblemId, setSelectedProblemId] = useState<string>(PROBLEMS_DATA[PROBLEMS_DATA.length - 1]?.id || 'contains-duplicate');
   const [activeLanguage, setActiveLanguage] = useState<'python' | 'cpp' | 'javascript' | 'java'>('python');
   const [activeTab, setActiveTab] = useState<'visualizer' | 'blueprint' | 'cheatsheet'>('visualizer');
 
   const currentProblem = useMemo(() => {
-    return PROBLEMS_DATA.find((p) => p.id === selectedProblemId) || PROBLEMS_DATA[0];
+    return PROBLEMS_DATA.find((p) => p.id === selectedProblemId) || PROBLEMS_DATA[PROBLEMS_DATA.length - 1];
   }, [selectedProblemId]);
 
   // Input states
@@ -1954,9 +1955,9 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
               }}
               className="bg-[#141b24] hover:bg-[#1a2330] border border-slate-700/90 hover:border-emerald-500/50 text-xs text-white font-bold rounded-xl px-3 py-1.5 focus:outline-hidden focus:ring-2 focus:ring-emerald-500/40 cursor-pointer shadow-md transition-all font-mono"
             >
-              {PROBLEMS_DATA.map((p) => (
+              {[...PROBLEMS_DATA].reverse().map((p, revIdx) => (
                 <option key={p.id} value={p.id} className="bg-[#121820] text-white">
-                  {p.title}
+                  {p.subtitle ? `${p.subtitle.split('•')[1]?.trim() || ''}: ${p.title}` : p.title} {revIdx === 0 ? '🔥 (NEW)' : ''}
                 </option>
               ))}
             </select>
@@ -2390,22 +2391,24 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
             </div>
           </div>
 
-          {/* 3 Interactive Revision Spread Cards */}
+          {/* Interactive Revision Spread Cards (Stack / LIFO Order: Newest First) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {PROBLEMS_DATA.map((prob, idx) => (
-              <div
-                key={prob.id}
-                className="bg-[#121820] border border-slate-800 hover:border-slate-700 rounded-2xl p-4 flex flex-col justify-between space-y-3 shadow-lg transition-all hover:shadow-emerald-500/5"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-md border border-emerald-500/30">
-                      Problem {idx + 1}
-                    </span>
-                    <span className="text-[10px] font-mono text-slate-400 font-bold">
-                      {prob.subtitle}
-                    </span>
-                  </div>
+            {[...PROBLEMS_DATA].reverse().map((prob, revIdx) => {
+              const origIdx = PROBLEMS_DATA.findIndex((p) => p.id === prob.id) + 1;
+              return (
+                <div
+                  key={prob.id}
+                  className="bg-[#121820] border border-slate-800 hover:border-slate-700 rounded-2xl p-4 flex flex-col justify-between space-y-3 shadow-lg transition-all hover:shadow-emerald-500/5"
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                        Problem #{origIdx} {revIdx === 0 ? '🔥 NEW' : ''}
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400 font-bold">
+                        {prob.subtitle}
+                      </span>
+                    </div>
 
                   <h3 className="text-sm font-black text-white font-mono">{prob.title}</h3>
                   <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
@@ -2440,8 +2443,9 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
         </div>
       )}
 
@@ -2515,7 +2519,7 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
             </div>
 
             {/* Graphic Visual Canvas */}
-            <div className="flex-1 min-h-0 bg-[#121820] border border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center relative overflow-hidden shadow-xl">
+            <div className="flex-1 min-h-0 bg-[#121820] border border-slate-800 rounded-2xl p-4 flex flex-col justify-between items-center relative overflow-y-auto shadow-xl">
               {/* ================= CONTAINS DUPLICATE: THE BLANK NOTEPAD (HASH SET) VISUAL MODEL ================= */}
               {selectedProblemId === 'contains-duplicate' && (
                 <div className="w-full h-full flex flex-col justify-around items-center p-2 space-y-3">
@@ -3443,9 +3447,9 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
 
               {/* PROBLEM 8: Valid Sudoku Visualizer */}
               {selectedProblemId === 'valid-sudoku' && (
-                <div className="w-full h-full flex flex-col items-center p-2 space-y-4">
+                <div className="w-full flex flex-col items-center p-2 space-y-4">
                   {/* Preset Selector Chips */}
-                  <div className="w-full max-w-2xl bg-[#141c26] border border-slate-700/80 rounded-2xl p-2.5 flex flex-wrap items-center justify-between gap-2 shadow-lg">
+                  <div className="w-full max-w-3xl bg-[#141c26] border border-slate-700/80 rounded-2xl p-2.5 flex flex-wrap items-center justify-between gap-2 shadow-lg">
                     <div className="flex items-center gap-1.5 text-xs font-mono text-slate-300">
                       <Sliders className="w-3.5 h-3.5 text-emerald-400" />
                       <span className="font-bold">Test Presets:</span>
@@ -3466,9 +3470,9 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                               setCurrentStepIndex(0);
                               setIsPlaying(false);
                             }}
-                            className={`px-2.5 py-1 rounded-xl text-[11px] font-mono font-bold transition-all cursor-pointer border ${
+                            className={`px-3 py-1 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer border ${
                               isCurrent
-                                ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-sm shadow-emerald-500/30'
+                                ? 'bg-emerald-500 text-slate-950 border-emerald-400 shadow-md shadow-emerald-500/30'
                                 : 'bg-[#0e141c] hover:bg-slate-800 text-slate-300 border-slate-700'
                             }`}
                           >
@@ -3480,28 +3484,28 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                   </div>
 
                   {/* Top Live Inspection HUD */}
-                  <div className="w-full max-w-2xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg font-mono text-xs">
+                  <div className="w-full max-w-3xl bg-[#141c26] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3 shadow-lg font-mono text-xs">
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-400 font-bold uppercase">Desk (r, c):</span>
-                      <span className="px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-black">
+                      <span className="text-slate-400 font-bold uppercase">Active Cell:</span>
+                      <span className="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-black">
                         {currentStep?.activeSudokuCell
-                          ? `Row ${currentStep.activeSudokuCell[0]}, Col ${currentStep.activeSudokuCell[1]}`
+                          ? `(Row ${currentStep.activeSudokuCell[0]}, Col ${currentStep.activeSudokuCell[1]})`
                           : 'Waiting...'}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2 bg-[#0b0f14] px-3 py-1 rounded-xl border border-slate-700">
-                      <span className="text-slate-400">Badge Val:</span>
-                      <span className="text-amber-300 font-black text-sm">
+                      <span className="text-slate-400">Badge Digit:</span>
+                      <span className="text-amber-300 font-black text-base">
                         {currentStep?.activeSudokuVal ?? '-'}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-400 font-bold uppercase">3×3 Pod Key:</span>
-                      <span className="px-2.5 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 font-black">
+                      <span className="text-slate-400 font-bold uppercase">Pod Math:</span>
+                      <span className="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 font-black">
                         {currentStep?.activeSudokuBox
-                          ? `(${currentStep.activeSudokuBox[0]}, ${currentStep.activeSudokuBox[1]})`
+                          ? `(${currentStep.activeSudokuCell?.[0]}//3, ${currentStep.activeSudokuCell?.[1]}//3) ➔ (${currentStep.activeSudokuBox[0]}, ${currentStep.activeSudokuBox[1]})`
                           : '-'}
                       </span>
                     </div>
@@ -3520,138 +3524,154 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                     )}
                   </div>
 
-                  {/* Main Display: 9x9 Board + 3 Sets Inspector */}
-                  <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                    {/* Left: 9x9 Sudoku Board */}
-                    <div className="md:col-span-7 bg-[#0e141c] border-2 border-slate-700/80 rounded-2xl p-3 flex flex-col items-center shadow-xl">
-                      <div className="w-full flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2 mb-2">
+                  {/* Main Display: Sudoku Board + 3 Sets Inspector */}
+                  <div className="w-full max-w-3xl flex flex-col lg:flex-row items-center lg:items-start justify-center gap-4">
+                    {/* Left: 9x9 Sudoku Board with proper Row and Column headers */}
+                    <div className="bg-[#0e141c] border-2 border-slate-700/90 rounded-2xl p-3 flex flex-col items-center shadow-2xl shrink-0">
+                      <div className="w-full flex items-center justify-between text-xs font-mono text-slate-400 border-b border-slate-800 pb-2 mb-2.5">
                         <span className="font-extrabold text-white flex items-center gap-2">
                           <Layers className="w-4 h-4 text-cyan-400" />
                           9×9 Office Floor (81 Desks)
                         </span>
-                        <span className="text-[10px] text-slate-400 font-mono">
-                          Thick lines = 3×3 Glass Pods
+                        <span className="text-[10px] text-amber-300 font-mono font-bold bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">
+                          Thick border = 3×3 Pod
                         </span>
                       </div>
 
-                      {/* Col coordinate headers */}
-                      <div className="grid grid-cols-9 gap-0.5 w-[270px] mb-1 font-mono text-[10px] text-slate-500 text-center select-none">
-                        {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((c) => (
-                          <div
-                            key={c}
-                            className={`font-bold ${
-                              currentStep?.activeSudokuCell?.[1] === c ? 'text-purple-400' : ''
-                            }`}
-                          >
-                            c{c}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* 9x9 Board Grid */}
-                      <div className="border-2 border-slate-600 rounded-xl overflow-hidden bg-[#0a0d13] shadow-inner">
-                        {(() => {
-                          const board = currentStep?.sudokuBoard || [
-                            ["5","3",".",".","7",".",".",".","."],
-                            ["6",".",".","1","9","5",".",".","."],
-                            [".","9","8",".",".",".",".","6","."],
-                            ["8",".",".",".","6",".",".",".","3"],
-                            ["4",".",".","8",".","3",".",".","1"],
-                            ["7",".",".",".","2",".",".",".","6"],
-                            [".","6",".",".",".",".","2","8","."],
-                            [".",".",".","4","1","9",".",".","5"],
-                            [".",".",".",".","8",".",".","7","9"]
-                          ];
-                          const activeR = currentStep?.activeSudokuCell?.[0];
-                          const activeC = currentStep?.activeSudokuCell?.[1];
-                          const boxR = currentStep?.activeSudokuBox?.[0];
-                          const boxC = currentStep?.activeSudokuBox?.[1];
-                          const conflict = currentStep?.sudokuConflict;
-
-                          return board.map((row, r) => (
-                            <div key={r} className="flex">
-                              {row.map((val, c) => {
-                                const isActive = activeR === r && activeC === c;
-                                const isConflict = conflict && conflict.r === r && conflict.c === c;
-                                const inSameRow = activeR === r;
-                                const inSameCol = activeC === c;
-                                const inSameBox =
-                                  boxR !== undefined &&
-                                  boxC !== undefined &&
-                                  Math.floor(r / 3) === boxR &&
-                                  Math.floor(c / 3) === boxC;
-
-                                // Subgrid border styling
-                                const borderRight =
-                                  c === 2 || c === 5
-                                    ? 'border-r-2 border-r-slate-500'
-                                    : c === 8
-                                    ? ''
-                                    : 'border-r border-r-slate-800/80';
-                                const borderBottom =
-                                  r === 2 || r === 5
-                                    ? 'border-b-2 border-b-slate-500'
-                                    : r === 8
-                                    ? ''
-                                    : 'border-b border-b-slate-800/80';
-
-                                let cellBg = 'bg-[#121822] text-slate-300';
-                                if (isConflict) {
-                                  cellBg = 'bg-red-500 text-white font-black animate-bounce ring-2 ring-red-300 z-30 shadow-lg shadow-red-500/50';
-                                } else if (isActive) {
-                                  cellBg = 'bg-amber-400 text-slate-950 font-black ring-4 ring-amber-400/60 scale-110 z-20 shadow-lg shadow-amber-500/50';
-                                } else if (inSameBox && (inSameRow || inSameCol)) {
-                                  cellBg = 'bg-cyan-500/25 text-cyan-200 font-bold';
-                                } else if (inSameBox) {
-                                  cellBg = 'bg-emerald-500/15 text-emerald-200';
-                                } else if (inSameRow) {
-                                  cellBg = 'bg-blue-500/15 text-blue-200';
-                                } else if (inSameCol) {
-                                  cellBg = 'bg-purple-500/15 text-purple-200';
-                                }
-
-                                return (
-                                  <div
-                                    key={c}
-                                    className={`w-[29px] h-[29px] flex items-center justify-center font-mono text-xs font-bold transition-all duration-150 ${borderRight} ${borderBottom} ${cellBg}`}
-                                    title={`Row ${r}, Col ${c} | Box (${Math.floor(r/3)}, ${Math.floor(c/3)})`}
-                                  >
-                                    {val === '.' ? (
-                                      <span className="text-slate-600/70 text-[10px] select-none">·</span>
-                                    ) : (
-                                      val
-                                    )}
-                                  </div>
-                                );
-                              })}
+                      {/* Board Layout with Row & Col headers */}
+                      <div className="flex flex-col select-none">
+                        {/* Column coordinate headers */}
+                        <div className="flex items-center pl-7 mb-1 font-mono text-xs font-bold text-slate-400">
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((c) => (
+                            <div
+                              key={c}
+                              className={`w-[32px] sm:w-[36px] text-center ${
+                                currentStep?.activeSudokuCell?.[1] === c ? 'text-amber-400 font-black scale-110' : ''
+                              }`}
+                            >
+                              c{c}
                             </div>
-                          ));
-                        })()}
+                          ))}
+                        </div>
+
+                        {/* 9 Rows */}
+                        <div className="flex flex-col border-3 border-slate-500 rounded-xl overflow-hidden bg-[#0a0d13] shadow-xl">
+                          {(() => {
+                            const board = currentStep?.sudokuBoard || [
+                              ["5","3",".",".","7",".",".",".","."],
+                              ["6",".",".","1","9","5",".",".","."],
+                              [".","9","8",".",".",".",".","6","."],
+                              ["8",".",".",".","6",".",".",".","3"],
+                              ["4",".",".","8",".","3",".",".","1"],
+                              ["7",".",".",".","2",".",".",".","6"],
+                              [".","6",".",".",".",".","2","8","."],
+                              [".",".",".","4","1","9",".",".","5"],
+                              [".",".",".",".","8",".",".","7","9"]
+                            ];
+                            const activeR = currentStep?.activeSudokuCell?.[0];
+                            const activeC = currentStep?.activeSudokuCell?.[1];
+                            const boxR = currentStep?.activeSudokuBox?.[0];
+                            const boxC = currentStep?.activeSudokuBox?.[1];
+                            const conflict = currentStep?.sudokuConflict;
+
+                            return board.map((row, r) => {
+                              const isRowThick = r === 2 || r === 5;
+                              return (
+                                <div
+                                  key={r}
+                                  className={`flex items-center ${
+                                    isRowThick ? 'border-b-4 border-b-slate-400' : r === 8 ? '' : 'border-b border-b-slate-800'
+                                  }`}
+                                >
+                                  {/* Row coordinate header */}
+                                  <div
+                                    className={`w-7 text-right pr-2 font-mono text-xs font-bold ${
+                                      activeR === r ? 'text-amber-400 font-black' : 'text-slate-500'
+                                    }`}
+                                  >
+                                    r{r}
+                                  </div>
+
+                                  {/* 9 Cells in this row */}
+                                  {row.map((val, c) => {
+                                    const isActive = activeR === r && activeC === c;
+                                    const isConflict = conflict && conflict.r === r && conflict.c === c;
+                                    const inSameRow = activeR === r;
+                                    const inSameCol = activeC === c;
+                                    const inSameBox =
+                                      boxR !== undefined &&
+                                      boxC !== undefined &&
+                                      Math.floor(r / 3) === boxR &&
+                                      Math.floor(c / 3) === boxC;
+                                    const isColThick = c === 2 || c === 5;
+
+                                    let cellBg = 'bg-[#121822] text-slate-200';
+                                    if (isConflict) {
+                                      cellBg = 'bg-red-600 text-white font-black animate-pulse ring-4 ring-red-400 z-30 shadow-lg shadow-red-500/50';
+                                    } else if (isActive) {
+                                      cellBg = 'bg-amber-400 text-slate-950 font-black ring-4 ring-amber-400/80 scale-105 z-20 shadow-lg shadow-amber-500/60';
+                                    } else if (inSameBox && (inSameRow || inSameCol)) {
+                                      cellBg = 'bg-cyan-500/30 text-cyan-100 font-bold';
+                                    } else if (inSameBox) {
+                                      cellBg = 'bg-emerald-500/20 text-emerald-200';
+                                    } else if (inSameRow) {
+                                      cellBg = 'bg-blue-500/20 text-blue-200';
+                                    } else if (inSameCol) {
+                                      cellBg = 'bg-purple-500/20 text-purple-200';
+                                    }
+
+                                    return (
+                                      <div
+                                        key={c}
+                                        className={`w-[32px] h-[32px] sm:w-[36px] sm:h-[36px] flex items-center justify-center font-mono text-sm sm:text-base font-bold transition-all duration-150 ${
+                                          isColThick
+                                            ? 'border-r-4 border-r-slate-400'
+                                            : c === 8
+                                            ? ''
+                                            : 'border-r border-r-slate-800'
+                                        } ${cellBg}`}
+                                        title={`Cell (Row ${r}, Col ${c}) | Pod (${Math.floor(r/3)}, ${Math.floor(c/3)})`}
+                                      >
+                                        {val === '.' ? (
+                                          <span className="text-slate-600 font-normal text-xs select-none">·</span>
+                                        ) : (
+                                          val
+                                        )}
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              );
+                            });
+                          })()}
+                        </div>
                       </div>
                     </div>
 
                     {/* Right: The 3 Live Hash Sets Inspector */}
-                    <div className="md:col-span-5 flex flex-col space-y-2.5">
+                    <div className="flex-1 w-full flex flex-col space-y-3 min-w-[240px]">
                       {/* Set 1: rows[r] */}
-                      <div className="bg-[#141c26] border border-slate-700/90 rounded-xl p-3 shadow-md">
+                      <div className="bg-[#141c26] border border-blue-500/40 rounded-xl p-3 shadow-md">
                         <div className="flex items-center justify-between text-xs font-mono mb-2">
                           <span className="text-blue-400 font-extrabold flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                            <span className="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
                             rows[{currentStep?.activeSudokuCell?.[0] ?? 'r'}]
                           </span>
-                          <span className="text-[10px] text-slate-400">Row Tracker</span>
+                          <span className="text-[10px] text-blue-300 font-bold bg-blue-950/70 px-2 py-0.5 rounded border border-blue-500/30">
+                            Row Set
+                          </span>
                         </div>
-                        <div className="flex flex-wrap gap-1 min-h-[26px] bg-[#0c1017] p-1.5 rounded-lg border border-slate-800">
+                        <div className="flex flex-wrap gap-1.5 min-h-[30px] bg-[#0c1017] p-2 rounded-lg border border-slate-800 items-center">
                           {(() => {
                             const r = currentStep?.activeSudokuCell?.[0] ?? 0;
                             const seen = currentStep?.sudokuRows?.[r] || [];
                             if (seen.length === 0) {
-                              return <span className="text-[10px] text-slate-500 italic font-mono">Empty set()</span>;
+                              return <span className="text-[11px] text-slate-500 italic font-mono">Empty set()</span>;
                             }
                             return seen.map((num, i) => (
                               <span
                                 key={i}
-                                className="px-1.5 py-0.5 bg-blue-500/20 text-blue-300 border border-blue-500/40 rounded text-[11px] font-mono font-bold"
+                                className="px-2 py-0.5 bg-blue-500/25 text-blue-300 border border-blue-500/50 rounded-md text-xs font-mono font-black"
                               >
                                 {num}
                               </span>
@@ -3661,25 +3681,27 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                       </div>
 
                       {/* Set 2: cols[c] */}
-                      <div className="bg-[#141c26] border border-slate-700/90 rounded-xl p-3 shadow-md">
+                      <div className="bg-[#141c26] border border-purple-500/40 rounded-xl p-3 shadow-md">
                         <div className="flex items-center justify-between text-xs font-mono mb-2">
                           <span className="text-purple-400 font-extrabold flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-purple-400"></span>
+                            <span className="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
                             cols[{currentStep?.activeSudokuCell?.[1] ?? 'c'}]
                           </span>
-                          <span className="text-[10px] text-slate-400">Col Tracker</span>
+                          <span className="text-[10px] text-purple-300 font-bold bg-purple-950/70 px-2 py-0.5 rounded border border-purple-500/30">
+                            Column Set
+                          </span>
                         </div>
-                        <div className="flex flex-wrap gap-1 min-h-[26px] bg-[#0c1017] p-1.5 rounded-lg border border-slate-800">
+                        <div className="flex flex-wrap gap-1.5 min-h-[30px] bg-[#0c1017] p-2 rounded-lg border border-slate-800 items-center">
                           {(() => {
                             const c = currentStep?.activeSudokuCell?.[1] ?? 0;
                             const seen = currentStep?.sudokuCols?.[c] || [];
                             if (seen.length === 0) {
-                              return <span className="text-[10px] text-slate-500 italic font-mono">Empty set()</span>;
+                              return <span className="text-[11px] text-slate-500 italic font-mono">Empty set()</span>;
                             }
                             return seen.map((num, i) => (
                               <span
                                 key={i}
-                                className="px-1.5 py-0.5 bg-purple-500/20 text-purple-300 border border-purple-500/40 rounded text-[11px] font-mono font-bold"
+                                className="px-2 py-0.5 bg-purple-500/25 text-purple-300 border border-purple-500/50 rounded-md text-xs font-mono font-black"
                               >
                                 {num}
                               </span>
@@ -3689,27 +3711,29 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
                       </div>
 
                       {/* Set 3: squares[(r//3, c//3)] */}
-                      <div className="bg-[#141c26] border border-slate-700/90 rounded-xl p-3 shadow-md">
+                      <div className="bg-[#141c26] border border-emerald-500/40 rounded-xl p-3 shadow-md">
                         <div className="flex items-center justify-between text-xs font-mono mb-2">
                           <span className="text-emerald-400 font-extrabold flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                             squares[({currentStep?.activeSudokuBox?.[0] ?? 'r//3'}, {currentStep?.activeSudokuBox?.[1] ?? 'c//3'})]
                           </span>
-                          <span className="text-[10px] text-slate-400">3×3 Pod Tracker</span>
+                          <span className="text-[10px] text-emerald-300 font-bold bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-500/30">
+                            3×3 Pod Set
+                          </span>
                         </div>
-                        <div className="flex flex-wrap gap-1 min-h-[26px] bg-[#0c1017] p-1.5 rounded-lg border border-slate-800">
+                        <div className="flex flex-wrap gap-1.5 min-h-[30px] bg-[#0c1017] p-2 rounded-lg border border-slate-800 items-center">
                           {(() => {
                             const boxR = currentStep?.activeSudokuBox?.[0] ?? 0;
                             const boxC = currentStep?.activeSudokuBox?.[1] ?? 0;
                             const key = `${boxR},${boxC}`;
                             const seen = currentStep?.sudokuBoxes?.[key] || [];
                             if (seen.length === 0) {
-                              return <span className="text-[10px] text-slate-500 italic font-mono">Empty set()</span>;
+                              return <span className="text-[11px] text-slate-500 italic font-mono">Empty set()</span>;
                             }
                             return seen.map((num, i) => (
                               <span
                                 key={i}
-                                className="px-1.5 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded text-[11px] font-mono font-bold"
+                                className="px-2 py-0.5 bg-emerald-500/25 text-emerald-300 border border-emerald-500/50 rounded-md text-xs font-mono font-black"
                               >
                                 {num}
                               </span>
@@ -3720,26 +3744,27 @@ export const LearningVisualizerScreen: React.FC<LearningVisualizerScreenProps> =
 
                       {/* Conflict Alert Box */}
                       {currentStep?.sudokuConflict && (
-                        <div className="bg-red-950/80 border-2 border-red-500 rounded-xl p-3 text-xs font-mono space-y-1.5 text-red-200 shadow-xl animate-pulse">
-                          <div className="flex items-center gap-1.5 font-black text-red-300">
-                            <AlertTriangle className="w-4 h-4 text-red-400" />
-                            <span>INVALID SUDOKU RULE BROKEN!</span>
+                        <div className="bg-red-950/90 border-2 border-red-500 rounded-xl p-3.5 text-xs font-mono space-y-2 text-red-200 shadow-2xl animate-pulse">
+                          <div className="flex items-center gap-2 font-black text-red-300 text-sm">
+                            <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+                            <span>INVALID SUDOKU: DUPLICATE FOUND!</span>
                           </div>
-                          <p className="text-[11px] text-slate-300 leading-snug">
-                            Duplicate <strong className="text-amber-300 text-sm">"{currentStep.sudokuConflict.val}"</strong> found in{' '}
-                            <strong className="text-white uppercase">{currentStep.sudokuConflict.type}</strong>.
-                            The algorithm immediately aborts and returns <code className="text-red-400 font-black">False</code>.
+                          <p className="text-xs text-slate-200 leading-relaxed">
+                            Number <strong className="text-amber-300 font-black text-sm">"{currentStep.sudokuConflict.val}"</strong> already exists in <strong className="text-white uppercase font-black">{currentStep.sudokuConflict.type}</strong>!
                           </p>
+                          <div className="text-[11px] bg-black/40 p-2 rounded-md border border-red-500/30 font-mono">
+                            ⚡ Early Exit: Returns <code className="text-red-400 font-black">False</code> immediately without inspecting the rest of the board.
+                          </div>
                         </div>
                       )}
                     </div>
                   </div>
 
                   {/* Mental Formula Card */}
-                  <div className="w-full max-w-2xl bg-slate-900/90 border border-slate-700 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
+                  <div className="w-full max-w-3xl bg-slate-900/90 border border-slate-700 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
                     <div className="flex items-center gap-2 text-slate-300">
-                      <span className="text-amber-400 font-bold">🎯 Pod Translation Formula:</span>
-                      <span>key = (r // 3, c // 3)</span>
+                      <span className="text-amber-400 font-bold">🎯 The 3-Guard Rule:</span>
+                      <span>No duplicates in Row, Column, OR (r // 3, c // 3) Pod</span>
                     </div>
                     <div className="text-emerald-400 font-bold">
                       O(81) Single Linear Pass • O(1) Time &amp; Space
