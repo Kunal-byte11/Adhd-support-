@@ -1,15 +1,9 @@
 export type ScreenType =
   | 'learning'
   | 'sem7'
-  | 'roadmap'
-  | 'notes'
-  | 'dmn'
-  | 'woop'
-  | 'breathing'
-  | 'sounds'
-  | 'neuro';
+  | 'roadmap';
 
-export type UserRole = 'kunal';
+export type UserRole = 'kunal' | 'guest' | string;
 
 export interface StudyTheaterVideo {
   id: string;

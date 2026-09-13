@@ -3,7 +3,6 @@ import {
   ScreenType,
   TaskItem,
   UserRole,
-  IWoopGoal,
   StudyTheaterVideo,
 } from './types';
 import { Sidebar } from './components/Sidebar';
@@ -12,18 +11,11 @@ import { LearningVisualizerScreen } from './components/LearningVisualizerScreen'
 import { RoadmapScreen } from './components/RoadmapScreen';
 import { KrishNaikOneShotsScreen } from './components/KrishNaikOneShotsScreen';
 import { Sem7Screen } from './components/Sem7Screen';
-import { NeuroFocusScreen } from './components/NeuroFocusScreen';
-import { WoopScreen } from './components/WoopScreen';
-import { PhysiologicalSighScreen } from './components/PhysiologicalSighScreen';
-import { AudioSynthesizerScreen } from './components/AudioSynthesizerScreen';
-import { DmnReprogrammingScreen } from './components/DmnReprogrammingScreen';
 import { StudyTheaterModal } from './components/StudyTheaterModal';
 import { LoginModal } from './components/LoginModal';
-import { WoopBoardModal } from './components/WoopBoardModal';
 import {
   saveCurriculumProgressToFirestore,
   subscribeCurriculumProgress,
-  subscribeWoopGoals,
 } from './lib/firestoreService';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth, signInWithGoogle, handleSignOut } from './lib/firebase';
@@ -68,22 +60,25 @@ export default function App() {
     }, 4000);
   };
 
-  // Monitor Google Authentication State
+  // Monitor Google Authentication State (Allows any user to sign in)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setGoogleUser(user);
-      if (user && user.email) {
-        const email = user.email.toLowerCase();
-        if (email === 'kunaldubey975@gmail.com') {
-          setUserRole('kunal');
-          localStorage.setItem('focusflow_active_user', 'kunal');
-          setIsLoginModalOpen(false);
-          showToast('Welcome back Kunal! Sem 7 Study Hub ready ⚡');
-        } else {
-          handleSignOut();
-          setGoogleUser(null);
-          showToast('Access Denied: Google account unauthorized.');
-        }
+      if (user) {
+        const displayName =
+          user.displayName || user.email?.split('@')[0] || 'User';
+        const role =
+          user.email?.toLowerCase() === 'kunaldubey975@gmail.com'
+            ? 'kunal'
+            : displayName;
+        setUserRole(role);
+        try {
+          localStorage.setItem('focusflow_active_user', role);
+        } catch (e) {}
+        setIsLoginModalOpen(false);
+        showToast(`Welcome ${displayName}! FocusFlow ready ⚡`);
+      } else {
+        setUserRole('guest');
       }
     });
     return unsubscribe;
@@ -148,23 +143,9 @@ export default function App() {
     });
   };
 
-  // WOOP Urgency Board state
-  const [woopGoals, setWoopGoals] = useState<IWoopGoal[]>([]);
-  const [isWoopModalOpen, setIsWoopModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    const unsubWoop = subscribeWoopGoals((remoteGoals) => {
-      setWoopGoals(remoteGoals);
-    });
-
-    return () => {
-      unsubWoop();
-    };
-  }, []);
-
   return (
     <div className={`flex flex-col ${
-      currentScreen === 'learning' || currentScreen === 'roadmap'
+      currentScreen === 'learning' || currentScreen === 'roadmap' || currentScreen === 'winterarc'
         ? 'min-h-screen bg-[#0b0f14] text-slate-100 selection:bg-emerald-500/30 selection:text-emerald-200'
         : 'min-h-screen bg-[#f7fafc] text-[#181c1e] selection:bg-[#c4eccb] selection:text-[#00210d]'
     }`}>
@@ -186,6 +167,7 @@ export default function App() {
         <Sidebar
           currentScreen={currentScreen}
           userRole={userRole}
+          googleUser={googleUser}
           isCollapsed={isSidebarCollapsed}
           onToggleCollapse={handleToggleSidebarCollapse}
           onNavigate={(screen) => setCurrentScreen(screen)}
@@ -209,42 +191,10 @@ export default function App() {
         {currentScreen === 'sem7' && (
           <Sem7Screen
             isSidebarCollapsed={isSidebarCollapsed}
-            woopGoals={woopGoals}
-            onOpenWoopModal={() => setIsWoopModalOpen(true)}
             onStartFocusFromQuestion={(title) => {
               showToast(`⚡ Focus initiated: ${title}`);
             }}
           />
-        )}
-
-        {currentScreen === 'neuro' && (
-          <NeuroFocusScreen
-            isSidebarCollapsed={isSidebarCollapsed}
-            woopGoals={woopGoals}
-            onWatchVideo={setActiveTheaterVideo}
-          />
-        )}
-
-        {currentScreen === 'woop' && (
-          <WoopScreen
-            isSidebarCollapsed={isSidebarCollapsed}
-            woopGoals={woopGoals}
-          />
-        )}
-
-        {currentScreen === 'dmn' && (
-          <DmnReprogrammingScreen
-            isSidebarCollapsed={isSidebarCollapsed}
-            onOpenStudyTheater={setActiveTheaterVideo}
-          />
-        )}
-
-        {currentScreen === 'breathing' && (
-          <PhysiologicalSighScreen isSidebarCollapsed={isSidebarCollapsed} />
-        )}
-
-        {currentScreen === 'sounds' && (
-          <AudioSynthesizerScreen isSidebarCollapsed={isSidebarCollapsed} />
         )}
       </div>
 
@@ -256,13 +206,6 @@ export default function App() {
         isCompleted={activeTheaterVideo ? completedCurriculumIds.has(activeTheaterVideo.id) : false}
         onSelectVideo={setActiveTheaterVideo}
         completedIds={completedCurriculumIds}
-      />
-
-      {/* WOOP Urgency Board Modal */}
-      <WoopBoardModal
-        isOpen={isWoopModalOpen}
-        onClose={() => setIsWoopModalOpen(false)}
-        goals={woopGoals}
       />
 
       {/* Mobile Bottom Navigation Bar */}
@@ -277,13 +220,7 @@ export default function App() {
       <LoginModal
         currentUserRole={userRole}
         isOpen={isLoginModalOpen}
-        onClose={
-          googleUser &&
-          googleUser.email &&
-          googleUser.email.toLowerCase() === 'kunaldubey975@gmail.com'
-            ? () => setIsLoginModalOpen(false)
-            : undefined
-        }
+        onClose={() => setIsLoginModalOpen(false)}
         googleUser={googleUser}
         onSignInGoogle={handleSignInGoogle}
         onSignOutGoogle={handleSignOutGoogle}

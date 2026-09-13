@@ -3,10 +3,6 @@ import { ScreenType, UserRole } from '../types';
 import {
   LucideIcon,
   BookOpen,
-  Brain,
-  Headphones,
-  Wind,
-  Target,
   Sparkles,
   Code2,
   BrainCircuit,
@@ -18,6 +14,7 @@ import {
 interface SidebarProps {
   currentScreen: ScreenType;
   userRole?: UserRole;
+  googleUser?: any;
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
   onNavigate: (screen: ScreenType) => void;
@@ -33,6 +30,7 @@ interface NavItem {
 
 export const Sidebar: React.FC<SidebarProps> = ({
   currentScreen,
+  googleUser,
   isCollapsed = false,
   onToggleCollapse,
   onNavigate,
@@ -42,13 +40,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'learning', label: 'Learning & Code 💻', Icon: Code2 },
     { id: 'roadmap', label: 'Road to Gen AI 🤖', Icon: BrainCircuit },
     { id: 'sem7', label: 'Sem 7 📚', Icon: BookOpen },
-  ];
-
-  const neuroNavItems: NavItem[] = [
-    { id: 'dmn', label: 'DMN Story 🧠', Icon: Brain },
-    { id: 'woop', label: 'WOOP Anchors 🎯', Icon: Target },
-    { id: 'breathing', label: 'Physiological Sigh 🫁', Icon: Wind },
-    { id: 'sounds', label: '40Hz Focus Audio 🎧', Icon: Headphones },
   ];
 
   const renderNavGroup = (title: string, items: NavItem[]) => (
@@ -150,22 +141,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className={`mb-4 w-full ${isCollapsed ? 'px-2' : 'px-4'}`}>
         <div
           onClick={onOpenLoginModal}
-          title={isCollapsed ? 'kunal11 (Kunal)' : undefined}
+          title={isCollapsed ? (googleUser?.displayName || googleUser?.email || 'Sign In') : undefined}
           className={`rounded-2xl border shadow-md flex items-center cursor-pointer transition-all bg-[#121820] border-slate-800 hover:border-slate-700 ${
             isCollapsed ? 'p-2 justify-center' : 'p-2.5 justify-between'
           }`}
         >
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="text-base">
-              👨‍💻
-            </span>
+            {googleUser?.photoURL ? (
+              <img
+                src={googleUser.photoURL}
+                alt="Avatar"
+                className="w-6 h-6 rounded-full object-cover shrink-0 border border-slate-700"
+              />
+            ) : (
+              <span className="text-base">
+                {googleUser ? '👨‍💻' : '👤'}
+              </span>
+            )}
             {!isCollapsed && (
               <div className="min-w-0">
                 <p className="text-xs font-bold text-white truncate font-mono">
-                  kunal11
+                  {googleUser ? (googleUser.displayName || googleUser.email?.split('@')[0]) : 'Guest User'}
                 </p>
                 <p className="text-[10px] text-slate-400 truncate">
-                  Google Synced
+                  {googleUser ? (googleUser.email || 'Google Synced') : 'Click to Sign In'}
                 </p>
               </div>
             )}
@@ -175,8 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Navigation Items grouped cleanly */}
       <div className={`flex flex-col w-full flex-1 overflow-y-auto ${isCollapsed ? 'items-center px-0' : 'pr-0'}`}>
-        {renderNavGroup('Study & Tasks', coreNavItems)}
-        {renderNavGroup('Neuro Protocols', neuroNavItems)}
+        {renderNavGroup('Study & Execution', coreNavItems)}
       </div>
     </nav>
   );

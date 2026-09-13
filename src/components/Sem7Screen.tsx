@@ -31,10 +31,8 @@ import {
   Flame,
   Target,
 } from 'lucide-react';
-import { IWoopGoal, ISessionRecall } from '../types';
+import { ISessionRecall } from '../types';
 import { saveRecallLogToFirestore } from '../lib/firestoreService';
-import { parseWoopPlan } from '../lib/woopUtils';
-import { NeuroDeck } from './NeuroDeck';
 
 interface ChecklistTask {
   id: string;
@@ -821,15 +819,11 @@ const MIS_EXAM_QUESTIONS: QuestionMetadata[] = [
 
 interface Sem7ScreenProps {
   onStartFocusFromQuestion?: (title: string) => void;
-  woopGoals?: IWoopGoal[];
-  onOpenWoopModal?: () => void;
   isSidebarCollapsed?: boolean;
 }
 
 export const Sem7Screen: React.FC<Sem7ScreenProps> = ({
   onStartFocusFromQuestion,
-  woopGoals = [],
-  onOpenWoopModal,
   isSidebarCollapsed = false,
 }) => {
   const [activeSubject, setActiveSubject] = useState<'deep-learning' | 'bda' | 'bct' | 'mis'>('deep-learning');
@@ -1904,63 +1898,6 @@ export const Sem7Screen: React.FC<Sem7ScreenProps> = ({
           </div>
         </div>
       </header>
-
-      {/* NeuroDeck Controller (Audio Entrainment & Breathing Reset) */}
-      <NeuroDeck
-        onOpenWoop={onOpenWoopModal || (() => {})}
-        activeWoopCount={woopGoals.length}
-      />
-
-      {/* WOOP Urgency Anchor Banner — Integrated Light Card */}
-      {woopGoals.length > 0 && (() => {
-        const activeGoal = woopGoals[0];
-        const parsed = parseWoopPlan(activeGoal.plan, activeGoal.obstacle);
-        return (
-          <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs font-sans">
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <span className="p-1 rounded-lg bg-emerald-50 text-emerald-700 text-xs border border-emerald-100">
-                  <Target className="w-3.5 h-3.5" />
-                </span>
-                <span className="text-xs font-bold text-[#181c1e]">
-                  Active WOOP anchor
-                </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 font-medium border border-emerald-100">
-                  {activeGoal.targetSubject || 'General focus'}
-                </span>
-              </div>
-              {onOpenWoopModal && (
-                <button
-                  onClick={onOpenWoopModal}
-                  className="text-xs font-medium text-[#43664c] hover:text-[#34513c] hover:underline flex items-center gap-1 transition cursor-pointer"
-                >
-                  <Sparkles className="w-3 h-3" /> Manage anchors
-                </button>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
-              <div>
-                <p className="text-xs text-slate-500 font-medium mb-0.5">Wish</p>
-                <h4 className="text-sm font-bold text-[#181c1e] leading-snug">{activeGoal.wish}</h4>
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5 mb-0.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block shrink-0" />
-                  <span className="text-xs text-slate-500 font-medium">Obstacle</span>
-                </div>
-                <p className="text-xs text-slate-700 leading-relaxed">{activeGoal.obstacle}</p>
-              </div>
-              <div className="p-3 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-xs">
-                <p className="font-medium text-emerald-800 mb-0.5">{parsed.condition}</p>
-                {parsed.action && (
-                  <p className="font-medium text-slate-900 leading-relaxed">{parsed.action}</p>
-                )}
-              </div>
-            </div>
-          </div>
-        );
-      })()}
 
       {/* Subject Tabs */}
       <div className="flex flex-wrap border-b border-[#c2c8c0] mb-6 gap-1 sm:gap-2">
